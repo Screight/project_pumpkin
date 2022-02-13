@@ -1288,3 +1288,11 @@ Received Import Request.
 Start importing Assets/Animations/Player/Idle/idle sheet-Sheet.png using Guid(33ceff24d86b98b479ca7dc77406f8d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b17303f7c201f7e6fddc5fa3fc1431c') in 0.064635 seconds 
   Import took 0.068448 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 940.778186 seconds.
+  path: Assets/Animations/Player/noBKG_KnightIdle_strip_0.controller
+  artifactKey: Guid(8ac96af92c24df246bf7e6539b812425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Player/noBKG_KnightIdle_strip_0.controller using Guid(8ac96af92c24df246bf7e6539b812425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30325fd1586aa37332463f7e95181425') in 0.033122 seconds 
+  Import took 0.039054 seconds .
+
