@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum PLAYER_STATE { IDLE, MOVING, DASH, DEATH, JUMP, ATTACK }
+public enum PLAYER_STATE { IDLE, MOVE, DASH, DEATH, JUMP, ATTACK }
 
 public class Player : MonoBehaviour
 {
@@ -26,18 +26,23 @@ public class Player : MonoBehaviour
     bool m_isGrounded;
 
     Animator m_animator;
-    int m_playerState;
+    int m_playerStateID;
     bool m_isFacingRight;
 
-    CircleCollider2D m_attackRangeCollider;
     float m_attackDuration = 0;
     float m_currentAttackDuration = 0;
+    [SerializeField] Transform m_attackPosition;
+    [SerializeField] LayerMask m_enemyLayer;
+    const float M_ATTACK_RANGE = 16;
+    bool m_keepAttacking = false;
+    int m_keepAttackingID;
+    int m_attackComboCount;
 
     private void Awake()
     {
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
-        m_playerState = Animator.StringToHash("state");
+        m_playerStateID = Animator.StringToHash("state");
 
         
         m_state = PLAYER_STATE.IDLE;
@@ -52,13 +57,13 @@ public class Player : MonoBehaviour
 
         m_isGrounded = false;
 
-        m_attackRangeCollider = GetComponentInChildren<CircleCollider2D>();
+        
     }
 
     private void Start()
     {
         m_isFacingRight = true;
-        m_attackRangeCollider.enabled = false;
+        m_keepAttackingID = Animator.StringToHash("nextAttack");
 
     }
 
@@ -70,16 +75,16 @@ public class Player : MonoBehaviour
                 {
                     
                     Move(PLAYER_STATE.IDLE);
-                    Attack_1();
+                    Attack();
                     Dash();
                     Jump();
                 }
                 break;
 
-            case PLAYER_STATE.MOVING:
+            case PLAYER_STATE.MOVE:
                 {
                     Move(PLAYER_STATE.IDLE);
-                    Attack_1();
+                    Attack();
                     Jump();
                     Dash();
                 }
@@ -98,7 +103,7 @@ public class Player : MonoBehaviour
                 break;
             case PLAYER_STATE.ATTACK:
                 {
-                    Attack_1();
+                    Attack();
                 }
                 break;
 
@@ -106,19 +111,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Attack_1()
+    void Attack()
     {
-        
         if (InputManager.Instance.AttackButtonPressed)
         {
+            m_keepAttacking = true;
+        }
+
+        if (m_keepAttacking && m_currentAttackDuration == 0)
+        {
             if (!m_isGrounded) { return; }
-            if (m_state != PLAYER_STATE.ATTACK)
+            if(m_state != PLAYER_STATE.ATTACK) { SetPlayerState(PLAYER_STATE.ATTACK); }
+
+            
+            Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(m_attackPosition.position, M_ATTACK_RANGE, m_enemyLayer);
+            m_keepAttacking = false;
+            foreach (Collider2D enemy in enemiesInAttackRange)
             {
-                SetPlayerState(PLAYER_STATE.ATTACK);
-                m_attackRangeCollider.enabled = true;
-                m_attackDuration = m_animator.GetCurrentAnimatorStateInfo(0).length;
-                
+                Debug.Log(enemy.gameObject.name + " hitted.");
             }
+            
         }
         else if (m_state == PLAYER_STATE.ATTACK)
         {
@@ -128,23 +140,24 @@ public class Player : MonoBehaviour
             }
             else
             {
-                m_currentAttackDuration = 0;
-                if (m_attackRangeCollider.enabled == true) { m_attackRangeCollider.enabled = false; }
-                SetPlayerState(PLAYER_STATE.IDLE);
+                if (m_keepAttacking && m_attackComboCount < 2)
+                {
+                    m_currentAttackDuration = 0;
+                    m_attackComboCount++;
+                    m_animator.SetTrigger(m_keepAttackingID);
+                }
+                else
+                {
+                    m_currentAttackDuration = 0;
+                    m_keepAttacking = false;
+                    SetPlayerState(PLAYER_STATE.IDLE);
+                    m_attackComboCount = 0;
+                }
+                
             }
         }
         
         
-    }
-
-    void Attack_2()
-    {
-        m_attackRangeCollider.enabled = true ;
-    }
-
-    void Attack_3()
-    {
-        m_attackRangeCollider.enabled = true;
     }
 
     void Jump()
@@ -168,7 +181,7 @@ public class Player : MonoBehaviour
             {
                 m_dashCurrentTime = 0;
                 m_state = PLAYER_STATE.IDLE;
-                m_animator.SetInteger(m_playerState, (int)m_state);
+                m_animator.SetInteger(m_playerStateID, (int)m_state);
             }
         }
 
@@ -177,7 +190,7 @@ public class Player : MonoBehaviour
             m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, m_rb2D.velocity.y);
 
             m_state = PLAYER_STATE.DASH;
-            m_animator.SetInteger(m_playerState, (int)m_state);
+            m_animator.SetInteger(m_playerStateID, (int)m_state);
         }
 
     }
@@ -198,14 +211,14 @@ public class Player : MonoBehaviour
                 FlipX();
             }
 
-            m_state = PLAYER_STATE.MOVING;
-            m_animator.SetInteger(m_playerState, (int)m_state);
+            m_state = PLAYER_STATE.MOVE;
+            m_animator.SetInteger(m_playerStateID, (int)m_state);
         }
         else
         {
-            m_animator.SetBool(m_playerState, false);
+            m_animator.SetBool(m_playerStateID, false);
             m_state = p_defaultState;
-            m_animator.SetInteger(m_playerState, (int)m_state);
+            m_animator.SetInteger(m_playerStateID, (int)m_state);
         }
 
         m_direction = horizontalAxisValue;
@@ -216,7 +229,7 @@ public class Player : MonoBehaviour
     public void SetPlayerState(PLAYER_STATE value)
     {
         m_state = value;
-        m_animator.SetInteger(m_playerState, (int)value);
+        m_animator.SetInteger(m_playerStateID, (int)value);
     }
 
     void FlipX()
