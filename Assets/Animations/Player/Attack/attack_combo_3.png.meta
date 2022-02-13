@@ -1,64 +1,52 @@
 fileFormatVersion: 2
-guid: 6f48faba2b3e524488230ac722c77166
+guid: 8bc0e4ac06be9d849844e62c54c3bada
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1937563075703252803
-    second: itch jump sheet-Sheet_0
+      213: -4819962228271358946
+    second: attack_combo_3_0
   - first:
-      213: -1642874414551790905
-    second: itch jump sheet-Sheet_1
+      213: 5715134276155719030
+    second: attack_combo_3_1
   - first:
-      213: 2013972733002845114
-    second: itch jump sheet-Sheet_2
+      213: -7034406318061772417
+    second: attack_combo_3_2
   - first:
-      213: -7368478625786407954
-    second: itch jump sheet-Sheet_3
+      213: 8424406957527054601
+    second: attack_combo_3_3
   - first:
-      213: -7689132333870070854
-    second: itch jump sheet-Sheet_4
+      213: -7809760558781103047
+    second: attack_combo_3_4
   - first:
-      213: -6786964077109724811
-    second: itch jump sheet-Sheet_5
+      213: 5147377124185717127
+    second: attack_combo_3_5
   - first:
-      213: -707797715841224138
-    second: itch jump sheet-Sheet_6
+      213: -3384771107306351388
+    second: attack_combo_3_6
   - first:
-      213: 4024468426254720172
-    second: itch jump sheet-Sheet_7
+      213: 1498519447479023234
+    second: attack_combo_3_7
   - first:
-      213: 7000538404382982207
-    second: itch jump sheet-Sheet_8
+      213: 3074413099895983817
+    second: attack_combo_3_8
   - first:
-      213: 6340650486909126505
-    second: itch jump sheet-Sheet_9
+      213: 2559878136565049740
+    second: attack_combo_3_9
   - first:
-      213: 1505297353285925501
-    second: itch jump sheet-Sheet_10
+      213: -7755811023407008027
+    second: attack_combo_3_10
   - first:
-      213: -5672479503649171287
-    second: itch jump sheet-Sheet_11
+      213: 593874063175905907
+    second: attack_combo_3_11
   - first:
-      213: 3325086125591716169
-    second: itch jump sheet-Sheet_12
+      213: -1225869787028691518
+    second: attack_combo_3_12
   - first:
-      213: -3913230824436460175
-    second: itch jump sheet-Sheet_13
+      213: 1935848276899442066
+    second: attack_combo_3_13
   - first:
-      213: -6796624284384122594
-    second: itch jump sheet-Sheet_14
-  - first:
-      213: 7016978500644561677
-    second: itch jump sheet-Sheet_15
-  - first:
-      213: -1178057378928704504
-    second: itch jump sheet-Sheet_16
-  - first:
-      213: 1692959348783638337
-    second: itch jump sheet-Sheet_17
-  - first:
-      213: -8800979115281204381
-    second: itch jump sheet-Sheet_18
+      213: 1424169431998189717
+    second: attack_combo_3_14
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -148,400 +136,316 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_0
+      name: attack_combo_3_0
       rect:
         serializedVersion: 2
-        x: 22
+        x: 15
         y: 21
-        width: 19
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.1904762, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 347a4390a5b93ea10800000000000000
-      internalID: 1937563075703252803
+      spriteID: e1cd51104ed0c1db0800000000000000
+      internalID: -4819962228271358946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_1
+      name: attack_combo_3_1
       rect:
         serializedVersion: 2
-        x: 104
+        x: 95
         y: 21
-        width: 14
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.2, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ca001e9c665339e0800000000000000
-      internalID: -1642874414551790905
+      spriteID: 67dbbe5185c305f40800000000000000
+      internalID: 5715134276155719030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_2
+      name: attack_combo_3_2
       rect:
         serializedVersion: 2
-        x: 185
+        x: 175
         y: 21
-        width: 13
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.21428572, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abb05f9b78113fb10800000000000000
-      internalID: 2013972733002845114
+      spriteID: f712a2e39b4c06e90800000000000000
+      internalID: -7034406318061772417
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_3
+      name: attack_combo_3_3
       rect:
         serializedVersion: 2
-        x: 264
+        x: 255
         y: 21
-        width: 14
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.22222222, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee351fecab7edb990800000000000000
-      internalID: -7368478625786407954
+      spriteID: 909bab25e7189e470800000000000000
+      internalID: 8424406957527054601
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_4
+      name: attack_combo_3_4
       rect:
         serializedVersion: 2
-        x: 342
+        x: 335
         y: 21
-        width: 15
-        height: 30
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.21428572, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab344b091e6ba4590800000000000000
-      internalID: -7689132333870070854
+      spriteID: 9340ff056282e9390800000000000000
+      internalID: -7809760558781103047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_5
+      name: attack_combo_3_5
       rect:
         serializedVersion: 2
-        x: 419
+        x: 415
         y: 21
-        width: 22
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.1904762, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 579b988712cdfc1a0800000000000000
-      internalID: -6786964077109724811
+      spriteID: 789bf04f8382f6740800000000000000
+      internalID: 5147377124185717127
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_6
+      name: attack_combo_3_6
       rect:
         serializedVersion: 2
-        x: 498
+        x: 495
         y: 21
-        width: 24
-        height: 29
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.1875, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 632737e3ab56d26f0800000000000000
-      internalID: -707797715841224138
+      spriteID: 4e4dff67c90e601d0800000000000000
+      internalID: -3384771107306351388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_7
+      name: attack_combo_3_7
       rect:
         serializedVersion: 2
-        x: 578
+        x: 575
         y: 21
-        width: 25
-        height: 29
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.18461539, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cac10bc06b8c9d730800000000000000
-      internalID: 4024468426254720172
+      spriteID: 286700c7f7fcbc410800000000000000
+      internalID: 1498519447479023234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_8
+      name: attack_combo_3_8
       rect:
         serializedVersion: 2
-        x: 658
+        x: 655
         y: 21
-        width: 25
-        height: 29
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.18461539, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f304abd9698e62160800000000000000
-      internalID: 7000538404382982207
+      spriteID: 9ce8b18ec628aaa20800000000000000
+      internalID: 3074413099895983817
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_9
+      name: attack_combo_3_9
       rect:
         serializedVersion: 2
-        x: 738
+        x: 735
         y: 21
-        width: 26
-        height: 31
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.18461539, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 967402d06048ef750800000000000000
-      internalID: 6340650486909126505
+      spriteID: c89af363a93868320800000000000000
+      internalID: 2559878136565049740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_10
+      name: attack_combo_3_10
       rect:
         serializedVersion: 2
-        x: 818
+        x: 815
         y: 21
-        width: 25
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.18461539, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7a71f7a7f3e3e410800000000000000
-      internalID: 1505297353285925501
+      spriteID: 5e634cc57f2dd5490800000000000000
+      internalID: -7755811023407008027
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_11
+      name: attack_combo_3_11
       rect:
         serializedVersion: 2
-        x: 899
+        x: 895
         y: 21
-        width: 24
-        height: 34
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.19672132, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a89e4d02fd4741b0800000000000000
-      internalID: -5672479503649171287
+      spriteID: 372fae0605ddd3800800000000000000
+      internalID: 593874063175905907
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_12
+      name: attack_combo_3_12
       rect:
         serializedVersion: 2
-        x: 978
+        x: 975
         y: 21
-        width: 25
-        height: 36
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.2, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9416973d634152e20800000000000000
-      internalID: 3325086125591716169
+      spriteID: 2c565437ce5dcfee0800000000000000
+      internalID: -1225869787028691518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_13
+      name: attack_combo_3_13
       rect:
         serializedVersion: 2
-        x: 1058
+        x: 1055
         y: 21
-        width: 25
-        height: 37
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.2, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1751b516c4961b9c0800000000000000
-      internalID: -3913230824436460175
+      spriteID: 29da4a350c38dda10800000000000000
+      internalID: 1935848276899442066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: itch jump sheet-Sheet_14
+      name: attack_combo_3_14
       rect:
         serializedVersion: 2
-        x: 1138
+        x: 1135
         y: 21
-        width: 25
-        height: 36
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 65
+        height: 59
+      alignment: 9
+      pivot: {x: 0.2, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e19ad71393a8da1a0800000000000000
-      internalID: -6796624284384122594
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: itch jump sheet-Sheet_15
-      rect:
-        serializedVersion: 2
-        x: 1219
-        y: 21
-        width: 23
-        height: 27
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d03e87fc4c0516160800000000000000
-      internalID: 7016978500644561677
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: itch jump sheet-Sheet_16
-      rect:
-        serializedVersion: 2
-        x: 1302
-        y: 21
-        width: 23
-        height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8044de33e03b6afe0800000000000000
-      internalID: -1178057378928704504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: itch jump sheet-Sheet_17
-      rect:
-        serializedVersion: 2
-        x: 1383
-        y: 21
-        width: 18
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 147ec6bde899e7710800000000000000
-      internalID: 1692959348783638337
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: itch jump sheet-Sheet_18
-      rect:
-        serializedVersion: 2
-        x: 1460
-        y: 21
-        width: 16
-        height: 31
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 36b380ecf14acd580800000000000000
-      internalID: -8800979115281204381
+      spriteID: 590d8368d8aa3c310800000000000000
+      internalID: 1424169431998189717
       vertices: []
       indices: 
       edges: []

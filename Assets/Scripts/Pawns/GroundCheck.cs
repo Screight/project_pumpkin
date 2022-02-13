@@ -16,8 +16,11 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        ContactPoint2D[] contactPoints = new ContactPoint2D[2];
+
         if (collision.gameObject.tag == "floor")
         {
+            Debug.Log("Grounded");
             playerScript.IsGrounded = true;
             playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);

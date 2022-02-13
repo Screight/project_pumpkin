@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum PLAYER_STATE { IDLE, MOVE, DASH, DEATH, JUMP, ATTACK }
+public enum PLAYER_STATE { IDLE, MOVE, DASH, DEATH, JUMP, ATTACK, FALL }
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Rigidbody2D m_rb2D;
     [SerializeField] float m_speed = 50.0f;
     float m_direction;
+    bool m_canMoveHorizontal = true;
 
     float m_dashCurrentTime;
     [SerializeField] float m_dashDistance = 100;
@@ -98,7 +99,11 @@ public class Player : MonoBehaviour
             case PLAYER_STATE.JUMP:
                 {
                     Move(PLAYER_STATE.JUMP);
-                    Dash();
+                }
+                break;
+            case PLAYER_STATE.FALL:
+                {
+                    Move(PLAYER_STATE.FALL);
                 }
                 break;
             case PLAYER_STATE.ATTACK:
@@ -162,13 +167,12 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-          if (InputManager.Instance.JumpButtonPressed && m_isGrounded)
-        {
+          if (InputManager.Instance.JumpButtonPressed && m_isGrounded) {
             m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
             SetPlayerState(PLAYER_STATE.JUMP);
             m_isGrounded = false;
-        }
+          }
     }
 
     void Dash()
@@ -210,9 +214,11 @@ public class Player : MonoBehaviour
             {
                 FlipX();
             }
-
-            m_state = PLAYER_STATE.MOVE;
-            m_animator.SetInteger(m_playerStateID, (int)m_state);
+            if (m_isGrounded) {
+                m_state = PLAYER_STATE.MOVE;
+                m_animator.SetInteger(m_playerStateID, (int)m_state);
+            } 
+            
         }
         else
         {
@@ -222,8 +228,22 @@ public class Player : MonoBehaviour
         }
 
         m_direction = horizontalAxisValue;
-        m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+        if (m_canMoveHorizontal)
+        {
+            m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+        }
+        else
+        {
+            Debug.Log("CANNOT MOVE THERE");
+        }
+        
 
+        if (m_rb2D.velocity.y < 0)
+        {
+            m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+            SetPlayerState(PLAYER_STATE.FALL);
+            m_isGrounded = false;
+        }
     }
 
     public void SetPlayerState(PLAYER_STATE value)
@@ -231,6 +251,7 @@ public class Player : MonoBehaviour
         m_state = value;
         m_animator.SetInteger(m_playerStateID, (int)value);
     }
+
 
     void FlipX()
     {
@@ -272,6 +293,11 @@ public class Player : MonoBehaviour
         {
             m_isGrounded = value;
         }
+    }
+
+    public bool CanMoveHorizontal
+    {
+        set { m_canMoveHorizontal = value; }
     }
 
 }
