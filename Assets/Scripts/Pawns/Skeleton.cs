@@ -8,6 +8,7 @@ public class Skeleton : MonoBehaviour
 {
     SKELETON_STATE m_state;
     Rigidbody2D m_rb2D;
+
     [SerializeField] Transform left_limit;
     [SerializeField] Transform right_limit;
 
@@ -60,26 +61,28 @@ public class Skeleton : MonoBehaviour
         else { m_direction = -1; }
         m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
 
-        if (m_isGrounded == false) {
-            FlipX();
-            m_isGrounded = true;
-        }
-        if (transform.position.x < left_limit.position.x) {
+        if (m_isGrounded == false) { FlipX(); m_isGrounded = true; }
+
+        if (transform.position.x < left_limit.position.x)
+        {
             transform.position = new Vector3(left_limit.position.x, transform.position.y, transform.position.z);
             FlipX();
         }
-        if (transform.position.x > right_limit.position.x) {
+        if (transform.position.x > right_limit.position.x)
+        {
             transform.position = new Vector3(right_limit.position.x, transform.position.y, transform.position.z);
             FlipX();
         }
     }
 
-    void FlipX() {
+    void FlipX()
+    {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;
     }
 
-    public bool IsGrounded {
+    public bool IsGrounded
+    {
         set { m_isGrounded = value; }
     }
 }
