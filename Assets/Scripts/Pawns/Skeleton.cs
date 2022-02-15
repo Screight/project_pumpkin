@@ -9,6 +9,10 @@ public class Skeleton : MonoBehaviour
     SKELETON_STATE m_state;
     Rigidbody2D m_rb2D;
 
+    const float m_boneCooldown = 2000.0f;
+    private float m_actualBoneCooldown;
+    public GameObject Bone;
+
     [SerializeField] Transform left_limit;
     [SerializeField] Transform right_limit;
 
@@ -28,6 +32,7 @@ public class Skeleton : MonoBehaviour
         m_state = SKELETON_STATE.MOVE;
         m_direction = -1;
         m_isGrounded = true;
+        m_actualBoneCooldown = 0.0f;
     }
 
     void Start()
@@ -52,6 +57,14 @@ public class Skeleton : MonoBehaviour
             case SKELETON_STATE.DIE:
                 {/*Die();*/}
                 break;
+        }
+
+        //fire
+        if (m_actualBoneCooldown >= m_boneCooldown)
+        {
+            m_actualBoneCooldown = 0;
+            GameObject fire = Instantiate(Bone, transform.position + new Vector3(3.0f, 0.0f, 0.0f), transform.rotation);
+            Destroy(fire, 3);
         }
     }
 
@@ -84,5 +97,11 @@ public class Skeleton : MonoBehaviour
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
+    }
+
+    private void FixedUpdate()
+    {
+        float delta = Time.fixedDeltaTime * 1000;
+        m_actualBoneCooldown += 1.0f * delta;
     }
 }
