@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK }
 
-public class Skeleton : MonoBehaviour {
-
+public class Skeleton : MonoBehaviour
+{
     SKELETON_STATE m_state;
     Rigidbody2D m_rb2D;
     [SerializeField] Transform left_limit;
@@ -29,41 +29,34 @@ public class Skeleton : MonoBehaviour {
         m_isGrounded = true;
     }
 
-    void Start() {
+    void Start()
+    {
         m_isFacingRight = false;
     }
 
-    void Update() {
-        switch (m_state) {
+    void Update()
+    {
+        switch (m_state)
+        {
+            default:break;
             case SKELETON_STATE.MOVE:
-                {
-                    Move();
-                }
+                { Move(); }
                 break;
             case SKELETON_STATE.CHASE:
-                {
-                    //Chase();
-                }
+                {/*Chase();*/}
                 break;
             case SKELETON_STATE.ATTACK:
-                {
-                    //Attack();
-                }
+                {/*Attack();*/}
                 break;
-
             case SKELETON_STATE.DIE:
-                {
-                    //Die();
-                }
+                {/*Die();*/}
                 break;
         }
     }
 
-    void Move() {
-
-        if (m_isFacingRight) {
-            m_direction = 1;
-        }
+    void Move()
+    {
+        if (m_isFacingRight) { m_direction = 1; }
         else { m_direction = -1; }
         m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
 
@@ -87,8 +80,6 @@ public class Skeleton : MonoBehaviour {
     }
 
     public bool IsGrounded {
-        set {
-            m_isGrounded = value;
-        }
+        set { m_isGrounded = value; }
     }
 }

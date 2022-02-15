@@ -7,7 +7,6 @@ public class GroundCheck : MonoBehaviour
     Player playerScript;
     Rigidbody2D playerRigidBody;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerScript = GetComponentInParent<Player>();
@@ -17,7 +16,6 @@ public class GroundCheck : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         ContactPoint2D[] contactPoints = new ContactPoint2D[2];
-
         if (collision.gameObject.tag == "floor")
         {
             Debug.Log("Grounded");
@@ -27,7 +25,4 @@ public class GroundCheck : MonoBehaviour
             playerScript.SetPlayerState(PLAYER_STATE.IDLE);
         }
     }
-
-
-
 }

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, ATTACK, FALL, DEATH }
 public enum PLAYER_ANIMATION { IDLE, RUN, DASH, BOOST, JUMP, FALL, LAND, ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
 
 public class Player : MonoBehaviour
 {
-
     Animator m_animator;
     int m_currentState;
 
@@ -25,15 +25,10 @@ public class Player : MonoBehaviour
 
     void ChangeAnimationState(int p_newState)
     {
-        // stop the same animation from interrupting itself
-        if (m_currentState == p_newState) return;
-
-        // play the animation
-        m_animator.Play(p_newState);
-        // reassigning the new state
-        m_currentState = p_newState;
+        if (m_currentState == p_newState) return;   // stop the same animation from interrupting itself
+        m_animator.Play(p_newState);                // play the animation
+        m_currentState = p_newState;                // reassigning the new state
     }
-
     PLAYER_STATE m_state;
 
     Rigidbody2D m_rb2D;
@@ -53,7 +48,6 @@ public class Player : MonoBehaviour
     float m_gravity2;
     float m_initialVelocityY;
     bool m_isGrounded;
-
     
     int m_playerStateID;
     bool m_isFacingRight;
@@ -72,7 +66,6 @@ public class Player : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_playerStateID = Animator.StringToHash("state");
-
         
         m_state = PLAYER_STATE.IDLE;
         m_direction = 0;
@@ -85,8 +78,6 @@ public class Player : MonoBehaviour
         m_initialVelocityY = 2 * m_maxHeight / m_timeToPeak1;
 
         m_isGrounded = false;
-
-        
     }
 
     private void Start()
@@ -104,16 +95,15 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_1] = Animator.StringToHash(m_attack_1_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_2] = Animator.StringToHash(m_attack_2_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_3] = Animator.StringToHash(m_attack_3_AnimationName);
-
     }
 
     private void Update()
     {
         switch (m_state)
         {
+            default: break;
             case PLAYER_STATE.IDLE:
                 {
-                    
                     Move(PLAYER_STATE.IDLE);
                     Attack();
                     Dash();
@@ -174,14 +164,12 @@ public class Player : MonoBehaviour
             {
                 Debug.Log(enemy.gameObject.name + " hitted.");
             }
-            
         }
         else if (m_state == PLAYER_STATE.ATTACK)
         {
             if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             {
                 m_currentAttackDuration += Time.deltaTime;
-
             }
             else
             {
@@ -199,11 +187,8 @@ public class Player : MonoBehaviour
                     ChangeAnimationState((int)PLAYER_ANIMATION.IDLE);
                     m_attackComboCount = 0;
                 }
-                
             }
         }
-        
-        
     }
 
     void Jump()
@@ -211,6 +196,7 @@ public class Player : MonoBehaviour
           if (InputManager.Instance.JumpButtonPressed && m_isGrounded) {
             m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
+
             SetPlayerState(PLAYER_STATE.JUMP);
             ChangeAnimationState((int)PLAYER_ANIMATION.JUMP);
             m_isGrounded = false;
@@ -240,7 +226,6 @@ public class Player : MonoBehaviour
             m_state = PLAYER_STATE.DASH;
             //m_animator.SetInteger(m_playerStateID, (int)m_state);
         }
-
     }
 
     void Move(PLAYER_STATE p_defaultState)
@@ -248,22 +233,14 @@ public class Player : MonoBehaviour
         float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
         if (horizontalAxisValue != 0)
         {
+            if (!m_isFacingRight && horizontalAxisValue > 0)    { FlipX(); }
+            if (m_isFacingRight && horizontalAxisValue < 0)     { FlipX(); }
 
-            if (!m_isFacingRight && horizontalAxisValue > 0)
-            {
-                FlipX();
-            }
-
-            if (m_isFacingRight && horizontalAxisValue < 0)
-            {
-                FlipX();
-            }
             if (m_isGrounded) {
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
                 //m_animator.SetInteger(m_playerStateID, (int)m_state);
-            } 
-            
+            }
         }
         else
         {
@@ -282,7 +259,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("CANNOT MOVE THERE");
         }
-        
 
         if (m_rb2D.velocity.y < 0)
         {
@@ -298,7 +274,6 @@ public class Player : MonoBehaviour
         m_state = value;
         //m_animator.SetInteger(m_playerStateID, (int)value);
     }
-
 
     void FlipX()
     {
@@ -320,33 +295,21 @@ public class Player : MonoBehaviour
 
     public float Gravity1
     {
-        get
-        {
-            return m_gravity1;
-        }
+        get { return m_gravity1; }
     }
 
     public float Gravity2
     {
-        get
-        {
-            return m_gravity2;
-        }
+        get { return m_gravity2; }
     }
 
     public bool IsGrounded
     {
-        set
-        {
-            m_isGrounded = value;
-        }
+        set { m_isGrounded = value; }
     }
 
     public bool CanMoveHorizontal
     {
         set { m_canMoveHorizontal = value; }
     }
-
-
-
 }
