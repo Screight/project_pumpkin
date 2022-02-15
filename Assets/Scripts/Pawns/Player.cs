@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, ATTACK, FALL, DEATH }
-public enum PLAYER_ANIMATION { IDLE, RUN, DASH, BOOST, JUMP, FALL, LAND, ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
+public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH }
+public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
 
 public class Player : MonoBehaviour
 {
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
                     m_currentAttackDuration = 0;
                     m_keepAttacking = false;
                     SetPlayerState(PLAYER_STATE.IDLE);
-                    ChangeAnimationState((int)PLAYER_ANIMATION.IDLE);
+                    ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.IDLE]);
                     m_attackComboCount = 0;
                 }
             }
@@ -198,7 +198,7 @@ public class Player : MonoBehaviour
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
             SetPlayerState(PLAYER_STATE.JUMP);
-            ChangeAnimationState((int)PLAYER_ANIMATION.JUMP);
+            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.JUMP]);
             m_isGrounded = false;
           }
     }
@@ -240,6 +240,7 @@ public class Player : MonoBehaviour
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
                 //m_animator.SetInteger(m_playerStateID, (int)m_state);
+
             }
         }
         else
