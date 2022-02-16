@@ -78,6 +78,9 @@ public class Player : MonoBehaviour
         m_initialVelocityY = 2 * m_maxHeight / m_timeToPeak1;
 
         m_isGrounded = false;
+
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+
     }
 
     private void Start()
@@ -260,14 +263,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("CANNOT MOVE THERE");
         }
-
-        if (m_rb2D.velocity.y < 0)
-        {
-            m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-            SetPlayerState(PLAYER_STATE.FALL);
-            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.FALL]);
-            m_isGrounded = false;
-        }
     }
 
     public void SetPlayerState(PLAYER_STATE value)
@@ -286,6 +281,24 @@ public class Player : MonoBehaviour
     {
         if (m_isFacingRight) return 1;
         else return -1;
+    }
+
+    #region Accessors
+
+    public bool IsFacingRight
+    {
+        get { return m_isFacingRight; }
+    }
+
+    public void SetPlayerAnimation(PLAYER_ANIMATION p_animation)
+    {
+        ChangeAnimationState(m_animationHash[(int)p_animation]);
+    }
+
+    public PLAYER_STATE State
+    {
+        get { return m_state; }
+        set { m_state = value; }
     }
 
     public float Speed
@@ -307,10 +320,13 @@ public class Player : MonoBehaviour
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
+        get { return m_isGrounded; }
     }
 
     public bool CanMoveHorizontal
     {
         set { m_canMoveHorizontal = value; }
     }
+
+    #endregion
 }

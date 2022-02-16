@@ -8,6 +8,11 @@ public class Skeleton : MonoBehaviour
 {
     SKELETON_STATE m_state;
     Rigidbody2D m_rb2D;
+
+    const float m_boneCooldown = 2000.0f;
+    private float m_actualBoneCooldown;
+    public GameObject Bone;
+
     [SerializeField] Transform left_limit;
     [SerializeField] Transform right_limit;
 
@@ -27,6 +32,7 @@ public class Skeleton : MonoBehaviour
         m_state = SKELETON_STATE.MOVE;
         m_direction = -1;
         m_isGrounded = true;
+        m_actualBoneCooldown = 0.0f;
     }
 
     void Start()
@@ -52,6 +58,14 @@ public class Skeleton : MonoBehaviour
                 {/*Die();*/}
                 break;
         }
+
+        //fire
+        if (m_actualBoneCooldown >= m_boneCooldown)
+        {
+            m_actualBoneCooldown = 0;
+            GameObject fire = Instantiate(Bone, transform.position + new Vector3(3.0f, 0.0f, 0.0f), transform.rotation);
+            Destroy(fire, 3);
+        }
     }
 
     void Move()
@@ -60,26 +74,34 @@ public class Skeleton : MonoBehaviour
         else { m_direction = -1; }
         m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
 
-        if (m_isGrounded == false) {
-            FlipX();
-            m_isGrounded = true;
-        }
-        if (transform.position.x < left_limit.position.x) {
+        if (m_isGrounded == false) { FlipX(); m_isGrounded = true; }
+
+        if (transform.position.x < left_limit.position.x)
+        {
             transform.position = new Vector3(left_limit.position.x, transform.position.y, transform.position.z);
             FlipX();
         }
-        if (transform.position.x > right_limit.position.x) {
+        if (transform.position.x > right_limit.position.x)
+        {
             transform.position = new Vector3(right_limit.position.x, transform.position.y, transform.position.z);
             FlipX();
         }
     }
 
-    void FlipX() {
+    void FlipX()
+    {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;
     }
 
-    public bool IsGrounded {
+    public bool IsGrounded
+    {
         set { m_isGrounded = value; }
+    }
+
+    private void FixedUpdate()
+    {
+        float delta = Time.fixedDeltaTime * 1000;
+        m_actualBoneCooldown += 1.0f * delta;
     }
 }
