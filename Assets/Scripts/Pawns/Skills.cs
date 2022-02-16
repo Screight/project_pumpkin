@@ -5,6 +5,12 @@ using UnityEngine;
 public class Skills : MonoBehaviour
 {
 
+    [SerializeField] GameObject m_marker;
+    float m_markerSpeed = 50.0f;
+    float m_markerDirection = 10.0f;
+    float m_markerMaxDistance = 100.0f;
+    bool m_isHoldingPilar = false;
+
     [SerializeField] GameObject m_pilar;
     BoxCollider2D m_pilarColider;
     [SerializeField] float m_pilarSummonDistance = 50;
@@ -42,21 +48,61 @@ public class Skills : MonoBehaviour
     private void Update()
     {
         // pillar cooldown
-        if (m_isPilarOnCooldown)
+        //if (m_isPilarOnCooldown)
+        //{
+        //    if (m_pilarDuration < m_pilarCooldown) { m_pilarDuration += Time.deltaTime; }
+        //    else
+        //    {
+        //        m_pilarDuration = 0;
+        //        m_isPilarOnCooldown = false;
+        //    }
+        //}
+
+        //m_canPlayerUseSkill = (m_player.State == PLAYER_STATE.IDLE || m_player.State == PLAYER_STATE.MOVE) && m_player.IsGrounded;
+
+        //if (m_canPlayerUseSkill && !m_isPilarOnCooldown && InputManager.Instance.Skill1ButtonPressed)
+        //{
+        //    SummonPilar();
+        //}
+
+        if (InputManager.Instance.Skill1ButtonHold)
         {
-            if(m_pilarDuration < m_pilarCooldown) { m_pilarDuration += Time.deltaTime; }
-            else {
-                m_pilarDuration = 0;
-                m_isPilarOnCooldown = false;
+            if (!m_isHoldingPilar)
+            {
+                m_isHoldingPilar = true;
+                if (m_player.IsFacingRight) m_markerDirection = 1;
+                else m_markerDirection = -1;
             }
+
+            if (m_marker.transform.position.x > transform.position.x + m_markerMaxDistance)
+            {
+                m_markerDirection *= -1;
+                m_marker.transform.position = new Vector3(transform.position.x + m_markerMaxDistance, m_marker.transform.position.y, m_marker.transform.position.z);
+            }
+            else if (m_marker.transform.position.x < transform.position.x - m_markerMaxDistance)
+            {
+                m_markerDirection *= -1;
+                m_marker.transform.position = new Vector3(transform.position.x - m_markerMaxDistance, m_marker.transform.position.y, m_marker.transform.position.z);
+            }
+
+            if (m_player.IsFacingRight && m_marker.transform.position.x < transform.position.x)
+            {
+                m_markerDirection *= -1;
+                m_marker.transform.position = new Vector3(transform.position.x, m_marker.transform.position.y, m_marker.transform.position.z);
+
+            }
+            else if (!m_player.IsFacingRight && m_marker.transform.position.x > transform.position.x)
+            {
+                m_markerDirection *= -1;
+            }
+
+            m_marker.transform.position += new Vector3( m_markerDirection * m_markerSpeed * Time.deltaTime, 0, 0);
         }
-
-        m_canPlayerUseSkill = (m_player.State == PLAYER_STATE.IDLE || m_player.State == PLAYER_STATE.MOVE) && m_player.IsGrounded;
-
-        if (m_canPlayerUseSkill && !m_isPilarOnCooldown && InputManager.Instance.Skill1ButtonPressed)
+        else if (InputManager.Instance.Skill1buttonReleased)
         {
-            SummonPilar();
+            m_isHoldingPilar = false;
         }
+
     }
 
     private void SummonPilar()

@@ -15,7 +15,7 @@ public class Pilar : MonoBehaviour
     float m_emergeDuration = 2.0f;
     float m_currentEmergeDuration = 2.0f;
 
-    float m_pilarDuration = 5.0f;
+    float m_pilarDuration = 2.0f;
     float m_pilarCurrentDuration;
 
     bool m_isEmerging;
@@ -69,7 +69,6 @@ public class Pilar : MonoBehaviour
             else
             {
                 m_pilarCurrentDuration = 0;
-                m_currentEmergeDuration = 0;
                 m_spriteRenderer.enabled = false;
                 this.gameObject.SetActive(false);
             }
