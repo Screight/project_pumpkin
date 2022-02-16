@@ -9,6 +9,9 @@ public class Skills : MonoBehaviour
     BoxCollider2D m_pilarColider;
     [SerializeField] float m_pilarSummonDistance = 50;
     [SerializeField] float m_pilarCooldown = 1;
+
+    Pilar m_pilarScript;
+
     float m_pilarDuration;
     bool m_isPilarSummoned;
     bool m_isPilarOnCooldown;
@@ -29,6 +32,11 @@ public class Skills : MonoBehaviour
         m_canPlayerUseSkill = false;
 
         m_pilarDuration = 0;
+    }
+
+    private void Start()
+    {
+        m_pilarScript = m_pilar.GetComponent<Pilar>();
     }
 
     private void Update()
@@ -76,7 +84,7 @@ public class Skills : MonoBehaviour
 
         Vector2 rightTopPosition = new Vector2(rightPositionX, commonPositionY + m_pilarColider.size.y);
 
-        Collider2D[] collisions = Physics2D.OverlapAreaAll(leftBottomPosition + new Vector2(0,1), rightTopPosition);
+        Collider2D[] collisions = Physics2D.OverlapAreaAll(leftBottomPosition + new Vector2(0,2), rightTopPosition);
 
         canPilarBeSummoned = CheckBoxCastWithScenario(collisions);
 
@@ -102,8 +110,10 @@ public class Skills : MonoBehaviour
 
         if(canPilarBeSummoned)
         {
-            m_pilar.transform.position = centerBottomPosition + Vector2.up * m_pilarColider.size.y/2;
             m_pilar.SetActive(true);
+            Vector3 pilarPosition = centerBottomPosition + Vector2.up * m_pilarColider.size.y / 2;
+            m_pilarScript.Summon(pilarPosition);
+            
             Debug.Log("Pillar sumonned");
         }
         else

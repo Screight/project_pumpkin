@@ -430,17 +430,25 @@ PrefabInstance:
       propertyPath: m_maxHeight
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 2283837635274848394, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
+      propertyPath: m_timeToPeak1
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283837635274848394, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
+      propertyPath: m_timeToPeak2
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.2
+      value: -139.9
       objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3
+      value: -23.3
       objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_LocalPosition.z
@@ -521,6 +529,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7469167060590964063, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
   m_PrefabInstance: {fileID: 112378894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1470672473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470672468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18e891d463e17a45b9587218f5ecf18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1638471244
 GameObject:
   m_ObjectHideFlags: 0

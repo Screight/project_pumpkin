@@ -159,6 +159,7 @@ public class Player : MonoBehaviour
         {
             if (!m_isGrounded) { return; }
             if(m_state != PLAYER_STATE.ATTACK) { SetPlayerState(PLAYER_STATE.ATTACK); }
+            m_rb2D.velocity = Vector2.zero;
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.ATTACK_1 + m_attackComboCount]);
             
             Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(m_attackPosition.position, M_ATTACK_RANGE, m_enemyLayer);
