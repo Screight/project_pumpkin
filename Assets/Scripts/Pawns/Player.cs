@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH }
+public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH, CAST }
 public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
 
 public class Player : MonoBehaviour
 {
+    Skills m_skills;
+
     Animator m_animator;
     int m_currentState;
 
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
         m_animator.Play(p_newState);                // play the animation
         m_currentState = p_newState;                // reassigning the new state
     }
+
     PLAYER_STATE m_state;
 
     Rigidbody2D m_rb2D;
@@ -80,7 +83,7 @@ public class Player : MonoBehaviour
         m_isGrounded = false;
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-
+        m_skills = gameObject.GetComponent<Skills>();
     }
 
     private void Start()
@@ -143,6 +146,8 @@ public class Player : MonoBehaviour
                     Attack();
                 }
                 break;
+            case PLAYER_STATE.CAST:
+                break;
 
             case PLAYER_STATE.DEATH: { } break;
         }
@@ -181,7 +186,6 @@ public class Player : MonoBehaviour
                 {
                     m_currentAttackDuration = 0;
                     m_attackComboCount++;
-                    //m_animator.SetTrigger(m_keepAttackingID);
                 }
                 else
                 {
@@ -218,7 +222,6 @@ public class Player : MonoBehaviour
                 m_dashCurrentTime = 0;
                 m_state = PLAYER_STATE.IDLE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
-                //m_animator.SetInteger(m_playerStateID, (int)m_state);
             }
         }
 
@@ -228,12 +231,15 @@ public class Player : MonoBehaviour
 
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
             m_state = PLAYER_STATE.DASH;
-            //m_animator.SetInteger(m_playerStateID, (int)m_state);
         }
     }
 
     void Move(PLAYER_STATE p_defaultState)
     {
+        if (m_skills.IsHoldingPilar()){
+            Debug.Log("I shouldn't be here..");
+        }
+
         float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
         if (horizontalAxisValue != 0)
         {
@@ -243,33 +249,30 @@ public class Player : MonoBehaviour
             if (m_isGrounded) {
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
-                //m_animator.SetInteger(m_playerStateID, (int)m_state);
 
             }
         }
         else
         {
-            //m_animator.SetBool(m_playerStateID, false);
             m_state = p_defaultState;
             ChangeAnimationState(m_animationHash[(int)p_defaultState]);
-            //m_animator.SetInteger(m_playerStateID, (int)m_state);
         }
 
         m_direction = horizontalAxisValue;
-        if (m_canMoveHorizontal)
+
+        m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+
+        if (m_rb2D.velocity.y < 0)
         {
-            m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+            SetPlayerState(PLAYER_STATE.FALL);
+            SetPlayerAnimation(PLAYER_ANIMATION.FALL);
         }
-        else
-        {
-            Debug.Log("CANNOT MOVE THERE");
-        }
+
     }
 
     public void SetPlayerState(PLAYER_STATE value)
     {
         m_state = value;
-        //m_animator.SetInteger(m_playerStateID, (int)value);
     }
 
     void FlipX()
@@ -300,12 +303,6 @@ public class Player : MonoBehaviour
     {
         get { return m_state; }
         set { m_state = value; }
-    }
-
-    public float Speed
-    {
-        get { return m_speed; }
-        set { m_speed = value; }
     }
 
     public float Gravity1
