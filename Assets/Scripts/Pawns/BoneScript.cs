@@ -17,19 +17,18 @@ public class BoneScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        m_playerPosX = player.transform.position.x;
+        m_skeletonPosX = skeleton.transform.position.x;
+        m_playerBoneDist = m_playerPosX - m_skeletonPosX;
+        m_height = 2 * (m_nextX - m_skeletonPosX) * (m_nextX - m_playerPosX) / (-0.25f * m_playerBoneDist * m_playerBoneDist);
     }
 
     void Update()
     {
         //Bone Fire
-        m_playerPosX = player.transform.position.x;
-        m_skeletonPosX = skeleton.transform.position.x;
-        m_playerBoneDist = m_playerPosX - m_skeletonPosX;
-
         m_nextX = Mathf.MoveTowards(transform.position.x, m_playerPosX, m_boneSpeed * Time.deltaTime);
         m_baseY = Mathf.Lerp(skeleton.transform.position.y, player.transform.position.y, (m_nextX - m_skeletonPosX) / m_playerBoneDist);
-        m_height = 2 * (m_nextX - m_skeletonPosX) * (m_nextX - m_playerPosX) / (-0.25f * m_playerBoneDist * m_playerBoneDist);
-
         Vector3 movePosition = new Vector3(m_nextX, m_baseY + m_height, transform.position.z);
         transform.rotation = LookAtTarged(movePosition - transform.position);
         transform.position = movePosition;

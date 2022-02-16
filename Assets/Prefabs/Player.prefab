@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1637796677}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -261,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_pilar: {fileID: 0}
   m_pilarSummonDistance: 50
+  m_pilarCooldown: 1
 --- !u!1 &2283837636547586392
 GameObject:
   m_ObjectHideFlags: 0
