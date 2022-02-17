@@ -70,7 +70,7 @@ public class Skeleton : MonoBehaviour
 
     void Update()
     {
-        PlayerSkeletonDist = player.transform.position.x - transform.position.x;
+        PlayerSkeletonDist = Mathf.Abs(player.transform.position.x - transform.position.x);
         Debug.Log(m_state);
 
         switch (m_state)
@@ -114,14 +114,18 @@ public class Skeleton : MonoBehaviour
             }
 
             //Player near?
-            if (PlayerSkeletonDist < 200 && !m_isFacingRight || PlayerSkeletonDist > -200 && !m_isFacingRight)
+            if (PlayerSkeletonDist < 200)
             {
+                m_hasReturned = false;
                 m_state = SKELETON_STATE.CHASE;
             }
         }
         else
         {
-            if (transform.position.x >= m_spawnPosX || transform.position.x <= m_spawnPosX)
+            if (m_isFacingRight) { m_direction = 1; }
+            else { m_direction = -1; }
+
+            if (transform.position.x >= m_spawnPosX + 3.0f || transform.position.x <= m_spawnPosX - 3.0f)
             {
                 m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
             }
@@ -130,13 +134,13 @@ public class Skeleton : MonoBehaviour
     }
     void Chase(SKELETON_STATE p_defaultState)
     {
-        //m_hasReturned = false;
+        m_hasReturned = false;
         if (m_isFacingRight) { m_direction = 1; }
         else { m_direction = -1; }
 
         m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
 
-        if (m_isGrounded == false || PlayerSkeletonDist > 200 && !m_isFacingRight || PlayerSkeletonDist < -200 && m_isFacingRight) 
+        if (m_isGrounded == false || PlayerSkeletonDist > 200) 
         { FlipX();  m_state = p_defaultState; }
     }
     void Attack(SKELETON_STATE p_defaultState)
