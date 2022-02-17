@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH, CAST }
+public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH, CAST, GROUNDBREAKER }
 public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
 
 public class Player : MonoBehaviour
@@ -148,6 +148,8 @@ public class Player : MonoBehaviour
                 break;
             case PLAYER_STATE.CAST:
                 break;
+            case PLAYER_STATE.GROUNDBREAKER:
+                break;
 
             case PLAYER_STATE.DEATH: { } break;
         }
@@ -159,6 +161,8 @@ public class Player : MonoBehaviour
         {
             m_keepAttacking = true;
         }
+
+        if (!m_isGrounded) { m_keepAttacking = false; }
 
         if (m_keepAttacking && m_currentAttackDuration == 0)
         {
@@ -236,10 +240,6 @@ public class Player : MonoBehaviour
 
     void Move(PLAYER_STATE p_defaultState)
     {
-        if (m_skills.IsHoldingPilar()){
-            Debug.Log("I shouldn't be here..");
-        }
-
         float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
         if (horizontalAxisValue != 0)
         {

@@ -399,11 +399,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -82.4
+      value: -95.9
       objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 99.4
+      value: 18.3
       objectReference: {fileID: 0}
     - target: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
       propertyPath: m_LocalPosition.z
@@ -479,6 +479,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2283837635274848405, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
   m_PrefabInstance: {fileID: 729496181}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &964015643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2283837635274848406, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
+  m_PrefabInstance: {fileID: 729496181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &964015644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1637796677, guid: 2a4f2775f5777b544ac2071e03e7f830, type: 3}
+  m_PrefabInstance: {fileID: 729496181}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964015643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d998c20232c3a4990d61c046894672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &964015650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964015643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cffe7a2d974c3a4eb5ac944b18fdea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1262652074
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,6 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18e891d463e17a45b9587218f5ecf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_skills: {fileID: 964015644}
 --- !u!1 &1638471244
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +829,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739918459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -205, y: 19, z: 0}
+  m_LocalPosition: {x: -205.8, y: 9.4, z: 0}
   m_LocalScale: {x: 10, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
