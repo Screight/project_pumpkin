@@ -5,7 +5,6 @@ using UnityEngine;
 public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK }
 public enum SKELETON_ANIMATION { MOVE, RELOAD, ATTACK, DIE, LAST_NO_USE }
 
-
 public class Skeleton : MonoBehaviour
 {
     void ChangeAnimationState(int p_newState)
@@ -19,10 +18,10 @@ public class Skeleton : MonoBehaviour
     Animator m_animator;
     int m_skeletonState;
 
-    string m_moveAnimationName = "Move";
-    string m_reloadAnimationName = "Reload";
-    string m_attackAnimationName = "Attack";
-    string m_dieAnimationName = "Die";
+    string m_moveAnimationName      = "Move";
+    string m_reloadAnimationName    = "Reload";
+    string m_attackAnimationName    = "Attack";
+    string m_dieAnimationName       = "Die";
     int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
 
     const float m_boneCooldown = 2000.0f;

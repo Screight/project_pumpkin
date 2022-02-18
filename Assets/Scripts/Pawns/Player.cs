@@ -12,17 +12,16 @@ public class Player : MonoBehaviour
     Animator m_animator;
     int m_currentState;
 
-    string m_idleAnimationName = "idle";
-    string m_runAnimationName = "run";
-    string m_dashAnimationName = "dash";
-    string m_boostAnimationName = "boost";
-    string m_jumpAnimationName = "jump";
-    string m_fallAnimationName = "fall";
-    string m_landAnimationName = "land";
+    string m_idleAnimationName      = "idle";
+    string m_runAnimationName       = "run";
+    string m_dashAnimationName      = "dash";
+    string m_boostAnimationName     = "boost";
+    string m_jumpAnimationName      = "jump";
+    string m_fallAnimationName      = "fall";
+    string m_landAnimationName      = "land";
     string m_attack_1_AnimationName = "attack_1";
     string m_attack_2_AnimationName = "attack_2";
     string m_attack_3_AnimationName = "attack_3";
-
     int[] m_animationHash = new int[(int)PLAYER_ANIMATION.LAST_NO_USE];
 
     void ChangeAnimationState(int p_newState)
@@ -91,13 +90,13 @@ public class Player : MonoBehaviour
         m_isFacingRight = true;
         m_keepAttackingID = Animator.StringToHash("nextAttack");
 
-        m_animationHash[(int)PLAYER_ANIMATION.IDLE] = Animator.StringToHash(m_idleAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.RUN] = Animator.StringToHash(m_runAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.DASH] = Animator.StringToHash(m_dashAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.BOOST] = Animator.StringToHash(m_boostAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.JUMP] = Animator.StringToHash(m_jumpAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.FALL] = Animator.StringToHash(m_fallAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.LAND] = Animator.StringToHash(m_landAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.IDLE]     = Animator.StringToHash(m_idleAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.RUN]      = Animator.StringToHash(m_runAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.DASH]     = Animator.StringToHash(m_dashAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.BOOST]    = Animator.StringToHash(m_boostAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.JUMP]     = Animator.StringToHash(m_jumpAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.FALL]     = Animator.StringToHash(m_fallAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.LAND]     = Animator.StringToHash(m_landAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_1] = Animator.StringToHash(m_attack_1_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_2] = Animator.StringToHash(m_attack_2_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_3] = Animator.StringToHash(m_attack_3_AnimationName);
@@ -125,33 +124,13 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
-
-            case PLAYER_STATE.DASH:
-                {
-                    Dash();
-                }
-                break;
-            case PLAYER_STATE.JUMP:
-                {
-                    Move(PLAYER_STATE.JUMP);
-                }
-                break;
-            case PLAYER_STATE.FALL:
-                {
-                    Move(PLAYER_STATE.FALL);
-                }
-                break;
-            case PLAYER_STATE.ATTACK:
-                {
-                    Attack();
-                }
-                break;
-            case PLAYER_STATE.CAST:
-                break;
-            case PLAYER_STATE.GROUNDBREAKER:
-                break;
-
-            case PLAYER_STATE.DEATH: { } break;
+            case PLAYER_STATE.DASH:     { Dash(); } break;
+            case PLAYER_STATE.JUMP:     { Move(PLAYER_STATE.JUMP); } break;
+            case PLAYER_STATE.FALL:     { Move(PLAYER_STATE.FALL); } break;
+            case PLAYER_STATE.ATTACK:   { Attack(); } break;
+            case PLAYER_STATE.CAST:     { } break;
+            case PLAYER_STATE.GROUNDBREAKER: { } break;
+            case PLAYER_STATE.DEATH:    { } break;
         }
     }
 
@@ -249,7 +228,6 @@ public class Player : MonoBehaviour
             if (m_isGrounded) {
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
-
             }
         }
         else
@@ -259,7 +237,6 @@ public class Player : MonoBehaviour
         }
 
         m_direction = horizontalAxisValue;
-
         m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
 
         if (m_rb2D.velocity.y < 0)

@@ -38,7 +38,6 @@ public class Pilar : MonoBehaviour
 
         m_emergeTimer = gameObject.AddComponent<Timer>();
         m_pilarTimer = gameObject.AddComponent<Timer>();
-
     }
 
     private void Start()
@@ -76,7 +75,7 @@ public class Pilar : MonoBehaviour
 
     public void Summon(Vector3 p_finalPosition)
     {
-        if (m_isEmerging) return;
+        if (m_isEmerging) { return; }
         m_isEmerging = true;
         m_spriteRenderer.enabled = true;
         transform.position = p_finalPosition - new Vector3(0, m_height, 0);
@@ -86,7 +85,4 @@ public class Pilar : MonoBehaviour
         m_skills.IsOnCooldown = true;
         m_emergeTimer.Run();
     }
-
-
-
 }

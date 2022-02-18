@@ -53,17 +53,10 @@ public class Skills : MonoBehaviour
     {
         switch (m_player.State)
         {
-            case PLAYER_STATE.MOVE:
-                Pilar();
-                break;
-            case PLAYER_STATE.IDLE:
-                Pilar();
-                break;
-            case PLAYER_STATE.CAST:
-                Pilar();
-                break;
-            default:
-                break;
+            default: { } break;
+            case PLAYER_STATE.MOVE: { Pilar(); } break;
+            case PLAYER_STATE.IDLE: { Pilar(); } break;
+            case PLAYER_STATE.CAST: { Pilar(); } break;
         }
     }
 
@@ -119,7 +112,6 @@ public class Skills : MonoBehaviour
         if (m_player.IsFacingRight && m_markerInitialRaycastPosition.x < transform.position.x)
         {
             m_markerDirection *= -1;
-
         }
         else if (!m_player.IsFacingRight && m_markerInitialRaycastPosition.x > transform.position.x)
         {
@@ -128,7 +120,6 @@ public class Skills : MonoBehaviour
 
         // move the imaginary point from where the raycast starts from
         m_markerInitialRaycastPosition += new Vector3(m_markerDirection * m_markerSpeed * Time.deltaTime, 0, 0);
-
         m_canPlayerUseSkill = CheckPositionForPillar(m_markerInitialRaycastPosition);
     }
 
@@ -170,16 +161,13 @@ public class Skills : MonoBehaviour
         {
             m_markerDirection *= -1;
         }
-
         return false;
     }
 
     private void SummonPilar()
     {
         m_isPilarSummoned = true;
-
         bool canPilarBeSummoned;
-
         bool verticalCollision = false; 
 
         float centerPositionX = m_pilarSummonDistance.x;
@@ -210,7 +198,6 @@ public class Skills : MonoBehaviour
         {
             Debug.Log("ERROR at summoning pillar");
         }
-
     }
 
     /// <summary>
@@ -234,5 +221,4 @@ public class Skills : MonoBehaviour
     {
         set { m_isPilarOnCooldown = value; }
     }
-
 }

@@ -18,11 +18,6 @@ public class Groundbreaker : MonoBehaviour
     {
         switch (m_player.State)
         {
-            case PLAYER_STATE.GROUNDBREAKER:
-                {
-                    
-                }
-                break;
             default:
                 {
                     if (InputManager.Instance.Skill2ButtonPressed && !m_player.IsGrounded)
@@ -33,8 +28,11 @@ public class Groundbreaker : MonoBehaviour
                     }
                 }
                 break;
+            case PLAYER_STATE.GROUNDBREAKER:
+                {
+                    
+                }
+                break;
         }
-
-        
     }
 }

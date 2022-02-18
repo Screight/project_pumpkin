@@ -29,12 +29,12 @@ public class GroundCheck : MonoBehaviour
             playerScript.IsGrounded = true;
             playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
+
             if(playerScript.State != PLAYER_STATE.MOVE && playerScript.State != PLAYER_STATE.CAST && playerScript.State != PLAYER_STATE.DASH && playerScript.State != PLAYER_STATE.ATTACK)
             {
                 playerScript.SetPlayerState(PLAYER_STATE.IDLE);
                 playerScript.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
-            }
-            
+            }           
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -42,11 +42,9 @@ public class GroundCheck : MonoBehaviour
         if (collision.gameObject.tag == "floor")
         {
             playerScript.IsGrounded = false;
-            playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;
-            
+            playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;            
         }
     }
-
 }
 
 
