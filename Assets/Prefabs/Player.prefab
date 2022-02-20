@@ -240,9 +240,9 @@ MonoBehaviour:
   m_speed: 70
   m_dashDistance: 100
   m_dashDuration: 0.5
-  m_maxHeight: 70
-  m_timeToPeak1: 0.5
-  m_timeToPeak2: 0.4
+  m_maxHeight: 120
+  m_timeToPeak1: 0.6
+  m_timeToPeak2: 0.5
   m_attackPosition: {fileID: 2283837636547586393}
   m_enemyLayer:
     serializedVersion: 2
@@ -259,8 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d998c20232c3a4990d61c046894672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_pilar: {fileID: 0}
-  m_pilarSummonDistance: 50
+  m_marker: {fileID: 0}
+  m_pilar: {fileID: 7469167060590964057, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
   m_pilarCooldown: 1
 --- !u!1 &2283837636547586392
 GameObject:
