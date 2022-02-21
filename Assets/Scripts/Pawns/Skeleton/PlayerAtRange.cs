@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRadar : MonoBehaviour
+public class PlayerAtRange : MonoBehaviour
 {
     Skeleton skeletonScript;
     Rigidbody2D skeletonRigidBody;
@@ -15,8 +15,8 @@ public class PlayerRadar : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            skeletonScript.IsPlayerNear = true;
+            skeletonScript.IsPlayerAtRange = true;
         }
-        else { skeletonScript.IsPlayerAtRange = true; }
+        else { skeletonScript.IsPlayerAtRange = false; }
     }
 }

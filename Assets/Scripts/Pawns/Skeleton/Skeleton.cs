@@ -25,9 +25,7 @@ public class Skeleton : MonoBehaviour
     int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
 
     public GameObject Bone;
-    Timer m_fireTimer;
-    float m_boneCooldown = 1.0f;
-    float m_currentTime = 0.0f;
+    float m_boneCooldown = 3.0f;
 
     [SerializeField] GameObject player;
     float m_playerPosX;
@@ -43,6 +41,7 @@ public class Skeleton : MonoBehaviour
     bool m_isFacingRight;
     bool m_isGrounded;
     bool m_playerIsNear;
+    bool m_playerIsAtRange;
 
     private void Awake() {
         m_rb2D = GetComponent<Rigidbody2D>();
@@ -53,6 +52,7 @@ public class Skeleton : MonoBehaviour
         m_direction = -1;
         m_isGrounded = true;
         m_playerIsNear = false;
+        m_playerIsAtRange = false;
 
         m_spawnPosX = transform.position.x;
         m_hasReturned = true;
@@ -66,7 +66,6 @@ public class Skeleton : MonoBehaviour
         m_animationHash[(int)SKELETON_ANIMATION.DIE] = Animator.StringToHash(m_dieAnimationName);
 
         player = GameObject.FindGameObjectWithTag("Player");
-        m_fireTimer = gameObject.AddComponent<Timer>();
         m_isFacingRight = false;
     }
 
@@ -84,7 +83,7 @@ public class Skeleton : MonoBehaviour
                 { Chase(SKELETON_STATE.MOVE); }
                 break;
             case SKELETON_STATE.ATTACK:
-                { Attack(SKELETON_STATE.MOVE); }
+                { Attack(SKELETON_STATE.CHASE); }
                 break;
             case SKELETON_STATE.DIE:
                 { Die(); }
@@ -126,7 +125,9 @@ public class Skeleton : MonoBehaviour
             if (m_isFacingRight) { m_direction = 1; }
             else { m_direction = -1; }
 
-            if (transform.position.x >= m_spawnPosX + 3.0f || transform.position.x <= m_spawnPosX - 3.0f)
+            if (m_isGrounded == false) { FlipX(); }
+
+            if (transform.position.x > m_spawnPosX - 4.0f || transform.position.x < m_spawnPosX + 4.0f)
             {
                 m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
             }
@@ -141,32 +142,31 @@ public class Skeleton : MonoBehaviour
     }
     void Chase(SKELETON_STATE p_defaultState)
     {
-        if (PlayerSkeletonDist < 100)
+        //Back To Spawn
+        if (m_isGrounded == false)
+        {
+            FlipX(); m_state = p_defaultState;
+        }
+        //Ready to Attack
+        if (m_playerIsAtRange)
         {
             m_state = SKELETON_STATE.ATTACK;
         }
-
-        if (m_isFacingRight) { m_direction = 1; }
-        else { m_direction = -1; }
+        //Chasing
+        if (player.transform.position.x > transform.position.x) { m_direction = 1; m_isFacingRight = true; }
+        else { m_direction = -1; m_isFacingRight = false; }
 
         m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
-
-        if (m_isGrounded == false || PlayerSkeletonDist > 200) 
-        { 
-            FlipX();  m_state = p_defaultState; 
-        }
     }
     void Attack(SKELETON_STATE p_defaultState)
     {
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
         m_rb2D.velocity = Vector2.zero;
-        if (PlayerSkeletonDist < 100)
+        if (m_playerIsAtRange)
         {   
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.FIRE]);
             GameObject fire = Instantiate(Bone, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
             Destroy(fire, 3);
-
-            m_currentTime = 0;
         }
         else
         {
@@ -193,8 +193,8 @@ public class Skeleton : MonoBehaviour
     {
         set { m_playerIsNear = value; }
     }
-    private void FixedUpdate()
+    public bool IsPlayerAtRange
     {
-        m_currentTime = Time.fixedDeltaTime;
+        set { m_playerIsAtRange = value; }
     }
 }
