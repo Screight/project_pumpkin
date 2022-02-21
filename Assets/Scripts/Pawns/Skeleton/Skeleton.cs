@@ -7,18 +7,12 @@ public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
 
 public class Skeleton : MonoBehaviour
 {
-
-    void ChangeAnimationState(int p_newState)
-    {
-        if (m_skeletonState == p_newState) { return; }  // stop the same animation from interrupting itself
-        m_animator.Play(p_newState);                    // play the animation
-        m_skeletonState = p_newState;                   // reassigning the new state
-    }
     SKELETON_STATE m_state;
     Rigidbody2D m_rb2D;
     Animator m_animator;
     Timer boneTimer;
     int m_skeletonState;
+    public int skeletonHealth;
 
     string m_moveAnimationName      = "Move";
     string m_reloadAnimationName    = "Reload";
@@ -49,6 +43,7 @@ public class Skeleton : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_skeletonState = Animator.StringToHash("state");
+        skeletonHealth = 2;
 
         m_state = SKELETON_STATE.MOVE;
         m_isGrounded = true;
@@ -130,7 +125,7 @@ public class Skeleton : MonoBehaviour
         {
             if (m_isGrounded == false) { FlipX(); }
 
-            if (transform.position.x > m_spawnPosX - 4.0f || transform.position.x < m_spawnPosX + 4.0f)
+            if (transform.position.x < m_spawnPosX - 4.0f || transform.position.x > m_spawnPosX + 4.0f)
             {
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
             }
@@ -147,11 +142,15 @@ public class Skeleton : MonoBehaviour
     {
         //Back To Spawn
         if (m_isGrounded == false) { FlipX(); }
-        //Ready to Attack
-        if (m_playerIsAtRange == true) { m_state = SKELETON_STATE.ATTACK; }
-        //Chasing
-        if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
-        if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
+        if (m_playerIsNear)
+        {
+            //Ready to Attack
+            if (m_playerIsAtRange == true) { m_state = SKELETON_STATE.ATTACK; }
+            //Chasing
+            if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
+            if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
+        }
+        else { m_state = p_defaultState; }
 
         m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
     }
@@ -165,7 +164,6 @@ public class Skeleton : MonoBehaviour
 
         if (m_playerIsAtRange == true)
         {
-
             if (boneTimer.IsFinished)
             {
                 Bone.SetActive(true);
@@ -181,9 +179,18 @@ public class Skeleton : MonoBehaviour
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
         }
     }
+
     void Die()
     {
+        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
+        Destroy(gameObject, 0.5f);
+    }
 
+    void ChangeAnimationState(int p_newState)
+    {
+        if (m_skeletonState == p_newState) { return; }
+        m_animator.Play(p_newState);
+        m_skeletonState = p_newState;     
     }
 
     void FlipX()
@@ -198,6 +205,14 @@ public class Skeleton : MonoBehaviour
         else return -1;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            skeletonHealth--;
+            if (skeletonHealth == 0) { m_state = SKELETON_STATE.DIE; }
+        }
+    }
 
     #region Accessors
     public bool IsGrounded
