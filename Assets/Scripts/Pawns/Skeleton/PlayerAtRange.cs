@@ -17,6 +17,12 @@ public class PlayerAtRange : MonoBehaviour
         {
             skeletonScript.IsPlayerAtRange = true;
         }
-        else { skeletonScript.IsPlayerAtRange = false; }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            skeletonScript.IsPlayerAtRange = false;
+        }
     }
 }

@@ -7,6 +7,7 @@ public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
 
 public class Skeleton : MonoBehaviour
 {
+
     void ChangeAnimationState(int p_newState)
     {
         if (m_skeletonState == p_newState) { return; }  // stop the same animation from interrupting itself
@@ -16,6 +17,7 @@ public class Skeleton : MonoBehaviour
     SKELETON_STATE m_state;
     Rigidbody2D m_rb2D;
     Animator m_animator;
+    Timer boneTimer;
     int m_skeletonState;
 
     string m_moveAnimationName      = "Move";
@@ -24,12 +26,13 @@ public class Skeleton : MonoBehaviour
     string m_dieAnimationName       = "Die";
     int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
 
-    public GameObject Bone;
-    float m_boneCooldown = 3.0f;
+    [SerializeField] GameObject prefabBone;
+    GameObject Bone;
+    BoneScript m_boneScript;
+    private float boneCooldown = 2000.0f;
 
     [SerializeField] GameObject player;
     float m_playerPosX;
-    float PlayerSkeletonDist = 0;
 
     [SerializeField] Transform left_limit;
     [SerializeField] Transform right_limit;
@@ -37,8 +40,7 @@ public class Skeleton : MonoBehaviour
     private bool m_hasReturned;
 
     [SerializeField] float m_speed = 50.0f;
-    float m_direction;
-    bool m_isFacingRight;
+    [SerializeField] bool m_isFacingRight;
     bool m_isGrounded;
     bool m_playerIsNear;
     bool m_playerIsAtRange;
@@ -49,13 +51,14 @@ public class Skeleton : MonoBehaviour
         m_skeletonState = Animator.StringToHash("state");
 
         m_state = SKELETON_STATE.MOVE;
-        m_direction = -1;
         m_isGrounded = true;
         m_playerIsNear = false;
         m_playerIsAtRange = false;
 
         m_spawnPosX = transform.position.x;
         m_hasReturned = true;
+
+        Bone = Instantiate(prefabBone, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     void Start()
@@ -67,12 +70,15 @@ public class Skeleton : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
+
+        m_boneScript = Bone.GetComponent<BoneScript>();
+        boneTimer = gameObject.AddComponent<Timer>();
+        Bone.SetActive(false);
+        boneTimer.Duration = 2;
     }
 
     void Update()
     {
-        PlayerSkeletonDist = Mathf.Abs(player.transform.position.x - transform.position.x);
-
         switch (m_state)
         {
             default:break;
@@ -89,18 +95,18 @@ public class Skeleton : MonoBehaviour
                 { Die(); }
                 break;
         }
+
+        float delta = Time.fixedDeltaTime * 1000;
+        boneCooldown += 1.0f * delta;
     }
 
     void Move(SKELETON_STATE p_defaultState)
     {
         if (m_hasReturned == true)
         {
-            if (m_isFacingRight) { m_direction = 1; }
-            else { m_direction = -1; }
+            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
 
-            m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
-
-            if (m_isGrounded == false) { FlipX(); m_isGrounded = true; }
+            if (m_isGrounded == false) { FlipX(); }
 
             if (transform.position.x < left_limit.position.x)
             {
@@ -114,7 +120,7 @@ public class Skeleton : MonoBehaviour
             }
 
             //Player near?
-            if (m_playerIsNear)
+            if (m_playerIsNear == true)
             {
                 m_hasReturned = false;
                 m_state = SKELETON_STATE.CHASE;
@@ -122,18 +128,15 @@ public class Skeleton : MonoBehaviour
         }
         else
         {
-            if (m_isFacingRight) { m_direction = 1; }
-            else { m_direction = -1; }
-
             if (m_isGrounded == false) { FlipX(); }
 
             if (transform.position.x > m_spawnPosX - 4.0f || transform.position.x < m_spawnPosX + 4.0f)
             {
-                m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+                m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
             }
             else { m_hasReturned = true; }
 
-            if (m_playerIsNear)
+            if (m_playerIsNear == true)
             {
                 m_hasReturned = false;
                 m_state = SKELETON_STATE.CHASE;
@@ -143,30 +146,34 @@ public class Skeleton : MonoBehaviour
     void Chase(SKELETON_STATE p_defaultState)
     {
         //Back To Spawn
-        if (m_isGrounded == false)
-        {
-            FlipX(); m_state = p_defaultState;
-        }
+        if (m_isGrounded == false) { FlipX(); }
         //Ready to Attack
-        if (m_playerIsAtRange)
-        {
-            m_state = SKELETON_STATE.ATTACK;
-        }
+        if (m_playerIsAtRange == true) { m_state = SKELETON_STATE.ATTACK; }
         //Chasing
-        if (player.transform.position.x > transform.position.x) { m_direction = 1; m_isFacingRight = true; }
-        else { m_direction = -1; m_isFacingRight = false; }
+        if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
+        if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
 
-        m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+        m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
     }
     void Attack(SKELETON_STATE p_defaultState)
     {
+        if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
+        if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
+
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
         m_rb2D.velocity = Vector2.zero;
-        if (m_playerIsAtRange)
-        {   
-            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.FIRE]);
-            GameObject fire = Instantiate(Bone, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-            Destroy(fire, 3);
+
+        if (m_playerIsAtRange == true)
+        {
+
+            if (boneTimer.IsFinished)
+            {
+                Bone.SetActive(true);
+                Bone.transform.position = transform.position;
+                m_boneScript.Shoot(FacingDirection());
+                boneTimer.Run();
+            }
+
         }
         else
         {
@@ -183,8 +190,16 @@ public class Skeleton : MonoBehaviour
     {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;
+        m_isGrounded = true;
+    }
+    public int FacingDirection()
+    {
+        if (m_isFacingRight) return 1;
+        else return -1;
     }
 
+
+    #region Accessors
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
@@ -197,4 +212,9 @@ public class Skeleton : MonoBehaviour
     {
         set { m_playerIsAtRange = value; }
     }
+    public bool IsFacingRight
+    {
+        get { return m_isFacingRight; }
+    }
+    #endregion
 }

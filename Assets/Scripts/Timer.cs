@@ -51,7 +51,6 @@ public class Timer: MonoBehaviour
     {
         if (m_isRunning && !m_isFinished)
         {
-            m_isFinished = true;
             Run();
         }
     }

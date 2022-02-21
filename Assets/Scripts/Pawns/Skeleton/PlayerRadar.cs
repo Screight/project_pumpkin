@@ -17,6 +17,14 @@ public class PlayerRadar : MonoBehaviour
         {
             skeletonScript.IsPlayerNear = true;
         }
-        else { skeletonScript.IsPlayerAtRange = true; }
+        //else { skeletonScript.IsPlayerNear = false; }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            skeletonScript.IsPlayerNear = false;
+        }
     }
 }
