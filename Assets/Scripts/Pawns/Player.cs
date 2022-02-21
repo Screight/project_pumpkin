@@ -241,8 +241,14 @@ public class Player : MonoBehaviour
 
         if (m_rb2D.velocity.y < 0)
         {
+            m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             SetPlayerState(PLAYER_STATE.FALL);
             SetPlayerAnimation(PLAYER_ANIMATION.FALL);
+        }
+
+        if(m_rb2D.velocity.y < -200)
+        {
+            m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -200.0f);
         }
 
     }
@@ -276,6 +282,7 @@ public class Player : MonoBehaviour
         ChangeAnimationState(m_animationHash[(int)p_animation]);
     }
 
+    public float Speed { get { return m_speed; } }
     public PLAYER_STATE State
     {
         get { return m_state; }

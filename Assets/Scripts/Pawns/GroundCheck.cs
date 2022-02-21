@@ -42,7 +42,11 @@ public class GroundCheck : MonoBehaviour
         if (collision.gameObject.tag == "floor")
         {
             playerScript.IsGrounded = false;
+<<<<<<< Updated upstream
             playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;            
+=======
+            
+>>>>>>> Stashed changes
         }
     }
 }
