@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager m_instance;
-
     [SerializeField] Camera camera;
 
     int screenWidth;
@@ -35,14 +34,9 @@ public class CameraManager : MonoBehaviour
         topLimit = topLeftCorner.y;
         rightLimit = bottomRightCorner.x;
         bottomLimit = bottomRightCorner.y;
-
-
     }
 
-    private void Update()
-    {
-        UpdateCameraPosition();
-    }
+    private void Update() { UpdateCameraPosition(); }
 
     public float LeftLimit { get { return leftLimit; } }
     public float RightLimit { get { return rightLimit; } }
@@ -62,14 +56,7 @@ public class CameraManager : MonoBehaviour
         topLimit = topLeftCorner.y;
         rightLimit = bottomRightCorner.x;
         bottomLimit = bottomRightCorner.y;
-
     }
 
-    static public CameraManager Instance
-    {
-        get { return m_instance; }
-    }
-
-
-
+    static public CameraManager Instance { get { return m_instance; } }
 }

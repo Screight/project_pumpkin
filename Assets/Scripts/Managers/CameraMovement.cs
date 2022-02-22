@@ -22,7 +22,6 @@ public class CameraMovement : MonoBehaviour
     float cameraBoxWidth = 50;
     float cameraBoxHeight = 50;
     Vector2 cameraBoxPosition;
-
     Vector3 targetPosition;
 
     private void Awake()
@@ -34,31 +33,16 @@ public class CameraMovement : MonoBehaviour
     {
         m_playerScript = m_player.GetComponent<Player>();
         m_offset = new Vector3(20, 0, -10);
-
     }
 
     private void Update()
     {
 
-        if (m_playerScript.IsFacingRight)
-        {
-            m_offset.x = 20;
-        }
-        else
-        {
-            m_offset.x = -20;
-        }
+        if (m_playerScript.IsFacingRight) { m_offset.x = 20; }
+        else { m_offset.x = -20; }
 
-
-
-        if (m_playerScript.State == PLAYER_STATE.FALL)
-        {
-            m_dampSpeedY = 0.4f;
-        }
-        else
-        {
-            m_dampSpeedY = 0.5f;
-        }
+        if (m_playerScript.State == PLAYER_STATE.FALL) { m_dampSpeedY = 0.4f; }
+        else { m_dampSpeedY = 0.5f; }
 
         if (m_player.transform.position.y + m_playerBoxCollider2D.size.y > transform.position.y - cameraOffsetY + cameraBoxHeight / 2) // sobresale por arriba
         {
@@ -71,23 +55,14 @@ public class CameraMovement : MonoBehaviour
             m_doLerp = true;
 
         }
-        else
-        {
-            m_playerOutOfCameraBoundsY = false;
-        }
-
-
-
+        else { m_playerOutOfCameraBoundsY = false; }
     }
 
     void FixedUpdate()
     {
-        if (!m_playerOutOfCameraBoundsY)
+        if (!m_playerOutOfCameraBoundsY && transform.position.y + cameraBoxHeight / 2 == m_player.transform.position.y)
         {
-            if (transform.position.y + cameraBoxHeight / 2 == m_player.transform.position.y)
-            {
-                m_doLerp = false;
-            }
+            m_doLerp = false;
         }
 
         targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + cameraBoxHeight / 2, m_offset.z);
@@ -98,10 +73,7 @@ public class CameraMovement : MonoBehaviour
         {
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, m_dampSpeedY);
         }
-
     }
-
-
 
     private void OnDrawGizmos()
     {
@@ -109,5 +81,4 @@ public class CameraMovement : MonoBehaviour
         Gizmos.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, 0, 10)), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height, 10)));
         Gizmos.DrawWireCube(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 - 2 * m_offset.x, Screen.height / 2, 10)), new Vector3(2 * m_offset.x, cameraBoxHeight, 1));
     }
-
 }
