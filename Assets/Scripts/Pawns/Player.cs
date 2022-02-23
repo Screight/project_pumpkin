@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
             m_keepAttacking = false;
             foreach (Collider2D enemy in enemiesInAttackRange)
             {
-                enemy.gameObject.GetComponent<Skeleton>().Damage(1);
+                enemy.gameObject.GetComponent<Enemy>().Damage(1);
                 Debug.Log(enemy.gameObject.name + " hitted.");
             }
         }

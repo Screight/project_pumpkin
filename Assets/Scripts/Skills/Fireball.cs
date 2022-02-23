@@ -11,6 +11,8 @@ public class Fireball : MonoBehaviour
     Timer m_maxDurationTimer;
     float m_maxDuration = 5.0f;
 
+    int m_damage = 1;
+
     private void Awake()
     {
         m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -46,6 +48,12 @@ public class Fireball : MonoBehaviour
         {
             DesactivateFireBall();
         }
+
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            collision.gameObject.GetComponent<Enemy>().Damage(m_damage);
+        }
+
     }
 
     void DesactivateFireBall()

@@ -52,7 +52,6 @@ public class Skill_Fireball : MonoBehaviour
             m_fireBallScript.Fire();
             m_timer.Run();
         }
-        
     }
 
     public bool IsFireBallAvailable

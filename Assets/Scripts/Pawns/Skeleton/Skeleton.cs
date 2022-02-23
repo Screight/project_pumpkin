@@ -5,14 +5,13 @@ using UnityEngine;
 public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK }
 public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
 
-public class Skeleton : MonoBehaviour
+public class Skeleton : Enemy
 {
-    SKELETON_STATE m_state;
+    
     Rigidbody2D m_rb2D;
     Animator m_animator;
     Timer boneTimer;
     int m_skeletonState;
-    public int skeletonHealth;
 
     string m_moveAnimationName      = "Move";
     string m_reloadAnimationName    = "Reload";
@@ -202,13 +201,6 @@ public class Skeleton : MonoBehaviour
     {
         if (m_isFacingRight) return 1;
         else return -1;
-    }
-
-    public void Damage(int p_damage)
-    {
-        skeletonHealth -= p_damage;
-
-        if (skeletonHealth == 0) { m_state = SKELETON_STATE.DIE; }
     }
 
     #region Accessors
