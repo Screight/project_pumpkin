@@ -7,27 +7,24 @@ public class GroundCheck : MonoBehaviour
     Player playerScript;
     Rigidbody2D playerRigidBody;
 
-    bool m_hasAnyGroundBeenFound;
-
     void Start()
     {
         playerScript = GetComponentInParent<Player>();
         playerRigidBody = GetComponentInParent<Rigidbody2D>();
-
-        m_hasAnyGroundBeenFound = false;
     }
 
     private void Update()
     {
-        m_hasAnyGroundBeenFound = false;
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         //Idle si estás en suelo || DENTRO de plataforma NO saltando/cayendo
-        if (collision.gameObject.tag == "floor" || (collision.gameObject.tag == "platform" && playerScript.State != PLAYER_STATE.JUMP))
+        if ((collision.gameObject.tag == "floor" || collision.gameObject.tag == "enemy" || (collision.gameObject.tag == "platform" && playerScript.State != PLAYER_STATE.JUMP)) && playerScript.State != PLAYER_STATE.DASH)
         {
             playerScript.IsGrounded = true;
+            playerScript.ObjectGroundedTo = collision.gameObject.tag;
             playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
 
@@ -48,12 +45,18 @@ public class GroundCheck : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform")
+        if ((collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform"))
         {
             playerScript.IsGrounded = false;
-            playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;
+
+            if (playerScript.State != PLAYER_STATE.DASH)
+            {
+                playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;
+            }
+            
         }
     }
+
 }
 
 

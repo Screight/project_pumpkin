@@ -25,10 +25,7 @@ public class BoneScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            gameObject.SetActive(false);
-        }
+        
     }
 
     public void Shoot(int p_direction)

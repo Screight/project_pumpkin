@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3512217339886869979}
   m_Layer: 0
   m_Name: bone
-  m_TagString: Untagged
+  m_TagString: enemyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_direction: -1
-  skeleton: {fileID: 0}
+  m_rb2D: {fileID: 0}
 --- !u!50 &-3512217339886869979
 Rigidbody2D:
   serializedVersion: 4

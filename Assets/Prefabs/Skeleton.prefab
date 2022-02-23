@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 433329262852216656}
   m_Layer: 6
   m_Name: Mob
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -403,7 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6effb6d4c98f74ba96790729223428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonHealth: 0
   prefabBone: {fileID: 5072539391972705450, guid: 6d0638c4f9e19a748a232a3f6b8a3839, type: 3}
   player: {fileID: 0}
   left_limit: {fileID: 433329263508409560}

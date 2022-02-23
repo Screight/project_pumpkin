@@ -2,11 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH, CAST, GROUNDBREAKER }
-public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
+public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH, CAST, GROUNDBREAKER, HURT }
+public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_1, ATTACK_2, ATTACK_3, HIT, LAST_NO_USE}
 
 public class Player : MonoBehaviour
 {
+    string m_objectGroundedTo;
+    SpriteRenderer m_spriteRenderer;
+
+    int m_health = 5;
+
+    bool m_isInvulnerable = false;
+    Timer m_invulnerableTimer;
+
+    bool m_canIMove = false;
+    Timer m_noControlTimer;
+
     Skill_Pilar m_skills;
 
     Animator m_animator;
@@ -22,6 +33,7 @@ public class Player : MonoBehaviour
     string m_attack_1_AnimationName = "attack_1";
     string m_attack_2_AnimationName = "attack_2";
     string m_attack_3_AnimationName = "attack_3";
+    string m_hitAnimationName       = "hit";
     int[] m_animationHash = new int[(int)PLAYER_ANIMATION.LAST_NO_USE];
 
     void ChangeAnimationState(int p_newState)
@@ -83,6 +95,15 @@ public class Player : MonoBehaviour
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_skills = gameObject.GetComponent<Skill_Pilar>();
+
+        m_invulnerableTimer = gameObject.AddComponent<Timer>();
+        m_invulnerableTimer.Duration = 1f;
+        m_noControlTimer = gameObject.AddComponent<Timer>();
+        m_noControlTimer.Duration = 0.5f;
+
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_objectGroundedTo = "";
+
     }
 
     private void Start()
@@ -100,10 +121,24 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_1] = Animator.StringToHash(m_attack_1_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_2] = Animator.StringToHash(m_attack_2_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.ATTACK_3] = Animator.StringToHash(m_attack_3_AnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.HIT]      = Animator.StringToHash(m_hitAnimationName);
     }
 
     private void Update()
     {
+
+        if (m_invulnerableTimer.IsFinished)
+        {
+            m_isInvulnerable = false;
+            m_spriteRenderer.color = Color.white;
+            Physics2D.IgnoreLayerCollision(6, 7, false);
+        }
+
+        if (m_noControlTimer.IsFinished)
+        {
+            m_canIMove = true;
+        }
+
         switch (m_state)
         {
             default: break;
@@ -111,8 +146,8 @@ public class Player : MonoBehaviour
                 {
                     Move(PLAYER_STATE.IDLE);
                     Attack();
-                    Dash();
                     Jump();
+                    Dash();
                 }
                 break;
 
@@ -125,12 +160,19 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PLAYER_STATE.DASH:     { Dash(); } break;
-            case PLAYER_STATE.JUMP:     { Move(PLAYER_STATE.JUMP); } break;
-            case PLAYER_STATE.FALL:     { Move(PLAYER_STATE.FALL); } break;
+            case PLAYER_STATE.JUMP:     {
+                    Move(PLAYER_STATE.JUMP);
+                    Dash();
+                } break;
+            case PLAYER_STATE.FALL:     {
+                    Move(PLAYER_STATE.FALL);
+                    Dash();
+                } break;
             case PLAYER_STATE.ATTACK:   { Attack(); } break;
             case PLAYER_STATE.CAST:     { } break;
             case PLAYER_STATE.GROUNDBREAKER: { } break;
             case PLAYER_STATE.DEATH:    { } break;
+            case PLAYER_STATE.HURT: { } break;
         }
     }
 
@@ -154,8 +196,11 @@ public class Player : MonoBehaviour
             m_keepAttacking = false;
             foreach (Collider2D enemy in enemiesInAttackRange)
             {
-                enemy.gameObject.GetComponent<Enemy>().Damage(1);
-                Debug.Log(enemy.gameObject.name + " hitted.");
+                if (enemy.gameObject.tag == "enemy")
+                {
+                    enemy.gameObject.GetComponent<Enemy>().Damage(1);
+                }
+                
             }
         }
         else if (m_state == PLAYER_STATE.ATTACK)
@@ -185,7 +230,7 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-          if (InputManager.Instance.JumpButtonPressed && m_isGrounded) {
+          if (InputManager.Instance.JumpButtonPressed && m_isGrounded && m_objectGroundedTo != "enemy") {
             m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
@@ -204,23 +249,26 @@ public class Player : MonoBehaviour
             {
                 m_dashCurrentTime = 0;
                 m_state = PLAYER_STATE.IDLE;
+                m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
+                Physics2D.IgnoreLayerCollision(6,7,false);
             }
         }
 
         if (InputManager.Instance.DashButtonPressed && m_state != PLAYER_STATE.DASH)
         {
-            m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, m_rb2D.velocity.y);
-
+            m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
             m_state = PLAYER_STATE.DASH;
+            m_rb2D.gravityScale = 0;
+            Physics2D.IgnoreLayerCollision(6, 7, true);
         }
     }
 
     void Move(PLAYER_STATE p_defaultState)
     {
         float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
-        if (horizontalAxisValue != 0)
+        if (horizontalAxisValue != 0 && m_canIMove)
         {
             if (!m_isFacingRight && horizontalAxisValue > 0)    { FlipX(); }
             if (m_isFacingRight && horizontalAxisValue < 0)     { FlipX(); }
@@ -236,8 +284,11 @@ public class Player : MonoBehaviour
             ChangeAnimationState(m_animationHash[(int)p_defaultState]);
         }
 
-        m_direction = horizontalAxisValue;
-        m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+        if (m_canIMove)
+        {
+            m_direction = horizontalAxisValue;
+            m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
+        }
 
         if (m_rb2D.velocity.y < 0)
         {
@@ -262,6 +313,7 @@ public class Player : MonoBehaviour
     {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;
+        
     }
 
     public int FacingDirection()
@@ -270,9 +322,42 @@ public class Player : MonoBehaviour
         else return -1;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Hola");
+        if(collision.gameObject.tag == "enemy" && !m_isInvulnerable)
+        {
+            float velocityX = -50*(collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = 100;
+
+            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+            m_isInvulnerable = true;
+            m_invulnerableTimer.Run();
+            m_noControlTimer.Duration = 0.5f;
+            m_noControlTimer.Run();
+            m_canIMove = false;
+            m_health--;
+            m_spriteRenderer.color = Color.black;
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "enemyProjectile" && !m_isInvulnerable)
+        {
+            float velocityX = -50 * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = 100;
+
+            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+            m_isInvulnerable = true;
+            m_invulnerableTimer.Run();
+            m_noControlTimer.Duration = 0.2f;
+            m_noControlTimer.Run();
+            m_canIMove = false;
+            collision.gameObject.SetActive(false);
+            m_health--;
+            m_spriteRenderer.color = Color.black;
+        }
     }
 
     #region Accessors
@@ -313,6 +398,8 @@ public class Player : MonoBehaviour
     {
         set { m_canMoveHorizontal = value; }
     }
+
+    public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
     #endregion
 }

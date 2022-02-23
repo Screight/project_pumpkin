@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - groundCheck
   - platform
+  - enemyProjectile
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - enemy
-  - 
+  - player
   - 
   - 
   - 
