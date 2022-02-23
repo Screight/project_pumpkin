@@ -140,19 +140,18 @@ public class Skeleton : MonoBehaviour
     }
     void Chase(SKELETON_STATE p_defaultState)
     {
-        //Back To Spawn
-        if (m_isGrounded == false) { FlipX(); }
-        if (m_playerIsNear)
+        //Player Near but Unnaccesible
+        if (m_playerIsNear && !m_playerIsAtRange && m_isGrounded == false) { m_rb2D.velocity = Vector2.zero; }
+        else if (m_playerIsNear)
         {
             //Ready to Attack
             if (m_playerIsAtRange == true) { m_state = SKELETON_STATE.ATTACK; }
             //Chasing
             if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
-            if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
+            if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
+            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
         }
         else { m_state = p_defaultState; }
-
-        m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
     }
     void Attack(SKELETON_STATE p_defaultState)
     {
