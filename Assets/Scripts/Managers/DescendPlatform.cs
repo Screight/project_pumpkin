@@ -4,32 +4,13 @@ using UnityEngine;
 
 public class DescendPlatform : MonoBehaviour
 {
-    private PlatformEffector2D effector;
-    Timer descendTimer;
-    bool restoreOffset;
+    private Rigidbody2D m_rb2D;
 
-    void Start()
-    {
-        effector = GetComponent<PlatformEffector2D>();
-
-        descendTimer = gameObject.AddComponent<Timer>();
-        descendTimer.Duration = 2;
-        restoreOffset = false;
-    }
+    void Start() { m_rb2D = GetComponent<Rigidbody2D>(); }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            descendTimer.Run();
-            effector.surfaceArc = -180.0f;
-            restoreOffset = true;
-        }
-
-        if (descendTimer.IsFinished && restoreOffset == true)
-        {
-            effector.surfaceArc = 270.0f;
-            restoreOffset = false;
-        }
+        if (Input.GetKey(KeyCode.DownArrow)) { m_rb2D.simulated = false; }
+        else { m_rb2D.simulated = true; }
     }
 }
