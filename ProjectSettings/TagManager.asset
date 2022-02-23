@@ -7,6 +7,7 @@ TagManager:
   - floor
   - enemy
   - groundCheck
+  - platform
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: blocks
+    uniqueID: 538339855
     locked: 0
