@@ -24,7 +24,8 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor")
+        //Idle si estás en suelo || DENTRO de plataforma NO saltando/cayendo
+        if (collision.gameObject.tag == "floor" || (collision.gameObject.tag == "platform" && playerScript.State != PLAYER_STATE.JUMP))
         {
             playerScript.IsGrounded = true;
             playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
@@ -36,10 +37,18 @@ public class GroundCheck : MonoBehaviour
                 playerScript.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
             }           
         }
+        //Subir si estás DENTRO de plataforma saltando
+        if (collision.gameObject.tag == "platform" && playerScript.State == PLAYER_STATE.JUMP)
+        {
+            playerScript.IsGrounded = false;
+
+            playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
+            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 80);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor")
+        if (collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform")
         {
             playerScript.IsGrounded = false;
             playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;

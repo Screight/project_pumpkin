@@ -303,7 +303,6 @@ public class Player : MonoBehaviour
     {
         get { return m_gravity2; }
     }
-
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
