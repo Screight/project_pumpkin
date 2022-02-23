@@ -41,10 +41,9 @@ public class Fireball : MonoBehaviour
         transform.position = m_playerScript.gameObject.transform.position + new Vector3(0,10,0);
         m_maxDurationTimer.Run();
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("floor") || collision.CompareTag("enemy"))
+        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform"))
         {
             DesactivateFireBall();
         }
@@ -53,7 +52,6 @@ public class Fireball : MonoBehaviour
         {
             collision.gameObject.GetComponent<Enemy>().Damage(m_damage);
         }
-
     }
 
     void DesactivateFireBall()

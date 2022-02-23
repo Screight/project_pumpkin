@@ -36,12 +36,16 @@ public class CameraMovement : MonoBehaviour
 
     private void Awake()
     {
-        m_playerBoxCollider2D = m_player.GetComponent<BoxCollider2D>();
+        
+        m_player = GameObject.FindGameObjectWithTag("Player");
+        m_target = m_player.transform;
         
     }
 
     private void Start()
     {
+        m_playerBoxCollider2D = m_player.GetComponent<BoxCollider2D>();
+
         m_playerScript = m_player.GetComponent<Player>();
         m_offset = new Vector3(20, 0, -10);
         m_fallTimer = gameObject.AddComponent<Timer>();
