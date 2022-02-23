@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skills : MonoBehaviour
+public class Skill_Pilar : MonoBehaviour
 {
     [SerializeField] GameObject m_marker;
     Vector3 m_markerInitialRaycastPosition;

@@ -7,7 +7,7 @@ public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_
 
 public class Player : MonoBehaviour
 {
-    Skills m_skills;
+    Skill_Pilar m_skills;
 
     Animator m_animator;
     int m_currentState;
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     float m_currentAttackDuration = 0;
     [SerializeField] Transform m_attackPosition;
     [SerializeField] LayerMask m_enemyLayer;
-    const float M_ATTACK_RANGE = 16;
+    const float M_ATTACK_RANGE = 8;
     bool m_keepAttacking = false;
     int m_keepAttackingID;
     int m_attackComboCount;
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         m_isGrounded = false;
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-        m_skills = gameObject.GetComponent<Skills>();
+        m_skills = gameObject.GetComponent<Skill_Pilar>();
     }
 
     private void Start()
@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
             m_keepAttacking = false;
             foreach (Collider2D enemy in enemiesInAttackRange)
             {
+                enemy.gameObject.GetComponent<Skeleton>().Damage(1);
                 Debug.Log(enemy.gameObject.name + " hitted.");
             }
         }
@@ -199,7 +200,6 @@ public class Player : MonoBehaviour
         if (m_state == PLAYER_STATE.DASH)
         {
             m_dashCurrentTime += Time.deltaTime;
-            Debug.Log(m_dashCurrentTime);
             if (m_dashCurrentTime > m_dashDuration)
             {
                 m_dashCurrentTime = 0;

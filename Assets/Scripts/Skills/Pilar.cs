@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pilar : MonoBehaviour
 {
-    [SerializeField] Skills m_skills;
+    [SerializeField] Skill_Pilar m_skills;
 
     BoxCollider2D m_boxCollider2D;
     SpriteRenderer m_spriteRenderer;

@@ -43,7 +43,7 @@ public class Skeleton : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_skeletonState = Animator.StringToHash("state");
-        skeletonHealth = 2;
+        skeletonHealth = 3;
 
         m_state = SKELETON_STATE.MOVE;
         m_isGrounded = true;
@@ -204,13 +204,11 @@ public class Skeleton : MonoBehaviour
         else return -1;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    public void Damage(int p_damage)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            skeletonHealth--;
-            if (skeletonHealth == 0) { m_state = SKELETON_STATE.DIE; }
-        }
+        skeletonHealth -= p_damage;
+
+        if (skeletonHealth == 0) { m_state = SKELETON_STATE.DIE; }
     }
 
     #region Accessors
