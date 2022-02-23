@@ -14,18 +14,26 @@ public class Timer: MonoBehaviour
     {
         m_time = 0;
         m_isFinished = true;
-        m_isRunning = true;
+        m_isRunning = false;
         m_duration = p_duration;
+    }
+
+    private void Awake()
+    {
+        m_time = 0;
+        m_isFinished = true;
+        m_isRunning = false;
     }
 
     private void Update()
     {
-        if(!m_isFinished)
+        if(!m_isFinished && m_isRunning)
         {
             m_time += Time.deltaTime;
             if(m_time >= m_duration) { 
                 m_isFinished = true;
-                m_time = 0;
+                m_isRunning = false;
+                m_time = m_duration;
             }
         }
     }
@@ -35,17 +43,16 @@ public class Timer: MonoBehaviour
     /// </summary>
     public void Run() {
         if (m_duration > 0 && m_isFinished) {
-            m_isFinished = false; 
+            m_isFinished = false;
+            m_isRunning = true;
+            m_time = 0;
         } 
     }
     public void Stop()
     {
-        if (m_isRunning && !m_isFinished)
-        {
-            m_isRunning = false;
-            m_isFinished = true;
-            m_time = 0;
-        }
+        m_isRunning = false;
+        m_isFinished = true;
+        m_time = 0;
     }
     public void Restart()
     {

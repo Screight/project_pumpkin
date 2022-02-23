@@ -25,21 +25,33 @@ public class CameraMovement : MonoBehaviour
 
     Vector3 targetPosition;
 
+    Timer m_fallTimer;
+    Timer m_dampTimer;
+    bool m_startFalling = false;
+
+
+
+    float m_distance = 0;
+    float m_lastPosition = 0;
+
     private void Awake()
     {
         m_playerBoxCollider2D = m_player.GetComponent<BoxCollider2D>();
+        
     }
 
     private void Start()
     {
         m_playerScript = m_player.GetComponent<Player>();
         m_offset = new Vector3(20, 0, -10);
-
+        m_fallTimer = gameObject.AddComponent<Timer>();
+        m_dampTimer = gameObject.AddComponent<Timer>();
+        m_fallTimer.Duration = 10000f;
+        m_dampTimer.Duration = 1f;
     }
 
     private void Update()
     {
-
         if (m_playerScript.IsFacingRight)
         {
             m_offset.x = 20;
@@ -53,11 +65,41 @@ public class CameraMovement : MonoBehaviour
 
         if (m_playerScript.State == PLAYER_STATE.FALL)
         {
-            m_dampSpeedY = 0.4f;
+            if (m_player.GetComponent<Rigidbody2D>().velocity.y == -200)
+            {
+                if (m_fallTimer.IsFinished && !m_startFalling)
+                {
+                    m_fallTimer.Run();
+                    m_startFalling = true;
+                }
+
+                if (m_fallTimer.CurrentTime >= 0.5 && m_fallTimer.IsRunning)
+                {
+                    m_dampTimer.Run();
+                    m_fallTimer.Pause();
+                }
+                else if (m_dampTimer.IsRunning || m_dampSpeedY != 0)
+                {
+                    m_dampSpeedY = 0.4f  * ((m_dampTimer.Duration - m_dampTimer.CurrentTime) / m_dampTimer.Duration);
+                    //m_offset.y = -50f * (1-((m_dampTimer.Duration - m_dampTimer.CurrentTime) / m_dampTimer.Duration));
+                }
+
+                
+
+            }
+            else
+            {
+                m_dampSpeedY = 0.4f;
+            }
+
         }
         else
         {
+            m_startFalling = false;
+            m_fallTimer.Stop();
+            m_dampTimer.Stop();
             m_dampSpeedY = 0.5f;
+            m_offset.y = 0f;
         }
 
         if (m_player.transform.position.y + m_playerBoxCollider2D.size.y > transform.position.y - cameraOffsetY + cameraBoxHeight / 2) // sobresale por arriba
@@ -75,12 +117,9 @@ public class CameraMovement : MonoBehaviour
         {
             m_playerOutOfCameraBoundsY = false;
         }
-
-
-
     }
 
-    void FixedUpdate()
+    private void LateUpdate()
     {
         if (!m_playerOutOfCameraBoundsY)
         {
@@ -90,15 +129,16 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
-        targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + cameraBoxHeight / 2, m_offset.z);
+        targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + cameraBoxHeight / 2, m_offset.z);
+
 
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.3f);
+
 
         if (m_doLerp)
         {
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, m_dampSpeedY);
         }
-
     }
 
 

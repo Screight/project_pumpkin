@@ -264,10 +264,15 @@ public class Player : MonoBehaviour
         m_isFacingRight = !m_isFacingRight;
     }
 
-    int FacingDirection()
+    public int FacingDirection()
     {
         if (m_isFacingRight) return 1;
         else return -1;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Hola");
     }
 
     #region Accessors

@@ -6,10 +6,12 @@ public class Skills : MonoBehaviour
 {
     [SerializeField] GameObject m_marker;
     Vector3 m_markerInitialRaycastPosition;
+    Vector3 m_markerLastRaycastPosition;
     float m_markerSpeed = 50.0f;
     float m_markerMaxDepth = 120;
     float m_markerDirection = 10.0f;
     float m_markerMaxDistance = 100.0f;
+    const float MARKER_MAX_DISTANCE = 100.0f;
 
     bool m_isCasting = false;
     Rigidbody2D m_rb2D;
@@ -67,7 +69,6 @@ public class Skills : MonoBehaviour
             if(!m_isCasting) { StartCasting(); }
             else {
                 MoveMarker();
-                m_canPlayerUseSkill = CheckPositionForPillar(m_markerInitialRaycastPosition);
             }
         }
         else if (InputManager.Instance.Skill1buttonReleased && m_canPlayerUseSkill)
@@ -89,37 +90,67 @@ public class Skills : MonoBehaviour
         m_player.SetPlayerState(PLAYER_STATE.CAST);
         m_player.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
         m_rb2D.velocity = Vector2.zero;
-        m_markerInitialRaycastPosition = m_player.transform.position;
+        m_markerInitialRaycastPosition = m_player.transform.position + 5 * Vector3.up;
+        m_markerLastRaycastPosition = m_markerInitialRaycastPosition;
+
+        // Raycast to see if there is a wall nearby, if there is change max distance to it
+
+        RaycastHit2D[] hits;
+
+        hits = Physics2D.RaycastAll(transform.position, new Vector2(m_player.FacingDirection(), 0), MARKER_MAX_DISTANCE);
+
+        bool hasFoundWall = false;
+
+        for (int i = 0; i < hits.Length && !hasFoundWall; i++)
+        {
+            if (hits[i].collider.CompareTag("floor"))
+            {
+                hasFoundWall = true;
+                m_markerMaxDistance = hits[i].distance;
+            }
+        }
+
+        if (!hasFoundWall) { m_markerMaxDistance = MARKER_MAX_DISTANCE; }
+
     }
 
     void MoveMarker()
     {
-        // check if the marker is within limtis, if not change direction
 
-        // check for max distance
-        if (m_markerInitialRaycastPosition.x > transform.position.x + m_markerMaxDistance)
-        {
-            m_markerDirection *= -1;
-            m_marker.transform.position = new Vector3(transform.position.x + m_markerMaxDistance, m_marker.transform.position.y, m_marker.transform.position.z);
-        }
-        else if (m_markerInitialRaycastPosition.x < transform.position.x - m_markerMaxDistance)
-        {
-            m_markerDirection *= -1;
-            m_markerInitialRaycastPosition = new Vector3(transform.position.x - m_markerMaxDistance, m_markerInitialRaycastPosition.y, m_markerInitialRaycastPosition.z);
-        }
+        // check if the marker is within limtis, if not change direction
 
         // check for minimum distance (the player position)
         if (m_player.IsFacingRight && m_markerInitialRaycastPosition.x < transform.position.x)
         {
             m_markerDirection *= -1;
+            //m_markerInitialRaycastPosition = new Vector3(transform.position.x, m_marker.transform.position.y, m_marker.transform.position.z);
+            m_markerInitialRaycastPosition = m_markerLastRaycastPosition;
         }
         else if (!m_player.IsFacingRight && m_markerInitialRaycastPosition.x > transform.position.x)
         {
             m_markerDirection *= -1;
+            //m_markerInitialRaycastPosition = new Vector3(transform.position.x, m_marker.transform.position.y, m_marker.transform.position.z);
+            m_markerInitialRaycastPosition = m_markerLastRaycastPosition;
         }
 
         // move the imaginary point from where the raycast starts from
+        m_markerLastRaycastPosition = m_markerInitialRaycastPosition;
         m_markerInitialRaycastPosition += new Vector3(m_markerDirection * m_markerSpeed * Time.deltaTime, 0, 0);
+
+        // check for max distance
+        if (m_markerInitialRaycastPosition.x > transform.position.x + m_markerMaxDistance)
+        {
+            m_markerDirection *= -1;
+            //m_markerInitialRaycastPosition = new Vector3(transform.position.x + m_markerMaxDistance, m_marker.transform.position.y, m_marker.transform.position.z);
+            m_markerInitialRaycastPosition = m_markerLastRaycastPosition;
+        }
+        else if (m_markerInitialRaycastPosition.x < transform.position.x - m_markerMaxDistance)
+        {
+            m_markerDirection *= -1;
+            //m_markerInitialRaycastPosition = new Vector3(transform.position.x - m_markerMaxDistance, m_marker.transform.position.y, m_markerInitialRaycastPosition.z);
+            m_markerInitialRaycastPosition = m_markerLastRaycastPosition;
+        }
+
         m_canPlayerUseSkill = CheckPositionForPillar(m_markerInitialRaycastPosition);
     }
 
@@ -159,6 +190,7 @@ public class Skills : MonoBehaviour
         }
         else
         {
+            m_markerInitialRaycastPosition = m_markerLastRaycastPosition;
             m_markerDirection *= -1;
         }
         return false;
@@ -171,8 +203,8 @@ public class Skills : MonoBehaviour
         bool verticalCollision = false; 
 
         float centerPositionX = m_pilarSummonDistance.x;
-        float rightPositionX = m_pilarSummonDistance.x + m_pilarColider.size.x / 2;
-        float leftPositionX = m_pilarSummonDistance.x - m_pilarColider.size.x / 2;
+        float rightPositionX = m_pilarSummonDistance.x/* + m_pilarColider.size.x / 2*/;
+        float leftPositionX = m_pilarSummonDistance.x/* - m_pilarColider.size.x / 2*/;
 
         float commonPositionY = m_pilarSummonDistance.y;
 
@@ -190,6 +222,25 @@ public class Skills : MonoBehaviour
         {
             m_pilar.SetActive(true);
             Vector3 pilarPosition = centerBottomPosition + Vector2.up * m_pilarColider.size.y / 2;
+
+            // check if any of the pilar is inside a wall
+
+            RaycastHit2D[] hits;
+
+            hits = Physics2D.RaycastAll(m_markerInitialRaycastPosition, new Vector2(m_player.FacingDirection(), 0), m_pilarColider.size.x/2);
+
+            bool hasFoundWall = false;
+
+            for (int i = 0; i < hits.Length && !hasFoundWall; i++)
+            {
+                if (hits[i].collider.CompareTag("floor"))
+                {
+                    hasFoundWall = true;
+                    Debug.Log("Wall found");
+                    pilarPosition.x = hits[i].point.x - m_player.FacingDirection() * m_pilarColider.size.x / 2;
+                }
+            }
+
             m_pilarScript.Summon(pilarPosition);
             
             Debug.Log("Pillar summoned");

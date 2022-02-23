@@ -38,13 +38,16 @@ public class Pilar : MonoBehaviour
 
         m_emergeTimer = gameObject.AddComponent<Timer>();
         m_pilarTimer = gameObject.AddComponent<Timer>();
+
+        m_emergingSpeed = m_height / m_emergeDuration;
+        m_emergeTimer.Duration = m_emergeDuration;
+        m_pilarTimer.Duration = m_pilarDuration;
+
     }
 
     private void Start()
     {
-        m_emergingSpeed = m_height / m_emergeDuration;
-        m_emergeTimer.Duration = m_emergeDuration;
-        m_pilarTimer.Duration = m_pilarDuration;
+        
     }
 
     private void Update()
