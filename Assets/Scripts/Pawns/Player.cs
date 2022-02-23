@@ -253,10 +253,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void SetPlayerState(PLAYER_STATE value)
-    {
-        m_state = value;
-    }
+    public void SetPlayerState(PLAYER_STATE value) { m_state = value; }
 
     void FlipX()
     {
@@ -294,15 +291,8 @@ public class Player : MonoBehaviour
         set { m_state = value; }
     }
 
-    public float Gravity1
-    {
-        get { return m_gravity1; }
-    }
-
-    public float Gravity2
-    {
-        get { return m_gravity2; }
-    }
+    public float Gravity1 { get { return m_gravity1; } }
+    public float Gravity2 { get { return m_gravity2; } }
 
     public bool IsGrounded
     {
@@ -310,10 +300,7 @@ public class Player : MonoBehaviour
         get { return m_isGrounded; }
     }
 
-    public bool CanMoveHorizontal
-    {
-        set { m_canMoveHorizontal = value; }
-    }
+    public bool CanMoveHorizontal { set { m_canMoveHorizontal = value; } }
 
     #endregion
 }
