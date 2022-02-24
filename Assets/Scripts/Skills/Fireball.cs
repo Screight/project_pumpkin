@@ -29,10 +29,7 @@ public class Fireball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_maxDurationTimer.IsFinished)
-        {
-            DesactivateFireBall();
-        }
+        if (m_maxDurationTimer.IsFinished) { DesactivateFireBall(); }
     }
 
     public void Fire()
@@ -43,7 +40,7 @@ public class Fireball : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform"))
+        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") /*|| collision.CompareTag("vine")*/)
         {
             DesactivateFireBall();
         }
@@ -60,5 +57,4 @@ public class Fireball : MonoBehaviour
         m_skillFireBallScript.IsFireBallAvailable = true;
         m_maxDurationTimer.Stop();
     }
-
 }

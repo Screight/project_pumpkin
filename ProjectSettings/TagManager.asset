@@ -10,6 +10,8 @@ TagManager:
   - platform
   - enemyProjectile
   - spike
+  - fireball
+  - vine
   layers:
   - Default
   - TransparentFX

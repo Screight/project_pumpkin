@@ -40,7 +40,6 @@ public class Skill_Fireball : MonoBehaviour
             case PLAYER_STATE.JUMP: { Fireball(); } break;
             case PLAYER_STATE.FALL: { Fireball(); } break;
         }
-
     }
 
     void Fireball()
@@ -58,5 +57,4 @@ public class Skill_Fireball : MonoBehaviour
     {
         set { m_isFireBallAvailable = value; }
     }
-
 }
