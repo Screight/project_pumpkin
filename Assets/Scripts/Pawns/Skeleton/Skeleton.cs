@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK, AIR }
-public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
+public enum ENEMY_STATE { MOVE, CHASE, DIE, ATTACK, AIR }
+public enum ENEMY_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
 
 public class Skeleton : Enemy
 {
@@ -17,7 +17,7 @@ public class Skeleton : Enemy
     string m_reloadAnimationName    = "Reload";
     string m_fireAnimationName    = "Fire";
     string m_dieAnimationName       = "Die";
-    int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
+    int[] m_animationHash = new int[(int)ENEMY_ANIMATION.LAST_NO_USE];
 
     [SerializeField] GameObject prefabBone;
     GameObject Bone;
@@ -38,13 +38,16 @@ public class Skeleton : Enemy
     bool m_playerIsNear;
     bool m_playerIsAtRange;
 
-    private void Awake() {
+    protected override void Awake() {
+
+        base.Awake();
+
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_skeletonState = Animator.StringToHash("state");
         skeletonHealth = 3;
 
-        m_state = SKELETON_STATE.MOVE;
+        m_state = ENEMY_STATE.MOVE;
         m_isGrounded = true;
         m_playerIsNear = false;
         m_playerIsAtRange = false;
@@ -60,10 +63,10 @@ public class Skeleton : Enemy
 
     void Start()
     {
-        m_animationHash[(int)SKELETON_ANIMATION.MOVE] = Animator.StringToHash(m_moveAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.RELOAD] = Animator.StringToHash(m_reloadAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.FIRE] = Animator.StringToHash(m_fireAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.DIE] = Animator.StringToHash(m_dieAnimationName);
+        m_animationHash[(int)ENEMY_ANIMATION.MOVE] = Animator.StringToHash(m_moveAnimationName);
+        m_animationHash[(int)ENEMY_ANIMATION.RELOAD] = Animator.StringToHash(m_reloadAnimationName);
+        m_animationHash[(int)ENEMY_ANIMATION.FIRE] = Animator.StringToHash(m_fireAnimationName);
+        m_animationHash[(int)ENEMY_ANIMATION.DIE] = Animator.StringToHash(m_dieAnimationName);
 
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
@@ -79,16 +82,16 @@ public class Skeleton : Enemy
         switch (m_state)
         {
             default:break;
-            case SKELETON_STATE.MOVE:
-                { Move(SKELETON_STATE.MOVE); }
+            case ENEMY_STATE.MOVE:
+                { Move(ENEMY_STATE.MOVE); }
                 break;
-            case SKELETON_STATE.CHASE:
-                { Chase(SKELETON_STATE.MOVE); }
+            case ENEMY_STATE.CHASE:
+                { Chase(ENEMY_STATE.MOVE); }
                 break;
-            case SKELETON_STATE.ATTACK:
-                { Attack(SKELETON_STATE.CHASE); }
+            case ENEMY_STATE.ATTACK:
+                { Attack(ENEMY_STATE.CHASE); }
                 break;
-            case SKELETON_STATE.DIE:
+            case ENEMY_STATE.DIE:
                 { Die(); }
                 break;
         }
@@ -97,7 +100,7 @@ public class Skeleton : Enemy
         boneCooldown += 1.0f * delta;
     }
 
-    void Move(SKELETON_STATE p_defaultState)
+    void Move(ENEMY_STATE p_defaultState)
     {
         if (m_hasReturned == true)
         {
@@ -120,7 +123,7 @@ public class Skeleton : Enemy
             if (m_playerIsNear == true)
             {
                 m_hasReturned = false;
-                m_state = SKELETON_STATE.CHASE;
+                m_state = ENEMY_STATE.CHASE;
             }
         }
         else
@@ -136,18 +139,18 @@ public class Skeleton : Enemy
             if (m_playerIsNear == true)
             {
                 m_hasReturned = false;
-                m_state = SKELETON_STATE.CHASE;
+                m_state = ENEMY_STATE.CHASE;
             }
         }
     }
-    void Chase(SKELETON_STATE p_defaultState)
+    void Chase(ENEMY_STATE p_defaultState)
     {
         //Player Near but Unnaccesible
         if (m_playerIsNear && !m_playerIsAtRange && m_isGrounded == false) { m_rb2D.velocity = Vector2.zero; }
         else if (m_playerIsNear)
         {
             //Ready to Attack
-            if (m_playerIsAtRange == true) { m_state = SKELETON_STATE.ATTACK; }
+            if (m_playerIsAtRange == true) { m_state = ENEMY_STATE.ATTACK; }
             //Chasing
             if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
             if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
@@ -155,12 +158,12 @@ public class Skeleton : Enemy
         }
         else { m_state = p_defaultState; }
     }
-    void Attack(SKELETON_STATE p_defaultState)
+    void Attack(ENEMY_STATE p_defaultState)
     {
         if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
         if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
 
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
+        ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.RELOAD]);
         m_rb2D.velocity = Vector2.zero;
 
         if (m_playerIsAtRange == true)
@@ -177,13 +180,13 @@ public class Skeleton : Enemy
         else
         {
             m_state = p_defaultState;
-            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+            ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.MOVE]);
         }
     }
 
     void Die()
     {
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
+        ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.DIE]);
         Destroy(gameObject, 0.5f);
     }
 
@@ -206,7 +209,7 @@ public class Skeleton : Enemy
         else return -1;
     }
 
-    public SKELETON_STATE State { set { m_state = value; } get { return m_state; } }
+    public ENEMY_STATE State { set { m_state = value; } get { return m_state; } }
 
     #region Accessors
     public bool IsGrounded
