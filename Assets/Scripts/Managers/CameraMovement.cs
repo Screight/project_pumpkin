@@ -30,7 +30,6 @@ public class CameraMovement : MonoBehaviour
     bool m_startFalling = false;
 
 
-
     float m_distance = 0;
     float m_lastPosition = 0;
 
@@ -144,14 +143,16 @@ public class CameraMovement : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, m_dampSpeedY);
         }
     }
-
-
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
         Gizmos.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, 0, 10)), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height, 10)));
         Gizmos.DrawWireCube(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 - 2 * m_offset.x, Screen.height / 2, 10)), new Vector3(2 * m_offset.x, cameraBoxHeight, 1));
+    }
+
+    public void SetCameraToPlayerPosition()
+    {
+        transform.position = new Vector3(m_player.transform.position.x, m_player.transform.position.y , transform.position.z);
     }
 
 }

@@ -7,6 +7,8 @@ public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] Transicion m_transicionScript;
+
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
     bool m_isUsingGroundBreaker = false;
@@ -368,7 +370,7 @@ public class Player : MonoBehaviour
         {
             //m_spriteRenderer.color = Color.black;
             m_health--;
-            CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
+            m_transicionScript.LocalCheckpointTransition();
         }
     }
 
