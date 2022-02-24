@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK }
+public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK, AIR }
 public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
 
 public class Skeleton : Enemy
@@ -53,6 +53,9 @@ public class Skeleton : Enemy
         m_hasReturned = true;
 
         Bone = Instantiate(prefabBone, new Vector3(0, 0, 0), Quaternion.identity);
+
+        Physics2D.IgnoreLayerCollision(7, 7, true);
+
     }
 
     void Start()
@@ -202,6 +205,8 @@ public class Skeleton : Enemy
         if (m_isFacingRight) return 1;
         else return -1;
     }
+
+    public SKELETON_STATE State { set { m_state = value; } get { return m_state; } }
 
     #region Accessors
     public bool IsGrounded

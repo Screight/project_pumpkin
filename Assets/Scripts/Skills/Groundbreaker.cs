@@ -26,6 +26,7 @@ public class Groundbreaker : MonoBehaviour
             m_player.SetPlayerState(PLAYER_STATE.GROUNDBREAKER);
             m_rb2D.gravityScale = 0;
             Physics2D.IgnoreLayerCollision(6, 7, true);
+            m_player.IsUsingGroundBreaker = true;
             m_isUsingGroundBreaker = true;
         }
 
@@ -36,10 +37,16 @@ public class Groundbreaker : MonoBehaviour
             {
                 if (enemy.gameObject.tag == "enemy")
                 {
+                    enemy.GetComponent<Skeleton>().State = SKELETON_STATE.AIR;
                     enemy.gameObject.GetComponent<Enemy>().Damage(1);
-                    enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(-50 * (transform.position - enemy.transform.position).normalized.x / Mathf.Abs((transform.position - enemy.transform.position).normalized.x), 100);
+                    float velocityX;
+                    if(transform.position.x == enemy.transform.position.x) { velocityX = 0; }
+                    else { velocityX = -50 * (transform.position - enemy.transform.position).normalized.x / Mathf.Abs((transform.position - enemy.transform.position).normalized.x);};
+                    float velocityY = 100;
+                    enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
                 m_isUsingGroundBreaker = false;
+                m_player.IsUsingGroundBreaker = false;
             }
         }
 

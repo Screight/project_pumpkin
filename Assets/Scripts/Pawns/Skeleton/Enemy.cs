@@ -10,6 +10,6 @@ public class Enemy : MonoBehaviour
     public void Damage(int p_damage)
     {
         skeletonHealth -= p_damage;
-        if (skeletonHealth == 0) { m_state = SKELETON_STATE.DIE; }
+        if (skeletonHealth <= 0) { m_state = SKELETON_STATE.DIE; }
     }
 }
