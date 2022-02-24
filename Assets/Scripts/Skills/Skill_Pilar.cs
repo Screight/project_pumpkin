@@ -103,7 +103,7 @@ public class Skill_Pilar : MonoBehaviour
 
         for (int i = 0; i < hits.Length && !hasFoundWall; i++)
         {
-            if (hits[i].collider.CompareTag("floor"))
+            if (hits[i].collider.CompareTag("floor") || hits[i].collider.CompareTag("platform"))
             {
                 hasFoundWall = true;
                 m_markerMaxDistance = hits[i].distance;
@@ -174,7 +174,7 @@ public class Skill_Pilar : MonoBehaviour
         {
             if (hits[i].collider != null)
             {
-                if (hits[i].collider.gameObject.CompareTag("floor"))
+                if (hits[i].collider.gameObject.CompareTag("floor") || hits[i].collider.gameObject.CompareTag("platform"))
                 {
                     floorPosition = hits[i].point;
                     hasFoundFloor = true;
@@ -233,7 +233,7 @@ public class Skill_Pilar : MonoBehaviour
 
             for (int i = 0; i < hits.Length && !hasFoundWall; i++)
             {
-                if (hits[i].collider.CompareTag("floor"))
+                if (hits[i].collider.CompareTag("floor") || hits[i].collider.CompareTag("platform"))
                 {
                     hasFoundWall = true;
                     Debug.Log("Wall found");
@@ -260,7 +260,7 @@ public class Skill_Pilar : MonoBehaviour
     {
         foreach (Collider2D collision in p_collisions)
         {
-            if (collision.gameObject.CompareTag("floor"))
+            if (collision.gameObject.CompareTag("floor") || collision.gameObject.CompareTag("platform"))
             {
                 return false;
             }

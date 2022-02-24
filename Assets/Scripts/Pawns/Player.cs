@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
 
     bool m_canIMove = false;
     Timer m_noControlTimer;
-    Vector3 UraRespawn;
 
     Skill_Pilar m_skills;
 
@@ -82,8 +81,6 @@ public class Player : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_playerStateID = Animator.StringToHash("state");
-
-        UraRespawn = transform.position;
 
         m_state = PLAYER_STATE.IDLE;
         m_direction = 0;
@@ -369,8 +366,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "spike")
         {
             //m_spriteRenderer.color = Color.black;
-            transform.position = UraRespawn;
             m_health--;
+            CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
         }
     }
 
