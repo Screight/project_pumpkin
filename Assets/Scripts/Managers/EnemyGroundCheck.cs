@@ -25,7 +25,7 @@ public class EnemyGroundCheck : MonoBehaviour
         if (collision.gameObject.tag == "floor" && skeletonScript.State != ENEMY_STATE.DIE)
         {
             skeletonScript.IsGrounded = true;
-            skeletonRigidBody.velocity = new Vector2(0,0);
+            skeletonRigidBody.velocity = Vector2.zero;
             Physics2D.IgnoreLayerCollision(6, 7, false);
             skeletonScript.State = ENEMY_STATE.MOVE;
         }
