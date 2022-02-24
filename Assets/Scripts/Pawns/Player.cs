@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) { return; } //Game Paused
 
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable)
         {
@@ -370,7 +371,6 @@ public class Player : MonoBehaviour
             CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
         }
     }
-
 
     #region Accessors
 
