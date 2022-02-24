@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
+    bool m_isUsingGroundBreaker = false;
 
     int m_health = 5;
 
@@ -346,7 +347,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "enemyProjectile" && !m_isInvulnerable)
+        if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker)
         {
             float velocityX = -50 * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
             float velocityY = 100;
@@ -385,8 +386,6 @@ public class Player : MonoBehaviour
     {
         ChangeAnimationState(m_animationHash[(int)p_animation]);
     }
-
-    public float Speed { get { return m_speed; } }
     public PLAYER_STATE State
     {
         get { return m_state; }
@@ -408,9 +407,9 @@ public class Player : MonoBehaviour
         get { return m_isGrounded; }
     }
 
-    public bool CanMoveHorizontal
+    public bool IsUsingGroundBreaker
     {
-        set { m_canMoveHorizontal = value; }
+        set { m_isUsingGroundBreaker = value; }
     }
 
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }

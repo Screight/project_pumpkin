@@ -11,7 +11,6 @@ public class BoneScript : MonoBehaviour
     private void Awake()
     {
         m_rb2D = GetComponent<Rigidbody2D>();
-
     }
 
     void Start()

@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 433329262558307992}
   - component: {fileID: 433329262558307990}
   - component: {fileID: 433329262558307991}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 433329262800548460}
   - component: {fileID: 433329262800548459}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: right_limit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433329262800548461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 60, y: -10, z: 0}
+  m_LocalPosition: {x: 34.1, y: -10, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 433329262809435476}
@@ -231,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 433329262809435476}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,8 +359,8 @@ Rigidbody2D:
   m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_GravityScale: 40
+  m_Material: {fileID: 6200000, guid: 2ce20ee907b2955408321eff6fea7b38, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -374,7 +374,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 433329262852216658}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2ce20ee907b2955408321eff6fea7b38, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -438,7 +438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 433329263508409560}
   - component: {fileID: 433329263508409559}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: left_limit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433329263508409561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -60, y: -10, z: 0}
+  m_LocalPosition: {x: -30.1, y: -10, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 433329262809435476}
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 433329264130662100}
   - component: {fileID: 433329264130662099}
   - component: {fileID: 433329264130662098}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
