@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     bool m_canIMove = false;
     Timer m_noControlTimer;
+    Vector3 UraRespawn;
 
     Skill_Pilar m_skills;
 
@@ -80,7 +81,9 @@ public class Player : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_playerStateID = Animator.StringToHash("state");
-        
+
+        UraRespawn = transform.position;
+
         m_state = PLAYER_STATE.IDLE;
         m_direction = 0;
 
@@ -134,10 +137,7 @@ public class Player : MonoBehaviour
             Physics2D.IgnoreLayerCollision(6, 7, false);
         }
 
-        if (m_noControlTimer.IsFinished)
-        {
-            m_canIMove = true;
-        }
+        if (m_noControlTimer.IsFinished) { m_canIMove = true; }
 
         switch (m_state)
         {
@@ -150,7 +150,6 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
-
             case PLAYER_STATE.MOVE:
                 {
                     Move(PLAYER_STATE.IDLE);
@@ -178,10 +177,7 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
-        if (InputManager.Instance.AttackButtonPressed)
-        {
-            m_keepAttacking = true;
-        }
+        if (InputManager.Instance.AttackButtonPressed) { m_keepAttacking = true; }
 
         if (!m_isGrounded) { m_keepAttacking = false; }
 
@@ -196,19 +192,13 @@ public class Player : MonoBehaviour
             m_keepAttacking = false;
             foreach (Collider2D enemy in enemiesInAttackRange)
             {
-                if (enemy.gameObject.tag == "enemy")
-                {
-                    enemy.gameObject.GetComponent<Enemy>().Damage(1);
-                }
+                if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }
                 
             }
         }
         else if (m_state == PLAYER_STATE.ATTACK)
         {
-            if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-            {
-                m_currentAttackDuration += Time.deltaTime;
-            }
+            if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1) { m_currentAttackDuration += Time.deltaTime; }
             else
             {
                 if (m_keepAttacking && m_attackComboCount < 2)
@@ -297,17 +287,11 @@ public class Player : MonoBehaviour
             SetPlayerAnimation(PLAYER_ANIMATION.FALL);
         }
 
-        if(m_rb2D.velocity.y < -200)
-        {
-            m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -200.0f);
-        }
+        if (m_rb2D.velocity.y < -200) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -200.0f); }
 
     }
 
-    public void SetPlayerState(PLAYER_STATE value)
-    {
-        m_state = value;
-    }
+    public void SetPlayerState(PLAYER_STATE value) { m_state = value; }
 
     void FlipX()
     {
@@ -318,8 +302,8 @@ public class Player : MonoBehaviour
 
     public int FacingDirection()
     {
-        if (m_isFacingRight) return 1;
-        else return -1;
+        if (m_isFacingRight) { return 1; }
+        else { return -1; }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -338,7 +322,6 @@ public class Player : MonoBehaviour
             m_health--;
             m_spriteRenderer.color = Color.black;
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -359,46 +342,36 @@ public class Player : MonoBehaviour
             m_spriteRenderer.color = Color.black;
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "spike")
+        {
+            m_spriteRenderer.color = Color.black;
+            transform.position = UraRespawn;
+        }
+    }
 
     #region Accessors
 
-    public bool IsFacingRight
-    {
-        get { return m_isFacingRight; }
-    }
-
+    public bool IsFacingRight { get { return m_isFacingRight; } }
     public void SetPlayerAnimation(PLAYER_ANIMATION p_animation)
     {
         ChangeAnimationState(m_animationHash[(int)p_animation]);
     }
-
     public float Speed { get { return m_speed; } }
     public PLAYER_STATE State
     {
         get { return m_state; }
         set { m_state = value; }
     }
-
-    public float Gravity1
-    {
-        get { return m_gravity1; }
-    }
-
-    public float Gravity2
-    {
-        get { return m_gravity2; }
-    }
+    public float Gravity1 { get { return m_gravity1; } }
+    public float Gravity2 { get { return m_gravity2; } }
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
         get { return m_isGrounded; }
     }
-
-    public bool CanMoveHorizontal
-    {
-        set { m_canMoveHorizontal = value; }
-    }
-
+    public bool CanMoveHorizontal { set { m_canMoveHorizontal = value; } }
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
     #endregion
