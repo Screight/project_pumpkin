@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     bool m_canIMove = false;
     Timer m_noControlTimer;
+    Vector3 UraRespawn;
 
     Skill_Pilar m_skills;
 
@@ -80,7 +81,9 @@ public class Player : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_playerStateID = Animator.StringToHash("state");
-        
+
+        UraRespawn = transform.position;
+
         m_state = PLAYER_STATE.IDLE;
         m_direction = 0;
 
@@ -127,7 +130,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
 
-        if (m_invulnerableTimer.IsFinished)
+        if (m_invulnerableTimer.IsFinished && m_isInvulnerable)
         {
             m_isInvulnerable = false;
             m_spriteRenderer.color = Color.white;
@@ -359,6 +362,17 @@ public class Player : MonoBehaviour
             m_spriteRenderer.color = Color.black;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "spike")
+        {
+            //m_spriteRenderer.color = Color.black;
+            transform.position = UraRespawn;
+            m_health--;
+        }
+    }
+
 
     #region Accessors
 

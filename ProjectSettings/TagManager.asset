@@ -9,6 +9,7 @@ TagManager:
   - groundCheck
   - platform
   - enemyProjectile
+  - spike
   layers:
   - Default
   - TransparentFX

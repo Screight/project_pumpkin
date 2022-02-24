@@ -19,4 +19,14 @@ public class EnemyGroundCheck : MonoBehaviour
             skeletonScript.IsGrounded = false;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "floor")
+        {
+            skeletonScript.IsGrounded = true;
+            skeletonRigidBody.velocity = new Vector2(0,0);
+        }
+    }
+
 }
