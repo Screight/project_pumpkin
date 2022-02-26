@@ -45,6 +45,7 @@ public class Groundbreaker : MonoBehaviour
                     float velocityY = 100;
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
+                Physics2D.IgnoreLayerCollision(6, 7, false);
                 m_isUsingGroundBreaker = false;
                 m_player.IsUsingGroundBreaker = false;
             }
