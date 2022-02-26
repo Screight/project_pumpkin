@@ -48,6 +48,8 @@ public class CameraManager : MonoBehaviour
     public float RightLimit { get { return rightLimit; } }
     public float TopLimit { get { return topLimit; } }
     public float BottomLimit { get { return bottomLimit; } }
+    public float Width { get { return rightLimit - leftLimit; } }
+    public float Height { get { return topLimit - bottomLimit; } }
 
     void UpdateCameraPosition()
     {

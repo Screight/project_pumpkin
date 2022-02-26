@@ -413,5 +413,7 @@ public class Player : MonoBehaviour
 
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
+    public Vector3 Speed { get { return m_rb2D.velocity; } }
+
     #endregion
 }

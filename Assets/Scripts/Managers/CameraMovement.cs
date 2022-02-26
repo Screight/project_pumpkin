@@ -24,21 +24,27 @@ public class CameraMovement : MonoBehaviour
     Vector2 cameraBoxPosition;
 
     Vector3 targetPosition;
+    [SerializeField] Transform m_leftLimitTransform;
+    [SerializeField] Transform m_rightLimitTransform;
+    [SerializeField] Transform m_bottomLimitTransform;
+    [SerializeField] Transform m_topLimitTransform;
+    float m_leftLimit = float.MaxValue;
+    float m_rightLimit = float.MaxValue;
+    float m_topLimit = float.MaxValue;
+    float m_bottomLimit = float.MaxValue;
+    bool m_canMove = true;
 
     Timer m_fallTimer;
     Timer m_dampTimer;
     bool m_startFalling = false;
-
 
     float m_distance = 0;
     float m_lastPosition = 0;
 
     private void Awake()
     {
-        
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_target = m_player.transform;
-        
     }
 
     private void Start()
@@ -51,6 +57,11 @@ public class CameraMovement : MonoBehaviour
         m_dampTimer = gameObject.AddComponent<Timer>();
         m_fallTimer.Duration = 10000f;
         m_dampTimer.Duration = 1f;
+
+        m_leftLimit = m_leftLimitTransform.position.x;
+        m_rightLimit = m_rightLimitTransform.position.x;
+        m_topLimit = m_topLimitTransform.position.y;
+        m_bottomLimit = m_bottomLimitTransform.position.y;
     }
 
     private void Update()
@@ -134,14 +145,77 @@ public class CameraMovement : MonoBehaviour
 
         targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + cameraBoxHeight / 2, m_offset.z);
 
+        // left limit
+        if(targetPosition.x - CameraManager.Instance.Width / 2 <= m_leftLimit)
+        {
+            targetPosition.x = m_leftLimit + CameraManager.Instance.Width/2;
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.8f);
 
-        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.3f);
+            float hola = Mathf.Abs((transform.position.x - CameraManager.Instance.Width / 2) - m_leftLimit);
 
+            if (hola < 0.1)
+            {
+                transform.position = new Vector3(m_leftLimit + CameraManager.Instance.Width/2, transform.position.y, transform.position.z);
+                velocityX = Vector3.zero;
+            }
+        }// RIGHT LIMIT
+        else if (targetPosition.x + CameraManager.Instance.Width / 2 >= m_rightLimit)
+        {
+            targetPosition.x = m_rightLimit - CameraManager.Instance.Width / 2;
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.8f);
+
+            float hola = Mathf.Abs((transform.position.x + CameraManager.Instance.Width / 2) - m_rightLimit);
+
+            if (hola < 0.1)
+            {
+                transform.position = new Vector3(m_rightLimit - CameraManager.Instance.Width / 2, transform.position.y, transform.position.z);
+                velocityX = Vector3.zero;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.3f);
+        }
 
         if (m_doLerp)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, m_dampSpeedY);
+
+            // BOTTOM LIMIT
+            if (targetPosition.y - CameraManager.Instance.Height / 2 <= m_bottomLimit)
+            {
+                targetPosition.y = m_bottomLimit + CameraManager.Instance.Height / 2;
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, 0.8f);
+
+                float hola = Mathf.Abs((transform.position.y - CameraManager.Instance.Height / 2) - m_bottomLimit);
+
+                if (hola < 0.1)
+                {
+                    transform.position = new Vector3(transform.position.x, m_bottomLimit + CameraManager.Instance.Height / 2, transform.position.z);
+                    velocityY = Vector3.zero;
+                }
+            }// TOP LIMIT
+            else if (targetPosition.y + CameraManager.Instance.Height / 2 >= m_topLimit)
+            {
+                targetPosition.y = m_topLimit - CameraManager.Instance.Height / 2;
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityX, 0.8f);
+
+                float hola = Mathf.Abs((transform.position.y + CameraManager.Instance.Height / 2) - m_topLimit);
+
+                if (hola < 0.1)
+                {
+                    transform.position = new Vector3(m_topLimit - CameraManager.Instance.Height / 2, transform.position.y, transform.position.z);
+                    velocityY = Vector3.zero;
+                }
+            }
+            else
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, m_dampSpeedY);
+            }
+            
         }
+
+
+
     }
     private void OnDrawGizmos()
     {
@@ -155,4 +229,10 @@ public class CameraMovement : MonoBehaviour
         transform.position = new Vector3(m_player.transform.position.x, m_player.transform.position.y , transform.position.z);
     }
 
+    public float LeftLimit { set { m_leftLimit = value; } }
+    public float RightLimit { set { m_rightLimit = value; } }
+    public float TopLimit { set { m_topLimit = value; } }
+    public float BottomLimit { set { m_bottomLimit = value; } }
+    public bool CanMove { set { m_canMove = value; } }
+    public Vector3 TargetPosition { set { targetPosition = value; } }
 }
