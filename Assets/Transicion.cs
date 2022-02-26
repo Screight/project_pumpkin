@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TRANSITION_ANIMATION { FADE_IN, FADE_OUT, LAST_NO_USE, EMPTY_SCREEN }
+public enum TRANSITION_ANIMATION { FADE_IN, FADE_OUT, EMPTY_SCREEN, LAST_NO_USE }
 
 public class Transicion : MonoBehaviour
 {
