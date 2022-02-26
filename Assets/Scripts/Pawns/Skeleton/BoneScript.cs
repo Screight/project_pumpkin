@@ -13,20 +13,6 @@ public class BoneScript : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
-
     public void Shoot(int p_direction)
     {
         m_rb2D.velocity = new Vector2(p_direction * m_boneSpeed, m_rb2D.velocity.y);
