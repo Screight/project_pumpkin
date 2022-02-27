@@ -31,7 +31,6 @@ public class Skill_Fireball : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         m_cooldownTimer.Duration = m_cooldown;
@@ -50,8 +49,5 @@ public class Skill_Fireball : MonoBehaviour
         }
     }
 
-    public bool IsFireBallAvailable
-    {
-        set { m_isFireBallAvailable = value; }
-    }
+    public bool IsFireBallAvailable { set { m_isFireBallAvailable = value; } }
 }

@@ -42,12 +42,6 @@ public class Pilar : MonoBehaviour
         m_emergingSpeed = m_height / m_emergeDuration;
         m_emergeTimer.Duration = m_emergeDuration;
         m_pilarTimer.Duration = m_pilarDuration;
-
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void Update()

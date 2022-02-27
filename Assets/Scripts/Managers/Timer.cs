@@ -56,10 +56,7 @@ public class Timer: MonoBehaviour
     }
     public void Restart()
     {
-        if (m_isRunning && !m_isFinished)
-        {
-            Run();
-        }
+        if (m_isRunning && !m_isFinished) { Run(); }
     }
     public void Pause() { if (m_isRunning && !m_isFinished) { m_isRunning = false; } }
 
@@ -75,10 +72,7 @@ public class Timer: MonoBehaviour
         private set {; }
     }
 
-    public bool IsActive
-    {
-        get { return !m_isFinished; }
-    }
+    public bool IsActive { get { return !m_isFinished; } }
 
     public float CurrentTime
     {
@@ -89,11 +83,6 @@ public class Timer: MonoBehaviour
     public float Duration
     {
         get { return m_duration; }
-        set {
-            if (!m_isRunning)
-            {
-                m_duration = value;
-            }
-        }
+        set { if (!m_isRunning) { m_duration = value; } }
     }
 }

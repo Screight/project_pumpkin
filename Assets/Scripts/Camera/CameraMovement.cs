@@ -66,16 +66,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (m_playerScript.IsFacingRight)
-        {
-            m_offset.x = 20;
-        }
-        else
-        {
-            m_offset.x = -20;
-        }
-
-
+        if (m_playerScript.IsFacingRight) { m_offset.x = 20; }
+        else { m_offset.x = -20; }
 
         if (m_playerScript.State == PLAYER_STATE.FALL)
         {
@@ -94,18 +86,11 @@ public class CameraMovement : MonoBehaviour
                 }
                 else if (m_dampTimer.IsRunning || m_dampSpeedY != 0)
                 {
-                    m_dampSpeedY = 0.4f  * ((m_dampTimer.Duration - m_dampTimer.CurrentTime) / m_dampTimer.Duration);
+                    m_dampSpeedY = 0.4f * ((m_dampTimer.Duration - m_dampTimer.CurrentTime) / m_dampTimer.Duration);
                     //m_offset.y = -50f * (1-((m_dampTimer.Duration - m_dampTimer.CurrentTime) / m_dampTimer.Duration));
                 }
-
-                
-
             }
-            else
-            {
-                m_dampSpeedY = 0.4f;
-            }
-
+            else { m_dampSpeedY = 0.4f; }
         }
         else
         {
@@ -127,20 +112,14 @@ public class CameraMovement : MonoBehaviour
             m_doLerp = true;
 
         }
-        else
-        {
-            m_playerOutOfCameraBoundsY = false;
-        }
+        else { m_playerOutOfCameraBoundsY = false; }
     }
 
     private void LateUpdate()
     {
-        if (!m_playerOutOfCameraBoundsY)
+        if (!m_playerOutOfCameraBoundsY && transform.position.y + cameraBoxHeight / 2 == m_player.transform.position.y)
         {
-            if (transform.position.y + cameraBoxHeight / 2 == m_player.transform.position.y)
-            {
-                m_doLerp = false;
-            }
+            m_doLerp = false;
         }
 
         targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + cameraBoxHeight / 2, m_offset.z);
@@ -179,7 +158,6 @@ public class CameraMovement : MonoBehaviour
 
         if (m_doLerp)
         {
-
             // BOTTOM LIMIT
             if (targetPosition.y - CameraManager.Instance.Height / 2 <= m_bottomLimit)
             {
@@ -213,9 +191,6 @@ public class CameraMovement : MonoBehaviour
             }
             
         }
-
-
-
     }
     private void OnDrawGizmos()
     {

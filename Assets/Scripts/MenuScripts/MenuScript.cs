@@ -10,15 +10,12 @@ public class MenuScript : MonoBehaviour
     private void Awake()
     {
         menu = GetComponent<Canvas>();
-        menu.enabled = false;
+        menu.enabled = true;
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown("escape"))
-        {
-            menu.enabled = !menu.enabled;
-        }
+        if (Input.GetKeyDown("escape")) { menu.enabled = !menu.enabled; }
 
         if (menu.enabled == true) { Pause(); } 
         else { Continue(); }
@@ -39,8 +36,5 @@ public class MenuScript : MonoBehaviour
         menu.enabled = false;
         Time.timeScale = 1;
     }
-    public void Pause()
-    {
-        Time.timeScale = 0;
-    }
+    public void Pause() { Time.timeScale = 0; }
 }

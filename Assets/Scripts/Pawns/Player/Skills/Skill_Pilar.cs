@@ -72,10 +72,8 @@ public class Skill_Pilar : MonoBehaviour
         if (!p_isPilarUnlocked) { return ; }
         if (InputManager.Instance.Skill1ButtonHold && m_player.IsGrounded && !m_isPilarOnCooldown && m_cooldownTimer.IsFinished)
         {
-            if(!m_isCasting) { StartCasting(); }
-            else {
-                MoveMarker();
-            }
+            if (!m_isCasting) { StartCasting(); }
+            else { MoveMarker(); }
         }
         else if (InputManager.Instance.Skill1buttonReleased && m_canPlayerUseSkill)
         {
@@ -117,12 +115,10 @@ public class Skill_Pilar : MonoBehaviour
         }
 
         if (!hasFoundWall) { m_markerMaxDistance = MARKER_MAX_DISTANCE; }
-
     }
 
     void MoveMarker()
     {
-
         // check if the marker is within limtis, if not change direction
 
         // check for minimum distance (the player position)
@@ -156,7 +152,6 @@ public class Skill_Pilar : MonoBehaviour
             //m_markerInitialRaycastPosition = new Vector3(transform.position.x - m_markerMaxDistance, m_marker.transform.position.y, m_markerInitialRaycastPosition.z);
             m_markerInitialRaycastPosition = m_markerLastRaycastPosition;
         }
-
         m_canPlayerUseSkill = CheckPositionForPillar(m_markerInitialRaycastPosition);
     }
 
@@ -224,7 +219,7 @@ public class Skill_Pilar : MonoBehaviour
         // check if any of the hits is a floor
         canPilarBeSummoned = CheckBoxCastWithScenario(collisions);
 
-        if(canPilarBeSummoned)
+        if (canPilarBeSummoned)
         {
             m_pilar.SetActive(true);
             Vector3 pilarPosition = centerBottomPosition + Vector2.up * m_pilarColider.size.y / 2;
@@ -233,7 +228,7 @@ public class Skill_Pilar : MonoBehaviour
 
             RaycastHit2D[] hits;
 
-            hits = Physics2D.RaycastAll(m_markerInitialRaycastPosition, new Vector2(m_player.FacingDirection(), 0), m_pilarColider.size.x/2);
+            hits = Physics2D.RaycastAll(m_markerInitialRaycastPosition, new Vector2(m_player.FacingDirection(), 0), m_pilarColider.size.x / 2);
 
             bool hasFoundWall = false;
 
@@ -248,14 +243,11 @@ public class Skill_Pilar : MonoBehaviour
             }
 
             m_pilarScript.Summon(pilarPosition);
-            
+
             Debug.Log("Pillar summoned");
             m_cooldownTimer.Run();
         }
-        else
-        {
-            Debug.Log("ERROR at summoning pillar");
-        }
+        else { Debug.Log("ERROR at summoning pillar"); }
     }
 
     /// <summary>
@@ -275,8 +267,5 @@ public class Skill_Pilar : MonoBehaviour
         return true;
     }
 
-    public bool IsOnCooldown
-    {
-        set { m_isPilarOnCooldown = value; }
-    }
+    public bool IsOnCooldown { set { m_isPilarOnCooldown = value; } }
 }

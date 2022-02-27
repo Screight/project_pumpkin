@@ -8,10 +8,7 @@ public class BoneScript : MonoBehaviour
     public float m_direction = 1.0f;
     public Rigidbody2D m_rb2D;
 
-    private void Awake()
-    {
-        m_rb2D = GetComponent<Rigidbody2D>();
-    }
+    private void Awake() { m_rb2D = GetComponent<Rigidbody2D>(); }
 
     public void Shoot(int p_direction)
     {
@@ -20,10 +17,6 @@ public class BoneScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "floor")
-        {
-            this.gameObject.SetActive(false);
-        }
+        if (collision.gameObject.tag == "floor") { this.gameObject.SetActive(false); }
     }
-
 }

@@ -106,7 +106,6 @@ public class Player : MonoBehaviour
 
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_objectGroundedTo = "";
-
     }
 
     private void Start()
@@ -138,10 +137,7 @@ public class Player : MonoBehaviour
             Physics2D.IgnoreLayerCollision(6, 7, false);
         }
 
-        if (m_noControlTimer.IsFinished)
-        {
-            m_canIMove = true;
-        }
+        if (m_noControlTimer.IsFinished) { m_canIMove = true; }
 
         switch (m_state)
         {
@@ -152,40 +148,36 @@ public class Player : MonoBehaviour
                     Attack();
                     Jump();
                     Dash();
-                }
-                break;
-
+                } break;
             case PLAYER_STATE.MOVE:
                 {
                     Move(PLAYER_STATE.IDLE);
                     Attack();
                     Jump();
                     Dash();
-                }
-                break;
+                } break;
             case PLAYER_STATE.DASH:     { Dash(); } break;
-            case PLAYER_STATE.JUMP:     {
+            case PLAYER_STATE.JUMP:     
+                {
                     Move(PLAYER_STATE.JUMP);
                     Dash();
                 } break;
-            case PLAYER_STATE.FALL:     {
+            case PLAYER_STATE.FALL:     
+                {
                     Move(PLAYER_STATE.FALL);
                     Dash();
                 } break;
-            case PLAYER_STATE.ATTACK:   { Attack(); } break;
-            case PLAYER_STATE.CAST:     { } break;
-            case PLAYER_STATE.GROUNDBREAKER: { } break;
-            case PLAYER_STATE.DEATH:    { } break;
-            case PLAYER_STATE.HURT: { } break;
+            case PLAYER_STATE.ATTACK:           { Attack(); } break;
+            case PLAYER_STATE.CAST:             { } break;
+            case PLAYER_STATE.GROUNDBREAKER:    { } break;
+            case PLAYER_STATE.DEATH:            { } break;
+            case PLAYER_STATE.HURT:             { } break;
         }
     }
 
     void Attack()
     {
-        if (InputManager.Instance.AttackButtonPressed)
-        {
-            m_keepAttacking = true;
-        }
+        if (InputManager.Instance.AttackButtonPressed) { m_keepAttacking = true; }
 
         if (!m_isGrounded) { m_keepAttacking = false; }
 
@@ -200,11 +192,7 @@ public class Player : MonoBehaviour
             m_keepAttacking = false;
             foreach (Collider2D enemy in enemiesInAttackRange)
             {
-                if (enemy.gameObject.tag == "enemy")
-                {
-                    enemy.gameObject.GetComponent<Enemy>().Damage(1);
-                }
-                
+                if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }         
             }
         }
         else if (m_state == PLAYER_STATE.ATTACK)
@@ -301,23 +289,15 @@ public class Player : MonoBehaviour
             SetPlayerAnimation(PLAYER_ANIMATION.FALL);
         }
 
-        if(m_rb2D.velocity.y < -200)
-        {
-            m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -200.0f);
-        }
-
+        if (m_rb2D.velocity.y < -200) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -200.0f); }
     }
 
-    public void SetPlayerState(PLAYER_STATE value)
-    {
-        m_state = value;
-    }
+    public void SetPlayerState(PLAYER_STATE value) { m_state = value; }
 
     void FlipX()
     {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        m_isFacingRight = !m_isFacingRight;
-        
+        m_isFacingRight = !m_isFacingRight;       
     }
 
     public int FacingDirection()
@@ -342,7 +322,6 @@ public class Player : MonoBehaviour
             m_health--;
             m_spriteRenderer.color = Color.black;
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -368,7 +347,6 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "spike")
         {
-            //m_spriteRenderer.color = Color.black;
             m_health--;
             m_transicionScript.LocalCheckpointTransition();
         }

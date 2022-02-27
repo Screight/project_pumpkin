@@ -13,11 +13,6 @@ public class GroundCheck : MonoBehaviour
         playerRigidBody = GetComponentInParent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         //Idle si estás en suelo || DENTRO de plataforma NO saltando/cayendo
@@ -52,11 +47,9 @@ public class GroundCheck : MonoBehaviour
             if (playerScript.State != PLAYER_STATE.DASH)
             {
                 playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;
-            }
-            
+            }           
         }
     }
-
 }
 
 

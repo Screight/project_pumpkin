@@ -22,10 +22,7 @@ public class Skill_Groundbreaker : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-        m_cooldownTimer.Duration = m_cooldown;
-    }
+    private void Start() { m_cooldownTimer.Duration = m_cooldown; }
 
     private void Update()
     {
@@ -63,16 +60,12 @@ public class Skill_Groundbreaker : MonoBehaviour
                     float velocityY = 100;
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
-                Physics2D.IgnoreLayerCollision(6, 7, false);
-                
+                Physics2D.IgnoreLayerCollision(6, 7, false);                
             }
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;
             m_cooldownTimer.Run();
         }
     }
-
-
-
 }
                 

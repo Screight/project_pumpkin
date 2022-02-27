@@ -109,7 +109,4 @@ public class CameraControl : MonoBehaviour
             else { m_isPositiveTransition = false; }
         }
     }
-
-    
-
 }

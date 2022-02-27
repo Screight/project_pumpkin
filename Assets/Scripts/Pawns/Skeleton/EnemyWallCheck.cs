@@ -15,9 +15,6 @@ public class EnemyWallCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor")
-        {
-            skeletonScript.IsGrounded = false;
-        }
+        if (collision.gameObject.tag == "floor") { skeletonScript.IsGrounded = false; }
     }
 }

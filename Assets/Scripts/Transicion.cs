@@ -15,15 +15,7 @@ public class Transicion : MonoBehaviour
     Animator m_animator;
     int m_currentState;
 
-    private void Awake()
-    {
-        m_animator = GetComponent<Animator>();
-    }
-
-    private void Update()
-    {
-        
-    }
+    private void Awake() { m_animator = GetComponent<Animator>(); }
 
     private void Start()
     {
@@ -45,15 +37,6 @@ public class Transicion : MonoBehaviour
         m_cameraScript.SetCameraToPlayerPosition();
         ChangeAnimationState(m_animationHash[(int)TRANSITION_ANIMATION.FADE_IN]);
     }
-
-    public void FadeOut()
-    {
-        ChangeAnimationState(m_animationHash[(int)TRANSITION_ANIMATION.FADE_OUT]);
-    }
-
-    public void LocalCheckpointTransition()
-    {
-        FadeOut();
-    }
-
+    public void FadeOut() { ChangeAnimationState(m_animationHash[(int)TRANSITION_ANIMATION.FADE_OUT]); }
+    public void LocalCheckpointTransition() { FadeOut(); }
 }

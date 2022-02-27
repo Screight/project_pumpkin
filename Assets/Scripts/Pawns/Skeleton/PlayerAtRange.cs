@@ -11,18 +11,13 @@ public class PlayerAtRange : MonoBehaviour
         skeletonScript = GetComponentInParent<Skeleton>();
         skeletonRigidBody = GetComponentInParent<Rigidbody2D>();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            skeletonScript.IsPlayerAtRange = true;
-        }
+        if (collision.gameObject.tag == "Player") { skeletonScript.IsPlayerAtRange = true; }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            skeletonScript.IsPlayerAtRange = false;
-        }
+        if (collision.gameObject.tag == "Player") { skeletonScript.IsPlayerAtRange = false; }
     }
 }

@@ -23,17 +23,7 @@ public class Fireball : MonoBehaviour
         m_maxDurationTimer.Duration = m_maxDuration;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (m_maxDurationTimer.IsFinished) { DesactivateFireBall(); }
-    }
+    void Update() { if (m_maxDurationTimer.IsFinished) { DesactivateFireBall(); } }
 
     public void Fire()
     {
@@ -48,8 +38,9 @@ public class Fireball : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") /*|| collision.CompareTag("vine")*/)
+        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") || collision.CompareTag("vine"))
         {
+            DesactivateFireBall();
         }
 
         if (collision.gameObject.CompareTag("enemy"))
@@ -70,5 +61,4 @@ public class Fireball : MonoBehaviour
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;
     }
-
 }

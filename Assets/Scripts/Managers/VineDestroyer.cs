@@ -5,10 +5,9 @@ using UnityEngine;
 public class VineDestroyer : MonoBehaviour
 {
     private SpriteRenderer vineSprite;
-    private void Awake()
-    {
-        vineSprite = GetComponent<SpriteRenderer>();
-    }
+
+    private void Awake() { vineSprite = GetComponent<SpriteRenderer>(); }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "fireball")

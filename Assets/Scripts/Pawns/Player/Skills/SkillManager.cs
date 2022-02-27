@@ -26,42 +26,34 @@ public class SkillManager : MonoBehaviour
         m_groundbreaker = GetComponent<Skill_Groundbreaker>();
 
         m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
     }
 
     private void Update()
     {
         switch (m_playerScript.State)
         {
-            case PLAYER_STATE.MOVE: {
+            case PLAYER_STATE.MOVE: 
+                {
                     m_skillFireball.Fireball(m_isFireballUnlocked);
                     m_skillPilar.Pilar(m_isPilarUnlocked);
-                }
-                break;
-
-            case PLAYER_STATE.IDLE: {
+                } break;
+            case PLAYER_STATE.IDLE: 
+                {
                     m_skillFireball.Fireball(m_isFireballUnlocked);
                     m_skillPilar.Pilar(m_isPilarUnlocked);
                     m_groundbreaker.Groundbreaker(m_isGroundbreakerUnlocked);
-                }
-                break;
-
-            case PLAYER_STATE.JUMP: {
+                } break;
+            case PLAYER_STATE.JUMP: 
+                {
                     m_skillFireball.Fireball(m_isFireballUnlocked);
                     m_groundbreaker.Groundbreaker(m_isGroundbreakerUnlocked);
-                }
-                break;
-
-            case PLAYER_STATE.FALL: {
+                } break;
+            case PLAYER_STATE.FALL: 
+                {
                     m_skillFireball.Fireball(m_isFireballUnlocked);
                     m_groundbreaker.Groundbreaker(m_isGroundbreakerUnlocked);
-                }
-                break;
-
-            case PLAYER_STATE.CAST: {
-                    m_skillPilar.Pilar(m_isPilarUnlocked);
-                }
-                break;
+                } break;
+            case PLAYER_STATE.CAST: { m_skillPilar.Pilar(m_isPilarUnlocked); } break;
         }
     }
 
@@ -74,5 +66,4 @@ public class SkillManager : MonoBehaviour
         get { return m_instance; }
         private set { }
     }
-
 }

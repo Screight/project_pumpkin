@@ -25,7 +25,6 @@ public class EnemyManager : MonoBehaviour
         {
             enemies[i] = enemiesObject[i].GetComponent<Enemy>();
         }
-
     }
 
     public void ResetAllAliveEnemies()
@@ -41,5 +40,4 @@ public class EnemyManager : MonoBehaviour
         get { return m_instance; }
         private set { }
     }
-
 }

@@ -28,5 +28,4 @@ public class Enemy : MonoBehaviour
         transform.localPosition = m_initialPosition;
         m_state = m_initialState;
     }
-
 }

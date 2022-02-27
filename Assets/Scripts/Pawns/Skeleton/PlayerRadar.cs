@@ -13,18 +13,11 @@ public class PlayerRadar : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            skeletonScript.IsPlayerNear = true;
-        }
-        //else { skeletonScript.IsPlayerNear = false; }
+        if (collision.gameObject.tag == "Player") { skeletonScript.IsPlayerNear = true; }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            skeletonScript.IsPlayerNear = false;
-        }
+        if (collision.gameObject.tag == "Player") { skeletonScript.IsPlayerNear = false; }
     }
 }

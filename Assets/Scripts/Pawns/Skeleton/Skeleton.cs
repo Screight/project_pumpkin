@@ -38,8 +38,8 @@ public class Skeleton : Enemy
     bool m_playerIsNear;
     bool m_playerIsAtRange;
 
-    protected override void Awake() {
-
+    protected override void Awake() 
+    {
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
@@ -58,7 +58,6 @@ public class Skeleton : Enemy
         Bone = Instantiate(prefabBone, new Vector3(0, 0, 0), Quaternion.identity);
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
-
     }
 
     void Start()
@@ -82,18 +81,10 @@ public class Skeleton : Enemy
         switch (m_state)
         {
             default:break;
-            case ENEMY_STATE.MOVE:
-                { Move(ENEMY_STATE.MOVE); }
-                break;
-            case ENEMY_STATE.CHASE:
-                { Chase(ENEMY_STATE.MOVE); }
-                break;
-            case ENEMY_STATE.ATTACK:
-                { Attack(ENEMY_STATE.CHASE); }
-                break;
-            case ENEMY_STATE.DIE:
-                { Die(); }
-                break;
+            case ENEMY_STATE.MOVE:      { Move(ENEMY_STATE.MOVE); } break;
+            case ENEMY_STATE.CHASE:     { Chase(ENEMY_STATE.MOVE); } break;
+            case ENEMY_STATE.ATTACK:    { Attack(ENEMY_STATE.CHASE); } break;
+            case ENEMY_STATE.DIE:       { Die(); } break;
         }
 
         float delta = Time.fixedDeltaTime * 1000;
@@ -175,7 +166,6 @@ public class Skeleton : Enemy
                 m_boneScript.Shoot(FacingDirection());
                 boneTimer.Run();
             }
-
         }
         else
         {
@@ -205,8 +195,8 @@ public class Skeleton : Enemy
     }
     public int FacingDirection()
     {
-        if (m_isFacingRight) return 1;
-        else return -1;
+        if (m_isFacingRight) { return 1; }
+        else { return -1; }
     }
 
     public ENEMY_STATE State { set { m_state = value; } get { return m_state; } }
