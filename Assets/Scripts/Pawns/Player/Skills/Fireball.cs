@@ -9,7 +9,9 @@ public class Fireball : MonoBehaviour
     Rigidbody2D m_rb2D;
     [SerializeField] Skill_Fireball m_skillFireBallScript;
     Timer m_maxDurationTimer;
-    float m_maxDuration = 5.0f;
+    float m_maxDuration = 3.0f;
+
+    bool m_isFacingRight = true;
 
     int m_damage = 1;
 
@@ -18,12 +20,13 @@ public class Fireball : MonoBehaviour
         m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         m_rb2D = GetComponent<Rigidbody2D>();
         m_maxDurationTimer = gameObject.AddComponent<Timer>();
+        m_maxDurationTimer.Duration = m_maxDuration;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        m_maxDurationTimer.Duration = m_maxDuration;
+        
     }
 
     // Update is called once per frame
@@ -34,6 +37,11 @@ public class Fireball : MonoBehaviour
 
     public void Fire()
     {
+        if(m_playerScript.IsFacingRight && !m_isFacingRight || !m_playerScript.IsFacingRight && m_isFacingRight)
+        {
+            FlipX();
+        }
+
         m_rb2D.velocity = new Vector2(m_playerScript.FacingDirection() * m_speed,0);
         transform.position = m_playerScript.gameObject.transform.position + new Vector3(0,10,0);
         m_maxDurationTimer.Run();
@@ -42,7 +50,6 @@ public class Fireball : MonoBehaviour
     {
         if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") /*|| collision.CompareTag("vine")*/)
         {
-            DesactivateFireBall();
         }
 
         if (collision.gameObject.CompareTag("enemy"))
@@ -57,4 +64,11 @@ public class Fireball : MonoBehaviour
         m_skillFireBallScript.IsFireBallAvailable = true;
         m_maxDurationTimer.Stop();
     }
+
+    void FlipX()
+    {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        m_isFacingRight = !m_isFacingRight;
+    }
+
 }

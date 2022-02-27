@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Groundbreaker : MonoBehaviour
+public class Skill_Groundbreaker : MonoBehaviour
 {
+    [SerializeField] SpellCooldown m_spellCooldownScript;
+    float m_cooldown = 3.0f;
     float m_maxSpeed = -300;
     Player m_player;
     Rigidbody2D m_rb2D;
@@ -11,16 +13,32 @@ public class Groundbreaker : MonoBehaviour
     [SerializeField] LayerMask m_enemyLayer;
 
     bool m_isUsingGroundBreaker = false;
+    Timer m_cooldownTimer;
 
     private void Awake()
     {
+        m_cooldownTimer = gameObject.AddComponent<Timer>();
         m_player = GetComponent<Player>();
         m_rb2D = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        m_cooldownTimer.Duration = m_cooldown;
+    }
+
     private void Update()
     {
-        if (InputManager.Instance.Skill2ButtonPressed && !m_player.IsGrounded)
+        if (m_cooldownTimer.IsRunning)
+        {
+            m_spellCooldownScript.FillGroundbreakerCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
+        }
+    }
+
+    public void Groundbreaker(bool p_isUnlocked)
+    {
+        if (!p_isUnlocked) { return; }
+        if (InputManager.Instance.Skill2ButtonPressed && m_cooldownTimer.IsFinished && !m_player.IsGrounded)
         {
             m_rb2D.velocity = new Vector2(0, m_maxSpeed);
             m_player.SetPlayerState(PLAYER_STATE.GROUNDBREAKER);
@@ -40,18 +58,21 @@ public class Groundbreaker : MonoBehaviour
                     enemy.GetComponent<Skeleton>().State = ENEMY_STATE.AIR;
                     enemy.gameObject.GetComponent<Enemy>().Damage(1);
                     float velocityX;
-                    if(transform.position.x == enemy.transform.position.x) { velocityX = 0; }
-                    else { velocityX = -50 * (transform.position - enemy.transform.position).normalized.x / Mathf.Abs((transform.position - enemy.transform.position).normalized.x);};
+                    if (transform.position.x == enemy.transform.position.x) { velocityX = 0; }
+                    else { velocityX = -50 * (transform.position - enemy.transform.position).normalized.x / Mathf.Abs((transform.position - enemy.transform.position).normalized.x); };
                     float velocityY = 100;
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
                 Physics2D.IgnoreLayerCollision(6, 7, false);
-                m_isUsingGroundBreaker = false;
-                m_player.IsUsingGroundBreaker = false;
+                
             }
+            m_isUsingGroundBreaker = false;
+            m_player.IsUsingGroundBreaker = false;
+            m_cooldownTimer.Run();
         }
-
     }
+
+
 
 }
                 

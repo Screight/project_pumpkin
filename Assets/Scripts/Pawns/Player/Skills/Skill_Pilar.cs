@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Skill_Pilar : MonoBehaviour
 {
+    [SerializeField] SpellCooldown m_spellCooldownScript;
+    Timer m_cooldownTimer;
+    float m_cooldown = 3.0f;
+    bool m_isPilarAvailable;
+
     [SerializeField] GameObject m_marker;
     Vector3 m_markerInitialRaycastPosition;
     Vector3 m_markerLastRaycastPosition;
@@ -33,6 +38,7 @@ public class Skill_Pilar : MonoBehaviour
 
     private void Awake()
     {
+        m_cooldownTimer = gameObject.AddComponent<Timer>();
         m_pilar.SetActive(false);
 
         m_player = GetComponent<Player>();
@@ -41,30 +47,30 @@ public class Skill_Pilar : MonoBehaviour
         m_isPilarOnCooldown = false;
         m_isPilarSummoned = false;
         m_canPlayerUseSkill = false;
+        m_isPilarAvailable = true;
 
         m_pilarDuration = 0;
+    }
+
+    private void Update()
+    {
+        if (m_cooldownTimer.IsRunning)
+        {
+            m_spellCooldownScript.FillPilarCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
+        }
     }
 
     private void Start()
     {
         m_pilarScript = m_pilar.GetComponent<Pilar>();
+        m_cooldownTimer.Duration = m_cooldown;
         m_rb2D = m_player.GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    public void Pilar(bool p_isPilarUnlocked)
     {
-        switch (m_player.State)
-        {
-            default: { } break;
-            case PLAYER_STATE.MOVE: { Pilar(); } break;
-            case PLAYER_STATE.IDLE: { Pilar(); } break;
-            case PLAYER_STATE.CAST: { Pilar(); } break;
-        }
-    }
-
-    private void Pilar()
-    {
-        if (InputManager.Instance.Skill1ButtonHold && m_player.IsGrounded && !m_isPilarOnCooldown)
+        if (!p_isPilarUnlocked) { return ; }
+        if (InputManager.Instance.Skill1ButtonHold && m_player.IsGrounded && !m_isPilarOnCooldown && m_cooldownTimer.IsFinished)
         {
             if(!m_isCasting) { StartCasting(); }
             else {
@@ -244,6 +250,7 @@ public class Skill_Pilar : MonoBehaviour
             m_pilarScript.Summon(pilarPosition);
             
             Debug.Log("Pillar summoned");
+            m_cooldownTimer.Run();
         }
         else
         {
