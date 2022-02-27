@@ -584,7 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_transicionScript: {fileID: 0}
   m_speed: 60
-  m_dashDistance: 50
+  m_dashDistance: 30
   m_dashDuration: 0.3
   m_maxHeight: 35
   m_timeToPeak1: 0.6

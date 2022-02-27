@@ -45,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 300, y: 100}
+  m_Size: {x: 120, y: 30}
   m_EdgeRadius: 0
 --- !u!114 &433329262506137365
 MonoBehaviour:
@@ -408,7 +408,7 @@ MonoBehaviour:
   player: {fileID: 0}
   left_limit: {fileID: 433329263508409560}
   right_limit: {fileID: 433329262800548460}
-  m_speed: 25
+  m_speed: 12
   m_isFacingRight: 0
 --- !u!95 &433329262852216656
 Animator:
@@ -556,7 +556,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -567,7 +567,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 120, y: 100}
+  m_Size: {x: 80, y: 30}
   m_EdgeRadius: 0
 --- !u!114 &433329264130662098
 MonoBehaviour:

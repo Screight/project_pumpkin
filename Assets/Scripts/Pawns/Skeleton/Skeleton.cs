@@ -6,8 +6,7 @@ public enum ENEMY_STATE { MOVE, CHASE, DIE, ATTACK, AIR }
 public enum ENEMY_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
 
 public class Skeleton : Enemy
-{
-    
+{   
     Rigidbody2D m_rb2D;
     Animator m_animator;
     Timer boneTimer;
@@ -15,7 +14,7 @@ public class Skeleton : Enemy
 
     string m_moveAnimationName      = "Move";
     string m_reloadAnimationName    = "Reload";
-    string m_fireAnimationName    = "Fire";
+    string m_fireAnimationName      = "Fire";
     string m_dieAnimationName       = "Die";
     int[] m_animationHash = new int[(int)ENEMY_ANIMATION.LAST_NO_USE];
 
@@ -137,7 +136,11 @@ public class Skeleton : Enemy
     void Chase(ENEMY_STATE p_defaultState)
     {
         //Player Near but Unnaccesible
-        if (m_playerIsNear && !m_playerIsAtRange && m_isGrounded == false) { m_rb2D.velocity = Vector2.zero; }
+        if (m_playerIsNear && !m_playerIsAtRange && m_isGrounded == false) 
+        { 
+            m_rb2D.velocity = Vector2.zero;
+            ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.RELOAD]);
+        }
         else if (m_playerIsNear)
         {
             //Ready to Attack
@@ -145,7 +148,7 @@ public class Skeleton : Enemy
             //Chasing
             if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
             if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
-            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
+            m_rb2D.velocity = new Vector2(FacingDirection() * (m_speed + 6), m_rb2D.velocity.y);
         }
         else { m_state = p_defaultState; }
     }
