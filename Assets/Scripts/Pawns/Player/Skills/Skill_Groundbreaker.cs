@@ -6,7 +6,7 @@ public class Skill_Groundbreaker : MonoBehaviour
 {
     [SerializeField] SpellCooldown m_spellCooldownScript;
     float m_cooldown = 3.0f;
-    float m_maxSpeed = -300;
+    [SerializeField] float m_maxSpeed = -100;
     Player m_player;
     Rigidbody2D m_rb2D;
 
@@ -39,6 +39,7 @@ public class Skill_Groundbreaker : MonoBehaviour
         {
             m_rb2D.velocity = new Vector2(0, m_maxSpeed);
             m_player.SetPlayerState(PLAYER_STATE.GROUNDBREAKER);
+            m_player.SetPlayerAnimation(PLAYER_ANIMATION.GROUNDBREAKER);
             m_rb2D.gravityScale = 0;
             Physics2D.IgnoreLayerCollision(6, 7, true);
             m_player.IsUsingGroundBreaker = true;

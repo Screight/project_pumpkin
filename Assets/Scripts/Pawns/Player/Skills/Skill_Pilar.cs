@@ -70,7 +70,7 @@ public class Skill_Pilar : MonoBehaviour
     public void Pilar(bool p_isPilarUnlocked)
     {
         if (!p_isPilarUnlocked) { return ; }
-        if (InputManager.Instance.Skill1ButtonHold && m_player.IsGrounded && !m_isPilarOnCooldown && m_cooldownTimer.IsFinished)
+        if (InputManager.Instance.Skill3ButtonHold && m_player.IsGrounded && !m_isPilarOnCooldown && m_cooldownTimer.IsFinished)
         {
             if (!m_isCasting) { StartCasting(); }
             else { MoveMarker(); }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, BOOST, LAND, ATTACK, DEATH, CAST, GROUNDBREAKER, HURT }
-public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, LAST_NO_USE}
+public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, GROUNDBREAKER, GROUNDBREAKER_LOOP, LAST_NO_USE}
 
 public class Player : MonoBehaviour
 {
@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     string m_attack_2_AnimationName = "attack_2";
     string m_attack_3_AnimationName = "attack_3";
     string m_hitAnimationName       = "hit";
+    string m_groundbreakerAnimationName       = "groundbreaker";
+    string m_groundbreakerLoopAnimationName       = "groundbreakerLoop";
     int[] m_animationHash = new int[(int)PLAYER_ANIMATION.LAST_NO_USE];
 
     void ChangeAnimationState(int p_newState)
@@ -123,6 +125,8 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.FALL]     = Animator.StringToHash(m_fallAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.LAND]     = Animator.StringToHash(m_landAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.HIT]      = Animator.StringToHash(m_hitAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]      = Animator.StringToHash(m_groundbreakerAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]      = Animator.StringToHash(m_groundbreakerLoopAnimationName);
     }
 
     private void Update()
@@ -177,15 +181,7 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
-            case PLAYER_STATE.ATTACK:
-                {
-                    Move(PLAYER_STATE.ATTACK);
-                }
-                break;
-            case PLAYER_STATE.CAST:             { } break;
-            case PLAYER_STATE.GROUNDBREAKER:    { } break;
-            case PLAYER_STATE.DEATH:            { } break;
-            case PLAYER_STATE.HURT:             { } break;
+            case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
         }
     }
 
@@ -249,7 +245,6 @@ public class Player : MonoBehaviour
             {
                 ChangeAnimationState(m_animationHash[(int)p_defaultState]);
             }
-            
         }
 
         if (m_canIMove)
@@ -295,11 +290,12 @@ public class Player : MonoBehaviour
             m_noControlTimer.Duration = 0.5f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            m_health--;
             m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             Physics2D.IgnoreLayerCollision(6, 7, true);
+            GameManager.Instance.ModifyHealthUI(false);
+            ModifyHP(-1);
         }
     }
 
@@ -317,10 +313,11 @@ public class Player : MonoBehaviour
             m_noControlTimer.Run();
             m_canIMove = false;
             collision.gameObject.SetActive(false);
-            m_health--;
             m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
+            GameManager.Instance.ModifyHealthUI(false);
+            ModifyHP(-1);
         }
     }
 
@@ -331,6 +328,11 @@ public class Player : MonoBehaviour
             m_health--;
             m_transicionScript.LocalCheckpointTransition();
         }
+    }
+
+    public void ModifyHP(int p_healthModifier)
+    {
+        m_health += p_healthModifier;
     }
 
     #region Accessors

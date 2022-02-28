@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("Base Awake called");
     }
 
-    public void Damage(int p_damage)
+    public virtual void Damage(int p_damage)
     {
         skeletonHealth -= p_damage;
         if (skeletonHealth <= 0) { m_state = ENEMY_STATE.DIE; }

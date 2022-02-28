@@ -12,6 +12,7 @@ TagManager:
   - spike
   - fireball
   - vine
+  - hearth
   layers:
   - Default
   - TransparentFX

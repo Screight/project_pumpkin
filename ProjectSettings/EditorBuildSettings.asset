@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BlockOut.unity
     guid: 97b04699711f00d4e8ba273b862c6ab9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BlockOutMatias.unity
     guid: 797b9c22d0187d045a43fdba6cd16e49
+  - enabled: 1
+    path: Assets/Scenes/NEW Blockout.unity
+    guid: 63aa20258b65e5d4ea7481170bcca9bd
   m_configObjects: {}

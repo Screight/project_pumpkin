@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ENEMY_STATE { MOVE, CHASE, DIE, ATTACK, AIR }
-public enum ENEMY_ANIMATION { MOVE, RELOAD, FIRE, DIE, LAST_NO_USE }
+public enum ENEMY_STATE { MOVE, CHASE, DIE, ATTACK, HIT, AIR }
+public enum ENEMY_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, LAST_NO_USE }
 
 public class Skeleton : Enemy
 {   
     Rigidbody2D m_rb2D;
+    Collider2D m_collider2D;
     Animator m_animator;
     Timer boneTimer;
     int m_skeletonState;
@@ -16,6 +17,7 @@ public class Skeleton : Enemy
     string m_reloadAnimationName    = "Reload";
     string m_fireAnimationName      = "Fire";
     string m_dieAnimationName       = "Die";
+    string m_hitAnimationName       = "hit";
     int[] m_animationHash = new int[(int)ENEMY_ANIMATION.LAST_NO_USE];
 
     [SerializeField] GameObject prefabBone;
@@ -54,6 +56,7 @@ public class Skeleton : Enemy
         m_spawnPosX = transform.position.x;
         m_hasReturned = true;
 
+        m_collider2D = GetComponent<Collider2D>();
         Bone = Instantiate(prefabBone, new Vector3(0, 0, 0), Quaternion.identity);
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
@@ -65,6 +68,7 @@ public class Skeleton : Enemy
         m_animationHash[(int)ENEMY_ANIMATION.RELOAD] = Animator.StringToHash(m_reloadAnimationName);
         m_animationHash[(int)ENEMY_ANIMATION.FIRE] = Animator.StringToHash(m_fireAnimationName);
         m_animationHash[(int)ENEMY_ANIMATION.DIE] = Animator.StringToHash(m_dieAnimationName);
+        m_animationHash[(int)ENEMY_ANIMATION.HIT] = Animator.StringToHash(m_hitAnimationName);
 
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
@@ -83,7 +87,9 @@ public class Skeleton : Enemy
             case ENEMY_STATE.MOVE:      { Move(ENEMY_STATE.MOVE); } break;
             case ENEMY_STATE.CHASE:     { Chase(ENEMY_STATE.MOVE); } break;
             case ENEMY_STATE.ATTACK:    { Attack(ENEMY_STATE.CHASE); } break;
-            case ENEMY_STATE.DIE:       { Die(); } break;
+            case ENEMY_STATE.DIE:       { 
+                    Die(); } break;
+            case ENEMY_STATE.HIT:       { } break;
         }
 
         float delta = Time.fixedDeltaTime * 1000;
@@ -180,14 +186,22 @@ public class Skeleton : Enemy
     void Die()
     {
         ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.DIE]);
+        m_collider2D.enabled = false;
         Destroy(gameObject, 0.5f);
     }
 
     void ChangeAnimationState(int p_newState)
     {
-        if (m_skeletonState == p_newState) { return; }
-        m_animator.Play(p_newState);
-        m_skeletonState = p_newState;     
+        if (m_skeletonState == p_newState && m_skeletonState != m_animationHash[(int)ENEMY_ANIMATION.HIT]) { return; }
+        
+        if (m_skeletonState == p_newState && m_skeletonState == m_animationHash[(int)ENEMY_ANIMATION.HIT]) {
+            m_animator.Play(p_newState,-1,0);
+        }
+        else
+        {
+            m_animator.Play(p_newState);
+            m_skeletonState = p_newState;
+        }
     }
 
     void FlipX()
@@ -200,6 +214,19 @@ public class Skeleton : Enemy
     {
         if (m_isFacingRight) { return 1; }
         else { return -1; }
+    }
+
+    public override void Damage(int p_damage)
+    {
+        m_state = ENEMY_STATE.HIT;
+        ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.HIT]);
+        base.Damage(p_damage);
+    }
+
+    void ReturnToNormalState()
+    {
+        m_state = ENEMY_STATE.MOVE;
+        ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.MOVE]);
     }
 
     public ENEMY_STATE State { set { m_state = value; } get { return m_state; } }

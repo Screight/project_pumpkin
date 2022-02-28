@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
+    [SerializeField] SpellCooldown m_spellsUI;
     static SkillManager m_instance;
 
     Skill_Fireball m_skillFireball;
@@ -53,17 +54,50 @@ public class SkillManager : MonoBehaviour
                     m_skillFireball.Fireball(m_isFireballUnlocked);
                     m_groundbreaker.Groundbreaker(m_isGroundbreakerUnlocked);
                 } break;
+            case PLAYER_STATE.BOOST:
+                {
+                    m_skillFireball.Fireball(m_isFireballUnlocked);
+                    m_groundbreaker.Groundbreaker(m_isGroundbreakerUnlocked);
+                }
+                break;
+            case PLAYER_STATE.LAND:
+                {
+                    m_skillFireball.Fireball(m_isFireballUnlocked);
+                    m_skillPilar.Pilar(m_isPilarUnlocked);
+                }
+                break;
             case PLAYER_STATE.CAST: { m_skillPilar.Pilar(m_isPilarUnlocked); } break;
+            case PLAYER_STATE.GROUNDBREAKER:
+                {
+                    m_groundbreaker.Groundbreaker(m_isGroundbreakerUnlocked);
+                }
+                break;
         }
     }
 
-    public void UnlockFireball() { m_isFireballUnlocked = true; }
-    public void UnlockPilar() { m_isPilarUnlocked = true; }
-    public void UnlockGroundbreaker() { m_isGroundbreakerUnlocked = true; }
+    public void UnlockFireball() { 
+        m_isFireballUnlocked = true;
+        m_spellsUI.ActivateFireballUI();
+    }
+    public void UnlockGroundbreaker()
+    {
+        m_isGroundbreakerUnlocked = true;
+        m_spellsUI.ActivateGroundbreakerUI();
+    }
+    public void UnlockPilar()
+    {
+        m_isPilarUnlocked = true;
+        m_spellsUI.ActivatePilarUI();
+    }
 
     static public SkillManager Instance
     {
         get { return m_instance; }
         private set { }
     }
+
+    public bool IsFireballUnlocked { get { return m_isFireballUnlocked; } }
+    public bool IsGroundbreakerUnlocked { get { return m_isGroundbreakerUnlocked; } }
+    public bool IsPilarUnlocked { get { return m_isPilarUnlocked; } }
+
 }
