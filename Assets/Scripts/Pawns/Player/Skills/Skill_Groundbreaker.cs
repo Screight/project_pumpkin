@@ -10,6 +10,10 @@ public class Skill_Groundbreaker : MonoBehaviour
     Player m_player;
     Rigidbody2D m_rb2D;
 
+    [SerializeField] Animator m_impactAnimator;
+    string m_groundbrekerImpactAnimationName = "impact";
+    int m_animationHash;
+
     [SerializeField] LayerMask m_enemyLayer;
 
     bool m_isUsingGroundBreaker = false;
@@ -20,9 +24,13 @@ public class Skill_Groundbreaker : MonoBehaviour
         m_cooldownTimer = gameObject.AddComponent<Timer>();
         m_player = GetComponent<Player>();
         m_rb2D = GetComponent<Rigidbody2D>();
+
     }
 
-    private void Start() { m_cooldownTimer.Duration = m_cooldown; }
+    private void Start() {
+        m_cooldownTimer.Duration = m_cooldown;
+        m_animationHash = Animator.StringToHash(m_groundbrekerImpactAnimationName); ;
+    }
 
     private void Update()
     {
@@ -63,6 +71,7 @@ public class Skill_Groundbreaker : MonoBehaviour
                 }
                 Physics2D.IgnoreLayerCollision(6, 7, false);                
             }
+            m_impactAnimator.Play(m_animationHash);
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;
             m_cooldownTimer.Run();
