@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 433329262558307992}
   - component: {fileID: 433329262558307990}
   - component: {fileID: 433329262558307991}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemyGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 433329264130662100}
   - component: {fileID: 433329264130662099}
   - component: {fileID: 433329264130662098}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 6598010076299284991}
   - component: {fileID: 5373698465013064931}
   - component: {fileID: 3773514586185093976}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemyWallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

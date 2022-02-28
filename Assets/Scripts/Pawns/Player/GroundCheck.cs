@@ -16,26 +16,36 @@ public class GroundCheck : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         //Idle si estás en suelo || DENTRO de plataforma NO saltando/cayendo
-        if ((collision.gameObject.tag == "floor" || collision.gameObject.tag == "enemy" || (collision.gameObject.tag == "platform" && playerScript.State != PLAYER_STATE.JUMP)) && playerScript.State != PLAYER_STATE.DASH)
+        if ((collision.gameObject.tag == "floor" || collision.gameObject.tag == "enemy" || (collision.gameObject.tag == "platform" && playerScript.State != PLAYER_STATE.JUMP && playerScript.State != PLAYER_STATE.BOOST)) && playerScript.State != PLAYER_STATE.DASH)
         {
             playerScript.IsGrounded = true;
             playerScript.ObjectGroundedTo = collision.gameObject.tag;
             playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0);
+            playerScript.HasUsedDash = false;
 
             if(playerScript.State != PLAYER_STATE.MOVE && playerScript.State != PLAYER_STATE.CAST && playerScript.State != PLAYER_STATE.DASH && playerScript.State != PLAYER_STATE.ATTACK)
             {
-                playerScript.SetPlayerState(PLAYER_STATE.IDLE);
-                playerScript.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
+                if(playerScript.State == PLAYER_STATE.FALL)
+                {
+                    playerScript.SetPlayerState(PLAYER_STATE.LAND);
+                    playerScript.SetPlayerAnimation(PLAYER_ANIMATION.LAND);
+                }
+                else if (playerScript.State != PLAYER_STATE.LAND)
+                {
+                    playerScript.SetPlayerState(PLAYER_STATE.IDLE);
+                    playerScript.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
+                }
+                
             }           
         }
         //Subir si estás DENTRO de plataforma saltando
-        if (collision.gameObject.tag == "platform" && playerScript.State == PLAYER_STATE.JUMP)
+        if (collision.gameObject.tag == "platform" && (playerScript.State == PLAYER_STATE.JUMP || playerScript.State == PLAYER_STATE.BOOST))
         {
             playerScript.IsGrounded = false;
 
             playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
-            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 80);
+            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 40);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

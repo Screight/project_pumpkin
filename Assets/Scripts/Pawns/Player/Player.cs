@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, ATTACK, DEATH, CAST, GROUNDBREAKER, HURT }
-public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, ATTACK_1, ATTACK_2, ATTACK_3, HIT, LAST_NO_USE}
+public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, BOOST, LAND, ATTACK, DEATH, CAST, GROUNDBREAKER, HURT }
+public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, LAST_NO_USE}
 
 public class Player : MonoBehaviour
 {
     [SerializeField] Transicion m_transicionScript;
 
+    bool m_hasUsedDash = false;
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
     bool m_isUsingGroundBreaker = false;
@@ -55,8 +56,8 @@ public class Player : MonoBehaviour
 
     float m_dashCurrentTime;
     [SerializeField] float m_dashDistance = 100;
-    [SerializeField] float m_dashDuration = 0.5f;
-    float m_dashSpeed = 200.0f;
+    float m_dashDuration = 4/6f;
+    [SerializeField] float m_dashSpeed = 200.0f;
 
     public float m_maxHeight = 10.0f;
     public float m_timeToPeak1 = 1f;
@@ -120,9 +121,6 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.JUMP]     = Animator.StringToHash(m_jumpAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.FALL]     = Animator.StringToHash(m_fallAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.LAND]     = Animator.StringToHash(m_landAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.ATTACK_1] = Animator.StringToHash(m_attack_1_AnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.ATTACK_2] = Animator.StringToHash(m_attack_2_AnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.ATTACK_3] = Animator.StringToHash(m_attack_3_AnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.HIT]      = Animator.StringToHash(m_hitAnimationName);
     }
 
@@ -130,7 +128,7 @@ public class Player : MonoBehaviour
     {
         if (Time.timeScale == 0) { return; } //Game Paused
 
-        if (m_invulnerableTimer.IsFinished && m_isInvulnerable)
+        if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
             m_isInvulnerable = false;
             m_spriteRenderer.color = Color.white;
@@ -145,18 +143,22 @@ public class Player : MonoBehaviour
             case PLAYER_STATE.IDLE:
                 {
                     Move(PLAYER_STATE.IDLE);
-                    Attack();
                     Jump();
                     Dash();
                 } break;
             case PLAYER_STATE.MOVE:
                 {
                     Move(PLAYER_STATE.IDLE);
-                    Attack();
                     Jump();
                     Dash();
                 } break;
             case PLAYER_STATE.DASH:     { Dash(); } break;
+            case PLAYER_STATE.BOOST:
+                {
+                    Move(PLAYER_STATE.BOOST);
+                    Dash();
+                }
+                break;
             case PLAYER_STATE.JUMP:     
                 {
                     Move(PLAYER_STATE.JUMP);
@@ -167,7 +169,13 @@ public class Player : MonoBehaviour
                     Move(PLAYER_STATE.FALL);
                     Dash();
                 } break;
-            case PLAYER_STATE.ATTACK:           { Attack(); } break;
+            case PLAYER_STATE.LAND:
+                {
+                    Move(PLAYER_STATE.LAND);
+                    Jump();
+                    Dash();
+                }
+                break;
             case PLAYER_STATE.CAST:             { } break;
             case PLAYER_STATE.GROUNDBREAKER:    { } break;
             case PLAYER_STATE.DEATH:            { } break;
@@ -175,50 +183,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Attack()
-    {
-        if (InputManager.Instance.AttackButtonPressed) { m_keepAttacking = true; }
 
-        if (!m_isGrounded) { m_keepAttacking = false; }
-
-        if (m_keepAttacking && m_currentAttackDuration == 0)
-        {
-            if (!m_isGrounded) { return; }
-            if(m_state != PLAYER_STATE.ATTACK) { SetPlayerState(PLAYER_STATE.ATTACK); }
-            m_rb2D.velocity = Vector2.zero;
-            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.ATTACK_1 + m_attackComboCount]);
-            
-            Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(m_attackPosition.position, M_ATTACK_RANGE, m_enemyLayer);
-            m_keepAttacking = false;
-            foreach (Collider2D enemy in enemiesInAttackRange)
-            {
-                if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }         
-            }
-        }
-        else if (m_state == PLAYER_STATE.ATTACK)
-        {
-            if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-            {
-                m_currentAttackDuration += Time.deltaTime;
-            }
-            else
-            {
-                if (m_keepAttacking && m_attackComboCount < 2)
-                {
-                    m_currentAttackDuration = 0;
-                    m_attackComboCount++;
-                }
-                else
-                {
-                    m_currentAttackDuration = 0;
-                    m_keepAttacking = false;
-                    SetPlayerState(PLAYER_STATE.IDLE);
-                    ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.IDLE]);
-                    m_attackComboCount = 0;
-                }
-            }
-        }
-    }
 
     void Jump()
     {
@@ -226,8 +191,8 @@ public class Player : MonoBehaviour
             m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
-            SetPlayerState(PLAYER_STATE.JUMP);
-            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.JUMP]);
+            SetPlayerState(PLAYER_STATE.BOOST);
+            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.BOOST]);
             m_isGrounded = false;
           }
     }
@@ -247,13 +212,14 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (InputManager.Instance.DashButtonPressed && m_state != PLAYER_STATE.DASH)
+        if (InputManager.Instance.DashButtonPressed && m_state != PLAYER_STATE.DASH && m_noControlTimer.IsFinished && !m_hasUsedDash)
         {
             m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
             m_state = PLAYER_STATE.DASH;
             m_rb2D.gravityScale = 0;
             Physics2D.IgnoreLayerCollision(6, 7, true);
+            m_hasUsedDash = true;
         }
     }
 
@@ -265,7 +231,7 @@ public class Player : MonoBehaviour
             if (!m_isFacingRight && horizontalAxisValue > 0)    { FlipX(); }
             if (m_isFacingRight && horizontalAxisValue < 0)     { FlipX(); }
 
-            if (m_isGrounded) {
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND) {
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
             }
@@ -321,12 +287,15 @@ public class Player : MonoBehaviour
             m_canIMove = false;
             m_health--;
             m_spriteRenderer.color = Color.black;
+            m_state = PLAYER_STATE.JUMP;
+            m_isGrounded = false;
+            Physics2D.IgnoreLayerCollision(6, 7, true);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker)
+        if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
             float velocityX = -50 * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
             float velocityY = 100;
@@ -340,6 +309,8 @@ public class Player : MonoBehaviour
             collision.gameObject.SetActive(false);
             m_health--;
             m_spriteRenderer.color = Color.black;
+            m_state = PLAYER_STATE.JUMP;
+            m_isGrounded = false;
         }
     }
 
@@ -366,7 +337,9 @@ public class Player : MonoBehaviour
     public PLAYER_STATE State
     {
         get { return m_state; }
-        set { m_state = value; }
+        set { m_state = value;
+            if(m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = Vector2.zero; }
+        }
     }
 
     public float Gravity1
@@ -392,6 +365,11 @@ public class Player : MonoBehaviour
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
     public Vector3 Speed { get { return m_rb2D.velocity; } }
+
+    public bool HasUsedDash
+    {
+        set { m_hasUsedDash = value; }
+    }
 
     #endregion
 }

@@ -1,52 +1,49 @@
 fileFormatVersion: 2
-guid: 8bc0e4ac06be9d849844e62c54c3bada
+guid: a3c263eb71197a04781993a806088162
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4819962228271358946
-    second: attack_combo_3_0
+      213: 8237110621238318970
+    second: ura_dash_0
   - first:
-      213: 5715134276155719030
-    second: attack_combo_3_1
+      213: -4611488878575172667
+    second: ura_dash_1
   - first:
-      213: -7034406318061772417
-    second: attack_combo_3_2
+      213: 8533035133363980692
+    second: ura_dash_2
   - first:
-      213: 8424406957527054601
-    second: attack_combo_3_3
+      213: 2977223540087269921
+    second: ura_dash_3
   - first:
-      213: -7809760558781103047
-    second: attack_combo_3_4
+      213: -5528394972422997693
+    second: ura_dash_4
   - first:
-      213: 5147377124185717127
-    second: attack_combo_3_5
+      213: 1314181492313946494
+    second: ura_dash_5
   - first:
-      213: -3384771107306351388
-    second: attack_combo_3_6
+      213: -1887665319846137631
+    second: ura_dash_6
   - first:
-      213: 1498519447479023234
-    second: attack_combo_3_7
+      213: -6023206924198091364
+    second: ura_dash_7
   - first:
-      213: 3074413099895983817
-    second: attack_combo_3_8
+      213: -4056103363190413377
+    second: ura_dash_8
   - first:
-      213: 2559878136565049740
-    second: attack_combo_3_9
+      213: 1944620350101516410
+    second: ura_dash_9
   - first:
-      213: -7755811023407008027
-    second: attack_combo_3_10
+      213: -7238258723014341031
+    second: ura_dash_10
   - first:
-      213: 593874063175905907
-    second: attack_combo_3_11
+      213: 7276297763698259869
+    second: ura_dash_11
   - first:
-      213: -1225869787028691518
-    second: attack_combo_3_12
+      213: -38188044648158113
+    second: ura_dash_12
   - first:
-      213: 1935848276899442066
-    second: attack_combo_3_13
-  - first:
-      213: 1424169431998189717
-    second: attack_combo_3_14
+      213: -7499787851673571541
+    second: ura_dash_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -136,316 +133,295 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attack_combo_3_0
+      name: ura_dash_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 21
-        width: 65
-        height: 59
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.1904762, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1cd51104ed0c1db0800000000000000
-      internalID: -4819962228271358946
+      spriteID: a77d18ac778105270800000000000000
+      internalID: 8237110621238318970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_1
+      name: ura_dash_1
       rect:
         serializedVersion: 2
-        x: 95
-        y: 21
-        width: 65
-        height: 59
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.2, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67dbbe5185c305f40800000000000000
-      internalID: 5715134276155719030
+      spriteID: 5c3ccd23c43b000c0800000000000000
+      internalID: -4611488878575172667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_2
+      name: ura_dash_2
       rect:
         serializedVersion: 2
-        x: 175
-        y: 21
-        width: 65
-        height: 59
+        x: 32
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.21428572, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f712a2e39b4c06e90800000000000000
-      internalID: -7034406318061772417
+      spriteID: 499861c6e3e6b6670800000000000000
+      internalID: 8533035133363980692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_3
+      name: ura_dash_3
       rect:
         serializedVersion: 2
-        x: 255
-        y: 21
-        width: 65
-        height: 59
+        x: 48
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.22222222, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 909bab25e7189e470800000000000000
-      internalID: 8424406957527054601
+      spriteID: 12a25d32909315920800000000000000
+      internalID: 2977223540087269921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_4
+      name: ura_dash_4
       rect:
         serializedVersion: 2
-        x: 335
-        y: 21
-        width: 65
-        height: 59
+        x: 64
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.21428572, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9340ff056282e9390800000000000000
-      internalID: -7809760558781103047
+      spriteID: 349fba230123743b0800000000000000
+      internalID: -5528394972422997693
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_5
+      name: ura_dash_5
       rect:
         serializedVersion: 2
-        x: 415
-        y: 21
-        width: 65
-        height: 59
+        x: 80
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.1904762, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 789bf04f8382f6740800000000000000
-      internalID: 5147377124185717127
+      spriteID: e79f3cbba19ec3210800000000000000
+      internalID: 1314181492313946494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_6
+      name: ura_dash_6
       rect:
         serializedVersion: 2
-        x: 495
-        y: 21
-        width: 65
-        height: 59
+        x: 96
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.1875, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e4dff67c90e601d0800000000000000
-      internalID: -3384771107306351388
+      spriteID: 1e03fb3946aadc5e0800000000000000
+      internalID: -1887665319846137631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_7
+      name: ura_dash_7
       rect:
         serializedVersion: 2
-        x: 575
-        y: 21
-        width: 65
-        height: 59
+        x: 112
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.18461539, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 286700c7f7fcbc410800000000000000
-      internalID: 1498519447479023234
+      spriteID: c95ef7af635496ca0800000000000000
+      internalID: -6023206924198091364
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_8
+      name: ura_dash_8
       rect:
         serializedVersion: 2
-        x: 655
-        y: 21
-        width: 65
-        height: 59
+        x: 128
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.18461539, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ce8b18ec628aaa20800000000000000
-      internalID: 3074413099895983817
+      spriteID: fb7a4c83b73d5b7c0800000000000000
+      internalID: -4056103363190413377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_9
+      name: ura_dash_9
       rect:
         serializedVersion: 2
-        x: 735
-        y: 21
-        width: 65
-        height: 59
+        x: 144
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.18461539, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c89af363a93868320800000000000000
-      internalID: 2559878136565049740
+      spriteID: a70fbc6c7edacfa10800000000000000
+      internalID: 1944620350101516410
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_10
+      name: ura_dash_10
       rect:
         serializedVersion: 2
-        x: 815
-        y: 21
-        width: 65
-        height: 59
+        x: 160
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.18461539, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e634cc57f2dd5490800000000000000
-      internalID: -7755811023407008027
+      spriteID: 95e8b569a0a8c8b90800000000000000
+      internalID: -7238258723014341031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_11
+      name: ura_dash_11
       rect:
         serializedVersion: 2
-        x: 895
-        y: 21
-        width: 65
-        height: 59
+        x: 176
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.19672132, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 372fae0605ddd3800800000000000000
-      internalID: 593874063175905907
+      spriteID: d97343db34a9af460800000000000000
+      internalID: 7276297763698259869
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_12
+      name: ura_dash_12
       rect:
         serializedVersion: 2
-        x: 975
-        y: 21
-        width: 65
-        height: 59
+        x: 192
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.2, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c565437ce5dcfee0800000000000000
-      internalID: -1225869787028691518
+      spriteID: f5c641cfc24587ff0800000000000000
+      internalID: -38188044648158113
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_3_13
+      name: ura_dash_13
       rect:
         serializedVersion: 2
-        x: 1055
-        y: 21
-        width: 65
-        height: 59
+        x: 208
+        y: 0
+        width: 16
+        height: 16
       alignment: 9
-      pivot: {x: 0.2, y: 0}
+      pivot: {x: 0.625, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29da4a350c38dda10800000000000000
-      internalID: 1935848276899442066
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attack_combo_3_14
-      rect:
-        serializedVersion: 2
-        x: 1135
-        y: 21
-        width: 65
-        height: 59
-      alignment: 9
-      pivot: {x: 0.2, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 590d8368d8aa3c310800000000000000
-      internalID: 1424169431998189717
+      spriteID: b2fe43a3fa66be790800000000000000
+      internalID: -7499787851673571541
       vertices: []
       indices: 
       edges: []

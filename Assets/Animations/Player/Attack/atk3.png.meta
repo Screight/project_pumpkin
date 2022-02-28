@@ -1,25 +1,37 @@
 fileFormatVersion: 2
-guid: e468d21ee55eaf6408ae3951d011aa5b
+guid: 3bb79865927ecda4ea885c17ac05c8ca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3858142951918610735
-    second: attack_combo_2_0
+      213: -2684345698607025799
+    second: atk3_0
   - first:
-      213: 748561806725407571
-    second: attack_combo_2_1
+      213: 430179783330033826
+    second: atk3_1
   - first:
-      213: 8572894714689195802
-    second: attack_combo_2_2
+      213: 68433446059051024
+    second: atk3_2
   - first:
-      213: -4077524552687191670
-    second: attack_combo_2_3
+      213: 4407083861248114144
+    second: atk3_3
   - first:
-      213: -4866459253754956593
-    second: attack_combo_2_4
+      213: 9173620297166588005
+    second: atk3_4
   - first:
-      213: -6670393141347640948
-    second: attack_combo_2_5
+      213: -3047444445719782475
+    second: atk3_5
+  - first:
+      213: 6287091656411042276
+    second: atk3_6
+  - first:
+      213: 6586163962052173244
+    second: atk3_7
+  - first:
+      213: 2920770813518301005
+    second: atk3_8
+  - first:
+      213: 865205485052938818
+    second: atk3_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -109,127 +121,211 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attack_combo_2_0
+      name: atk3_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 21
-        width: 64
-        height: 59
-      alignment: 9
-      pivot: {x: 0.1875, y: 0}
+        x: 0
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2929cdc290ea8530800000000000000
-      internalID: 3858142951918610735
+      spriteID: 9713e243fc94fbad0800000000000000
+      internalID: -2684345698607025799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_2_1
+      name: atk3_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a0f0f6db3e48f500800000000000000
+      internalID: 430179783330033826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atk3_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0180b1b4bdf13f000800000000000000
+      internalID: 68433446059051024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atk3_3
       rect:
         serializedVersion: 2
         x: 96
-        y: 21
-        width: 64
-        height: 59
-      alignment: 9
-      pivot: {x: 0.20689656, y: 0}
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 353ea464ffc636a00800000000000000
-      internalID: 748561806725407571
+      spriteID: 0edfc0d0c6b192d30800000000000000
+      internalID: 4407083861248114144
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_2_2
+      name: atk3_4
       rect:
         serializedVersion: 2
-        x: 176
-        y: 21
-        width: 64
-        height: 59
-      alignment: 9
-      pivot: {x: 0.20689656, y: 0}
+        x: 128
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1f8fd5625a09f670800000000000000
-      internalID: 8572894714689195802
+      spriteID: 5688dec6e0f3f4f70800000000000000
+      internalID: 9173620297166588005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_2_3
+      name: atk3_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb92243c6d45b5d0800000000000000
+      internalID: -3047444445719782475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atk3_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e1d3b21d8c304750800000000000000
+      internalID: 6287091656411042276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atk3_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbd599e7a31c66b50800000000000000
+      internalID: 6586163962052173244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atk3_8
       rect:
         serializedVersion: 2
         x: 256
-        y: 21
-        width: 64
-        height: 59
-      alignment: 9
-      pivot: {x: 0.21818182, y: 0}
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a897522e509b967c0800000000000000
-      internalID: -4077524552687191670
+      spriteID: d47461a7499a88820800000000000000
+      internalID: 2920770813518301005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_combo_2_4
+      name: atk3_9
       rect:
         serializedVersion: 2
-        x: 336
-        y: 21
-        width: 64
-        height: 59
-      alignment: 9
-      pivot: {x: 0.2, y: 0}
+        x: 288
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc4f502a71dd67cb0800000000000000
-      internalID: -4866459253754956593
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attack_combo_2_5
-      rect:
-        serializedVersion: 2
-        x: 416
-        y: 21
-        width: 64
-        height: 59
-      alignment: 9
-      pivot: {x: 0.19354838, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c8995c977c00e63a0800000000000000
-      internalID: -6670393141347640948
+      spriteID: 24acc4afdc3d10c00800000000000000
+      internalID: 865205485052938818
       vertices: []
       indices: 
       edges: []
