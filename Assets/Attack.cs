@@ -57,11 +57,6 @@ public class Attack : MonoBehaviour
             default: break;
 
         }
-
-        
-
-        
-
     }
 
     void Attack1()
@@ -71,6 +66,7 @@ public class Attack : MonoBehaviour
         {
             if (m_player.State != PLAYER_STATE.ATTACK) {
                 m_player.State = PLAYER_STATE.ATTACK;
+                m_player.ReduceSpeed();
             }
             m_keepAttacking = true;
             if (!m_isAttacking /*&& m_windowToComboTimer.IsFinished*/)
@@ -99,7 +95,7 @@ public class Attack : MonoBehaviour
         Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - offset, transform.position.y), M_ATTACK_RANGE, m_enemyLayer);
         foreach (Collider2D enemy in enemiesInAttackRange)
         {
-            //if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }
+            if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }
             Debug.Log("Enemy hit");
         }
     }
@@ -124,6 +120,7 @@ public class Attack : MonoBehaviour
             m_player.State = PLAYER_STATE.IDLE;
             ChangeAnimationState(m_animationHash[0]);
             m_attackComboNumber = 0;
+            m_player.SetToNormalSpeed();
         }
         
     }

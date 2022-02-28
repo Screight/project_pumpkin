@@ -24,6 +24,7 @@ public class MenuScript : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        menu.enabled = false;
     }
     public void Exit()
     {
@@ -36,5 +37,6 @@ public class MenuScript : MonoBehaviour
         menu.enabled = false;
         Time.timeScale = 1;
     }
+
     public void Pause() { Time.timeScale = 0; }
 }

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Transicion m_transicionScript;
 
+    float m_reducedMovementSpeed = 30.0f;
     bool m_hasUsedDash = false;
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
 
     float m_dashCurrentTime;
     [SerializeField] float m_dashDistance = 100;
-    float m_dashDuration = 4/6f;
+    float m_dashDuration = 3/6f;
     [SerializeField] float m_dashSpeed = 200.0f;
 
     public float m_maxHeight = 10.0f;
@@ -176,6 +177,11 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
+            case PLAYER_STATE.ATTACK:
+                {
+                    Move(PLAYER_STATE.ATTACK);
+                }
+                break;
             case PLAYER_STATE.CAST:             { } break;
             case PLAYER_STATE.GROUNDBREAKER:    { } break;
             case PLAYER_STATE.DEATH:            { } break;
@@ -239,7 +245,11 @@ public class Player : MonoBehaviour
         else
         {
             m_state = p_defaultState;
-            ChangeAnimationState(m_animationHash[(int)p_defaultState]);
+            if(m_state != PLAYER_STATE.ATTACK)
+            {
+                ChangeAnimationState(m_animationHash[(int)p_defaultState]);
+            }
+            
         }
 
         if (m_canIMove)
@@ -365,6 +375,10 @@ public class Player : MonoBehaviour
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
     public Vector3 Speed { get { return m_rb2D.velocity; } }
+
+    public void ReduceSpeed() { m_speed = m_reducedMovementSpeed; }
+
+    public void SetToNormalSpeed() { m_speed = 60; }
 
     public bool HasUsedDash
     {

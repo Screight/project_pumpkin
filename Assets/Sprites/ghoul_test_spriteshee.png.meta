@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: fe210f5e23ee6514ebbf2171d96da3bc
+guid: 0334b3ea2e7833c41a121bf88b9688c6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1659573616651085283
-    second: ura_idle_A_0
+      213: -1820144692580675066
+    second: ghoul_test_spriteshee_0
   - first:
-      213: -7570451896115565987
-    second: ura_idle_A_1
+      213: -7728245060173482806
+    second: ghoul_test_spriteshee_1
   - first:
-      213: 350057541400897062
-    second: ura_idle_A_2
+      213: -6023932191668486830
+    second: ghoul_test_spriteshee_2
   - first:
-      213: -6300503127309701780
-    second: ura_idle_A_3
+      213: -5078071478271652299
+    second: ghoul_test_spriteshee_3
+  - first:
+      213: 5141175161083634469
+    second: ghoul_test_spriteshee_4
+  - first:
+      213: -4542548907967546780
+    second: ghoul_test_spriteshee_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -139,85 +145,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ura_idle_A_0
+      name: ghoul_test_spriteshee_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.625, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e5291b596df70710800000000000000
-      internalID: 1659573616651085283
+      spriteID: 6029aeeab0c8db6e0800000000000000
+      internalID: -1820144692580675066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ura_idle_A_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.625, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d5a69d64c1a50f690800000000000000
-      internalID: -7570451896115565987
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ura_idle_A_2
+      name: ghoul_test_spriteshee_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.625, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 626a52eaa77abd400800000000000000
-      internalID: 350057541400897062
+      spriteID: ac431335012cfb490800000000000000
+      internalID: -7728245060173482806
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ura_idle_A_3
+      name: ghoul_test_spriteshee_2
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.625, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6da77689cd1098a0800000000000000
-      internalID: -6300503127309701780
+      spriteID: 25d3f8c7691b66ca0800000000000000
+      internalID: -6023932191668486830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghoul_test_spriteshee_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53e439135e01789b0800000000000000
+      internalID: -5078071478271652299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghoul_test_spriteshee_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 523a374e19f195740800000000000000
+      internalID: 5141175161083634469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghoul_test_spriteshee_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46a71cde5df95f0c0800000000000000
+      internalID: -4542548907967546780
       vertices: []
       indices: 
       edges: []
