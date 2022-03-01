@@ -16,7 +16,8 @@ public class Player : MonoBehaviour
     SpriteRenderer m_spriteRenderer;
     bool m_isUsingGroundBreaker = false;
 
-    int m_health = 5;
+    int m_totalHealthPoints = 8;
+    int m_health = 8;
 
     bool m_isInvulnerable = false;
     Timer m_invulnerableTimer;
@@ -315,7 +316,8 @@ public class Player : MonoBehaviour
             m_noControlTimer.Duration = 0.2f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
@@ -399,6 +401,16 @@ public class Player : MonoBehaviour
     public bool HasUsedDash
     {
         set { m_hasUsedDash = value; }
+    }
+
+    public int HealthPoints
+    {
+        get { return m_health; }
+    }
+
+    public int TotalHealthPoints
+    {
+        get { return m_totalHealthPoints; }
     }
 
     #endregion
