@@ -7,6 +7,7 @@ public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, GR
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] DashDust m_dashDustScript;
     [SerializeField] Transicion m_transicionScript;
 
     float m_reducedMovementSpeed = 30.0f;
@@ -223,6 +224,7 @@ public class Player : MonoBehaviour
             m_rb2D.gravityScale = 0;
             Physics2D.IgnoreLayerCollision(6, 7, true);
             m_hasUsedDash = true;
+            m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), IsFacingRight);
         }
     }
 
