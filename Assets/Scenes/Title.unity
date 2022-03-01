@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 833329075}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1337931623
@@ -848,7 +848,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -550355497
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1819400996
