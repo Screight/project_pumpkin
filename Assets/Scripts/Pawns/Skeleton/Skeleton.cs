@@ -98,6 +98,7 @@ public class Skeleton : Enemy
 
     void Move(ENEMY_STATE p_defaultState)
     {
+        ChangeAnimationState(m_animationHash[(int)ENEMY_ANIMATION.MOVE]);
         if (m_hasReturned == true)
         {
             m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
@@ -170,9 +171,12 @@ public class Skeleton : Enemy
         {
             if (boneTimer.IsFinished)
             {
-                Bone.SetActive(true);
-                Bone.transform.position = transform.position;
-                m_boneScript.Shoot(FacingDirection());
+                //Bone.SetActive(true);
+                BoneScript boneScript= Instantiate(prefabBone).GetComponent<BoneScript>();
+                boneScript.gameObject.transform.position = transform.position;
+                boneScript.Shoot(FacingDirection());
+                //Bone.transform.position = transform.position;
+                //m_boneScript.Shoot(FacingDirection());
                 boneTimer.Run();
             }
         }
