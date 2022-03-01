@@ -253,7 +253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8100820308285545279
 Transform:
   m_ObjectHideFlags: 0
@@ -262,8 +262,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4577418816438749576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.5, z: 1}
+  m_LocalPosition: {x: 1.2, y: 5.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2483708738412794923}
   m_RootOrder: 2
@@ -305,10 +305,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 538339855
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e5e16900b2e234448e6c2c3d4a90578, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f95e9592d8fb9a04db0237b713b8d860, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -651,7 +651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.2, y: -18.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5559658922750157610}
@@ -793,7 +793,7 @@ MonoBehaviour:
   m_transicionScript: {fileID: 0}
   m_speed: 60
   m_dashDistance: 40
-  m_dashSpeed: 100
+  m_dashDuration: 0.5
   m_maxHeight: 35
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
@@ -832,6 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spellCooldownScript: {fileID: 0}
+  m_markerSprite: {fileID: 953591079877642030}
   m_marker: {fileID: 4577418816438749576}
   m_pilar: {fileID: 6054658955083523244}
   m_pilarCooldown: 2

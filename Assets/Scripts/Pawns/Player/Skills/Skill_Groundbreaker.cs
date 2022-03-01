@@ -69,7 +69,6 @@ public class Skill_Groundbreaker : MonoBehaviour
                     float velocityY = 100;
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
-                Physics2D.IgnoreLayerCollision(6, 7, false);
             }
             SoundManager.Instance.PlayOnce(AudioClipName.GROUNDBREAKER, 1f);
             m_impactAnimator.Play(m_animationHash);

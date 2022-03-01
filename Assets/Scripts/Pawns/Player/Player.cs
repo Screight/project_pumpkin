@@ -336,6 +336,13 @@ public class Player : MonoBehaviour
         m_health += p_healthModifier;
     }
 
+    public void StartInvulnerability(float p_invulnerableDuration)
+    {
+        m_invulnerableTimer.Duration = p_invulnerableDuration;
+        m_invulnerableTimer.Stop();
+        m_invulnerableTimer.Run();
+    }
+
     #region Accessors
 
     public bool IsFacingRight

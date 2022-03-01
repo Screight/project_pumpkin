@@ -8,6 +8,7 @@ public class Skill_Pilar : MonoBehaviour
     Timer m_cooldownTimer;
     float m_cooldown = 3.0f;
     bool m_isPilarAvailable;
+    [SerializeField] SpriteRenderer m_markerSprite;
 
     [SerializeField] GameObject m_marker;
     Vector3 m_markerInitialRaycastPosition;
@@ -65,6 +66,7 @@ public class Skill_Pilar : MonoBehaviour
         m_pilarScript = m_pilar.GetComponent<Pilar>();
         m_cooldownTimer.Duration = m_cooldown;
         m_rb2D = m_player.GetComponent<Rigidbody2D>();
+        m_markerSprite.enabled = false;
     }
 
     public void Pilar(bool p_isPilarUnlocked)
@@ -83,11 +85,13 @@ public class Skill_Pilar : MonoBehaviour
             SummonPilar();
             m_player.SetPlayerState(PLAYER_STATE.IDLE);
             m_canPlayerUseSkill = false;
+            m_markerSprite.enabled = false;
         }
     }
 
     void StartCasting()
     {
+        m_markerSprite.enabled = true;
         m_isCasting = true;
         if (m_player.IsFacingRight) m_markerDirection = 1;
         else m_markerDirection = -1;
@@ -101,7 +105,7 @@ public class Skill_Pilar : MonoBehaviour
 
         RaycastHit2D[] hits;
 
-        hits = Physics2D.RaycastAll(transform.position, new Vector2(m_player.FacingDirection(), 0), MARKER_MAX_DISTANCE);
+       hits = Physics2D.RaycastAll(transform.position + Vector3.up, new Vector3(m_player.FacingDirection(), 0, 0), MARKER_MAX_DISTANCE);
 
         bool hasFoundWall = false;
 
