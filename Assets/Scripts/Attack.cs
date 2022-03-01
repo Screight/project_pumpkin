@@ -58,13 +58,13 @@ public class Attack : MonoBehaviour
                 Attack1();
                 break;
             case PLAYER_STATE.BOOST:
-                Attack1();
+                //Attack1();
                 break;
             case PLAYER_STATE.JUMP:
-                Attack1();
+                //Attack1();
                 break;
             case PLAYER_STATE.FALL:
-                Attack1();
+                //Attack1();
                 break;
             default: break;
 

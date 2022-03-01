@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799879348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 78.74628, y: -25.663717, z: 53.413486}
+  m_LocalPosition: {x: 78.74628, y: -25.663717, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6455235162950911169}
@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 851272843}
   - component: {fileID: 851272839}
   - component: {fileID: 700607250}
+  - component: {fileID: 141253593}
+  - component: {fileID: 2642076292021052267}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -333,3 +335,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_healthUI: {fileID: 0}
+--- !u!114 &141253593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455235162950911171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab528ca179066f4094227c42174f71b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_defaultCheckpoint: {fileID: 0}
+--- !u!114 &2642076292021052267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455235162950911171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67cc53c80527134aa43bbbb18e73079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
