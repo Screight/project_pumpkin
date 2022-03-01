@@ -35,7 +35,7 @@ AnimationClip:
       value: {fileID: 6244727058061061567, guid: 5595ed48a3d017942ab829d0fd73df1f, type: 3}
     - time: 0.3
       value: {fileID: -11521977823125247, guid: 5595ed48a3d017942ab829d0fd73df1f, type: 3}
-    - time: 0.36666667
+    - time: 0.33333334
       value: {fileID: -7169059190514807250, guid: 5595ed48a3d017942ab829d0fd73df1f, type: 3}
     attribute: m_Sprite
     path: 
@@ -70,7 +70,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6
+    m_StopTime: 0.38333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -90,14 +90,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.33333334
+  - time: 0.11666667
     functionName: Hit
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
+  - time: 0.38333333
     functionName: TransitionToNextComboAttack
     data: 
     objectReferenceParameter: {fileID: 0}
