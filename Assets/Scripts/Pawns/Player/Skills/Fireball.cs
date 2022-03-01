@@ -32,6 +32,7 @@ public class Fireball : MonoBehaviour
             FlipX();
         }
 
+        SoundManager.Instance.PlayOnce(AudioClipName.FIREBALL, 1f);
         m_rb2D.velocity = new Vector2(m_playerScript.FacingDirection() * m_speed,0);
         transform.position = m_playerScript.gameObject.transform.position + new Vector3(0,10,0);
         m_maxDurationTimer.Run();

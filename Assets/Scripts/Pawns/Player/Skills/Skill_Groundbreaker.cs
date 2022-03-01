@@ -6,7 +6,7 @@ public class Skill_Groundbreaker : MonoBehaviour
 {
     [SerializeField] SpellCooldown m_spellCooldownScript;
     float m_cooldown = 3.0f;
-    [SerializeField] float m_maxSpeed = -100;
+    [SerializeField] float m_maxSpeed;
     Player m_player;
     Rigidbody2D m_rb2D;
 
@@ -69,8 +69,9 @@ public class Skill_Groundbreaker : MonoBehaviour
                     float velocityY = 100;
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
-                Physics2D.IgnoreLayerCollision(6, 7, false);                
+                Physics2D.IgnoreLayerCollision(6, 7, false);
             }
+            SoundManager.Instance.PlayOnce(AudioClipName.GROUNDBREAKER, 1f);
             m_impactAnimator.Play(m_animationHash);
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;

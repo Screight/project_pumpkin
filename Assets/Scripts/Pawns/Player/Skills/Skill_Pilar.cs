@@ -75,7 +75,7 @@ public class Skill_Pilar : MonoBehaviour
             if (!m_isCasting) { StartCasting(); }
             else { MoveMarker(); }
         }
-        else if (InputManager.Instance.Skill1buttonReleased && m_canPlayerUseSkill)
+        else if (InputManager.Instance.Skill3buttonReleased && m_canPlayerUseSkill)
         {
             m_pilarSummonDistance = new Vector2(m_marker.transform.position.x, m_marker.transform.position.y);
             m_marker.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);

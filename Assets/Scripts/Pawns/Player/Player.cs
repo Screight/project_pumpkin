@@ -59,8 +59,8 @@ public class Player : MonoBehaviour
 
     float m_dashCurrentTime;
     [SerializeField] float m_dashDistance = 100;
-    float m_dashDuration = 3/6f;
-    [SerializeField] float m_dashSpeed = 200.0f;
+    [SerializeField] float m_dashDuration = 3/6f;
+    float m_dashSpeed = 200.0f;
 
     public float m_maxHeight = 10.0f;
     public float m_timeToPeak1 = 1f;
@@ -181,7 +181,8 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
-            case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
+            case PLAYER_STATE.ATTACK: { 
+                    Move(PLAYER_STATE.ATTACK); } break;
         }
     }
 
@@ -233,7 +234,7 @@ public class Player : MonoBehaviour
             if (!m_isFacingRight && horizontalAxisValue > 0)    { FlipX(); }
             if (m_isFacingRight && horizontalAxisValue < 0)     { FlipX(); }
 
-            if (m_isGrounded && m_state != PLAYER_STATE.LAND) {
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK) {
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
             }
@@ -253,7 +254,7 @@ public class Player : MonoBehaviour
             m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
         }
 
-        if (m_rb2D.velocity.y < 0)
+        if (m_rb2D.velocity.y < 0 && m_state != PLAYER_STATE.ATTACK)
         {
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             SetPlayerState(PLAYER_STATE.FALL);
@@ -350,7 +351,7 @@ public class Player : MonoBehaviour
     {
         get { return m_state; }
         set { m_state = value;
-            if(m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = Vector2.zero; }
+            if(m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(m_speed, m_rb2D.velocity.y); }
         }
     }
 
@@ -378,7 +379,11 @@ public class Player : MonoBehaviour
 
     public Vector3 Speed { get { return m_rb2D.velocity; } }
 
-    public void ReduceSpeed() { m_speed = m_reducedMovementSpeed; }
+    public void ReduceSpeed()
+    {
+        if (IsGrounded) { m_speed = 0; }
+        else { m_speed = m_reducedMovementSpeed; }
+    }
 
     public void SetToNormalSpeed() { m_speed = 60; }
 

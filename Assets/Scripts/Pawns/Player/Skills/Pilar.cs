@@ -80,6 +80,7 @@ public class Pilar : MonoBehaviour
         m_finalPositionY = p_finalPosition.y;
         m_isEmerging = true;
         m_skills.IsOnCooldown = true;
+        SoundManager.Instance.PlayOnce(AudioClipName.PILAR, 1f);
         m_emergeTimer.Run();
     }
 }

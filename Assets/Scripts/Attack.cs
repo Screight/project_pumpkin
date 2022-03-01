@@ -57,6 +57,15 @@ public class Attack : MonoBehaviour
             case PLAYER_STATE.LAND:
                 Attack1();
                 break;
+            case PLAYER_STATE.BOOST:
+                Attack1();
+                break;
+            case PLAYER_STATE.JUMP:
+                Attack1();
+                break;
+            case PLAYER_STATE.FALL:
+                Attack1();
+                break;
             default: break;
 
         }
@@ -67,10 +76,11 @@ public class Attack : MonoBehaviour
         
         if (InputManager.Instance.AttackButtonPressed)
         {
-            if (m_player.State != PLAYER_STATE.ATTACK) {
+            if (m_player.State != PLAYER_STATE.ATTACK && m_player.IsGrounded) {
                 m_player.State = PLAYER_STATE.ATTACK;
                 m_player.ReduceSpeed();
             }
+
             m_keepAttacking = true;
             if (!m_isAttacking /*&& m_windowToComboTimer.IsFinished*/)
             {
@@ -78,6 +88,19 @@ public class Attack : MonoBehaviour
                 m_windowToComboTimer.Run();
                 m_isAttacking = true;
             }
+        }
+
+        if (m_player.State == PLAYER_STATE.ATTACK)
+        {
+            if (m_player.IsGrounded)
+            {
+                m_player.ReduceSpeed();
+            }
+            else
+            {
+                m_player.SetToNormalSpeed();
+            }
+
         }
 
         //if (m_windowToComboTimer.IsRunning && !m_isAttacking && m_keepAttacking)
@@ -100,6 +123,12 @@ public class Attack : MonoBehaviour
         {
             if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }
             Debug.Log("Enemy hit");
+        }
+
+        if(enemiesInAttackRange.Length == 0)
+        {
+
+            SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.PLAYER_ATTACK_1 + (int)(m_attackComboNumber) -1), 1f);
         }
     }
 

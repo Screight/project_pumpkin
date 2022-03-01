@@ -20,7 +20,14 @@ public class Enemy : MonoBehaviour
     public virtual void Damage(int p_damage)
     {
         skeletonHealth -= p_damage;
-        if (skeletonHealth <= 0) { m_state = ENEMY_STATE.DIE; }
+        
+        if (skeletonHealth <= 0) { 
+            m_state = ENEMY_STATE.DIE;
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL, 1f);
+        } else
+        {
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT, 1f);
+        }
     }
 
     public void Reset()
