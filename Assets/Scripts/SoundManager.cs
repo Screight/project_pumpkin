@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AudioClipName { ENEMY_HIT, ENEMY_KILL, FIREBALL, PILAR, ARCHER_ATTACK, PLAYER_ATTACK_1, PLAYER_ATTACK_2, PLAYER_ATTACK_3, LOW_HP, GROUNDBREAKER, LAST_NO_USE }
+public enum AudioClipName { ENEMY_HIT, ENEMY_KILL, FIREBALL, PILAR, ARCHER_ATTACK, PLAYER_ATTACK_1, PLAYER_ATTACK_2, PLAYER_ATTACK_3, LOW_HP, GROUNDBREAKER, ITEM_PICK_UP, DASH, ARROW, LAST_NO_USE }
 
 public class SoundManager : MonoBehaviour
 {
@@ -41,6 +41,9 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.PLAYER_ATTACK_3] = Resources.Load<AudioClip>("Sound/Slash3SFX");
         m_audioClips[(int)AudioClipName.LOW_HP] = Resources.Load<AudioClip>("Sound/Ura1HearthLeftSFX");
         m_audioClips[(int)AudioClipName.GROUNDBREAKER] = Resources.Load<AudioClip>("Sound/UraGroundbreakerSFX");
+        m_audioClips[(int)AudioClipName.ITEM_PICK_UP] = Resources.Load<AudioClip>("Sound/UraItemPickUpSFX");
+        m_audioClips[(int)AudioClipName.DASH] = Resources.Load<AudioClip>("Sound/UraDashSFX");
+        m_audioClips[(int)AudioClipName.ARROW] = Resources.Load<AudioClip>("Sound/ArrowSFX");
 
     }
 
@@ -48,7 +51,6 @@ public class SoundManager : MonoBehaviour
     {
         m_audioSource.volume = p_volumeLevel;
         m_audioSource.PlayOneShot(m_audioClips[(int)p_name]);
-
     }
 
     public void PlayBackground(AudioClipName p_name, float p_volumeLevel)

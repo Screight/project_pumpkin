@@ -173,8 +173,9 @@ public class Skeleton : Enemy
             {
                 //Bone.SetActive(true);
                 BoneScript boneScript= Instantiate(prefabBone).GetComponent<BoneScript>();
+                //SoundManager.Instance.PlayOnce(AudioClipName.ARCHER_ATTACK, 1.0f);
                 boneScript.gameObject.transform.position = transform.position;
-                boneScript.Shoot(FacingDirection());
+                boneScript.Shoot(FacingDirection(), AudioClipName.ARCHER_ATTACK);
                 //Bone.transform.position = transform.position;
                 //m_boneScript.Shoot(FacingDirection());
                 boneTimer.Run();

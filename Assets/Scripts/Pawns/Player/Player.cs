@@ -25,6 +25,10 @@ public class Player : MonoBehaviour
     bool m_canIMove = false;
     Timer m_noControlTimer;
 
+    Timer m_blinkTimer;
+    bool m_hasBlinked = false;
+    [SerializeField] float m_blinkDuration = 0.2f;
+
     Skill_Pilar m_skills;
 
     Animator m_animator;
@@ -109,6 +113,8 @@ public class Player : MonoBehaviour
         m_invulnerableTimer.Duration = 1f;
         m_noControlTimer = gameObject.AddComponent<Timer>();
         m_noControlTimer.Duration = 0.5f;
+        m_blinkTimer = gameObject.AddComponent<Timer>();
+        m_blinkTimer.Duration = m_blinkDuration;
 
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_objectGroundedTo = "";
@@ -129,17 +135,39 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.HIT]      = Animator.StringToHash(m_hitAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]      = Animator.StringToHash(m_groundbreakerAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]      = Animator.StringToHash(m_groundbreakerLoopAnimationName);
+
     }
 
     private void Update()
     {
         if (Time.timeScale == 0) { return; } //Game Paused
 
+        if (m_invulnerableTimer.IsRunning)
+        {
+            if (m_blinkTimer.IsFinished)
+            {
+                if (!m_hasBlinked)
+                {
+                    m_spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+                }
+                else
+                {
+                    m_spriteRenderer.color = new Color(1, 1, 1, 1);
+                }
+                m_hasBlinked = !m_hasBlinked;
+                m_blinkTimer.Run();
+                Debug.Log("blinked");
+            }
+        }
+
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
             m_isInvulnerable = false;
-            m_spriteRenderer.color = Color.white;
+            m_spriteRenderer.color = new Color(255, 255, 255, 255);
             Physics2D.IgnoreLayerCollision(6, 7, false);
+            m_invulnerableTimer.Stop();
+            m_blinkTimer.Stop();
+            m_hasBlinked = false;
         }
 
         if (m_noControlTimer.IsFinished) { m_canIMove = true; }
@@ -219,6 +247,7 @@ public class Player : MonoBehaviour
 
         if (InputManager.Instance.DashButtonPressed && m_state != PLAYER_STATE.DASH && m_noControlTimer.IsFinished && !m_hasUsedDash)
         {
+            SoundManager.Instance.PlayOnce(AudioClipName.DASH,1);
             m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
             m_state = PLAYER_STATE.DASH;
@@ -294,7 +323,7 @@ public class Player : MonoBehaviour
             m_noControlTimer.Duration = 0.5f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            m_spriteRenderer.color = Color.black;
+            //m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             Physics2D.IgnoreLayerCollision(6, 7, true);
@@ -303,7 +332,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
@@ -318,7 +347,7 @@ public class Player : MonoBehaviour
             m_canIMove = false;
             //collision.gameObject.SetActive(false);
             Destroy(collision.gameObject);
-            m_spriteRenderer.color = Color.black;
+            //m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             GameManager.Instance.ModifyHealthUI(false);

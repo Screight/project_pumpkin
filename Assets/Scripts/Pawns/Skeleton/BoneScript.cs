@@ -11,9 +11,10 @@ public class BoneScript : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
     }
 
-    public void Shoot(int p_direction)
+    public void Shoot(int p_direction, AudioClipName p_audio)
     {
         m_rb2D.velocity = new Vector2(p_direction * m_boneSpeed, m_rb2D.velocity.y);
+        SoundManager.Instance.PlayOnce(p_audio, 1.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
