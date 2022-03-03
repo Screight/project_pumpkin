@@ -77,5 +77,11 @@ public class Skill_Groundbreaker : MonoBehaviour
             m_cooldownTimer.Run();
         }
     }
+
+    public void ResetGroundbreakerState()
+    {
+        m_isUsingGroundBreaker = false;
+    }
+
 }
                 

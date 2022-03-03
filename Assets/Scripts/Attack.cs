@@ -67,7 +67,6 @@ public class Attack : MonoBehaviour
                 //Attack1();
                 break;
             default: break;
-
         }
     }
 

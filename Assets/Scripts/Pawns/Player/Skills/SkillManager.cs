@@ -96,6 +96,11 @@ public class SkillManager : MonoBehaviour
         private set { }
     }
 
+    public void ResetSkillStates()
+    {
+        m_groundbreaker.ResetGroundbreakerState();
+    }
+
     public bool IsFireballUnlocked { get { return m_isFireballUnlocked; } }
     public bool IsGroundbreakerUnlocked { get { return m_isGroundbreakerUnlocked; } }
     public bool IsPilarUnlocked { get { return m_isPilarUnlocked; } }

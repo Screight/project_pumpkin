@@ -34,6 +34,7 @@ public class CheckpointsManager : MonoBehaviour
 
     public void MovePlayerToLocalCheckPoint()
     {
+        m_player.ResetPlayer();
         if (m_localCheckPoint != null) { m_player.transform.position = new Vector3(m_localCheckPoint.position.x, m_localCheckPoint.position.y, m_player.transform.position.z); }
         else { m_player.transform.position = new Vector3(m_defaultCheckpoint.position.x, m_defaultCheckpoint.position.y, m_player.transform.position.z); }
         EnemyManager.Instance.ResetAllAliveEnemies();
@@ -41,6 +42,7 @@ public class CheckpointsManager : MonoBehaviour
 
     public void MovePlayerToGlobalCheckPoint()
     {
+        m_player.ResetPlayer();
         if (m_globalCheckPoint != null) 
         {
             m_player.transform.position = new Vector3(m_globalCheckPoint.position.x, m_globalCheckPoint.position.y, m_player.transform.position.z);

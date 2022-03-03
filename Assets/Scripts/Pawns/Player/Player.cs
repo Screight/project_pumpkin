@@ -355,11 +355,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ResetPlayer()
+    {
+        m_state = PLAYER_STATE.IDLE;
+        ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.IDLE]);
+        m_isGrounded = false;
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+        m_rb2D.velocity = Vector2.zero;
+        SkillManager.Instance.ResetSkillStates();
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "spike")
         {
-            m_health--;
+            ModifyHP(-1);
+            GameManager.Instance.ModifyHealthUI(false);
             m_transicionScript.LocalCheckpointTransition();
         }
     }
