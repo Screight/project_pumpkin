@@ -59,6 +59,10 @@ public class Skill_Pilar : MonoBehaviour
         {
             m_spellCooldownScript.FillPilarCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
         }
+        else
+        {
+            m_spellCooldownScript.FillPilarCooldownUI(1);
+        }
     }
 
     private void Start()

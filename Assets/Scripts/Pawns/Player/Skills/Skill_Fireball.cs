@@ -29,6 +29,10 @@ public class Skill_Fireball : MonoBehaviour
         {
             m_spellCooldownScript.FillFireballCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
         }
+        else
+        {
+            m_spellCooldownScript.FillFireballCooldownUI(1);
+        }
     }
 
     void Start()

@@ -19,9 +19,9 @@ public class weakPlatformDestroyer : MonoBehaviour
         playerScript = player.GetComponent<Player>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && playerScript.State == PLAYER_STATE.GROUNDBREAKER)
+        if (collision.gameObject.tag == "groundCheck" && playerScript.State == PLAYER_STATE.GROUNDBREAKER)
         {
             platformSprite.color = Color.Lerp(Color.white, Color.red, 10.0f);
             Destroy(gameObject, 0.1f);

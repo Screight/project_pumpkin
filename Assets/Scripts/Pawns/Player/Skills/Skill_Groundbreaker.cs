@@ -38,6 +38,10 @@ public class Skill_Groundbreaker : MonoBehaviour
         {
             m_spellCooldownScript.FillGroundbreakerCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
         }
+        else
+        {
+            m_spellCooldownScript.FillGroundbreakerCooldownUI(1);
+        }
     }
 
     public void Groundbreaker(bool p_isUnlocked)
@@ -70,7 +74,7 @@ public class Skill_Groundbreaker : MonoBehaviour
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(velocityX, velocityY);
                 }
             }
-            SoundManager.Instance.PlayOnce(AudioClipName.GROUNDBREAKER, 1f);
+            SoundManager.Instance.PlayOnce(AudioClipName.GROUNDBREAKER);
             m_impactAnimator.Play(m_animationHash);
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;

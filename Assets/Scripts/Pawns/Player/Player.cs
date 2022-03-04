@@ -247,7 +247,7 @@ public class Player : MonoBehaviour
 
         if (InputManager.Instance.DashButtonPressed && m_state != PLAYER_STATE.DASH && m_noControlTimer.IsFinished && !m_hasUsedDash)
         {
-            SoundManager.Instance.PlayOnce(AudioClipName.DASH,1);
+            SoundManager.Instance.PlayOnce(AudioClipName.DASH);
             m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
             m_state = PLAYER_STATE.DASH;

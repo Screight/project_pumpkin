@@ -6,12 +6,42 @@ public enum AudioClipName { ENEMY_HIT, ENEMY_KILL, FIREBALL, PILAR, ARCHER_ATTAC
 
 public class SoundManager : MonoBehaviour
 {
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_generalVolume = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_background = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_enemyHit = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_enemyDeath = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_fireball = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_dashVolume = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_pilar = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_skeletonAttack = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_playerAttackOne = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_playerAttackSecond = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_playerAttackThird = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_playerLowHealth = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_groundbreaker = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_itemPickUp = 1;
+    [Range(0.0F, 1.0F)]
+    [SerializeField] float m_arrow = 1;
+
     static SoundManager m_instance;
     [SerializeField] AudioSource m_audioSource;
     [SerializeField] AudioSource m_backgroundSource;
     AudioClip[] m_audioClips;
-
-
+    float[] m_volumeClips;
 
     // Start is called before the first frame update
     private void Awake()
@@ -45,17 +75,31 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.DASH] = Resources.Load<AudioClip>("Sound/UraDashSFX");
         m_audioClips[(int)AudioClipName.ARROW] = Resources.Load<AudioClip>("Sound/ArrowSFX");
 
+        m_volumeClips = new float[(int)AudioClipName.LAST_NO_USE];
+        m_volumeClips[(int)AudioClipName.ENEMY_HIT] = m_enemyHit;
+        m_volumeClips[(int)AudioClipName.ARCHER_ATTACK] = m_skeletonAttack;
+        m_volumeClips[(int)AudioClipName.ARROW] = m_arrow;
+        m_volumeClips[(int)AudioClipName.DASH] = m_dashVolume;
+        m_volumeClips[(int)AudioClipName.ENEMY_KILL] = m_enemyDeath;
+        m_volumeClips[(int)AudioClipName.FIREBALL] = m_fireball;
+        m_volumeClips[(int)AudioClipName.GROUNDBREAKER] = m_groundbreaker;
+        m_volumeClips[(int)AudioClipName.ITEM_PICK_UP] = m_itemPickUp;
+        m_volumeClips[(int)AudioClipName.LOW_HP] = m_playerLowHealth;
+        m_volumeClips[(int)AudioClipName.PILAR] = m_pilar;
+        m_volumeClips[(int)AudioClipName.PLAYER_ATTACK_1] = m_playerAttackOne;
+        m_volumeClips[(int)AudioClipName.PLAYER_ATTACK_2] = m_playerAttackSecond;
+        m_volumeClips[(int)AudioClipName.PLAYER_ATTACK_3] = m_playerAttackThird;
     }
 
-    public void PlayOnce(AudioClipName p_name, float p_volumeLevel)
+    public void PlayOnce(AudioClipName p_name)
     {
-        m_audioSource.volume = p_volumeLevel;
+        m_audioSource.volume = m_generalVolume * m_volumeClips[(int)p_name];
         m_audioSource.PlayOneShot(m_audioClips[(int)p_name]);
     }
 
-    public void PlayBackground(AudioClipName p_name, float p_volumeLevel)
+    public void PlayBackground(AudioClipName p_name)
     {
-        m_audioSource.volume = p_volumeLevel;
+        m_audioSource.volume = m_background;
         m_audioSource.Play();
 
     }

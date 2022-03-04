@@ -127,7 +127,7 @@ public class Attack : MonoBehaviour
         if(enemiesInAttackRange.Length == 0)
         {
 
-            SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.PLAYER_ATTACK_1 + (int)(m_attackComboNumber) -1), 1f);
+            SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.PLAYER_ATTACK_1 + (int)(m_attackComboNumber) -1));
         }
     }
 

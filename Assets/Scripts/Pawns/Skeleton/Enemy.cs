@@ -23,10 +23,10 @@ public class Enemy : MonoBehaviour
         
         if (skeletonHealth <= 0) { 
             m_state = ENEMY_STATE.DIE;
-            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL, 1f);
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL);
         } else
         {
-            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT, 1f);
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT);
         }
     }
 
