@@ -224,7 +224,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a02245539b3c505408739672a1354596, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -320,6 +320,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0081980d955d0e5459a7b5c8eb3b9048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_generalVolume: 1
+  m_background: 1
+  m_enemyHit: 1
+  m_enemyDeath: 1
+  m_fireball: 1
+  m_dashVolume: 0.095
+  m_pilar: 1
+  m_skeletonAttack: 1
+  m_playerAttackOne: 0.254
+  m_playerAttackSecond: 0.246
+  m_playerAttackThird: 0.254
+  m_playerLowHealth: 1
+  m_groundbreaker: 1
+  m_itemPickUp: 1
+  m_arrow: 1
   m_audioSource: {fileID: 851272840}
   m_backgroundSource: {fileID: 851272843}
 --- !u!114 &700607250
