@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 1228466546}
   - component: {fileID: 1228466545}
   m_Layer: 0
-  m_Name: Heart2
+  m_Name: Heart_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 1379833375}
   - component: {fileID: 1379833374}
   m_Layer: 0
-  m_Name: Heart1
+  m_Name: Heart_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 2136626524}
   - component: {fileID: 2136626523}
   m_Layer: 0
-  m_Name: Heart3
+  m_Name: Heart_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1790,7 +1790,7 @@ GameObject:
   - component: {fileID: 3921497417762409463}
   - component: {fileID: 1006385015}
   m_Layer: 0
-  m_Name: UraLives
+  m_Name: lives
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1804,7 +1804,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6343249547088111597}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -329.90012, y: -325.78146, z: -191.62195}
+  m_LocalPosition: {x: -329.90012, y: -325.78146, z: 0}
   m_LocalScale: {x: 0.6406406, y: 0.6406406, z: 0.6406406}
   m_Children:
   - {fileID: 1379833373}
@@ -1833,6 +1833,11 @@ MonoBehaviour:
   m_firstHearth: {fileID: 1379833374}
   m_secondHearth: {fileID: 1228466545}
   m_thirdHearth: {fileID: 2136626523}
+  m_forthHearth: {fileID: 896941963703136595}
+  m_fifthHearth: {fileID: 6878074727492422811}
+  m_sixthHearth: {fileID: 7886439552288580267}
+  m_seventhHearth: {fileID: 2869895097688812288}
+  m_octoHearth: {fileID: 799725979027679931}
   m_fullHearth: {fileID: 5941651614346352416, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
   m_emptyHearth: {fileID: -2764825476995513921, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
 --- !u!1 &8798996675533381019

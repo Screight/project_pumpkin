@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 1005414630830359072}
   m_Layer: 7
   m_Name: groundCheck
-  m_TagString: Untagged
+  m_TagString: groundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -767,7 +767,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2, y: -18.67, z: 0}
+  m_LocalPosition: {x: -1199.8, y: 481.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5559658922750157610}
@@ -908,10 +908,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_dashDustScript: {fileID: 514142220}
   m_transicionScript: {fileID: 0}
-  m_speed: 60
-  m_dashDistance: 40
+  m_blinkDuration: 0.2
+  m_speed: 75
+  m_dashDistance: 75
   m_dashDuration: 0.5
-  m_maxHeight: 35
+  m_maxHeight: 70
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
   m_attackPosition: {fileID: 6862410078162418334}
@@ -931,7 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spellCooldownScript: {fileID: 0}
-  m_maxSpeed: -100
+  m_maxSpeed: -260
   m_impactAnimator: {fileID: 540352106}
   m_enemyLayer:
     serializedVersion: 2
