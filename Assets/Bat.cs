@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BAT_STATE { MOVE, CHASE, ATTACK, DIE, HIT, AIR }
+public enum BAT_ANIMATION { MOVE, ATTACK, DIE, HIT, LAST_NO_USE }
+
 public class Bat : Enemy
 {
     Rigidbody2D m_rb2D;
+    BAT_STATE m_batState;
+    int m_currentState;
 
     [SerializeField] Transform m_leftLimit;
     [SerializeField] Transform m_rightLimit;
@@ -42,14 +47,15 @@ public class Bat : Enemy
 
     void Update()
     {
-        switch (m_state)
+        switch (m_batState)
         {
-            case ENEMY_STATE.MOVE:
+            default: break;
+            case BAT_STATE.MOVE:
                 {
                     Patrol();
                 }
                 break;
-            case ENEMY_STATE.CHASE:
+            case BAT_STATE.CHASE:
                 {
                     Search();
                 }
@@ -82,7 +88,7 @@ public class Bat : Enemy
         }
         else
         {
-            //m_state = ENEMY_STATE.ATTACK;
+            //m_batState = ENEMY_STATE.ATTACK;
             m_rb2D.velocity = Vector2.zero;
         }
         
@@ -90,7 +96,7 @@ public class Bat : Enemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(m_state == ENEMY_STATE.MOVE)
+        if(m_batState == BAT_STATE.MOVE)
         {
             m_sense *= -1;
             m_rb2D.velocity = m_sense * m_direction * m_patrolSpeed;
@@ -111,10 +117,7 @@ public class Bat : Enemy
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
-        {
-            m_state = ENEMY_STATE.CHASE;
-        }
+        if (collision.tag == "Player") { m_batState = BAT_STATE.CHASE; }
     }
 
     private void OnDrawGizmos()
@@ -132,5 +135,4 @@ public class Bat : Enemy
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 200);
     }
-
 }

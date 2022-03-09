@@ -20,12 +20,12 @@ public class EnemyGroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor" && skeletonScript.State != ENEMY_STATE.DIE)
+        if (collision.gameObject.tag == "floor" && skeletonScript.State != SKELETON_STATE.DIE)
         {
             skeletonScript.IsGrounded = true;
             skeletonRigidBody.velocity = Vector2.zero;
             Physics2D.IgnoreLayerCollision(6, 7, false);
-            skeletonScript.State = ENEMY_STATE.MOVE;
+            skeletonScript.State = SKELETON_STATE.MOVE;
         }
     }
 }
