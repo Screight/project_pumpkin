@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ENEMY_STATE { MOVE, CHASE, DIE, ATTACK, HIT, AIR }
+public enum ENEMY_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, LAST_NO_USE }
+
 public class Enemy : MonoBehaviour
 {
-    protected int skeletonHealth;
+    protected int m_health;
     protected ENEMY_STATE m_state;
 
     Vector3 m_initialPosition;
@@ -19,9 +22,9 @@ public class Enemy : MonoBehaviour
 
     public virtual void Damage(int p_damage)
     {
-        skeletonHealth -= p_damage;
+        m_health -= p_damage;
         
-        if (skeletonHealth <= 0) { 
+        if (m_health <= 0) { 
             m_state = ENEMY_STATE.DIE;
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL);
         } else

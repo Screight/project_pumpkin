@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ENEMY_STATE { MOVE, CHASE, DIE, ATTACK, HIT, AIR }
-public enum ENEMY_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, LAST_NO_USE }
 
 public class Skeleton : Enemy
 {   
@@ -46,7 +44,7 @@ public class Skeleton : Enemy
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_skeletonState = Animator.StringToHash("state");
-        skeletonHealth = 3;
+        m_health = 3;
 
         m_state = ENEMY_STATE.MOVE;
         m_isGrounded = true;
