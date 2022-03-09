@@ -83,7 +83,7 @@ public class Ghoul : Enemy
     {
 
     }
-    void Die
+    void Die()
     {
 
     }
