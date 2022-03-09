@@ -17,8 +17,8 @@ public class Skeleton : Enemy
     string m_moveAnimationName      = "Move";
     string m_reloadAnimationName    = "Reload";
     string m_fireAnimationName      = "Fire";
-    string m_dieAnimationName       = "Die";
     string m_hitAnimationName       = "hit";
+    string m_dieAnimationName       = "Die";
     int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
 
     [SerializeField] GameObject prefabBone;
@@ -44,6 +44,7 @@ public class Skeleton : Enemy
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
+        m_collider2D = GetComponent<Collider2D>();
         m_animator = GetComponent<Animator>();
         m_health = 3;
 
@@ -53,7 +54,6 @@ public class Skeleton : Enemy
 
         m_hasReturned = true;
 
-        m_collider2D = GetComponent<Collider2D>();
         Bone = Instantiate(prefabBone, new Vector3(0, 0, 0), Quaternion.identity);
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
@@ -81,12 +81,11 @@ public class Skeleton : Enemy
         switch (m_skeletonState)
         {
             default:break;
-            case SKELETON_STATE.MOVE:      { Move(SKELETON_STATE.MOVE); } break;
-            case SKELETON_STATE.CHASE:     { Chase(SKELETON_STATE.MOVE); } break;
-            case SKELETON_STATE.ATTACK:    { Attack(SKELETON_STATE.CHASE); } break;
-            case SKELETON_STATE.DIE:       { 
-                    Die(); } break;
-            case SKELETON_STATE.HIT:       { } break;
+            case SKELETON_STATE.MOVE:       { Move(SKELETON_STATE.MOVE); }      break;
+            case SKELETON_STATE.CHASE:      { Chase(SKELETON_STATE.MOVE); }     break;
+            case SKELETON_STATE.ATTACK:     { Attack(SKELETON_STATE.CHASE); }   break;
+            case SKELETON_STATE.HIT:        { }                                 break;
+            case SKELETON_STATE.DIE:        { Die(); }                          break;            
         }
 
         float delta = Time.fixedDeltaTime * 1000;
