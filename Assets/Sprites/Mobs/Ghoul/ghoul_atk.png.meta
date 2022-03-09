@@ -1,31 +1,22 @@
 fileFormatVersion: 2
-guid: 5ce72022bf51eed42b511897558d4f34
+guid: c0385d9a39f98ad42a228c5155169b4a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -273567318796562241
-    second: Skeleton Hit_0
+      213: 6253693536846830821
+    second: ghoul_atk_0
   - first:
-      213: 4277271011309529139
-    second: Skeleton Hit_1
+      213: 5465723913668790949
+    second: ghoul_atk_1
   - first:
-      213: -1537884627087384292
-    second: Skeleton Hit_2
+      213: -8480128980029323711
+    second: ghoul_atk_2
   - first:
-      213: 8452754394787171160
-    second: Skeleton Hit_3
+      213: 1126965498264864677
+    second: ghoul_atk_3
   - first:
-      213: 6079654374805429708
-    second: Skeleton Hit_4
-  - first:
-      213: 3860408454011024614
-    second: Skeleton Hit_5
-  - first:
-      213: -8501204524192146682
-    second: Skeleton Hit_6
-  - first:
-      213: -8738580348800268814
-    second: Skeleton Hit_7
+      213: -5511973459303405072
+    second: ghoul_atk_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -92,7 +83,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -104,7 +95,43 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,12 +142,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skeleton Hit_0
+      name: ghoul_atk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 30
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -129,19 +156,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb099f419f7143cf0800000000000000
-      internalID: -273567318796562241
+      spriteID: 5ec59e5632599c650800000000000000
+      internalID: 6253693536846830821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton Hit_1
+      name: ghoul_atk_1
       rect:
         serializedVersion: 2
-        x: 30
+        x: 32
         y: 0
-        width: 30
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -150,19 +177,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3382e25a25beb5b30800000000000000
-      internalID: 4277271011309529139
+      spriteID: 5aa069ad0f62adb40800000000000000
+      internalID: 5465723913668790949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton Hit_2
+      name: ghoul_atk_2
       rect:
         serializedVersion: 2
-        x: 60
+        x: 64
         y: 0
-        width: 30
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -171,19 +198,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c112ce8641658aae0800000000000000
-      internalID: -1537884627087384292
+      spriteID: 1464bdf4f97805a80800000000000000
+      internalID: -8480128980029323711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton Hit_3
+      name: ghoul_atk_3
       rect:
         serializedVersion: 2
-        x: 90
+        x: 96
         y: 0
-        width: 30
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -192,19 +219,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85b49e266573e4570800000000000000
-      internalID: 8452754394787171160
+      spriteID: 5a7c2365629c3af00800000000000000
+      internalID: 1126965498264864677
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton Hit_4
+      name: ghoul_atk_4
       rect:
         serializedVersion: 2
-        x: 120
+        x: 128
         y: 0
-        width: 30
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -213,71 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccd5d6741754f5450800000000000000
-      internalID: 6079654374805429708
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton Hit_5
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 0
-        width: 30
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e4fd3d190de29530800000000000000
-      internalID: 3860408454011024614
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton Hit_6
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 0
-        width: 30
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60b559cc687a50a80800000000000000
-      internalID: -8501204524192146682
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skeleton Hit_7
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 0
-        width: 30
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f50d84c8735ab680800000000000000
-      internalID: -8738580348800268814
+      spriteID: 0f9e6daa7598183b0800000000000000
+      internalID: -5511973459303405072
       vertices: []
       indices: 
       edges: []
