@@ -4,35 +4,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    protected int skeletonHealth;
-    protected ENEMY_STATE m_state;
+    protected int m_health;
 
-    Vector3 m_initialPosition;
-    ENEMY_STATE m_initialState;
+    protected Vector2 m_spawnPos;
 
     protected virtual void Awake()
     {
-        m_initialPosition = transform.localPosition;
-        m_initialState = ENEMY_STATE.MOVE;
+        m_spawnPos = transform.position;
         Debug.Log("Base Awake called");
     }
 
     public virtual void Damage(int p_damage)
     {
-        skeletonHealth -= p_damage;
-        
-        if (skeletonHealth <= 0) { 
-            m_state = ENEMY_STATE.DIE;
-            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL);
-        } else
-        {
-            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT);
-        }
+        m_health -= p_damage;
+
+        if (m_health <= 0) { SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL); }
+        else { SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT); }
     }
 
-    public void Reset()
-    {
-        transform.localPosition = m_initialPosition;
-        m_state = m_initialState;
-    }
+    public void Reset() { transform.position = m_spawnPos; }
 }
