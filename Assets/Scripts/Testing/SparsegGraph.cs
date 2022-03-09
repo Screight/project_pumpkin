@@ -13,6 +13,8 @@ class SparseGraph
     {
         m_nextNodeIndex = 0;
         m_isDiGraph = p_diGraph;
+        m_nodes = new List<NavigationGraphNode>();
+        m_edges = new List<List<GraphEdge>>();
     }
 
     public  NavigationGraphNode GetNode(int p_index) {
@@ -24,6 +26,7 @@ class SparseGraph
     public int GetNextFreeNodeIndex() { return m_nextNodeIndex; }
     public int AddNode(NavigationGraphNode p_node) { 
         m_nodes.Add(p_node);
+        m_edges.Add(new List<GraphEdge>());
         return m_nextNodeIndex++;
     }
     public void RemoveNode(int p_node)
@@ -39,6 +42,16 @@ class SparseGraph
         {
             m_edges[p_edge.OriginNode].Add(p_edge);
         }
+    }
+
+    public List<GraphEdge> GetEdges(int p_index)
+    {
+        if(p_index >= 0 && p_index < m_nodes.Count)
+        {
+            return m_edges[p_index];
+        }
+
+        return null;
     }
 
     public void RemoveEdge(int p_originNode, int p_destinationNode)
