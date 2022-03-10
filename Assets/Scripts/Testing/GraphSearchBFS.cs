@@ -31,7 +31,23 @@ class GraphSearchBFS
             m_route.Add((int)node_status.no_parent_assigned);
         }
 
-        m_isTargetFound = Search();
+        m_isTargetFound = Search(p_sourceIndex, p_targetIndex);
+    }
+
+    public GraphSearchBFS(SparseGraph p_graph)
+    {
+        m_visitedNodes = new List<int>();
+        m_route = new List<int>();
+
+        m_graph = p_graph;
+
+        for (int i = 0; i < p_graph.NumberOfNodes(); i++)
+        {
+            m_visitedNodes.Add((int)node_status.unvisited);
+            m_route.Add((int)node_status.no_parent_assigned);
+        }
+
+        m_isTargetFound = Search(m_sourceIndex, m_targetIndex);
 
     }
 
@@ -48,7 +64,7 @@ class GraphSearchBFS
         return pathToTarget;
     }
 
-    public bool Search()
+    public bool Search(int p_sourceIndex, int p_targetIndex)
     {
         Queue<GraphEdge> queue = new Queue<GraphEdge>();
         GraphEdge dummy = new GraphEdge(m_sourceIndex, m_sourceIndex, 0);
@@ -71,7 +87,7 @@ class GraphSearchBFS
 
             for (int i = 0; i < size; i++)
             {
-                if (m_visitedNodes[edges[i].DestinationNode] == (int)node_status.unvisited)
+                if (m_visitedNodes[edges[i].DestinationNode] == (int)node_status.unvisited && m_graph.GetNode(edges[i].DestinationNode).IsActive)
                 {
                     queue.Enqueue(edges[i]);
                     m_visitedNodes[edges[i].DestinationNode] = (int)node_status.visited;

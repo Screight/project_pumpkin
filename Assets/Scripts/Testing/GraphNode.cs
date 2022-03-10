@@ -12,14 +12,22 @@ public class GraphNode
 {
     // every node has an index > 0 that represents it
     protected int m_index;
+    protected bool m_isActive;
     public GraphNode(int p_index) {
         m_index = p_index;
+        m_isActive = true;
     }
 
     public int Index
     {
         get { return m_index; }
         set { m_index = value; }
+    }
+
+    public bool IsActive
+    {
+        get { return m_isActive; }
+        set { m_isActive = value; }
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using UnityEngine;
 class SparseGraph
 {
     private List<NavigationGraphNode> m_nodes; // nodes that form this graph
@@ -38,7 +38,7 @@ class SparseGraph
 
     public void AddEdge(GraphEdge p_edge)
     {
-        if(m_nodes[p_edge.OriginNode].Index != int.MinValue && m_nodes[p_edge.DestinationNode].Index != int.MinValue)
+        if (m_nodes[p_edge.OriginNode].Index != int.MinValue && m_nodes[p_edge.DestinationNode].Index != int.MinValue)
         {
             m_edges[p_edge.OriginNode].Add(p_edge);
         }
