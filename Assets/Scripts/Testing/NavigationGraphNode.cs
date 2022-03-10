@@ -11,4 +11,9 @@ public class NavigationGraphNode: GraphNode
         m_position = p_position;
     }
 
+    public Vector2 Position
+    {
+        get { return m_position; }
+    }
+
 }
