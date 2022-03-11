@@ -22,9 +22,8 @@ public class Ghoul : Enemy
 
     [SerializeField] GameObject player;
     float m_playerPosX;
-    private bool m_hasReturned;
 
-    [SerializeField] float m_speed = 50.0f;
+    [SerializeField] float m_speed = 80.0f;
     [SerializeField] bool m_isFacingRight;
     bool m_isGrounded;
     bool m_playerIsNear;
@@ -64,7 +63,7 @@ public class Ghoul : Enemy
         {
             default:break;
             case GHOUL_STATE.IDLE:      { Idle(); } break;
-            case GHOUL_STATE.CHASE:     { Move(); } break;
+            case GHOUL_STATE.CHASE:     { Move(GHOUL_STATE.IDLE); } break;
             case GHOUL_STATE.ATTACK:    { Attack(); } break;
             case GHOUL_STATE.HIT:       { } break;
             case GHOUL_STATE.DIE:       { Die(); } break;
@@ -73,11 +72,30 @@ public class Ghoul : Enemy
 
     void Idle()
     {
+        m_rb2D.velocity = Vector2.zero;
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
 
+        if (m_playerIsNear) { m_ghoulState = GHOUL_STATE.CHASE; }
     }
-    void Move()
+    void Move(GHOUL_STATE p_defaultState)
     {
-
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.MOVE]);
+        //Player Near but Unnaccesible
+        if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded)
+        {
+            m_rb2D.velocity = Vector2.zero;
+            ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+        }
+        else if (m_playerIsNear)
+        {
+            //Ready to Attack
+            if (m_playerIsAtRange) { m_ghoulState = GHOUL_STATE.ATTACK; }
+            //Chasing
+            if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
+            if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
+            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
+        }
+        else { m_ghoulState = p_defaultState; }
     }
     void Attack()
     {
@@ -87,4 +105,59 @@ public class Ghoul : Enemy
     {
 
     }
+
+    void ChangeAnimationState(int p_newState)
+    {
+        if (m_currentState == p_newState && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
+
+        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT])
+        {
+            m_animator.Play(p_newState, -1, 0);
+        }
+        else
+        {
+            m_animator.Play(p_newState);
+            m_currentState = p_newState;
+        }
+    }
+
+    void FlipX()
+    {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        m_isFacingRight = !m_isFacingRight;
+        m_isGrounded = true;
+    }
+    public int FacingDirection()
+    {
+        if (m_isFacingRight) { return 1; }
+        else { return -1; }
+    }
+
+    public override void Damage(int p_damage)
+    {
+        m_ghoulState = GHOUL_STATE.HIT;
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.HIT]);
+        base.Damage(p_damage);
+    }
+
+    public GHOUL_STATE State { set { m_ghoulState = value; } get { return m_ghoulState; } }
+
+    #region Accessors
+    public bool IsGrounded
+    {
+        set { m_isGrounded = value; }
+    }
+    public bool IsPlayerNear
+    {
+        set { m_playerIsNear = value; }
+    }
+    public bool IsPlayerAtRange
+    {
+        set { m_playerIsAtRange = value; }
+    }
+    public bool IsFacingRight
+    {
+        get { return m_isFacingRight; }
+    }
+    #endregion
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2541730946004942697}
   - component: {fileID: 2541730946004942698}
   - component: {fileID: -1746364614012119857}
+  - component: {fileID: 2920101750621324863}
   m_Layer: 0
   m_Name: Ghoul
   m_TagString: Untagged
@@ -148,6 +149,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50bb963633bb8c2419882261133187f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  m_speed: 50
+  m_isFacingRight: 0
+--- !u!95 &2920101750621324863
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2541730946004942694}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 67486b66e7bf1a846bc69aa1df82ab08, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2798030389794866648
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8070678815914000849}
   - component: {fileID: 7803348108305695190}
-  - component: {fileID: 4633461529300570343}
+  - component: {fileID: 8127073798054480922}
   m_Layer: 0
   m_Name: PlayerRadar
   m_TagString: Untagged
@@ -204,9 +227,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 130, y: 50}
+  m_Size: {x: 180, y: 50}
   m_EdgeRadius: 0
---- !u!114 &4633461529300570343
+--- !u!114 &8127073798054480922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,7 +238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2798030389794866648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ccdfac5282cb6e44b98007fe15bfd67, type: 3}
+  m_Script: {fileID: 11500000, guid: f8bfe92e9c1ce5347be7fa1d83c54f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6824218043558534454
@@ -368,7 +391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7028146568601380662}
   - component: {fileID: 4640989533120429278}
-  - component: {fileID: 661175130275648835}
+  - component: {fileID: 4605128886943011045}
   m_Layer: 0
   m_Name: AttackRange
   m_TagString: Untagged
@@ -416,7 +439,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 80, y: 50}
   m_EdgeRadius: 0
---- !u!114 &661175130275648835
+--- !u!114 &4605128886943011045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -425,6 +448,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8660231912689791661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec7afabf48f9e54b9d06fc6fa29ba16, type: 3}
+  m_Script: {fileID: 11500000, guid: eb021d8371a3c874c8c27eaf0251c664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -95,11 +95,11 @@ public class Skeleton : Enemy
     void Move(SKELETON_STATE p_defaultState)
     {
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
-        if (m_hasReturned == true)
+        if (m_hasReturned)
         {
             m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
 
-            if (m_isGrounded == false) { FlipX(); }
+            if (!m_isGrounded) { FlipX(); }
 
             if (transform.position.x < left_limit.position.x)
             {
@@ -113,7 +113,7 @@ public class Skeleton : Enemy
             }
 
             //Player near?
-            if (m_playerIsNear == true)
+            if (m_playerIsNear)
             {
                 m_hasReturned = false;
                 m_skeletonState = SKELETON_STATE.CHASE;
@@ -121,7 +121,7 @@ public class Skeleton : Enemy
         }
         else
         {
-            if (m_isGrounded == false) { FlipX(); }
+            if (!m_isGrounded) { FlipX(); }
             if (m_isFacingRight && transform.position.x > m_spawnPos.x)         { FlipX(); }
             else if(!m_isFacingRight && transform.position.x < m_spawnPos.x)    { FlipX(); }
 
@@ -132,7 +132,7 @@ public class Skeleton : Enemy
             }
             else { m_hasReturned = true; }
 
-            if (m_playerIsNear == true)
+            if (m_playerIsNear)
             {
                 m_hasReturned = false;
                 m_skeletonState = SKELETON_STATE.CHASE;
@@ -142,7 +142,7 @@ public class Skeleton : Enemy
     void Chase(SKELETON_STATE p_defaultState)
     {
         //Player Near but Unnaccesible
-        if (m_playerIsNear && !m_playerIsAtRange && m_isGrounded == false) 
+        if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded) 
         { 
             m_rb2D.velocity = Vector2.zero;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
@@ -150,7 +150,7 @@ public class Skeleton : Enemy
         else if (m_playerIsNear)
         {
             //Ready to Attack
-            if (m_playerIsAtRange == true) { m_skeletonState = SKELETON_STATE.ATTACK; }
+            if (m_playerIsAtRange) { m_skeletonState = SKELETON_STATE.ATTACK; }
             //Chasing
             if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
             if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
@@ -166,7 +166,7 @@ public class Skeleton : Enemy
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
         m_rb2D.velocity = Vector2.zero;
 
-        if (m_playerIsAtRange == true)
+        if (m_playerIsAtRange)
         {
             if (boneTimer.IsFinished)
             {
