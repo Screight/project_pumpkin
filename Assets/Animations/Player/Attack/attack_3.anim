@@ -20,24 +20,20 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -2684345698607025799, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.1
       value: {fileID: 430179783330033826, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.18333334
-      value: {fileID: 68433446059051024, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.23333333
+    - time: 0.083333336
       value: {fileID: 4407083861248114144, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.26666668
+    - time: 0.16666667
       value: {fileID: 9173620297166588005, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.3
+    - time: 0.2
       value: {fileID: -3047444445719782475, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.35
+    - time: 0.23333333
       value: {fileID: 6287091656411042276, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.43333334
+    - time: 0.28333333
       value: {fileID: 6586163962052173244, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.51666665
+    - time: 0.36666667
       value: {fileID: 2920770813518301005, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - time: 0.6166667
+    - time: 0.5
       value: {fileID: 865205485052938818, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
     attribute: m_Sprite
     path: 
@@ -58,9 +54,7 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -2684345698607025799, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
     - {fileID: 430179783330033826, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
-    - {fileID: 68433446059051024, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
     - {fileID: 4407083861248114144, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
     - {fileID: 9173620297166588005, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
     - {fileID: -3047444445719782475, guid: 3bb79865927ecda4ea885c17ac05c8ca, type: 3}
@@ -73,7 +67,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.68333334
+    m_StopTime: 0.5833333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -93,14 +87,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.26666668
+  - time: 0.16666667
     functionName: Hit
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.68333334
+  - time: 0.5833333
     functionName: TransitionToNextComboAttack
     data: 
     objectReferenceParameter: {fileID: 0}
