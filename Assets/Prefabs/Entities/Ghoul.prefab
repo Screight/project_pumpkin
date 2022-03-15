@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2541730946004942698}
   - component: {fileID: -1746364614012119857}
   - component: {fileID: 2920101750621324863}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ghoul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 8070678815914000849}
   - component: {fileID: 7803348108305695190}
   - component: {fileID: 8127073798054480922}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerRadar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 180, y: 50}
+  m_Size: {x: 200, y: 50}
   m_EdgeRadius: 0
 --- !u!114 &8127073798054480922
 MonoBehaviour:
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 1718871301885148662}
   - component: {fileID: 7980990933757950907}
   - component: {fileID: 6348932758190748620}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyWallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 47493999175582642}
   - component: {fileID: 5632152060606996703}
   - component: {fileID: 2938442696470821865}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 7028146568601380662}
   - component: {fileID: 4640989533120429278}
   - component: {fileID: 4605128886943011045}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 80, y: 50}
+  m_Size: {x: 100, y: 50}
   m_EdgeRadius: 0
 --- !u!114 &4605128886943011045
 MonoBehaviour:

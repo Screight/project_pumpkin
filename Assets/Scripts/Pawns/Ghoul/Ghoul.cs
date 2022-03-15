@@ -22,6 +22,8 @@ public class Ghoul : Enemy
 
     [SerializeField] GameObject player;
     float m_playerPosX;
+    bool hasCharged;
+    Timer chargeTimer;
 
     [SerializeField] float m_speed = 80.0f;
     [SerializeField] bool m_isFacingRight;
@@ -41,6 +43,7 @@ public class Ghoul : Enemy
         m_isGrounded = true;
         m_playerIsNear = false;
         m_playerIsAtRange = false;
+        hasCharged = false;
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
     }
@@ -55,16 +58,19 @@ public class Ghoul : Enemy
 
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
+        chargeTimer = gameObject.AddComponent<Timer>();
+        chargeTimer.Duration = 1;
     }
 
     void Update()
     {
+        if (Time.timeScale == 0) { return; } //Game Paused
         switch (m_ghoulState)
         {
             default:break;
             case GHOUL_STATE.IDLE:      { Idle(); } break;
             case GHOUL_STATE.CHASE:     { Move(GHOUL_STATE.IDLE); } break;
-            case GHOUL_STATE.ATTACK:    { Attack(); } break;
+            case GHOUL_STATE.ATTACK:    { Attack(GHOUL_STATE.CHASE); } break;
             case GHOUL_STATE.HIT:       { } break;
             case GHOUL_STATE.DIE:       { Die(); } break;
         }
@@ -72,8 +78,8 @@ public class Ghoul : Enemy
 
     void Idle()
     {
-        m_rb2D.velocity = Vector2.zero;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+        m_rb2D.velocity = Vector2.zero;
 
         if (m_playerIsNear) { m_ghoulState = GHOUL_STATE.CHASE; }
     }
@@ -89,17 +95,39 @@ public class Ghoul : Enemy
         else if (m_playerIsNear)
         {
             //Ready to Attack
-            if (m_playerIsAtRange) { m_ghoulState = GHOUL_STATE.ATTACK; }
+            if (m_playerIsAtRange)
+            {
+                m_playerPosX = player.transform.position.x;
+                chargeTimer.Run();
+                m_ghoulState = GHOUL_STATE.ATTACK;
+                ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+            }
             //Chasing
             if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
-            if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
+            if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
             m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
         }
         else { m_ghoulState = p_defaultState; }
     }
-    void Attack()
+    void Attack(GHOUL_STATE p_defaultState)
     {
+        float distance = Mathf.Abs(player.transform.position.x - transform.position.x);
 
+        m_rb2D.velocity = Vector2.zero;
+        if (chargeTimer.IsFinished) { hasCharged = true; }
+
+        if ((m_isFacingRight && transform.position.x <= m_playerPosX+10) || (!m_isFacingRight && transform.position.x >= m_playerPosX-10))
+        {
+            if (hasCharged && m_isGrounded)
+            {
+                m_animator.speed = 55 / distance;
+
+                ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.ATTACK]);
+                m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
+                if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
+            }
+        }
+        else { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
     }
     void Die()
     {
@@ -109,11 +137,7 @@ public class Ghoul : Enemy
     void ChangeAnimationState(int p_newState)
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
-
-        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT])
-        {
-            m_animator.Play(p_newState, -1, 0);
-        }
+        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT]) { m_animator.Play(p_newState, -1, 0); }
         else
         {
             m_animator.Play(p_newState);
@@ -140,24 +164,16 @@ public class Ghoul : Enemy
         base.Damage(p_damage);
     }
 
-    public GHOUL_STATE State { set { m_ghoulState = value; } get { return m_ghoulState; } }
+    public GHOUL_STATE State 
+    { 
+        set { m_ghoulState = value; } 
+        get { return m_ghoulState; } 
+    }
 
     #region Accessors
-    public bool IsGrounded
-    {
-        set { m_isGrounded = value; }
-    }
-    public bool IsPlayerNear
-    {
-        set { m_playerIsNear = value; }
-    }
-    public bool IsPlayerAtRange
-    {
-        set { m_playerIsAtRange = value; }
-    }
-    public bool IsFacingRight
-    {
-        get { return m_isFacingRight; }
-    }
+    public bool IsGrounded { set { m_isGrounded = value; } }
+    public bool IsPlayerNear { set { m_playerIsNear = value; } }
+    public bool IsPlayerAtRange { set { m_playerIsAtRange = value; } }
+    public bool IsFacingRight { get { return m_isFacingRight; } }
     #endregion
 }
