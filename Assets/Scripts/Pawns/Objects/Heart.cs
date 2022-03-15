@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hearth : MonoBehaviour
+public class Heart : MonoBehaviour
 {
     Player m_player;
 

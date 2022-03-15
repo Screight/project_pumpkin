@@ -146,14 +146,8 @@ public class Player : MonoBehaviour
         {
             if (m_blinkTimer.IsFinished)
             {
-                if (!m_hasBlinked)
-                {
-                    m_spriteRenderer.color = new Color(1, 1, 1, 0.5f);
-                }
-                else
-                {
-                    m_spriteRenderer.color = new Color(1, 1, 1, 1);
-                }
+                if (!m_hasBlinked) { m_spriteRenderer.color = new Color(1, 1, 1, 0.5f); }
+                else { m_spriteRenderer.color = new Color(1, 1, 1, 1); }
                 m_hasBlinked = !m_hasBlinked;
                 m_blinkTimer.Run();
                 Debug.Log("blinked");
@@ -211,8 +205,7 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
-            case PLAYER_STATE.ATTACK: { 
-                    Move(PLAYER_STATE.ATTACK); } break;
+            case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
         }
     }
 
@@ -220,14 +213,15 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-          if (InputManager.Instance.JumpButtonPressed && m_isGrounded && m_objectGroundedTo != "enemy") {
+        if (InputManager.Instance.JumpButtonPressed && m_isGrounded && m_objectGroundedTo != "enemy")
+        {
             m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
             SetPlayerState(PLAYER_STATE.BOOST);
             ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.BOOST]);
             m_isGrounded = false;
-          }
+        }
     }
 
     void Dash()
@@ -266,7 +260,8 @@ public class Player : MonoBehaviour
             if (!m_isFacingRight && horizontalAxisValue > 0)    { FlipX(); }
             if (m_isFacingRight && horizontalAxisValue < 0)     { FlipX(); }
 
-            if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK) {
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
+            {
                 m_state = PLAYER_STATE.MOVE;
                 ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
             }
@@ -274,10 +269,7 @@ public class Player : MonoBehaviour
         else
         {
             m_state = p_defaultState;
-            if(m_state != PLAYER_STATE.ATTACK)
-            {
-                ChangeAnimationState(m_animationHash[(int)p_defaultState]);
-            }
+            if (m_state != PLAYER_STATE.ATTACK) { ChangeAnimationState(m_animationHash[(int)p_defaultState]); }
         }
 
         if (m_canIMove)
@@ -374,10 +366,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ModifyHP(int p_healthModifier)
-    {
-        m_health += p_healthModifier;
-    }
+    public void ModifyHP(int p_healthModifier) { m_health += p_healthModifier; }
 
     public void StartInvulnerability(float p_invulnerableDuration)
     {
@@ -388,10 +377,7 @@ public class Player : MonoBehaviour
 
     #region Accessors
 
-    public bool IsFacingRight
-    {
-        get { return m_isFacingRight; }
-    }
+    public bool IsFacingRight { get { return m_isFacingRight; } }
 
     public void SetPlayerAnimation(PLAYER_ANIMATION p_animation)
     {
@@ -400,30 +386,23 @@ public class Player : MonoBehaviour
     public PLAYER_STATE State
     {
         get { return m_state; }
-        set { m_state = value;
-            if(m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(m_speed, m_rb2D.velocity.y); }
+        set
+        {
+            m_state = value;
+            if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(m_speed, m_rb2D.velocity.y); }
         }
     }
 
-    public float Gravity1
-    {
-        get { return m_gravity1; }
-    }
+    public float Gravity1 { get { return m_gravity1; } }
 
-    public float Gravity2
-    {
-        get { return m_gravity2; }
-    }
+    public float Gravity2 { get { return m_gravity2; } }
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
         get { return m_isGrounded; }
     }
 
-    public bool IsUsingGroundBreaker
-    {
-        set { m_isUsingGroundBreaker = value; }
-    }
+    public bool IsUsingGroundBreaker { set { m_isUsingGroundBreaker = value; } }
 
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
@@ -437,20 +416,11 @@ public class Player : MonoBehaviour
 
     public void SetToNormalSpeed() { m_speed = 60; }
 
-    public bool HasUsedDash
-    {
-        set { m_hasUsedDash = value; }
-    }
+    public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
-    public int HealthPoints
-    {
-        get { return m_health; }
-    }
+    public int HealthPoints { get { return m_health; } }
 
-    public int TotalHealthPoints
-    {
-        get { return m_totalHealthPoints; }
-    }
+    public int TotalHealthPoints { get { return m_totalHealthPoints; } }
 
     #endregion
 }
