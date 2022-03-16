@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWallCheck : MonoBehaviour
+public class skellyWallCheck : MonoBehaviour
 {
     Skeleton skeletonScript;
     Rigidbody2D skeletonRigidBody;

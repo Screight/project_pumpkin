@@ -289,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 433329262852215983, guid: d5090dadaed7d3341b3021b389bce8c1, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 6054658956129048169, guid: ed3068462826d5f4492d48846b2b1081, type: 3}
     - target: {fileID: 433329262852216657, guid: d5090dadaed7d3341b3021b389bce8c1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 111.7
@@ -5064,6 +5068,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 206289767, guid: ed3068462826d5f4492d48846b2b1081, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2483708738412794923, guid: ed3068462826d5f4492d48846b2b1081, type: 3}
       propertyPath: m_LocalPosition.x
       value: -163
