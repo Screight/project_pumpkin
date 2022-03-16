@@ -9,7 +9,6 @@ public class PathFinderTest : MonoBehaviour
     [SerializeField] int m_width;
     [SerializeField] int m_tileSize;
     [SerializeField] Transform m_initialPosition;
-    [SerializeField] Transform m_targetPosition;
     int m_initialNode;
     int m_targetNode;
 
@@ -23,8 +22,12 @@ public class PathFinderTest : MonoBehaviour
     List<int> pathToTarget;
     Dictionary<int, int> m_pathToTarget;
 
+    bool m_isInANode;
+    GameObject m_target;
+
     private void Awake()
     {
+        m_target = GameObject.FindGameObjectWithTag("Player");
         m_graph = new SparseGraph(true);
         m_pathToTarget = new Dictionary<int, int>();
         for (int j = 0; j < m_height; j++)
@@ -42,16 +45,8 @@ public class PathFinderTest : MonoBehaviour
                 if( i >= 0 && i < m_width - 1) { m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + j * m_width)); }
                 if( i >= 0 && i < m_width - 1) { m_graph.AddEdge(new GraphEdge((i + 1) + j * m_width, i + j * m_width)); }
 
-                //if( i < m_width - 1) { m_graph.AddEdge(new GraphEdge(i + j, i + 1 + j)); }
-                //if( i < m_width - 1) { m_graph.AddEdge(new GraphEdge(i + 1 + j, i + j)); }
-
-
                 if( j >= 0 && j < m_height - 1) { m_graph.AddEdge(new GraphEdge(i + j * m_width, i + (j * m_width + m_width))); }
                 if( j >= 0 && j < m_height - 1) { m_graph.AddEdge(new GraphEdge(i + (j * m_width + m_width), i + j * m_width)); }
-
-                //if( j < m_height - 1) { m_graph.AddEdge(new GraphEdge(i + j, i + (j + m_height))); }
-                //if( j < m_height - 1) { m_graph.AddEdge(new GraphEdge(i + (j + m_height), i+j)); }
-
             }
         }
 
@@ -70,14 +65,23 @@ public class PathFinderTest : MonoBehaviour
 
     private void Start()
     {
-
-        for(int i = 0; i < m_graph.NumberOfNodes(); i++)
+        m_isInANode = true;
+        for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
-            if (m_graph.GetNode(i).IsNearEnoughThisNode(5, m_initialPosition.position)) {
-                m_initialNode = i; }
-            if (m_graph.GetNode(i).IsNearEnoughThisNode(5, m_targetPosition.position)) {
-                m_targetNode = i; }
+            if (m_graph.GetNode(i).IsNearEnoughThisNode(5, m_initialPosition.position))
+            {
+                m_initialNode = i;
+            }
+            if (m_graph.GetNode(i).IsNearEnoughThisNode(16, m_target.transform.position))
+            {
+                m_targetNode = i;
+            }
         }
+
+    }
+
+    void SearchTarget()
+    {
 
         m_currentNodeIndex = m_initialNode;
         transform.position = m_graph.GetNode(m_initialNode).Position;
@@ -91,13 +95,30 @@ public class PathFinderTest : MonoBehaviour
                 m_pathToTarget.Add(pathToTarget[i + 1], pathToTarget[i]);
             }
         }
-
+        m_isInANode = false;
     }
+
+    void ClearPathToTarget()
+    {
+        m_pathToTarget.Clear();
+    }
+
     private void Update()
     {
         if (m_currentNodeIndex != m_targetNode)
         {
-            Move();
+            if (m_isInANode) {
+                for (int i = 0; i < m_graph.NumberOfNodes(); i++)
+                {
+                    if (m_graph.GetNode(i).IsNearEnoughThisNode(16, m_target.transform.position) && m_graph.GetNode(i).IsActive)
+                    {
+                        m_targetNode = i;
+                    }
+                }
+                SearchTarget(); 
+            }
+            else { Move(); }
+            
         }
          
     }
@@ -113,6 +134,9 @@ public class PathFinderTest : MonoBehaviour
         {
             transform.position = m_graph.GetNode(m_pathToTarget[m_currentNodeIndex]).Position;
             m_currentNodeIndex = m_pathToTarget[m_currentNodeIndex];
+            m_pathToTarget.Clear();
+            m_isInANode = true;
+            m_initialNode = m_currentNodeIndex;
             Debug.Log(m_currentNodeIndex);
         }
     }
@@ -121,7 +145,7 @@ public class PathFinderTest : MonoBehaviour
     {
         Gizmos.color = Color.black;
         Vector3 initialPosition = m_startingPoint.position;
-        for (int i = 0; i < m_graph.NumberOfNodes(); i++)
+        /*for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
             if(i == m_initialNode) { Gizmos.color = Color.green; }
             else if(i == m_targetNode) { Gizmos.color = Color.red; }
@@ -129,7 +153,7 @@ public class PathFinderTest : MonoBehaviour
             else { Gizmos.color = Color.black; }
 
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
-        }
+        }*/
 
         if (!m_graphSearch.IsTargetFound) { return; }
         List<int> pathToTarget = m_graphSearch.GetPathToTarget();
