@@ -190,6 +190,14 @@ public class Skeleton : Enemy
         Destroy(gameObject, 0.5f);
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Player.Instance.PushAway(-50.0f, 100.0f);
+        }
+    }
+
     void ChangeAnimationState(int p_newState)
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)SKELETON_ANIMATION.HIT]) { return; }
