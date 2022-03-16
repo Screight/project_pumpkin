@@ -21,7 +21,6 @@ public class BoneScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "floor") {
             Destroy(gameObject);
-            this.gameObject.SetActive(false); 
         }
     }
 }

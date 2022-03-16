@@ -134,6 +134,14 @@ public class Ghoul : Enemy
         Destroy(gameObject);
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Player.Instance.PushAway(-150.0f, 150.0f);
+        }
+    }
+
     void ChangeAnimationState(int p_newState)
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
