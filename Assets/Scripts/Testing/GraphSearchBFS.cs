@@ -102,6 +102,7 @@ class GraphSearchBFS
     public bool IsTargetFound
     {
         get { return m_isTargetFound; }
+        set { m_isTargetFound = value; }
     }
 
 }
