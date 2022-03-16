@@ -93,7 +93,7 @@ public class Ghoul : Enemy
         {
             m_ghoulState = p_defaultState;
         }
-        else if (m_playerIsNear)
+        else if (m_playerIsNear || m_playerIsAtRange)
         {
             //Ready to Attack
             if (m_playerIsAtRange && m_isGrounded)
@@ -115,7 +115,7 @@ public class Ghoul : Enemy
         m_rb2D.velocity = Vector2.zero;
         if (chargeTimer.IsFinished) { hasCharged = true; }
 
-        if ((m_isFacingRight && transform.position.x <= m_playerPosX+15) || (!m_isFacingRight && transform.position.x >= m_playerPosX-15))
+        if ((m_isFacingRight && transform.position.x <= m_playerPosX + 15) || (!m_isFacingRight && transform.position.x >= m_playerPosX - 15))
         {
             if (hasCharged && m_isGrounded)
             {
@@ -124,7 +124,8 @@ public class Ghoul : Enemy
                 ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.ATTACK]);
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
                 if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
-            }else if(!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
+            }
+            else if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
         }
         else { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
     }

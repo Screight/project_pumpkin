@@ -208,8 +208,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
     void Jump()
     {
         if (InputManager.Instance.JumpButtonPressed && m_isGrounded && m_objectGroundedTo != "enemy")
@@ -307,8 +305,9 @@ public class Player : MonoBehaviour
         {
             float velocityX = -50*(collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
             float velocityY = 100;
-
             m_rb2D.velocity = new Vector2(velocityX, velocityY);
+
+            Physics2D.IgnoreLayerCollision(6, 7, true);
             m_isInvulnerable = true;
             m_invulnerableTimer.Run();
             m_noControlTimer.Duration = 0.5f;
@@ -316,7 +315,6 @@ public class Player : MonoBehaviour
             m_canIMove = false;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
-            Physics2D.IgnoreLayerCollision(6, 7, true);
             GameManager.Instance.ModifyHealthUI(false);
             ModifyHP(-1);
         }
