@@ -5,13 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     protected int m_health;
-
     protected Vector2 m_spawnPos;
 
     protected virtual void Awake()
     {
         m_spawnPos = transform.position;
-        Debug.Log("Base Awake called");
     }
 
     public virtual void Damage(int p_damage)

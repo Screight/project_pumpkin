@@ -44,9 +44,6 @@ public class Player : MonoBehaviour
     string m_jumpAnimationName      = "jump";
     string m_fallAnimationName      = "fall";
     string m_landAnimationName      = "land";
-    string m_attack_1_AnimationName = "attack_1";
-    string m_attack_2_AnimationName = "attack_2";
-    string m_attack_3_AnimationName = "attack_3";
     string m_hitAnimationName       = "hit";
     string m_groundbreakerAnimationName       = "groundbreaker";
     string m_groundbreakerLoopAnimationName       = "groundbreakerLoop";
@@ -82,12 +79,9 @@ public class Player : MonoBehaviour
     int m_playerStateID;
     bool m_isFacingRight;
 
-    float m_attackDuration = 0.0f;
-    float m_currentAttackDuration = 0.0f;
     [SerializeField] Transform m_attackPosition;
     [SerializeField] LayerMask m_enemyLayer;
     const float M_ATTACK_RANGE = 8.0f;
-    bool m_keepAttacking = false;
     int m_keepAttackingID;
     int m_attackComboCount;
 

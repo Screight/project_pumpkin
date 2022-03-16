@@ -25,14 +25,8 @@ public class Skill_Fireball : MonoBehaviour
 
     private void Update()
     {
-        if (m_cooldownTimer.IsRunning)
-        {
-            m_spellCooldownScript.FillFireballCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
-        }
-        else
-        {
-            m_spellCooldownScript.FillFireballCooldownUI(1);
-        }
+        if (m_cooldownTimer.IsRunning) { m_spellCooldownScript.FillFireballCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration); }
+        else { m_spellCooldownScript.FillFireballCooldownUI(1); }
     }
 
     void Start()
@@ -43,10 +37,7 @@ public class Skill_Fireball : MonoBehaviour
 
     public void Fireball(bool p_isFireballUnlocked)
     {
-        if(!p_isFireballUnlocked) {
-            return;
-            Debug.Log("hola");
-        }
+        if (!p_isFireballUnlocked) { return; }
         if (InputManager.Instance.Skill1ButtonPressed && m_cooldownTimer.IsFinished && m_isFireBallAvailable)
         {
             m_fireBall.SetActive(true);
