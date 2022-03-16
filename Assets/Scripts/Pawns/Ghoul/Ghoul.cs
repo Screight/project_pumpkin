@@ -27,9 +27,9 @@ public class Ghoul : Enemy
 
     [SerializeField] float m_speed = 80.0f;
     [SerializeField] bool m_isFacingRight;
-    bool m_isGrounded;
-    bool m_playerIsNear;
-    bool m_playerIsAtRange;
+    public bool m_isGrounded;
+    public bool m_playerIsNear;
+    public bool m_playerIsAtRange;
 
     protected override void Awake()
     {
@@ -85,17 +85,18 @@ public class Ghoul : Enemy
     }
     void Move(GHOUL_STATE p_defaultState)
     {
+        if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
+        if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.MOVE]);
         //Player Near but Unnaccesible
         if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded)
         {
-            m_rb2D.velocity = Vector2.zero;
-            ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+            m_ghoulState = p_defaultState;
         }
         else if (m_playerIsNear)
         {
             //Ready to Attack
-            if (m_playerIsAtRange)
+            if (m_playerIsAtRange && m_isGrounded)
             {
                 m_playerPosX = player.transform.position.x;
                 chargeTimer.Run();
@@ -103,8 +104,6 @@ public class Ghoul : Enemy
                 ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
             }
             //Chasing
-            if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
-            if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
             m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
         }
         else { m_ghoulState = p_defaultState; }
@@ -116,7 +115,7 @@ public class Ghoul : Enemy
         m_rb2D.velocity = Vector2.zero;
         if (chargeTimer.IsFinished) { hasCharged = true; }
 
-        if ((m_isFacingRight && transform.position.x <= m_playerPosX+10) || (!m_isFacingRight && transform.position.x >= m_playerPosX-10))
+        if ((m_isFacingRight && transform.position.x <= m_playerPosX+15) || (!m_isFacingRight && transform.position.x >= m_playerPosX-15))
         {
             if (hasCharged && m_isGrounded)
             {
@@ -125,13 +124,13 @@ public class Ghoul : Enemy
                 ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.ATTACK]);
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
                 if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
-            }
+            }else if(!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
         }
         else { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
     }
     void Die()
     {
-
+        Destroy(gameObject);
     }
 
     void ChangeAnimationState(int p_newState)

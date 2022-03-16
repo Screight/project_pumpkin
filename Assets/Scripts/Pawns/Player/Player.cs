@@ -125,17 +125,16 @@ public class Player : MonoBehaviour
         m_isFacingRight = true;
         m_keepAttackingID = Animator.StringToHash("nextAttack");
 
-        m_animationHash[(int)PLAYER_ANIMATION.IDLE]     = Animator.StringToHash(m_idleAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.RUN]      = Animator.StringToHash(m_runAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.DASH]     = Animator.StringToHash(m_dashAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.BOOST]    = Animator.StringToHash(m_boostAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.JUMP]     = Animator.StringToHash(m_jumpAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.FALL]     = Animator.StringToHash(m_fallAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.LAND]     = Animator.StringToHash(m_landAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.HIT]      = Animator.StringToHash(m_hitAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]      = Animator.StringToHash(m_groundbreakerAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]      = Animator.StringToHash(m_groundbreakerLoopAnimationName);
-
+        m_animationHash[(int)PLAYER_ANIMATION.IDLE]                 = Animator.StringToHash(m_idleAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.RUN]                  = Animator.StringToHash(m_runAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.DASH]                 = Animator.StringToHash(m_dashAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.BOOST]                = Animator.StringToHash(m_boostAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.JUMP]                 = Animator.StringToHash(m_jumpAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.FALL]                 = Animator.StringToHash(m_fallAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.LAND]                 = Animator.StringToHash(m_landAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.HIT]                  = Animator.StringToHash(m_hitAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]        = Animator.StringToHash(m_groundbreakerAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]   = Animator.StringToHash(m_groundbreakerLoopAnimationName);
     }
 
     private void Update()
@@ -315,7 +314,6 @@ public class Player : MonoBehaviour
             m_noControlTimer.Duration = 0.5f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            //m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             Physics2D.IgnoreLayerCollision(6, 7, true);
@@ -337,9 +335,7 @@ public class Player : MonoBehaviour
             m_noControlTimer.Duration = 0.2f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            //collision.gameObject.SetActive(false);
             Destroy(collision.gameObject);
-            //m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             GameManager.Instance.ModifyHealthUI(false);
