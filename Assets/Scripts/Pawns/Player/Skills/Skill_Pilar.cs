@@ -7,7 +7,6 @@ public class Skill_Pilar : MonoBehaviour
     [SerializeField] SpellCooldown m_spellCooldownScript;
     Timer m_cooldownTimer;
     float m_cooldown = 3.0f;
-    bool m_isPilarAvailable;
     [SerializeField] SpriteRenderer m_markerSprite;
 
     [SerializeField] GameObject m_marker;
@@ -25,12 +24,8 @@ public class Skill_Pilar : MonoBehaviour
     [SerializeField] GameObject m_pilar;
     BoxCollider2D m_pilarColider;
     Vector2 m_pilarSummonDistance;
-    [SerializeField] float m_pilarCooldown = 2;
 
     Pilar m_pilarScript;
-
-    float m_pilarDuration;
-    bool m_isPilarSummoned;
     bool m_isPilarOnCooldown;
 
     bool m_canPlayerUseSkill;
@@ -46,25 +41,15 @@ public class Skill_Pilar : MonoBehaviour
         m_pilarColider = m_pilar.GetComponent<BoxCollider2D>();
 
         m_isPilarOnCooldown = false;
-        m_isPilarSummoned = false;
         m_canPlayerUseSkill = false;
-        m_isPilarAvailable = true;
-
-        m_pilarDuration = 0;
     }
 
     private void Update()
     {
-        if (m_cooldownTimer.IsRunning)
-        {
-            m_spellCooldownScript.FillPilarCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration);
-        }
-        else
-        {
-            m_spellCooldownScript.FillPilarCooldownUI(1);
-        }
+        if (m_cooldownTimer.IsRunning) { m_spellCooldownScript.FillPilarCooldownUI(m_cooldownTimer.CurrentTime / m_cooldownTimer.Duration); }
+        else { m_spellCooldownScript.FillPilarCooldownUI(1); }
     }
-
+    
     private void Start()
     {
         m_pilarScript = m_pilar.GetComponent<Pilar>();
@@ -207,9 +192,7 @@ public class Skill_Pilar : MonoBehaviour
 
     private void SummonPilar()
     {
-        m_isPilarSummoned = true;
         bool canPilarBeSummoned;
-        bool verticalCollision = false; 
 
         float centerPositionX = m_pilarSummonDistance.x;
         float rightPositionX = m_pilarSummonDistance.x/* + m_pilarColider.size.x / 2*/;

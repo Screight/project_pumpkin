@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2920101750621324863}
   m_Layer: 6
   m_Name: Ghoul
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,6 +152,9 @@ MonoBehaviour:
   player: {fileID: 0}
   m_speed: 50
   m_isFacingRight: 0
+  m_isGrounded: 0
+  m_playerIsNear: 0
+  m_playerIsAtRange: 0
 --- !u!95 &2920101750621324863
 Animator:
   serializedVersion: 3
@@ -182,7 +185,7 @@ GameObject:
   - component: {fileID: 8070678815914000849}
   - component: {fileID: 7803348108305695190}
   - component: {fileID: 8127073798054480922}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: PlayerRadar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,8 +254,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1718871301885148662}
   - component: {fileID: 7980990933757950907}
-  - component: {fileID: 6348932758190748620}
-  m_Layer: 6
+  - component: {fileID: 2497836753102135530}
+  m_Layer: 0
   m_Name: EnemyWallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +302,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 20}
   m_EdgeRadius: 0
---- !u!114 &6348932758190748620
+--- !u!114 &2497836753102135530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -308,7 +311,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6824218043558534454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d8189fe9545420408e8b5e5bab33bdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a45114119c733c4f9ce0e4b3c2801a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7766460918769142166
@@ -322,7 +325,7 @@ GameObject:
   - component: {fileID: 47493999175582642}
   - component: {fileID: 5632152060606996703}
   - component: {fileID: 2938442696470821865}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemyGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +381,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7766460918769142166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dd358cbedaa24d4a993097997876758, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ccd4c495bd0a414b8d15e40c9c53165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8660231912689791661
@@ -392,7 +395,7 @@ GameObject:
   - component: {fileID: 7028146568601380662}
   - component: {fileID: 4640989533120429278}
   - component: {fileID: 4605128886943011045}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

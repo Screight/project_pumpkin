@@ -23,6 +23,7 @@ public class Bat : Enemy
 
     private void Awake()
     {
+        base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
         m_player = GameObject.FindGameObjectWithTag("Player");
     }

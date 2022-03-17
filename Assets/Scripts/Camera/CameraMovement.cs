@@ -19,8 +19,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] GameObject m_player;
     Player m_playerScript;
     BoxCollider2D m_playerBoxCollider2D;
-    float cameraBoxWidth = 50;
-    float cameraBoxHeight = 50;
+    float cameraBoxSize = 50;
     Vector2 cameraBoxPosition;
 
     Vector3 targetPosition;
@@ -37,9 +36,6 @@ public class CameraMovement : MonoBehaviour
     Timer m_fallTimer;
     Timer m_dampTimer;
     bool m_startFalling = false;
-
-    float m_distance = 0;
-    float m_lastPosition = 0;
 
     private void Awake()
     {
@@ -101,12 +97,12 @@ public class CameraMovement : MonoBehaviour
             m_offset.y = 0f;
         }
 
-        if (m_player.transform.position.y + m_playerBoxCollider2D.size.y > transform.position.y - cameraOffsetY + cameraBoxHeight / 2) // sobresale por arriba
+        if (m_player.transform.position.y + m_playerBoxCollider2D.size.y > transform.position.y - cameraOffsetY + cameraBoxSize / 2) // sobresale por arriba
         {
             m_playerOutOfCameraBoundsY = true;
             m_doLerp = true;
         }
-        else if (((m_player.transform.position.y) - (transform.position.y - cameraOffsetY)) < -cameraBoxHeight / 2) // sobresale por abajo
+        else if (((m_player.transform.position.y) - (transform.position.y - cameraOffsetY)) < -cameraBoxSize / 2) // sobresale por abajo
         {
             m_playerOutOfCameraBoundsY = true;
             m_doLerp = true;
@@ -117,12 +113,12 @@ public class CameraMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!m_playerOutOfCameraBoundsY && transform.position.y + cameraBoxHeight / 2 == m_player.transform.position.y)
+        if (!m_playerOutOfCameraBoundsY && transform.position.y + cameraBoxSize / 2 == m_player.transform.position.y)
         {
             m_doLerp = false;
         }
 
-        targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + cameraBoxHeight / 2, m_offset.z);
+        targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + cameraBoxSize / 2, m_offset.z);
 
         // left limit
         if(targetPosition.x - CameraManager.Instance.Width / 2 <= m_leftLimit)
@@ -199,7 +195,7 @@ public class CameraMovement : MonoBehaviour
     {
         Gizmos.color = Color.black;
         Gizmos.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, 0, 10)), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height, 10)));
-        Gizmos.DrawWireCube(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 - 2 * m_offset.x, Screen.height / 2, 10)), new Vector3(2 * m_offset.x, cameraBoxHeight, 1));
+        Gizmos.DrawWireCube(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 - 2 * m_offset.x, Screen.height / 2, 10)), new Vector3(2 * m_offset.x, cameraBoxSize, 1));
     }
 
     public void SetCameraToPlayerPosition()

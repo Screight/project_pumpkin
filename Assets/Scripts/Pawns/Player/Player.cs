@@ -7,6 +7,7 @@ public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, GR
 
 public class Player : MonoBehaviour
 {
+    static Player m_instance;
     [SerializeField] DashDust m_dashDustScript;
     [SerializeField] Transicion m_transicionScript;
 
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
 
     bool m_isInvulnerable = false;
     Timer m_invulnerableTimer;
+    float pushVelX = -50.0f;
+    float pushVelY = 100.0f;
 
     bool m_canIMove = false;
     Timer m_noControlTimer;
@@ -41,9 +44,6 @@ public class Player : MonoBehaviour
     string m_jumpAnimationName      = "jump";
     string m_fallAnimationName      = "fall";
     string m_landAnimationName      = "land";
-    string m_attack_1_AnimationName = "attack_1";
-    string m_attack_2_AnimationName = "attack_2";
-    string m_attack_3_AnimationName = "attack_3";
     string m_hitAnimationName       = "hit";
     string m_groundbreakerAnimationName       = "groundbreaker";
     string m_groundbreakerLoopAnimationName       = "groundbreakerLoop";
@@ -64,13 +64,13 @@ public class Player : MonoBehaviour
     bool m_canMoveHorizontal = true;
 
     float m_dashCurrentTime;
-    [SerializeField] float m_dashDistance = 100;
+    [SerializeField] float m_dashDistance = 100.0f;
     [SerializeField] float m_dashDuration = 3/6f;
     float m_dashSpeed = 200.0f;
 
     public float m_maxHeight = 10.0f;
-    public float m_timeToPeak1 = 1f;
-    public float m_timeToPeak2 = 1f;
+    public float m_timeToPeak1 = 1.0f;
+    public float m_timeToPeak2 = 1.0f;
     float m_gravity1;
     float m_gravity2;
     float m_initialVelocityY;
@@ -79,17 +79,16 @@ public class Player : MonoBehaviour
     int m_playerStateID;
     bool m_isFacingRight;
 
-    float m_attackDuration = 0;
-    float m_currentAttackDuration = 0;
     [SerializeField] Transform m_attackPosition;
     [SerializeField] LayerMask m_enemyLayer;
-    const float M_ATTACK_RANGE = 8;
-    bool m_keepAttacking = false;
+    const float M_ATTACK_RANGE = 8.0f;
     int m_keepAttackingID;
     int m_attackComboCount;
 
     private void Awake()
     {
+        if (m_instance == null) { m_instance = this; }
+
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_playerStateID = Animator.StringToHash("state");
@@ -125,17 +124,16 @@ public class Player : MonoBehaviour
         m_isFacingRight = true;
         m_keepAttackingID = Animator.StringToHash("nextAttack");
 
-        m_animationHash[(int)PLAYER_ANIMATION.IDLE]     = Animator.StringToHash(m_idleAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.RUN]      = Animator.StringToHash(m_runAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.DASH]     = Animator.StringToHash(m_dashAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.BOOST]    = Animator.StringToHash(m_boostAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.JUMP]     = Animator.StringToHash(m_jumpAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.FALL]     = Animator.StringToHash(m_fallAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.LAND]     = Animator.StringToHash(m_landAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.HIT]      = Animator.StringToHash(m_hitAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]      = Animator.StringToHash(m_groundbreakerAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]      = Animator.StringToHash(m_groundbreakerLoopAnimationName);
-
+        m_animationHash[(int)PLAYER_ANIMATION.IDLE]                 = Animator.StringToHash(m_idleAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.RUN]                  = Animator.StringToHash(m_runAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.DASH]                 = Animator.StringToHash(m_dashAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.BOOST]                = Animator.StringToHash(m_boostAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.JUMP]                 = Animator.StringToHash(m_jumpAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.FALL]                 = Animator.StringToHash(m_fallAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.LAND]                 = Animator.StringToHash(m_landAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.HIT]                  = Animator.StringToHash(m_hitAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]        = Animator.StringToHash(m_groundbreakerAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]   = Animator.StringToHash(m_groundbreakerLoopAnimationName);
     }
 
     private void Update()
@@ -208,8 +206,6 @@ public class Player : MonoBehaviour
             case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
         }
     }
-
-
 
     void Jump()
     {
@@ -306,19 +302,18 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.tag == "enemy" && !m_isInvulnerable)
         {
-            float velocityX = -50*(collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
-            float velocityY = 100;
-
+            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = pushVelY;
             m_rb2D.velocity = new Vector2(velocityX, velocityY);
+
+            Physics2D.IgnoreLayerCollision(6, 7, true);
             m_isInvulnerable = true;
             m_invulnerableTimer.Run();
             m_noControlTimer.Duration = 0.5f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            //m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
-            Physics2D.IgnoreLayerCollision(6, 7, true);
             GameManager.Instance.ModifyHealthUI(false);
             ModifyHP(-1);
         }
@@ -328,8 +323,9 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
-            float velocityX = -50 * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
-            float velocityY = 100;
+            PushAway(-50.0f, 100.0f);
+            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = pushVelY;
 
             m_rb2D.velocity = new Vector2(velocityX, velocityY);
             m_isInvulnerable = true;
@@ -337,9 +333,7 @@ public class Player : MonoBehaviour
             m_noControlTimer.Duration = 0.2f;
             m_noControlTimer.Run();
             m_canIMove = false;
-            //collision.gameObject.SetActive(false);
             Destroy(collision.gameObject);
-            //m_spriteRenderer.color = Color.black;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             GameManager.Instance.ModifyHealthUI(false);
@@ -365,6 +359,13 @@ public class Player : MonoBehaviour
             m_transicionScript.LocalCheckpointTransition();
         }
     }
+
+    static public Player Instance
+    {
+        get { return m_instance; }
+        private set { }
+    }
+    public void PushAway(float velX, float velY) { pushVelX = velX; pushVelY = velY; }
 
     public void ModifyHP(int p_healthModifier) { m_health += p_healthModifier; }
 

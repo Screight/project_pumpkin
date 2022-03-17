@@ -5,22 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Scenes/1_cemetery/MainTitle.unity
+    guid: ef4e35db78b0674408c1801aec864988
+  - enabled: 1
+    path: Assets/Scenes/Proto Scenes/protoScene.unity
+    guid: 58b711fcf38ad5b4c8de846f42e30237
+  - enabled: 0
     path: Assets/Scenes/Proto Scenes/Title.unity
     guid: 18c77e11ae273e5498f6fd09bdd651b4
   - enabled: 0
-    path: Assets/Scenes/Others/BlockOut.unity
-    guid: 97b04699711f00d4e8ba273b862c6ab9
-  - enabled: 0
     path: Assets/Scenes/Others/BlockOutMatias.unity
     guid: 797b9c22d0187d045a43fdba6cd16e49
-  - enabled: 0
-    path: Assets/Scenes/Others/NEW Blockout.unity
-    guid: 63aa20258b65e5d4ea7481170bcca9bd
-  - enabled: 1
-    path: Assets/Scenes/Proto Scenes/proto_isma.unity
-    guid: 58b711fcf38ad5b4c8de846f42e30237
   m_configObjects: {}
