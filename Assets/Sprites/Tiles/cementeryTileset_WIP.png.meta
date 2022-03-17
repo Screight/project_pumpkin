@@ -284,6 +284,87 @@ TextureImporter:
   - first:
       213: 2968558535058046714
     second: cementeryTileset_WIP_93
+  - first:
+      213: 5206460131235768255
+    second: cementeryTileset_WIP_94
+  - first:
+      213: 2970757376416829515
+    second: cementeryTileset_WIP_95
+  - first:
+      213: 2151608743829561835
+    second: cementeryTileset_WIP_96
+  - first:
+      213: 7491280944476031072
+    second: cementeryTileset_WIP_97
+  - first:
+      213: -842293244850079031
+    second: cementeryTileset_WIP_98
+  - first:
+      213: 922262634183338203
+    second: cementeryTileset_WIP_99
+  - first:
+      213: 470341201968482953
+    second: cementeryTileset_WIP_100
+  - first:
+      213: 3703576417974579617
+    second: cementeryTileset_WIP_101
+  - first:
+      213: -7889845279787306635
+    second: cementeryTileset_WIP_102
+  - first:
+      213: -3329322825346641697
+    second: cementeryTileset_WIP_103
+  - first:
+      213: -6306340614268285579
+    second: cementeryTileset_WIP_104
+  - first:
+      213: 4920645273959725280
+    second: cementeryTileset_WIP_105
+  - first:
+      213: 1797065237253630202
+    second: cementeryTileset_WIP_106
+  - first:
+      213: -7364562821569646221
+    second: cementeryTileset_WIP_107
+  - first:
+      213: 6350613042679912457
+    second: cementeryTileset_WIP_108
+  - first:
+      213: 503105726079427534
+    second: cementeryTileset_WIP_109
+  - first:
+      213: -4949488621992133537
+    second: cementeryTileset_WIP_110
+  - first:
+      213: -1644530153456309690
+    second: cementeryTileset_WIP_111
+  - first:
+      213: 4993964193059034384
+    second: cementeryTileset_WIP_112
+  - first:
+      213: -1342350331516789605
+    second: cementeryTileset_WIP_113
+  - first:
+      213: 4924096488482904933
+    second: cementeryTileset_WIP_114
+  - first:
+      213: -8966255482345325435
+    second: cementeryTileset_WIP_115
+  - first:
+      213: 6774336517847894432
+    second: cementeryTileset_WIP_116
+  - first:
+      213: 5029399934505103221
+    second: cementeryTileset_WIP_117
+  - first:
+      213: -7611544668374584834
+    second: cementeryTileset_WIP_118
+  - first:
+      213: -6753425166224644579
+    second: cementeryTileset_WIP_119
+  - first:
+      213: -5716615469748872866
+    second: cementeryTileset_WIP_120
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -586,8 +667,8 @@ TextureImporter:
       name: cementeryTileset_WIP_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 268
+        x: 176
+        y: 284
         width: 16
         height: 16
       alignment: 0
@@ -607,8 +688,8 @@ TextureImporter:
       name: cementeryTileset_WIP_11
       rect:
         serializedVersion: 2
-        x: 16
-        y: 268
+        x: 192
+        y: 284
         width: 16
         height: 16
       alignment: 0
@@ -628,8 +709,8 @@ TextureImporter:
       name: cementeryTileset_WIP_12
       rect:
         serializedVersion: 2
-        x: 32
-        y: 268
+        x: 208
+        y: 284
         width: 16
         height: 16
       alignment: 0
@@ -649,7 +730,7 @@ TextureImporter:
       name: cementeryTileset_WIP_13
       rect:
         serializedVersion: 2
-        x: 48
+        x: 0
         y: 268
         width: 16
         height: 16
@@ -670,7 +751,7 @@ TextureImporter:
       name: cementeryTileset_WIP_14
       rect:
         serializedVersion: 2
-        x: 64
+        x: 16
         y: 268
         width: 16
         height: 16
@@ -691,7 +772,7 @@ TextureImporter:
       name: cementeryTileset_WIP_15
       rect:
         serializedVersion: 2
-        x: 80
+        x: 32
         y: 268
         width: 16
         height: 16
@@ -712,7 +793,7 @@ TextureImporter:
       name: cementeryTileset_WIP_16
       rect:
         serializedVersion: 2
-        x: 96
+        x: 48
         y: 268
         width: 16
         height: 16
@@ -733,7 +814,7 @@ TextureImporter:
       name: cementeryTileset_WIP_17
       rect:
         serializedVersion: 2
-        x: 112
+        x: 64
         y: 268
         width: 16
         height: 16
@@ -754,7 +835,7 @@ TextureImporter:
       name: cementeryTileset_WIP_18
       rect:
         serializedVersion: 2
-        x: 128
+        x: 80
         y: 268
         width: 16
         height: 16
@@ -775,7 +856,7 @@ TextureImporter:
       name: cementeryTileset_WIP_19
       rect:
         serializedVersion: 2
-        x: 144
+        x: 96
         y: 268
         width: 16
         height: 16
@@ -796,8 +877,8 @@ TextureImporter:
       name: cementeryTileset_WIP_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 252
+        x: 112
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -817,8 +898,8 @@ TextureImporter:
       name: cementeryTileset_WIP_21
       rect:
         serializedVersion: 2
-        x: 16
-        y: 252
+        x: 128
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -838,8 +919,8 @@ TextureImporter:
       name: cementeryTileset_WIP_22
       rect:
         serializedVersion: 2
-        x: 32
-        y: 252
+        x: 144
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -859,8 +940,8 @@ TextureImporter:
       name: cementeryTileset_WIP_23
       rect:
         serializedVersion: 2
-        x: 48
-        y: 252
+        x: 176
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -880,8 +961,8 @@ TextureImporter:
       name: cementeryTileset_WIP_24
       rect:
         serializedVersion: 2
-        x: 64
-        y: 252
+        x: 192
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -901,8 +982,8 @@ TextureImporter:
       name: cementeryTileset_WIP_25
       rect:
         serializedVersion: 2
-        x: 80
-        y: 252
+        x: 208
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -922,8 +1003,8 @@ TextureImporter:
       name: cementeryTileset_WIP_26
       rect:
         serializedVersion: 2
-        x: 96
-        y: 252
+        x: 224
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -943,8 +1024,8 @@ TextureImporter:
       name: cementeryTileset_WIP_27
       rect:
         serializedVersion: 2
-        x: 112
-        y: 252
+        x: 240
+        y: 268
         width: 16
         height: 16
       alignment: 0
@@ -964,7 +1045,7 @@ TextureImporter:
       name: cementeryTileset_WIP_28
       rect:
         serializedVersion: 2
-        x: 128
+        x: 0
         y: 252
         width: 16
         height: 16
@@ -985,7 +1066,7 @@ TextureImporter:
       name: cementeryTileset_WIP_29
       rect:
         serializedVersion: 2
-        x: 144
+        x: 16
         y: 252
         width: 16
         height: 16
@@ -1006,7 +1087,7 @@ TextureImporter:
       name: cementeryTileset_WIP_30
       rect:
         serializedVersion: 2
-        x: 160
+        x: 32
         y: 252
         width: 16
         height: 16
@@ -1027,8 +1108,8 @@ TextureImporter:
       name: cementeryTileset_WIP_31
       rect:
         serializedVersion: 2
-        x: 0
-        y: 236
+        x: 48
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1048,8 +1129,8 @@ TextureImporter:
       name: cementeryTileset_WIP_32
       rect:
         serializedVersion: 2
-        x: 16
-        y: 236
+        x: 64
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1069,8 +1150,8 @@ TextureImporter:
       name: cementeryTileset_WIP_33
       rect:
         serializedVersion: 2
-        x: 32
-        y: 236
+        x: 80
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1090,8 +1171,8 @@ TextureImporter:
       name: cementeryTileset_WIP_34
       rect:
         serializedVersion: 2
-        x: 48
-        y: 236
+        x: 96
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1111,8 +1192,8 @@ TextureImporter:
       name: cementeryTileset_WIP_35
       rect:
         serializedVersion: 2
-        x: 64
-        y: 236
+        x: 112
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1132,8 +1213,8 @@ TextureImporter:
       name: cementeryTileset_WIP_36
       rect:
         serializedVersion: 2
-        x: 80
-        y: 236
+        x: 128
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1153,8 +1234,8 @@ TextureImporter:
       name: cementeryTileset_WIP_37
       rect:
         serializedVersion: 2
-        x: 96
-        y: 236
+        x: 144
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1174,8 +1255,8 @@ TextureImporter:
       name: cementeryTileset_WIP_38
       rect:
         serializedVersion: 2
-        x: 112
-        y: 236
+        x: 160
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1195,8 +1276,8 @@ TextureImporter:
       name: cementeryTileset_WIP_39
       rect:
         serializedVersion: 2
-        x: 128
-        y: 236
+        x: 176
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1216,8 +1297,8 @@ TextureImporter:
       name: cementeryTileset_WIP_40
       rect:
         serializedVersion: 2
-        x: 144
-        y: 236
+        x: 192
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1237,8 +1318,8 @@ TextureImporter:
       name: cementeryTileset_WIP_41
       rect:
         serializedVersion: 2
-        x: 160
-        y: 236
+        x: 208
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1258,8 +1339,8 @@ TextureImporter:
       name: cementeryTileset_WIP_42
       rect:
         serializedVersion: 2
-        x: 64
-        y: 220
+        x: 224
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1279,8 +1360,8 @@ TextureImporter:
       name: cementeryTileset_WIP_43
       rect:
         serializedVersion: 2
-        x: 80
-        y: 220
+        x: 240
+        y: 252
         width: 16
         height: 16
       alignment: 0
@@ -1300,8 +1381,8 @@ TextureImporter:
       name: cementeryTileset_WIP_44
       rect:
         serializedVersion: 2
-        x: 96
-        y: 220
+        x: 0
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1321,8 +1402,8 @@ TextureImporter:
       name: cementeryTileset_WIP_45
       rect:
         serializedVersion: 2
-        x: 112
-        y: 220
+        x: 16
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1342,8 +1423,8 @@ TextureImporter:
       name: cementeryTileset_WIP_46
       rect:
         serializedVersion: 2
-        x: 128
-        y: 220
+        x: 32
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1363,8 +1444,8 @@ TextureImporter:
       name: cementeryTileset_WIP_47
       rect:
         serializedVersion: 2
-        x: 0
-        y: 204
+        x: 48
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1384,8 +1465,8 @@ TextureImporter:
       name: cementeryTileset_WIP_48
       rect:
         serializedVersion: 2
-        x: 16
-        y: 204
+        x: 64
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1405,8 +1486,8 @@ TextureImporter:
       name: cementeryTileset_WIP_49
       rect:
         serializedVersion: 2
-        x: 32
-        y: 204
+        x: 80
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1426,8 +1507,8 @@ TextureImporter:
       name: cementeryTileset_WIP_50
       rect:
         serializedVersion: 2
-        x: 48
-        y: 204
+        x: 96
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1447,8 +1528,8 @@ TextureImporter:
       name: cementeryTileset_WIP_51
       rect:
         serializedVersion: 2
-        x: 64
-        y: 204
+        x: 112
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1468,8 +1549,8 @@ TextureImporter:
       name: cementeryTileset_WIP_52
       rect:
         serializedVersion: 2
-        x: 80
-        y: 204
+        x: 128
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1489,8 +1570,8 @@ TextureImporter:
       name: cementeryTileset_WIP_53
       rect:
         serializedVersion: 2
-        x: 96
-        y: 204
+        x: 144
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1510,8 +1591,8 @@ TextureImporter:
       name: cementeryTileset_WIP_54
       rect:
         serializedVersion: 2
-        x: 112
-        y: 204
+        x: 160
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1531,8 +1612,8 @@ TextureImporter:
       name: cementeryTileset_WIP_55
       rect:
         serializedVersion: 2
-        x: 128
-        y: 204
+        x: 208
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1552,8 +1633,8 @@ TextureImporter:
       name: cementeryTileset_WIP_56
       rect:
         serializedVersion: 2
-        x: 144
-        y: 204
+        x: 224
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1573,8 +1654,8 @@ TextureImporter:
       name: cementeryTileset_WIP_57
       rect:
         serializedVersion: 2
-        x: 0
-        y: 188
+        x: 240
+        y: 236
         width: 16
         height: 16
       alignment: 0
@@ -1594,8 +1675,8 @@ TextureImporter:
       name: cementeryTileset_WIP_58
       rect:
         serializedVersion: 2
-        x: 16
-        y: 188
+        x: 64
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1615,8 +1696,8 @@ TextureImporter:
       name: cementeryTileset_WIP_59
       rect:
         serializedVersion: 2
-        x: 32
-        y: 188
+        x: 80
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1636,8 +1717,8 @@ TextureImporter:
       name: cementeryTileset_WIP_60
       rect:
         serializedVersion: 2
-        x: 48
-        y: 188
+        x: 96
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1657,8 +1738,8 @@ TextureImporter:
       name: cementeryTileset_WIP_61
       rect:
         serializedVersion: 2
-        x: 64
-        y: 188
+        x: 112
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1678,8 +1759,8 @@ TextureImporter:
       name: cementeryTileset_WIP_62
       rect:
         serializedVersion: 2
-        x: 80
-        y: 188
+        x: 128
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1699,8 +1780,8 @@ TextureImporter:
       name: cementeryTileset_WIP_63
       rect:
         serializedVersion: 2
-        x: 96
-        y: 188
+        x: 208
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1720,8 +1801,8 @@ TextureImporter:
       name: cementeryTileset_WIP_64
       rect:
         serializedVersion: 2
-        x: 112
-        y: 188
+        x: 224
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1741,8 +1822,8 @@ TextureImporter:
       name: cementeryTileset_WIP_65
       rect:
         serializedVersion: 2
-        x: 128
-        y: 188
+        x: 240
+        y: 220
         width: 16
         height: 16
       alignment: 0
@@ -1762,8 +1843,8 @@ TextureImporter:
       name: cementeryTileset_WIP_66
       rect:
         serializedVersion: 2
-        x: 144
-        y: 188
+        x: 0
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1783,8 +1864,8 @@ TextureImporter:
       name: cementeryTileset_WIP_67
       rect:
         serializedVersion: 2
-        x: 0
-        y: 172
+        x: 16
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1804,8 +1885,8 @@ TextureImporter:
       name: cementeryTileset_WIP_68
       rect:
         serializedVersion: 2
-        x: 16
-        y: 172
+        x: 32
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1825,8 +1906,8 @@ TextureImporter:
       name: cementeryTileset_WIP_69
       rect:
         serializedVersion: 2
-        x: 32
-        y: 172
+        x: 48
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1846,8 +1927,8 @@ TextureImporter:
       name: cementeryTileset_WIP_70
       rect:
         serializedVersion: 2
-        x: 48
-        y: 172
+        x: 64
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1867,8 +1948,8 @@ TextureImporter:
       name: cementeryTileset_WIP_71
       rect:
         serializedVersion: 2
-        x: 64
-        y: 172
+        x: 80
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1888,8 +1969,8 @@ TextureImporter:
       name: cementeryTileset_WIP_72
       rect:
         serializedVersion: 2
-        x: 80
-        y: 172
+        x: 96
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1909,8 +1990,8 @@ TextureImporter:
       name: cementeryTileset_WIP_73
       rect:
         serializedVersion: 2
-        x: 96
-        y: 172
+        x: 112
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1930,8 +2011,8 @@ TextureImporter:
       name: cementeryTileset_WIP_74
       rect:
         serializedVersion: 2
-        x: 112
-        y: 172
+        x: 128
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1951,8 +2032,8 @@ TextureImporter:
       name: cementeryTileset_WIP_75
       rect:
         serializedVersion: 2
-        x: 128
-        y: 172
+        x: 144
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1972,8 +2053,8 @@ TextureImporter:
       name: cementeryTileset_WIP_76
       rect:
         serializedVersion: 2
-        x: 144
-        y: 172
+        x: 176
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -1993,8 +2074,8 @@ TextureImporter:
       name: cementeryTileset_WIP_77
       rect:
         serializedVersion: 2
-        x: 160
-        y: 172
+        x: 192
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -2014,8 +2095,8 @@ TextureImporter:
       name: cementeryTileset_WIP_78
       rect:
         serializedVersion: 2
-        x: 0
-        y: 156
+        x: 208
+        y: 204
         width: 16
         height: 16
       alignment: 0
@@ -2035,8 +2116,8 @@ TextureImporter:
       name: cementeryTileset_WIP_79
       rect:
         serializedVersion: 2
-        x: 16
-        y: 156
+        x: 0
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2056,8 +2137,8 @@ TextureImporter:
       name: cementeryTileset_WIP_80
       rect:
         serializedVersion: 2
-        x: 32
-        y: 156
+        x: 16
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2077,8 +2158,8 @@ TextureImporter:
       name: cementeryTileset_WIP_81
       rect:
         serializedVersion: 2
-        x: 48
-        y: 156
+        x: 32
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2098,8 +2179,8 @@ TextureImporter:
       name: cementeryTileset_WIP_82
       rect:
         serializedVersion: 2
-        x: 64
-        y: 156
+        x: 48
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2119,8 +2200,8 @@ TextureImporter:
       name: cementeryTileset_WIP_83
       rect:
         serializedVersion: 2
-        x: 80
-        y: 156
+        x: 64
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2140,8 +2221,8 @@ TextureImporter:
       name: cementeryTileset_WIP_84
       rect:
         serializedVersion: 2
-        x: 96
-        y: 156
+        x: 80
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2161,8 +2242,8 @@ TextureImporter:
       name: cementeryTileset_WIP_85
       rect:
         serializedVersion: 2
-        x: 112
-        y: 156
+        x: 96
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2182,8 +2263,8 @@ TextureImporter:
       name: cementeryTileset_WIP_86
       rect:
         serializedVersion: 2
-        x: 128
-        y: 156
+        x: 112
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2203,8 +2284,8 @@ TextureImporter:
       name: cementeryTileset_WIP_87
       rect:
         serializedVersion: 2
-        x: 144
-        y: 156
+        x: 128
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2224,8 +2305,8 @@ TextureImporter:
       name: cementeryTileset_WIP_88
       rect:
         serializedVersion: 2
-        x: 160
-        y: 156
+        x: 144
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2245,8 +2326,8 @@ TextureImporter:
       name: cementeryTileset_WIP_89
       rect:
         serializedVersion: 2
-        x: 64
-        y: 140
+        x: 176
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2266,8 +2347,8 @@ TextureImporter:
       name: cementeryTileset_WIP_90
       rect:
         serializedVersion: 2
-        x: 80
-        y: 140
+        x: 192
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2287,8 +2368,8 @@ TextureImporter:
       name: cementeryTileset_WIP_91
       rect:
         serializedVersion: 2
-        x: 96
-        y: 140
+        x: 208
+        y: 188
         width: 16
         height: 16
       alignment: 0
@@ -2308,8 +2389,8 @@ TextureImporter:
       name: cementeryTileset_WIP_92
       rect:
         serializedVersion: 2
-        x: 112
-        y: 140
+        x: 0
+        y: 172
         width: 16
         height: 16
       alignment: 0
@@ -2329,8 +2410,8 @@ TextureImporter:
       name: cementeryTileset_WIP_93
       rect:
         serializedVersion: 2
-        x: 128
-        y: 140
+        x: 16
+        y: 172
         width: 16
         height: 16
       alignment: 0
@@ -2342,6 +2423,573 @@ TextureImporter:
       bones: []
       spriteID: afeb6117240723920800000000000000
       internalID: 2968558535058046714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_94
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb7aa8387ef014840800000000000000
+      internalID: 5206460131235768255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_95
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b40523718104a3920800000000000000
+      internalID: 2970757376416829515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_96
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be1e597b0cc0cdd10800000000000000
+      internalID: 2151608743829561835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_97
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0688528145066f760800000000000000
+      internalID: 7491280944476031072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_98
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cafff7a1c29f44f0800000000000000
+      internalID: -842293244850079031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_99
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd82d1cbaf88ccc00800000000000000
+      internalID: 922262634183338203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_100
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98acf8ac4dcf68600800000000000000
+      internalID: 470341201968482953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_101
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a173e7312fb56330800000000000000
+      internalID: 3703576417974579617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_102
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5713c7d2583a18290800000000000000
+      internalID: -7889845279787306635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_103
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd01d94a78edbc1d0800000000000000
+      internalID: -3329322825346641697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_104
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 172
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57d8bedaf906b78a0800000000000000
+      internalID: -6306340614268285579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_105
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e8f2145ec4a94440800000000000000
+      internalID: 4920645273959725280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_106
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af8a4b0ef4570f810800000000000000
+      internalID: 1797065237253630202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_107
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 371fa460221dbc990800000000000000
+      internalID: -7364562821569646221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_108
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90816e25ae8e12850800000000000000
+      internalID: 6350613042679912457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_109
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec3ed670ef36bf600800000000000000
+      internalID: 503105726079427534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_110
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5c32526252ef4bb0800000000000000
+      internalID: -4949488621992133537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_111
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64a61dcd9847d29e0800000000000000
+      internalID: -1644530153456309690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_112
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 015dd4479ff1e4540800000000000000
+      internalID: 4993964193059034384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_113
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9c50dd4c730f5de0800000000000000
+      internalID: -1342350331516789605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_114
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56b95c3daa7e55440800000000000000
+      internalID: 4924096488482904933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_115
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 156
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58c7861e426719380800000000000000
+      internalID: -8966255482345325435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_116
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 140
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a9c747cb27430e50800000000000000
+      internalID: 6774336517847894432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_117
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 140
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57fac81f7940cc540800000000000000
+      internalID: 5029399934505103221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_118
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 140
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef1b389a37c5e5690800000000000000
+      internalID: -7611544668374584834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_119
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 140
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d162ffda7930742a0800000000000000
+      internalID: -6753425166224644579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cementeryTileset_WIP_120
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 140
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e599d18a4808aa0b0800000000000000
+      internalID: -5716615469748872866
       vertices: []
       indices: 
       edges: []
