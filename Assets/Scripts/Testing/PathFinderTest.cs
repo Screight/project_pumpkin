@@ -15,6 +15,8 @@ public class PathFinderTest : MonoBehaviour
     int m_targetNode;
     bool m_isInANode;
 
+    bool m_hasNewPathStarted = true;
+
     [SerializeField] LayerMask m_obstacleLayer;
 
     SparseGraph m_graph;
@@ -111,7 +113,10 @@ public class PathFinderTest : MonoBehaviour
 
     public void NavigateToTargetPosition()
     {
-        if (m_currentNodeIndex != m_targetNode)
+        if(!m_hasNewPathStarted){
+            MoveToStartingNode();
+        }
+        else if (m_currentNodeIndex != m_targetNode)
         {
             if (m_isInANode)
             {
@@ -120,6 +125,20 @@ public class PathFinderTest : MonoBehaviour
             }
             else { MoveToNextNode(); }
         }
+    }
+
+    void MoveToStartingNode(){
+        if((m_graph.GetNode(m_initialNode).Position - transform.position).magnitude <= 1.0f){
+            transform.position = m_graph.GetNode(m_initialNode).Position;
+            m_hasNewPathStarted = true;
+            m_currentNodeIndex = m_initialNode;
+            m_isInANode = true;
+            return;
+        }
+        Vector3 direction = new Vector3 (m_graph.GetNode(m_initialNode).Position.x - transform.position.x, m_graph.GetNode(m_initialNode).Position.y - transform.position.y, 0.0f);
+        direction = direction.normalized;
+        Debug.Log(Time.deltaTime);
+        transform.position += direction * m_speed * Time.deltaTime;
     }
 
     void MoveToNextNode()
@@ -212,6 +231,12 @@ public class PathFinderTest : MonoBehaviour
         }
     }
 
+    public void SetInitialNodeToNone(){
+        m_currentNodeIndex = -1;
+        m_hasNewPathStarted = false;
+        m_isInANode = false;
+    }    
+
     public void SetInitialNode(Vector2 p_origin)
     {
         m_initialPosition = p_origin;
@@ -230,9 +255,9 @@ public class PathFinderTest : MonoBehaviour
             }
         }
 
-        transform.position = m_graph.GetNode(m_initialNode).Position;
-        m_currentNodeIndex = m_initialNode;
-        m_isInANode = true;
+        //transform.position = m_graph.GetNode(m_initialNode).Position;
+        //m_currentNodeIndex = m_initialNode;
+        //m_isInANode = true;
 
         if (hasAnActiveNodeBeenFound) { return; }
 
@@ -249,9 +274,9 @@ public class PathFinderTest : MonoBehaviour
             }
         }
 
-        transform.position = m_graph.GetNode(m_initialNode).Position;
-        m_currentNodeIndex = m_initialNode;
-        m_isInANode = true;
+        //transform.position = m_graph.GetNode(m_initialNode).Position;
+        //m_currentNodeIndex = m_initialNode;
+        //m_isInANode = true;
     }
 
     public bool IsFinished()

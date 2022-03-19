@@ -37,6 +37,7 @@ public class FlyingMonster : MonoBehaviour
     PathFinderTest m_pathFinder;
     bool m_isGoingFrom1To2;
     bool m_isCharging;
+    bool m_hasCharged = false;
 
     private void Awake()
     {
@@ -98,6 +99,7 @@ public class FlyingMonster : MonoBehaviour
     {
         m_isCharging = true;
         m_rb2D.velocity = m_chargeSpeed * GetDirection(m_player.transform.position, transform.position);
+        m_hasCharged = true;
     }
 
     void Attack()
@@ -107,6 +109,7 @@ public class FlyingMonster : MonoBehaviour
 
     void InitializeReposition()
     {
+        m_hasCharged = false;
         float repositionAngle = Random.Range(m_minAngleReposition, m_maxAngleReposition);
         //Vector2 targetPosition = new Vector2(transform.position.x, transform.position.y) + new Vector2(m_attackRange * Mathf.Sin(repositionAngle), m_attackRange * Mathf.Cos(repositionAngle));
 
@@ -268,7 +271,8 @@ public class FlyingMonster : MonoBehaviour
                         }
                         else
                         {
-                            SetState(ENEMY_STATE.ATTACK);
+                            InitializeReposition();
+                            SetState(ENEMY_STATE.REPOSITION);
                         }
                     }
                 }
@@ -276,7 +280,7 @@ public class FlyingMonster : MonoBehaviour
             case ENEMY_STATE.ATTACK:
                 {
                     if (m_isCharging) { return; }
-                    if (CanEnemySeePlayer(transform.position))
+                    if (CanEnemySeePlayer(transform.position) && !m_hasCharged)
                     {
                         InitializeAttack();
                     }
@@ -314,8 +318,10 @@ public class FlyingMonster : MonoBehaviour
     {
         if((collision.tag == "floor" || collision.tag == "platform") && m_state == ENEMY_STATE.ATTACK)
         {
+            m_pathFinder.SetInitialNodeToNone();
             m_state = ENEMY_STATE.IDLE;
             m_rb2D.velocity = Vector2.zero;
+            m_memoryTimer.Stop();
             m_restTimer.Run();
             m_isCharging = false;
             Debug.Log("End of charge");
