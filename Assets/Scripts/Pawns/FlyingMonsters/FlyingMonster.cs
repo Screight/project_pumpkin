@@ -15,6 +15,9 @@ public class FlyingMonster : MonoBehaviour
     Timer m_restTimer;
     [SerializeField] float m_TimeToWaitBetweenAttacks = 1;
 
+    Timer m_memoryTimer;
+    [SerializeField] float m_TimeToRememberPlayer = 1;
+
     [SerializeField] Transform m_patrolPoint_1;
     [SerializeField] Transform m_patrolPoint_2;
     [SerializeField] float m_attackRange = 20;
@@ -39,21 +42,23 @@ public class FlyingMonster : MonoBehaviour
         m_rb2D = GetComponent<Rigidbody2D>();
 
         m_restTimer = gameObject.AddComponent<Timer>();
+        m_memoryTimer = gameObject.AddComponent<Timer>();
         m_player = GameObject.FindGameObjectWithTag("Player");
 
         m_pathFinder = GetComponent<PathFinderTest>();
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
-        
         m_isFacingRight = true;
         m_restTimer.Duration = m_TimeToWaitBetweenAttacks;
+        m_memoryTimer.Duration = m_TimeToRememberPlayer;
+
         m_playerScript = m_player.GetComponent<Player>();
         m_isGoingFrom1To2 = true;
         m_isCharging = false;
-
 
         m_minAngleReposition = Mathf.Asin((m_minHeightReposition / m_attackRange));
         m_maxAngleReposition = Mathf.Asin((m_maxHeightReposition / m_attackRange));
@@ -79,7 +84,7 @@ public class FlyingMonster : MonoBehaviour
                 break;
             case ENEMY_STATE.CHASE:
                 {
-                    if (!IsPlayerInRange(m_visionRange))
+                    if (!IsPlayerInRange(m_visionRange) && m_memoryTimer.IsFinished)
                     {
                         SetState(ENEMY_STATE.PATROL);
                         InitializePatrol();
@@ -171,6 +176,8 @@ public class FlyingMonster : MonoBehaviour
     void InitializeChase()
     {
         //m_pathFinder.SnapToClosestNode();
+        m_memoryTimer.Stop();
+        m_memoryTimer.Run();
         m_pathFinder.SetInitialNode(transform.position);
         m_pathFinder.SetTargetNode(m_player.transform.position);
     }
@@ -286,6 +293,7 @@ public class FlyingMonster : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, m_visionRange);
         Gizmos.color = Color.red;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
