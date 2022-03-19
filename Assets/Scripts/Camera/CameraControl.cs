@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    /// ABOUT TO BE DEPRECATED
     Player m_playerScript;
     CameraMovement m_cameraScript;
 

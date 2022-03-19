@@ -23,10 +23,6 @@ public class CameraMovement : MonoBehaviour
     Vector2 cameraBoxPosition;
 
     Vector3 targetPosition;
-    [SerializeField] Transform m_leftLimitTransform;
-    [SerializeField] Transform m_rightLimitTransform;
-    [SerializeField] Transform m_bottomLimitTransform;
-    [SerializeField] Transform m_topLimitTransform;
     float m_leftLimit = float.MaxValue;
     float m_rightLimit = float.MaxValue;
     float m_topLimit = float.MaxValue;
@@ -53,11 +49,6 @@ public class CameraMovement : MonoBehaviour
         m_dampTimer = gameObject.AddComponent<Timer>();
         m_fallTimer.Duration = 10000f;
         m_dampTimer.Duration = 1f;
-
-        m_leftLimit = m_leftLimitTransform.position.x;
-        m_rightLimit = m_rightLimitTransform.position.x;
-        m_topLimit = m_topLimitTransform.position.y;
-        m_bottomLimit = m_bottomLimitTransform.position.y;
     }
 
     private void Update()
@@ -126,26 +117,12 @@ public class CameraMovement : MonoBehaviour
             targetPosition.x = m_leftLimit + CameraManager.Instance.Width/2;
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.8f);
 
-            float hola = Mathf.Abs((transform.position.x - CameraManager.Instance.Width / 2) - m_leftLimit);
-
-            if (hola < 0.1)
-            {
-                transform.position = new Vector3(m_leftLimit + CameraManager.Instance.Width/2, transform.position.y, transform.position.z);
-                velocityX = Vector3.zero;
-            }
         }// RIGHT LIMIT
         else if (targetPosition.x + CameraManager.Instance.Width / 2 >= m_rightLimit)
         {
             targetPosition.x = m_rightLimit - CameraManager.Instance.Width / 2;
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetPosition.x, transform.position.y, transform.position.z), ref velocityX, 0.8f);
 
-            float hola = Mathf.Abs((transform.position.x + CameraManager.Instance.Width / 2) - m_rightLimit);
-
-            if (hola < 0.1)
-            {
-                transform.position = new Vector3(m_rightLimit - CameraManager.Instance.Width / 2, transform.position.y, transform.position.z);
-                velocityX = Vector3.zero;
-            }
         }
         else
         {
@@ -159,36 +136,17 @@ public class CameraMovement : MonoBehaviour
             {
                 targetPosition.y = m_bottomLimit + CameraManager.Instance.Height / 2;
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, 0.8f);
-
-                float hola = Mathf.Abs((transform.position.y - CameraManager.Instance.Height / 2) - m_bottomLimit);
-
-                if (hola < 0.1)
-                {
-                    transform.position = new Vector3(transform.position.x, m_bottomLimit + CameraManager.Instance.Height / 2, transform.position.z);
-                    velocityY = Vector3.zero;
-                }
             }// TOP LIMIT
             else if (targetPosition.y + CameraManager.Instance.Height / 2 >= m_topLimit)
             {
                 targetPosition.y = m_topLimit - CameraManager.Instance.Height / 2;
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityX, 0.8f);
-
-                float hola = Mathf.Abs((transform.position.y + CameraManager.Instance.Height / 2) - m_topLimit);
-
-                if (hola < 0.1)
-                {
-                    transform.position = new Vector3(m_topLimit - CameraManager.Instance.Height / 2, transform.position.y, transform.position.z);
-                    velocityY = Vector3.zero;
-                }
             }
             else
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, m_dampSpeedY);
             }
-            
         }
-
-        
 
     }
     private void OnDrawGizmos()

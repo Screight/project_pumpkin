@@ -13,6 +13,7 @@ TagManager:
   - fireball
   - vine
   - hearth
+  - cameraBound
   layers:
   - Default
   - TransparentFX
