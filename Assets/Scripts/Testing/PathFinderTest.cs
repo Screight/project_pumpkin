@@ -22,7 +22,7 @@ public class PathFinderTest : MonoBehaviour
     SparseGraph m_graph;
     GraphSearchBFS m_graphSearch;
 
-    [SerializeField] float m_speed;
+    float m_speed = 10.0f;
     int m_currentNodeIndex;
     List<int> pathToTarget;
     Dictionary<int, int> m_pathToTarget;
@@ -254,7 +254,7 @@ public class PathFinderTest : MonoBehaviour
 
             }
         }
-
+        
         //transform.position = m_graph.GetNode(m_initialNode).Position;
         //m_currentNodeIndex = m_initialNode;
         //m_isInANode = true;
@@ -277,6 +277,10 @@ public class PathFinderTest : MonoBehaviour
         //transform.position = m_graph.GetNode(m_initialNode).Position;
         //m_currentNodeIndex = m_initialNode;
         //m_isInANode = true;
+    }
+
+    public void SetSpeed(float p_speed){
+        m_speed = p_speed;
     }
 
     public bool IsFinished()

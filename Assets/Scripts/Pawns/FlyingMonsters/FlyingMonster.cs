@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlyingMonster : MonoBehaviour
 {
-    enum ENEMY_STATE { PATROL, CHASE, ATTACK, IDLE, RETURN, HIT, DEAD, REPOSITION }
+    enum ENEMY_STATE { PATROL, CHASE, ATTACK, IDLE, RETURN, HIT, DEAD, REPOSITION, PREPARE_ATTACK }
 
     [SerializeField] LayerMask m_enemyLayer;
 
@@ -13,10 +13,14 @@ public class FlyingMonster : MonoBehaviour
     Rigidbody2D m_rb2D;
 
     Timer m_restTimer;
-    [SerializeField] float m_TimeToWaitBetweenAttacks = 1;
+    [SerializeField] float m_timeToWaitBetweenAttacks = 1;
 
     Timer m_memoryTimer;
-    [SerializeField] float m_TimeToRememberPlayer = 1;
+    [SerializeField] float m_timeToRememberPlayer = 1;
+
+    Timer m_prepareAttackTimer;
+    [SerializeField] float m_prepareAttackDuration = 1;
+
     bool m_isPlayerInEnemyRangeFlag = false;
 
     [SerializeField] Transform m_patrolPoint_1;
@@ -45,6 +49,7 @@ public class FlyingMonster : MonoBehaviour
 
         m_restTimer = gameObject.AddComponent<Timer>();
         m_memoryTimer = gameObject.AddComponent<Timer>();
+        m_prepareAttackTimer = gameObject.AddComponent<Timer>();
         m_player = GameObject.FindGameObjectWithTag("Player");
 
         m_pathFinder = GetComponent<PathFinderTest>();
@@ -95,23 +100,26 @@ public class FlyingMonster : MonoBehaviour
         m_pathFinder.NavigateToTargetPosition();
     }
 
+
+
     void InitializeAttack()
+    {
+        m_prepareAttackTimer.Stop();
+        m_prepareAttackTimer.Run();
+    }
+
+    void Attack()
     {
         m_isCharging = true;
         m_rb2D.velocity = m_chargeSpeed * GetDirection(m_player.transform.position, transform.position);
         m_hasCharged = true;
     }
 
-    void Attack()
-    {
-        
-    }
-
     void InitializeReposition()
     {
         m_hasCharged = false;
         float repositionAngle = Random.Range(m_minAngleReposition, m_maxAngleReposition);
-        //Vector2 targetPosition = new Vector2(transform.position.x, transform.position.y) + new Vector2(m_attackRange * Mathf.Sin(repositionAngle), m_attackRange * Mathf.Cos(repositionAngle));
+        //Vector2 targetPosition = new Vector2(transform.position.x, transform.position.y) + new Vector2(m_attackRange * Mathf.Sin(repositionAngle), m_attackRange * Mathf.CoETURN, HIT, DEAD, REPOSITION }s(repositionAngle));
 
         Vector2 targetPosition;
 
@@ -216,8 +224,9 @@ public class FlyingMonster : MonoBehaviour
     void Start()
     {
         m_isFacingRight = true;
-        m_restTimer.Duration = m_TimeToWaitBetweenAttacks;
-        m_memoryTimer.Duration = m_TimeToRememberPlayer;
+        m_restTimer.Duration = m_timeToWaitBetweenAttacks;
+        m_memoryTimer.Duration = m_timeToRememberPlayer;
+        m_prepareAttackTimer.Duration = m_prepareAttackDuration;
 
         m_playerScript = m_player.GetComponent<Player>();
         m_isGoingFrom1To2 = true;
@@ -228,6 +237,7 @@ public class FlyingMonster : MonoBehaviour
 
         InitializePatrol();
         m_state = ENEMY_STATE.PATROL;
+        m_pathFinder.SetSpeed(m_speed);
     }
 
     private void Update()
@@ -282,7 +292,9 @@ public class FlyingMonster : MonoBehaviour
                     if (m_isCharging) { return; }
                     if (CanEnemySeePlayer(transform.position) && !m_hasCharged)
                     {
-                        InitializeAttack();
+                        if(m_prepareAttackTimer.IsFinished){
+                            Attack();
+                        }
                     }
                     else
                     {
