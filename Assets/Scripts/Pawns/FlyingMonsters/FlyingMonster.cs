@@ -17,6 +17,7 @@ public class FlyingMonster : MonoBehaviour
 
     Timer m_memoryTimer;
     [SerializeField] float m_TimeToRememberPlayer = 1;
+    bool m_isPlayerInEnemyRangeFlag = false;
 
     [SerializeField] Transform m_patrolPoint_1;
     [SerializeField] Transform m_patrolPoint_2;
@@ -48,100 +49,7 @@ public class FlyingMonster : MonoBehaviour
         m_pathFinder = GetComponent<PathFinderTest>();
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        m_isFacingRight = true;
-        m_restTimer.Duration = m_TimeToWaitBetweenAttacks;
-        m_memoryTimer.Duration = m_TimeToRememberPlayer;
-
-        m_playerScript = m_player.GetComponent<Player>();
-        m_isGoingFrom1To2 = true;
-        m_isCharging = false;
-
-        m_minAngleReposition = Mathf.Asin((m_minHeightReposition / m_attackRange));
-        m_maxAngleReposition = Mathf.Asin((m_maxHeightReposition / m_attackRange));
-
-        InitializePatrol();
-        m_state = ENEMY_STATE.PATROL;
-    }
-
-    private void Update()
-    {
-        switch (m_state)
-        {
-            default: break;
-            case ENEMY_STATE.PATROL:
-                {
-                    if (IsPlayerInRange(m_visionRange))
-                    {
-                        SetState(ENEMY_STATE.CHASE);
-                        InitializeChase();
-                    }
-                    else { Patrol(); }
-                }
-                break;
-            case ENEMY_STATE.CHASE:
-                {
-                    if (!IsPlayerInRange(m_visionRange) && m_memoryTimer.IsFinished)
-                    {
-                        SetState(ENEMY_STATE.PATROL);
-                        InitializePatrol();
-                    }
-                    else if (IsPlayerInRange(m_attackRange))
-                    {
-                        SetState(ENEMY_STATE.ATTACK);
-                    }
-                    else { Chase(); }
-                    
-                }
-                break;
-            case ENEMY_STATE.IDLE:
-                {
-                    if (m_restTimer.IsFinished)
-                    {
-                        if (!IsPlayerInRange(m_attackRange))
-                        {
-                            SetState(ENEMY_STATE.CHASE);
-                            InitializeChase();
-                        }
-                        else
-                        {
-                            SetState(ENEMY_STATE.ATTACK);
-                        }
-                    }
-                }
-                break;
-            case ENEMY_STATE.ATTACK:
-                {
-                    if (m_isCharging) { return; }
-                    if (CanEnemySeePlayer(transform.position))
-                    {
-                        InitializeAttack();
-                    }
-                    else
-                    {
-                        InitializeReposition();
-                        SetState(ENEMY_STATE.REPOSITION);
-                    }
-                }
-                break;
-            case ENEMY_STATE.REPOSITION:
-                {
-                    if (m_pathFinder.IsFinished()) {
-                        SetState(ENEMY_STATE.ATTACK);
-                        InitializeAttack();
-                    }
-                    else { Reposition(); }
-                }
-                break;
-        }
-        Debug.Log(m_state);
-    }
-
-
-    void InitializePatrol()
+        void InitializePatrol()
     {
         m_pathFinder.SetInitialNode(transform.position);
         //m_pathFinder.SnapToClosestNode();
@@ -176,8 +84,6 @@ public class FlyingMonster : MonoBehaviour
     void InitializeChase()
     {
         //m_pathFinder.SnapToClosestNode();
-        m_memoryTimer.Stop();
-        m_memoryTimer.Run();
         m_pathFinder.SetInitialNode(transform.position);
         m_pathFinder.SetTargetNode(m_player.transform.position);
     }
@@ -241,6 +147,24 @@ public class FlyingMonster : MonoBehaviour
 
     }
 
+    bool DoesEnemyKnowsWhereThePlayerIs(){
+        if(IsPlayerInRange(m_visionRange)){
+            m_isPlayerInEnemyRangeFlag = true;
+            return true;
+        }
+        else if(m_isPlayerInEnemyRangeFlag){ 
+            m_isPlayerInEnemyRangeFlag = false;
+            m_memoryTimer.Stop();
+            m_memoryTimer.Run();
+            return true;
+            }
+        else if(!m_memoryTimer.IsFinished){
+            return true;
+        }
+
+        return false;
+    }
+
     bool IsPlayerInRange(float p_range)
     {
         Vector2 distanceToPlayer;
@@ -283,6 +207,97 @@ public class FlyingMonster : MonoBehaviour
         Vector2 unitaryVector;
         unitaryVector = new Vector2(p_finalPosition.x - p_originPosition.x, p_finalPosition.y - p_originPosition.y);
         return unitaryVector.normalized;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_isFacingRight = true;
+        m_restTimer.Duration = m_TimeToWaitBetweenAttacks;
+        m_memoryTimer.Duration = m_TimeToRememberPlayer;
+
+        m_playerScript = m_player.GetComponent<Player>();
+        m_isGoingFrom1To2 = true;
+        m_isCharging = false;
+
+        m_minAngleReposition = Mathf.Asin((m_minHeightReposition / m_attackRange));
+        m_maxAngleReposition = Mathf.Asin((m_maxHeightReposition / m_attackRange));
+
+        InitializePatrol();
+        m_state = ENEMY_STATE.PATROL;
+    }
+
+    private void Update()
+    {
+        switch (m_state)
+        {
+            default: break;
+            case ENEMY_STATE.PATROL:
+                {
+                    if (IsPlayerInRange(m_visionRange))
+                    {
+                        SetState(ENEMY_STATE.CHASE);
+                        InitializeChase();
+                    }
+                    else { Patrol(); }
+                }
+                break;
+            case ENEMY_STATE.CHASE:
+                {
+                    if (!DoesEnemyKnowsWhereThePlayerIs())
+                    {
+                        SetState(ENEMY_STATE.PATROL);
+                        InitializePatrol();
+                    }
+                    else if (IsPlayerInRange(m_attackRange))
+                    {
+                        SetState(ENEMY_STATE.ATTACK);
+                    }
+                    else { Chase(); }
+                    
+                }
+                break;
+            case ENEMY_STATE.IDLE:
+                {
+                    if (m_restTimer.IsFinished)
+                    {
+                        if (!IsPlayerInRange(m_attackRange))
+                        {
+                            SetState(ENEMY_STATE.CHASE);
+                            InitializeChase();
+                        }
+                        else
+                        {
+                            SetState(ENEMY_STATE.ATTACK);
+                        }
+                    }
+                }
+                break;
+            case ENEMY_STATE.ATTACK:
+                {
+                    if (m_isCharging) { return; }
+                    if (CanEnemySeePlayer(transform.position))
+                    {
+                        InitializeAttack();
+                    }
+                    else
+                    {
+                        InitializeReposition();
+                        SetState(ENEMY_STATE.REPOSITION);
+                    }
+                }
+                break;
+            case ENEMY_STATE.REPOSITION:
+                {
+                    if (m_pathFinder.IsFinished()) {
+                        SetState(ENEMY_STATE.ATTACK);
+                        InitializeAttack();
+                    }
+                    else { Reposition(); }
+                }
+                break;
+        }
+        Debug.Log(m_state);
     }
 
     private void OnDrawGizmos()
