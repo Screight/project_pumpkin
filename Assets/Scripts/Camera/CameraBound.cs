@@ -6,8 +6,6 @@ public enum DIRECTION {TOP, BOTTOM, LEFT, RIGHT, LAST_NO_USE}
 
 public struct Limit{
 
-    
-
     public Limit(DIRECTION p_direction, float p_position, uint p_layerIndex, uint p_boundID){
         direction = p_direction;
         position = p_position;
@@ -20,32 +18,62 @@ public struct Limit{
     public uint cameraBoundID;
 }
 
+public struct HeightLimit{
+
+    public HeightLimit(float p_height, uint p_layerIndex, uint p_boundID){
+        height = p_height;
+        layerIndex = p_layerIndex;
+        cameraBoundID = p_boundID;
+    }
+    public float height;
+    public uint layerIndex;
+    public uint cameraBoundID;
+}
+
 public class CameraBound : MonoBehaviour
 {
     public static uint m_nextAvailableID = 0;
-
     [SerializeField] uint m_layerIndex = 0;
     [SerializeField] bool m_isTopLimitActive = false;
     [SerializeField] bool m_isBottomLimitActive = false;
     [SerializeField] bool m_isLeftLimitActive = false;
     [SerializeField] bool m_isRightLimitActive = false;
 
+    [SerializeField] bool m_isTopLimitBridge = false;
+    [SerializeField] bool m_isBottomLimitBridge = false;
+    [SerializeField] bool m_isLeftLimitBridge = false;
+    [SerializeField] bool m_isRightLimitBridge= false;
+
+    [SerializeField] bool m_isCameraRestrictedInY = false;
+    [SerializeField] float m_minimumHeightForCameraMovement;
+
+    float m_bridgeDistance = 1000000;
+    float m_bridgeDirection = 1;
+
     // NEEDS TO BE UNIQUE
     uint m_ID;
 
+    HeightLimit m_heighLimit;
     Limit[] m_limits;
     bool[] m_limitsActive;
+    bool[] m_isBridge;
 
     [SerializeField] BoxCollider2D m_boundsCollider;
 
     private void Awake() {
         m_limitsActive = new bool[(int)DIRECTION.LAST_NO_USE];
         m_limits = new Limit[(int)DIRECTION.LAST_NO_USE];
+        m_isBridge = new bool[(int)DIRECTION.LAST_NO_USE];
 
         m_limitsActive[(int)DIRECTION.TOP] = m_isTopLimitActive;
         m_limitsActive[(int)DIRECTION.BOTTOM] = m_isBottomLimitActive;
         m_limitsActive[(int)DIRECTION.LEFT] = m_isLeftLimitActive;
         m_limitsActive[(int)DIRECTION.RIGHT] = m_isRightLimitActive;
+
+        m_isBridge[(int)DIRECTION.TOP] = m_isTopLimitBridge;
+        m_isBridge[(int)DIRECTION.BOTTOM] = m_isBottomLimitBridge;
+        m_isBridge[(int)DIRECTION.LEFT] = m_isLeftLimitBridge;
+        m_isBridge[(int)DIRECTION.RIGHT] = m_isRightLimitBridge;
 
         m_boundsCollider = GetComponent<BoxCollider2D>();
 
@@ -61,18 +89,29 @@ public class CameraBound : MonoBehaviour
                 default: break;
                 case (int)DIRECTION.TOP:
                 boundPosition = m_boundsCollider.bounds.max.y;
+                m_bridgeDirection = 1;
                 break;
                 case (int)DIRECTION.BOTTOM:
                 boundPosition = m_boundsCollider.bounds.min.y;
+                m_bridgeDirection = -1;
                 break;
                 case (int)DIRECTION.LEFT:
                 boundPosition = m_boundsCollider.bounds.min.x;
+                m_bridgeDirection = -1;
                 break;
                 case (int)DIRECTION.RIGHT:
                 boundPosition = m_boundsCollider.bounds.max.x;
+                m_bridgeDirection = 1;
                 break;
             }
-            m_limits[i] = new Limit((DIRECTION)i, boundPosition,m_layerIndex, m_ID);
+            if(m_isBridge[i]){ m_limits[i] = new Limit((DIRECTION)i, m_bridgeDirection * m_bridgeDistance,m_layerIndex, m_ID); }
+            else{
+                m_limits[i] = new Limit((DIRECTION)i, boundPosition,m_layerIndex, m_ID);
+            }
+        }
+
+        if(m_isCameraRestrictedInY){
+            m_heighLimit = new HeightLimit(m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement, m_layerIndex, m_ID);
         }
     }
 
@@ -81,6 +120,7 @@ public class CameraBound : MonoBehaviour
         for(int i = 0; i < (int)DIRECTION.LAST_NO_USE; i++){
             if(m_limitsActive[i]){ BoundsManager.Instance.AddLimit(m_limits[i]); }
         }
+        BoundsManager.Instance.AddHeightLimit(m_heighLimit);
         BoundsManager.Instance.UpdateBounds();
     }
 
@@ -100,6 +140,10 @@ public class CameraBound : MonoBehaviour
     }
     public Limit RightLimit{
         get {return m_limits[(int)DIRECTION.RIGHT];}
+    }
+
+    public float GetMinimumPositionForCameraMovement(){
+        return m_minimumHeightForCameraMovement + m_boundsCollider.bounds.min.y;
     }
 
     private void OnDrawGizmos() {
@@ -126,6 +170,13 @@ public class CameraBound : MonoBehaviour
         Gizmos.DrawLine(bottomRightCorner,topRightCorner);
         Gizmos.DrawLine(topRightCorner,topLeftCorner);
         Gizmos.DrawLine(topLeftCorner,bottomLeftCorner);
+
+        if(!m_isCameraRestrictedInY){ return; }
+        Gizmos.color = Color.black;
+        Vector2 leftPoint = new Vector2(m_boundsCollider.bounds.min.x, m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement);
+        Vector2 rightPoint = new Vector2(m_boundsCollider.bounds.max.x, m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement);
+        Gizmos.DrawLine(leftPoint,rightPoint);
+
     }
 
 }

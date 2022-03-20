@@ -141,7 +141,7 @@ public class CameraMovement : MonoBehaviour
             else if (targetPosition.y + CameraManager.Instance.Height / 2 >= m_topLimit)
             {
                 targetPosition.y = m_topLimit - CameraManager.Instance.Height / 2;
-                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityX, 0.8f);
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocityY, 0.8f);
             }
             else
             {
