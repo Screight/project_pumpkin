@@ -55,7 +55,7 @@ public class FlyingMonster : MonoBehaviour
         m_pathFinder = GetComponent<PathFinderTest>();
     }
 
-        void InitializePatrol()
+    void InitializePatrol()
     {
         m_pathFinder.SetInitialNode(transform.position);
         //m_pathFinder.SnapToClosestNode();
@@ -66,9 +66,7 @@ public class FlyingMonster : MonoBehaviour
     void Patrol()
     {
         m_pathFinder.NavigateToTargetPosition();
-        if (m_pathFinder.IsFinished()) {
-            SwapPatrolTarget();
-        }
+        if (m_pathFinder.IsFinished()) { SwapPatrolTarget(); }
     }
 
     void SwapPatrolTarget()
@@ -99,8 +97,6 @@ public class FlyingMonster : MonoBehaviour
         m_pathFinder.SetTargetNode(m_player.transform.position);
         m_pathFinder.NavigateToTargetPosition();
     }
-
-
 
     void InitializeAttack()
     {
@@ -137,10 +133,7 @@ public class FlyingMonster : MonoBehaviour
         m_pathFinder.SetTargetNode(targetPosition);
     }
 
-    void Reposition()
-    {
-        m_pathFinder.NavigateToTargetPosition();
-    }
+    void Reposition() { m_pathFinder.NavigateToTargetPosition(); }
 
     bool CanEnemySeePlayer(Vector2 p_position) {
         Vector2 playerPosition = new Vector2(m_player.transform.position.x, m_player.transform.position.y);
@@ -150,12 +143,10 @@ public class FlyingMonster : MonoBehaviour
 
         if(obstaclesHit.collider == null) { return true; }
 
-
         float distanceToPlayer = (playerPosition - p_position).magnitude;
 
         if(distanceToPlayer < obstaclesHit.distance) { return true; }
         return false;
-
     }
 
     bool DoesEnemyKnowsWhereThePlayerIs(){
@@ -172,7 +163,6 @@ public class FlyingMonster : MonoBehaviour
         else if(!m_memoryTimer.IsFinished){
             return true;
         }
-
         return false;
     }
 
@@ -182,10 +172,7 @@ public class FlyingMonster : MonoBehaviour
         distanceToPlayer.x = transform.position.x - m_player.transform.position.x;
         distanceToPlayer.y = transform.position.y - m_player.transform.position.y;
 
-        if (distanceToPlayer.magnitude <= p_range)
-        {
-            return true;
-        }
+        if (distanceToPlayer.magnitude <= p_range) { return true; }
         return false;
     }
 
@@ -198,8 +185,8 @@ public class FlyingMonster : MonoBehaviour
 
     int FacingDirection()
     {
-        if (m_isFacingRight) return 1;
-        else return -1;
+        if (m_isFacingRight) { return 1; }
+        else { return -1; }
     }
 
     void FlipX()
@@ -208,10 +195,7 @@ public class FlyingMonster : MonoBehaviour
         m_isFacingRight = !m_isFacingRight;
     }
 
-    void SetState(ENEMY_STATE p_state)
-    {
-        m_state = p_state;
-    }
+    void SetState(ENEMY_STATE p_state) { m_state = p_state; }
 
     Vector2 GetDirection(Vector3 p_finalPosition, Vector3 p_originPosition)
     {
@@ -266,8 +250,7 @@ public class FlyingMonster : MonoBehaviour
                     {
                         SetState(ENEMY_STATE.ATTACK);
                     }
-                    else { Chase(); }
-                    
+                    else { Chase(); }               
                 }
                 break;
             case ENEMY_STATE.IDLE:
@@ -325,7 +308,6 @@ public class FlyingMonster : MonoBehaviour
         Gizmos.color = Color.red;
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if((collision.tag == "floor" || collision.tag == "platform") && m_state == ENEMY_STATE.ATTACK)
@@ -339,5 +321,4 @@ public class FlyingMonster : MonoBehaviour
             Debug.Log("End of charge");
         }
     }
-
 }

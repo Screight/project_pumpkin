@@ -17,7 +17,7 @@ public class MenuScript : MonoBehaviour
     {
         if (Input.GetKeyDown("escape")) { menu.enabled = !menu.enabled; }
 
-        if (menu.enabled == true) { Pause(); } 
+        if (menu.enabled) { Pause(); } 
         else { Continue(); }
     }
 
