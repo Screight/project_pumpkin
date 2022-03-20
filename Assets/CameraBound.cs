@@ -5,11 +5,15 @@ using UnityEngine;
 public enum DIRECTION {TOP, BOTTOM, LEFT, RIGHT, LAST_NO_USE}
 
 public struct Limit{
-    public Limit(DIRECTION p_direction, float p_position, uint p_layerIndex, uint p_cameraBoundID){
+
+    static uint m_nextAvailableID;
+
+    public Limit(DIRECTION p_direction, float p_position, uint p_layerIndex){
         direction = p_direction;
         position = p_position;
         layerIndex = p_layerIndex;
-        cameraBoundID = p_cameraBoundID;
+        cameraBoundID = m_nextAvailableID;
+        m_nextAvailableID++;
     }
     public DIRECTION direction;
     public float position;
@@ -27,7 +31,7 @@ public class CameraBound : MonoBehaviour
     [SerializeField] bool m_isRightLimitActive = false;
 
     // NEEDS TO BE UNIQUE
-    [SerializeField] uint m_ID;
+    uint m_ID;
 
     Limit[] m_limits;
     bool[] m_limitsActive;
@@ -65,7 +69,7 @@ public class CameraBound : MonoBehaviour
                 boundPosition = m_boundsCollider.bounds.max.x;
                 break;
             }
-            m_limits[i] = new Limit((DIRECTION)i, boundPosition,m_layerIndex, m_ID);
+            m_limits[i] = new Limit((DIRECTION)i, boundPosition,m_layerIndex);
         }
 
     }
