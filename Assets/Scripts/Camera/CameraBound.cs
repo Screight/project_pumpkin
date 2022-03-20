@@ -36,7 +36,7 @@ public class CameraBound : MonoBehaviour
     Limit[] m_limits;
     bool[] m_limitsActive;
 
-    BoxCollider2D m_boundsCollider;
+    [SerializeField] BoxCollider2D m_boundsCollider;
 
     private void Awake() {
         m_limitsActive = new bool[(int)DIRECTION.LAST_NO_USE];
@@ -101,4 +101,31 @@ public class CameraBound : MonoBehaviour
     public Limit RightLimit{
         get {return m_limits[(int)DIRECTION.RIGHT];}
     }
+
+    private void OnDrawGizmos() {
+        switch(m_layerIndex){
+            case 0:
+            Gizmos.color = Color.green;
+            break;
+            case 1:
+            Gizmos.color = Color.red;
+            break;
+            case 2:
+            Gizmos.color = Color.blue;
+            break;
+            case 3:
+            Gizmos.color = Color.yellow;
+            break;
+        }
+        
+        Vector2 bottomLeftCorner = new Vector2(m_boundsCollider.bounds.min.x, m_boundsCollider.bounds.min.y);
+        Vector2 bottomRightCorner = new Vector2(m_boundsCollider.bounds.max.x, m_boundsCollider.bounds.min.y);
+        Vector2 topLeftCorner = new Vector2(m_boundsCollider.bounds.min.x, m_boundsCollider.bounds.max.y);
+        Vector2 topRightCorner = new Vector2(m_boundsCollider.bounds.max.x, m_boundsCollider.bounds.max.y);
+        Gizmos.DrawLine(bottomLeftCorner,bottomRightCorner);
+        Gizmos.DrawLine(bottomRightCorner,topRightCorner);
+        Gizmos.DrawLine(topRightCorner,topLeftCorner);
+        Gizmos.DrawLine(topLeftCorner,bottomLeftCorner);
+    }
+
 }

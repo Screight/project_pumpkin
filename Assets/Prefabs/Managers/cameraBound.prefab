@@ -75,3 +75,4 @@ MonoBehaviour:
   m_isBottomLimitActive: 1
   m_isLeftLimitActive: 1
   m_isRightLimitActive: 1
+  m_boundsCollider: {fileID: 8395991706612843053}

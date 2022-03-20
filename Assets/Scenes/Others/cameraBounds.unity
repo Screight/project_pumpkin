@@ -355,11 +355,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3125669691184897495, guid: 675eb2d32c7242a4e9c28e0efa147c04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -221.89235
+      value: -646
       objectReference: {fileID: 0}
     - target: {fileID: 3125669691184897495, guid: 675eb2d32c7242a4e9c28e0efa147c04, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9
+      value: -609
       objectReference: {fileID: 0}
     - target: {fileID: 3125669691184897495, guid: 675eb2d32c7242a4e9c28e0efa147c04, type: 3}
       propertyPath: m_LocalPosition.z
@@ -402,6 +402,11 @@ PrefabInstance:
 --- !u!1 &415050562 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8395991706612843052, guid: 7ad64f64c5b398c8bbf09762d2322553, type: 3}
+  m_PrefabInstance: {fileID: 8395991706741631342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &415050564 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8395991706612843053, guid: 7ad64f64c5b398c8bbf09762d2322553, type: 3}
   m_PrefabInstance: {fileID: 8395991706741631342}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &675071422
@@ -11038,7 +11043,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036601607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 196.89235, y: 123.3112, z: -572.18854}
+  m_LocalPosition: {x: 473, y: 594, z: -572.18854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 812255673}
@@ -11120,6 +11125,7 @@ MonoBehaviour:
   m_isBottomLimitActive: 1
   m_isLeftLimitActive: 0
   m_isRightLimitActive: 0
+  m_boundsCollider: {fileID: 1166760274}
 --- !u!1 &1474551335
 GameObject:
   m_ObjectHideFlags: 0
@@ -11151,7 +11157,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 424.05075, y: 12.231119}
+  m_Offset: {x: 424.05075, y: 1.4583416}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -11162,7 +11168,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 431.346, y: 80.68431}
+  m_Size: {x: 431.346, y: 102.22986}
   m_EdgeRadius: 0
 --- !u!4 &1474551337
 Transform:
@@ -11195,6 +11201,7 @@ MonoBehaviour:
   m_isBottomLimitActive: 0
   m_isLeftLimitActive: 1
   m_isRightLimitActive: 1
+  m_boundsCollider: {fileID: 1474551336}
 --- !u!1 &1747839426
 GameObject:
   m_ObjectHideFlags: 0
@@ -11292,6 +11299,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8395991706612843051, guid: 7ad64f64c5b398c8bbf09762d2322553, type: 3}
+      propertyPath: m_boundsCollider
+      value: 
+      objectReference: {fileID: 415050564}
     - target: {fileID: 8395991706612843052, guid: 7ad64f64c5b398c8bbf09762d2322553, type: 3}
       propertyPath: m_Name
       value: cameraBound
