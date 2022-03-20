@@ -6,14 +6,13 @@ public enum DIRECTION {TOP, BOTTOM, LEFT, RIGHT, LAST_NO_USE}
 
 public struct Limit{
 
-    static uint m_nextAvailableID;
+    
 
-    public Limit(DIRECTION p_direction, float p_position, uint p_layerIndex){
+    public Limit(DIRECTION p_direction, float p_position, uint p_layerIndex, uint p_boundID){
         direction = p_direction;
         position = p_position;
         layerIndex = p_layerIndex;
-        cameraBoundID = m_nextAvailableID;
-        m_nextAvailableID++;
+        cameraBoundID = p_boundID;
     }
     public DIRECTION direction;
     public float position;
@@ -23,6 +22,7 @@ public struct Limit{
 
 public class CameraBound : MonoBehaviour
 {
+    public static uint m_nextAvailableID = 0;
 
     [SerializeField] uint m_layerIndex = 0;
     [SerializeField] bool m_isTopLimitActive = false;
@@ -51,6 +51,9 @@ public class CameraBound : MonoBehaviour
 
         Vector2 boundsColliderPosition = new Vector2(m_boundsCollider.transform.position.x, m_boundsCollider.transform.position.y);
 
+        m_ID = m_nextAvailableID;
+        m_nextAvailableID++;
+
         for(int i = 0; i < (int)DIRECTION.LAST_NO_USE; i++){
 
             float boundPosition = 0;
@@ -69,9 +72,8 @@ public class CameraBound : MonoBehaviour
                 boundPosition = m_boundsCollider.bounds.max.x;
                 break;
             }
-            m_limits[i] = new Limit((DIRECTION)i, boundPosition,m_layerIndex);
+            m_limits[i] = new Limit((DIRECTION)i, boundPosition,m_layerIndex, m_ID);
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D p_collider) {
