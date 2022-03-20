@@ -58,7 +58,7 @@ public class CameraMovement : MonoBehaviour
 
         if (m_playerScript.State == PLAYER_STATE.FALL)
         {
-            if (m_player.GetComponent<Rigidbody2D>().velocity.y == -200)
+            /*if (m_player.GetComponent<Rigidbody2D>().velocity.y == -200)
             {
                 if (m_fallTimer.IsFinished && !m_startFalling)
                 {
@@ -77,7 +77,8 @@ public class CameraMovement : MonoBehaviour
                     //m_offset.y = -50f * (1-((m_dampTimer.Duration - m_dampTimer.CurrentTime) / m_dampTimer.Duration));
                 }
             }
-            else { m_dampSpeedY = 0.4f; }
+            else { m_dampSpeedY = 0.4f; }*/
+            m_dampSpeedY = 0f;
         }
         else
         {
@@ -88,12 +89,12 @@ public class CameraMovement : MonoBehaviour
             m_offset.y = 0f;
         }
 
-        if (m_player.transform.position.y + m_playerBoxCollider2D.size.y > transform.position.y - cameraOffsetY + cameraBoxSize / 2) // sobresale por arriba
+        if (m_player.transform.position.y + m_playerBoxCollider2D.size.y > transform.position.y + cameraBoxSize / 2) // sobresale por arriba
         {
             m_playerOutOfCameraBoundsY = true;
             m_doLerp = true;
         }
-        else if (((m_player.transform.position.y) - (transform.position.y - cameraOffsetY)) < -cameraBoxSize / 2) // sobresale por abajo
+        else if (((m_player.transform.position.y) - (transform.position.y)) < -cameraBoxSize / 2) // sobresale por abajo
         {
             m_playerOutOfCameraBoundsY = true;
             m_doLerp = true;
@@ -109,7 +110,7 @@ public class CameraMovement : MonoBehaviour
             m_doLerp = false;
         }
 
-        targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + cameraBoxSize / 2, m_offset.z);
+        targetPosition = new Vector3(m_player.transform.position.x + m_offset.x, m_player.transform.position.y + m_offset.y + /*cameraBoxSize / 2,*/ m_offset.z);
 
         // left limit
         if(targetPosition.x - CameraManager.Instance.Width / 2 <= m_leftLimit)
@@ -152,8 +153,8 @@ public class CameraMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, 0, 10)), Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height, 10)));
-        Gizmos.DrawWireCube(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 - 2 * m_offset.x, Screen.height / 2, 10)), new Vector3(2 * m_offset.x, cameraBoxSize, 1));
+
+        Gizmos.DrawWireCube(transform.position,new Vector3(cameraBoxSize,cameraBoxSize,1));
     }
 
     public void SetCameraToPlayerPosition()

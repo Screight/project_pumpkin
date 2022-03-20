@@ -380,6 +380,11 @@ public class Player : MonoBehaviour
 
     public bool IsFacingRight { get { return m_isFacingRight; } }
 
+    public int GetFacingDirection() {
+        if(m_isFacingRight){ return 1;}
+        else return -1;
+    }
+
     public void SetPlayerAnimation(PLAYER_ANIMATION p_animation)
     {
         ChangeAnimationState(m_animationHash[(int)p_animation]);
