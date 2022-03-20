@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour
 {
     public Canvas menu;
-
+    public Canvas HUD;
     private void Awake()
     {
         menu = GetComponent<Canvas>();
-        menu.enabled = true;
+        if (SceneManager.GetActiveScene().buildIndex == 0) { menu.enabled = true; }
+        else { menu.enabled = false; }
     }
 
     public void Update()
@@ -25,6 +26,7 @@ public class MenuScript : MonoBehaviour
     {
         SceneManager.LoadScene(1);
         menu.enabled = false;
+        HUD.enabled = true;
     }
     public void Exit()
     {
@@ -36,7 +38,8 @@ public class MenuScript : MonoBehaviour
     {
         menu.enabled = false;
         Time.timeScale = 1;
+        HUD.enabled = true;
     }
 
-    public void Pause() { Time.timeScale = 0; }
+    public void Pause() { Time.timeScale = 0; HUD.enabled = false; }
 }
