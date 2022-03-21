@@ -33,10 +33,7 @@ public class MenuScript : MonoBehaviour
     }
     public void Exit()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            SceneManager.LoadScene(0);
-        }
+        if (SceneManager.GetActiveScene().buildIndex != 0) { SceneManager.LoadScene(0); }
         else
         {
             Debug.Log("Game Closed!");
