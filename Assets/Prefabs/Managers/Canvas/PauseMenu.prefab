@@ -937,6 +937,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   HUD: {fileID: 0}
+  buttons:
+  - {fileID: 3917647141909706491}
+  - {fileID: 3917647143163001223}
+  - {fileID: 3917647141781882906}
 --- !u!1 &3917647143163001221
 GameObject:
   m_ObjectHideFlags: 0
