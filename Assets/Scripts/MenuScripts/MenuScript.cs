@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
     public Canvas menu;
     public Canvas HUD;
+
     private void Awake()
     {
         menu = GetComponent<Canvas>();
@@ -16,7 +18,7 @@ public class MenuScript : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown("escape")) { menu.enabled = !menu.enabled; }
+        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = !menu.enabled; }
 
         if (menu.enabled) { Pause(); } 
         else { Continue(); }
@@ -36,10 +38,19 @@ public class MenuScript : MonoBehaviour
 
     public void Continue()
     {
-        menu.enabled = false;
-        Time.timeScale = 1;
-        HUD.enabled = true;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            menu.enabled = false;
+            Time.timeScale = 1;
+            HUD.enabled = true;
+        }
     }
 
-    public void Pause() { Time.timeScale = 0; HUD.enabled = false; }
+    public void Pause()
+    {
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            Time.timeScale = 0; HUD.enabled = false;
+        }
+    }
 }
