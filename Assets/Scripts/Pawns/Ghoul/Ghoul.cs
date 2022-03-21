@@ -165,7 +165,7 @@ public class Ghoul : Enemy
         else { return -1; }
     }
 
-    public override void Damage(int p_damage)
+    public override void Damage(float p_damage)
     {
         m_ghoulState = GHOUL_STATE.HIT;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.HIT]);

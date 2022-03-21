@@ -18,6 +18,8 @@ public class HealthPoints : MonoBehaviour
     [SerializeField] Sprite m_emptyHeart;
 
     Image[] p_hearts;
+
+    int m_maxNumberOfHearts = 8;
     int m_currentNumberOfHearts = 8;
 
     private void Start()
@@ -31,6 +33,18 @@ public class HealthPoints : MonoBehaviour
         p_hearts[5].sprite = m_fullHeart;
         p_hearts[6].sprite = m_fullHeart;
         p_hearts[7].sprite = m_fullHeart;
+    }
+
+    public void SetHealth(int p_value)
+    {
+        Sprite sprite;
+        m_currentNumberOfHearts = p_value;
+        for( int i = 0; i < m_maxNumberOfHearts; i++)
+        {
+            if(i < m_currentNumberOfHearts){ sprite = m_fullHeart; }
+            else { sprite = m_emptyHeart; }
+            p_hearts[i].sprite = sprite;
+        }
     }
 
     public void GainHealth()

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Player stats
+    [SerializeField] int PLAYER_MAX_HEALTH;
+    int m_playerHealth;
+    float m_playerAttackDamage = 1;
+
     static GameManager m_instance;
     [SerializeField] HealthPoints m_healthUI;
     Player m_player;
@@ -28,12 +33,15 @@ public class GameManager : MonoBehaviour
         private set { }
     }
 
-    public void ModifyHealthUI(bool p_isGainingHP)
+    public void ModifyPlayerHealth(int p_amount)
     {
-        if (p_isGainingHP) { m_healthUI.GainHealth(); }
-        else { m_healthUI.LoseHearth(); }
+        m_playerHealth += p_amount;
+        if (m_playerHealth < 0) { m_playerHealth = 0; }
+        else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
+
+        m_healthUI.SetHealth(m_playerHealth);
     }
 
-
+    public float PlayerAttackDamage { get { return m_playerAttackDamage; } }
 
 }

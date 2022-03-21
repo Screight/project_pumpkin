@@ -148,7 +148,6 @@ public class Player : MonoBehaviour
                 else { m_spriteRenderer.color = new Color(1, 1, 1, 1); }
                 m_hasBlinked = !m_hasBlinked;
                 m_blinkTimer.Run();
-                Debug.Log("blinked");
             }
         }
 
@@ -314,7 +313,7 @@ public class Player : MonoBehaviour
             m_canIMove = false;
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
-            GameManager.Instance.ModifyHealthUI(false);
+            GameManager.Instance.ModifyPlayerHealth(-1);
             ModifyHP(-1);
         }
     }
@@ -336,7 +335,7 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
-            GameManager.Instance.ModifyHealthUI(false);
+            GameManager.Instance.ModifyPlayerHealth(-1);
             ModifyHP(-1);
         }
     }
@@ -355,7 +354,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "spike")
         {
             ModifyHP(-1);
-            GameManager.Instance.ModifyHealthUI(false);
+            GameManager.Instance.ModifyPlayerHealth(-1);
             m_transicionScript.LocalCheckpointTransition();
         }
     }

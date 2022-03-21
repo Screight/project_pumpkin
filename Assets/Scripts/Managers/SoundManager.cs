@@ -94,7 +94,7 @@ public class SoundManager : MonoBehaviour
     public void PlayOnce(AudioClipName p_name)
     {
         m_audioSource.volume = m_generalVolume * m_volumeClips[(int)p_name];
-        m_audioSource.PlayOneShot(m_audioClips[(int)p_name]);
+        m_audioSource.PlayOneShot(m_audioClips[(int)p_name]);   
     }
 
     public void PlayBackground(AudioClipName p_name)

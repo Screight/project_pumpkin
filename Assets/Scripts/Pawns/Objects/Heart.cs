@@ -16,7 +16,7 @@ public class Heart : MonoBehaviour
         if(collision.tag == "Player" && m_player.HealthPoints < m_player.TotalHealthPoints)
         {
             m_player.ModifyHP(1);
-            GameManager.Instance.ModifyHealthUI(true);
+            GameManager.Instance.ModifyPlayerHealth(1);
             this.gameObject.SetActive(false);
         }
     }

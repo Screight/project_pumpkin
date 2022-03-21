@@ -190,13 +190,7 @@ public class Skeleton : Enemy
         Destroy(gameObject, 0.5f);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            Player.Instance.PushAway(-50.0f, 100.0f);
-        }
-    }
+    
 
     void ChangeAnimationState(int p_newState)
     {
@@ -224,14 +218,23 @@ public class Skeleton : Enemy
         else { return -1; }
     }
 
-    public override void Damage(int p_damage)
+    public override void Damage(float p_damage)
     {
         m_skeletonState = SKELETON_STATE.HIT;
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.HIT]);
         base.Damage(p_damage);
+        if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
+            
+        }
     }
 
     public SKELETON_STATE State { set { m_skeletonState = value; } get { return m_skeletonState; } }
+
+    void ReturnToNormalState()
+    {
+        m_skeletonState = SKELETON_STATE.MOVE;
+        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+    }
 
     #region Accessors
     public bool IsGrounded

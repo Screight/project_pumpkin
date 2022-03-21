@@ -120,7 +120,7 @@ public class Attack : MonoBehaviour
         Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - offset, transform.position.y), M_ATTACK_RANGE, m_enemyLayer);
         foreach (Collider2D enemy in enemiesInAttackRange)
         {
-            if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(1); }
+            if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(GameManager.Instance.PlayerAttackDamage); }
             Debug.Log("Enemy hit");
         }
 
