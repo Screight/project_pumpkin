@@ -608,7 +608,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 20
 --- !u!1 &3917647142600580874
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 2
+  m_ReferencePixelsPerUnit: 200
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 640, y: 360}
   m_ScreenMatchMode: 0
@@ -937,6 +937,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   HUD: {fileID: 0}
+  buttons:
+  - {fileID: 3917647141909706491}
+  - {fileID: 3917647143163001223}
+  - {fileID: 3917647141781882906}
 --- !u!1 &3917647143163001221
 GameObject:
   m_ObjectHideFlags: 0
