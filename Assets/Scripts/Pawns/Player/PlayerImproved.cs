@@ -22,9 +22,9 @@ public class PlayerImproved : MonoBehaviour
     PLAYER_ANIMATION m_animationState;
     int m_currentAnimationHash = 0;
 
-    void ChangeAnimationState(PLAYER_ANIMATION p_animationState)
+    public void ChangeAnimationState(PLAYER_ANIMATION p_animationState)
     {
-        int newAnimationHash = m_animationHash[(int)m_animationState];
+        int newAnimationHash = m_animationHash[(int)p_animationState];
 
         if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
         m_animator.Play(newAnimationHash);                // play the animation
@@ -39,7 +39,9 @@ public class PlayerImproved : MonoBehaviour
     Rigidbody2D m_rb2D;
     int m_direction = 0;
     bool m_isFacingRight = true;
-    [SerializeField] float m_speedX = 60;
+    [SerializeField] float m_normalMovementSpeed = 60;
+    [SerializeField] float m_reducedMovementSpeed = 30;
+    float m_currentSpeedX;
     bool m_canMove = true;
 
     /// JUMP
@@ -50,25 +52,44 @@ public class PlayerImproved : MonoBehaviour
     float m_gravity2;
     float m_initialVelocityY;
     bool m_isGrounded;
-    float m_maxFallingSpeed = -200;
+    float m_maxFallingSpeed = 200;
 
     /// DASH
-    bool m_hasUsedDash;
-
+    bool m_hasUsedDash = false;
     Timer m_dashTimer;
     [SerializeField] float m_dashDuration = 3/6f;
     [SerializeField] float m_dashDistance = 100.0f;
-    
     float m_dashSpeed = 200.0f;
     [SerializeField] DashDust m_dashDustScript;
 
-
+    /// TODO: ORGANIZE THIS VARIABLES
+    string m_objectGroundedTo;
+    SpriteRenderer m_spriteRenderer;
+    [SerializeField] Transicion m_transicionScript;
+    bool m_isUsingGroundBreaker = false;
+    bool m_isInvulnerable = false;
+    Timer m_invulnerableTimer;
+    float pushVelX = -50.0f;
+    float pushVelY = 100.0f;
+    Timer m_noControlTimer;
+    Timer m_blinkTimer;
+    bool m_hasBlinked = false;
+    [SerializeField] float m_blinkDuration = 0.2f;
+/// END OF VARIABLES
     private void Awake() {
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
 
         m_dashSpeed = m_dashDistance / m_dashDuration;
         m_dashTimer = gameObject.AddComponent<Timer>();
+
+        m_gravity1 = -2 * m_maxHeight / (m_timeToPeak1 * m_timeToPeak1);
+        m_gravity2 = -2 * m_maxHeight / (m_timeToPeak2 * m_timeToPeak2);
+        m_initialVelocityY = 2 * m_maxHeight / m_timeToPeak1;
+
+        m_isGrounded = false;
+
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         
     }
 
@@ -85,6 +106,7 @@ public class PlayerImproved : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]   = Animator.StringToHash(m_groundbreakerLoopAnimationName);
 
         m_dashTimer.Duration = m_dashDuration;
+        m_currentSpeedX = m_normalMovementSpeed;
     }
 
     private void Update() {
@@ -108,11 +130,13 @@ public class PlayerImproved : MonoBehaviour
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         if(InputManager.Instance.JumpButtonPressed && m_isGrounded){ Jump();}
-        if(InputManager.Instance.DashButtonPressed){ InitializeDash();}
+        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
     }
 
     void InitializeDash(){
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
+        m_state = PLAYER_STATE.DASH;
+        m_hasUsedDash = true;
 
         m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
         m_rb2D.gravityScale = 0;
@@ -120,7 +144,6 @@ public class PlayerImproved : MonoBehaviour
         ChangeAnimationState(PLAYER_ANIMATION.DASH);
         m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
 
-        
         Physics2D.IgnoreLayerCollision(6, 7, true);
         m_hasUsedDash = true;
         
@@ -132,6 +155,7 @@ public class PlayerImproved : MonoBehaviour
         {
             m_state = PLAYER_STATE.IDLE;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+            m_rb2D.velocity = new Vector2(0,0);
             ChangeAnimationState(PLAYER_ANIMATION.DASH);
             Physics2D.IgnoreLayerCollision(6,7,false);
         }
@@ -139,7 +163,7 @@ public class PlayerImproved : MonoBehaviour
 
     void Move(){
         if(m_direction != 0 && m_canMove){
-            m_rb2D.velocity = new Vector2(m_direction * m_speedX, m_rb2D.velocity.y);
+            m_rb2D.velocity = new Vector2(m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             FacePlayerToMovementDirection();
             if(m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK){
             m_state = PLAYER_STATE.MOVE;
@@ -171,7 +195,7 @@ public class PlayerImproved : MonoBehaviour
     void HandleJumpState(){
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
-        if(InputManager.Instance.DashButtonPressed){ InitializeDash();}
+        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
     }
 
     void HandleFallState(){  HandleJumpState(); }
@@ -203,6 +227,59 @@ public class PlayerImproved : MonoBehaviour
         else return -1;
     }
 
+    public void PushAway(float velX, float velY) { pushVelX = velX; pushVelY = velY; }
+
+/// COLLITIONS
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "spike")
+        {
+            GameManager.Instance.ModifyPlayerHealth(-1);
+            m_transicionScript.LocalCheckpointTransition();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH)
+        {
+            PushAway(-50.0f, 100.0f);
+            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = pushVelY;
+
+            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+            m_isInvulnerable = true;
+            m_invulnerableTimer.Run();
+            m_noControlTimer.Duration = 0.2f;
+            m_noControlTimer.Run();
+            m_canMove = false;
+            Destroy(collision.gameObject);
+            m_state = PLAYER_STATE.JUMP;
+            m_isGrounded = false;
+            GameManager.Instance.ModifyPlayerHealth(-1);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "enemy" && !m_isInvulnerable)
+        {
+            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = pushVelY;
+            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+
+            Physics2D.IgnoreLayerCollision(6, 7, true);
+            m_isInvulnerable = true;
+            m_invulnerableTimer.Run();
+            m_noControlTimer.Duration = 0.5f;
+            m_noControlTimer.Run();
+            m_canMove = false;
+            m_state = PLAYER_STATE.JUMP;
+            m_isGrounded = false;
+            GameManager.Instance.ModifyPlayerHealth(-1);
+        }
+    }
+
     #region Accessors
 
     public bool IsFacingRight { get { return m_isFacingRight; } }
@@ -212,10 +289,6 @@ public class PlayerImproved : MonoBehaviour
         else return -1;
     }
 
-    public void SetPlayerAnimation(PLAYER_ANIMATION p_animation)
-    {
-        ChangeAnimationState(m_animationHash[(int)p_animation]);
-    }
     public PLAYER_STATE State
     {
         get { return m_state; }
@@ -225,6 +298,7 @@ public class PlayerImproved : MonoBehaviour
             if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y); }
         }
     }
+
 
     public float Gravity1 { get { return m_gravity1; } }
 
@@ -243,11 +317,11 @@ public class PlayerImproved : MonoBehaviour
 
     public void ReduceSpeed()
     {
-        if (IsGrounded) { m_speedX = 0; }
-        else { m_speedX = m_reducedMovementSpeed; }
+        if (IsGrounded) { m_currentSpeedX = 0; }
+        else { m_currentSpeedX = m_reducedMovementSpeed; }
     }
 
-    public void SetToNormalSpeed() { m_speedX = 60; }
+    public void SetToNormalSpeed() { m_currentSpeedX = m_normalMovementSpeed; }
 
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 

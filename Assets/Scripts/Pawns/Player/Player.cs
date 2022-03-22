@@ -32,8 +32,6 @@ public class Player : MonoBehaviour
     bool m_hasBlinked = false;
     [SerializeField] float m_blinkDuration = 0.2f;
 
-    Skill_Pilar m_skills;
-
     Animator m_animator;
     int m_currentState;
 
@@ -98,7 +96,6 @@ public class Player : MonoBehaviour
         m_isGrounded = false;
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-        m_skills = gameObject.GetComponent<Skill_Pilar>();
 
         m_invulnerableTimer = gameObject.AddComponent<Timer>();
         m_invulnerableTimer.Duration = 1f;

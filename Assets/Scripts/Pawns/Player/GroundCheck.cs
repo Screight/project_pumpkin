@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    Player playerScript;
+    PlayerImproved playerScript;
     Rigidbody2D playerRigidBody;
 
     void Start()
     {
-        playerScript = GetComponentInParent<Player>();
+        playerScript = GetComponentInParent<PlayerImproved>();
         playerRigidBody = GetComponentInParent<Rigidbody2D>();
     }
 
@@ -28,13 +28,13 @@ public class GroundCheck : MonoBehaviour
             {
                 if(playerScript.State == PLAYER_STATE.FALL)
                 {
-                    playerScript.SetPlayerState(PLAYER_STATE.LAND);
-                    playerScript.SetPlayerAnimation(PLAYER_ANIMATION.LAND);
+                    playerScript.State =PLAYER_STATE.LAND;
+                    playerScript.ChangeAnimationState(PLAYER_ANIMATION.LAND);
                 }
                 else if (playerScript.State != PLAYER_STATE.LAND)
                 {
-                    playerScript.SetPlayerState(PLAYER_STATE.IDLE);
-                    playerScript.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
+                    playerScript.State = PLAYER_STATE.IDLE;
+                    playerScript.ChangeAnimationState(PLAYER_ANIMATION.IDLE);
                 }
                 
             }           
@@ -56,7 +56,7 @@ public class GroundCheck : MonoBehaviour
 
             if (playerScript.State != PLAYER_STATE.DASH)
             {
-                playerRigidBody.gravityScale = playerScript.Gravity1 / Physics2D.gravity.y;
+                playerRigidBody.gravityScale = playerScript.Gravity2 / Physics2D.gravity.y;
             }           
         }
     }
