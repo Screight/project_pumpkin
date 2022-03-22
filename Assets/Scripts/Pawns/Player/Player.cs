@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
     float m_initialVelocityY;
     bool m_isGrounded;
     float m_maxFallingSpeed = 200;
+    [SerializeField] float m_moveTowardsOneWayPlatform = 40;
 
     /// DASH
     bool m_hasUsedDash = false;
@@ -208,6 +209,7 @@ public class Player : MonoBehaviour
     void CheckIfFalling(){
         if (m_rb2D.velocity.y < 0)
         {
+            m_isGrounded = false;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             m_state = PLAYER_STATE.FALL;
             ChangeAnimationState(PLAYER_ANIMATION.FALL);
@@ -232,6 +234,12 @@ public class Player : MonoBehaviour
     }
 
     public void PushAway(float velX, float velY) { pushVelX = velX; pushVelY = velY; }
+
+    public void HandleOneWayPlatforms(){
+        m_isGrounded = false;
+        m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_moveTowardsOneWayPlatform);
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+    }
 
     public void SetToGrounded( string p_objectGroundedTo){
         m_isGrounded = true;

@@ -444,7 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5559658922750157610}
   - component: {fileID: 6123783068770931118}
-  - component: {fileID: 1005414630830359072}
+  - component: {fileID: 4014198820374382404}
   m_Layer: 7
   m_Name: groundCheck
   m_TagString: groundCheck
@@ -492,7 +492,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.9, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1005414630830359072
+--- !u!114 &4014198820374382404
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5569941843633194132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a57443d5a508c4e8b746d8d2bb213f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b2a517409904ed8b85c74b06bbc0c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6054658956108164525
@@ -827,6 +827,7 @@ MonoBehaviour:
   m_maxHeight: 78
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
+  m_moveTowardsOneWayPlatform: 40
   m_dashDuration: 0.5
   m_dashDistance: 75
   m_dashDustScript: {fileID: 514142220}

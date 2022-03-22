@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5480460765940213520}
   - component: {fileID: 3781625552134042502}
   - component: {fileID: 7267645093181901656}
-  - component: {fileID: 3125669691714907932}
   - component: {fileID: 1352978130}
+  - component: {fileID: 1404127117206987007}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7893d6a480566ac44b442f0afd3b1066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 505133074128173949}
+  m_camera: {fileID: 0}
 --- !u!114 &1352978130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mainBounds: {fileID: 0}
---- !u!114 &2068265980
+--- !u!114 &1404127117206987007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6519586484710774235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dfc5bbb5d73d873eb79577d0762933e, type: 3}
+  m_Script: {fileID: 11500000, guid: 856fd88bede40014488b78b3eff8b439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_dampSpeedUp: 0.3
