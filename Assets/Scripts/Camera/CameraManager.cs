@@ -21,6 +21,8 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        m_camera = Camera.main;
+
         if (m_instance == null) { m_instance = this; }
         else { Destroy(this.gameObject); }
 

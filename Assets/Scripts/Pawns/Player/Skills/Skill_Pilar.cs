@@ -72,7 +72,7 @@ public class Skill_Pilar : MonoBehaviour
             m_marker.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             m_isCasting = false;
             SummonPilar();
-            m_player.SetPlayerState(PLAYER_STATE.IDLE);
+            m_player.State = PLAYER_STATE.IDLE;
             m_canPlayerUseSkill = false;
             m_markerSprite.enabled = false;
         }
@@ -84,8 +84,8 @@ public class Skill_Pilar : MonoBehaviour
         m_isCasting = true;
         if (m_player.IsFacingRight) m_markerDirection = 1;
         else m_markerDirection = -1;
-        m_player.SetPlayerState(PLAYER_STATE.CAST);
-        m_player.SetPlayerAnimation(PLAYER_ANIMATION.IDLE);
+        m_player.State = PLAYER_STATE.CAST;
+        m_player.ChangeAnimationState(PLAYER_ANIMATION.IDLE);
         m_rb2D.velocity = Vector2.zero;
         m_markerInitialRaycastPosition = m_player.transform.position + 5 * Vector3.up;
         m_markerLastRaycastPosition = m_markerInitialRaycastPosition;

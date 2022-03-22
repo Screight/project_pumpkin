@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Player.Instance.PushAway(-50.0f, 100.0f);
+            //Player.Instance.PushAway(-50.0f, 100.0f);
         }
     }
 

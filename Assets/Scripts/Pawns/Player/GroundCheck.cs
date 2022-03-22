@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    PlayerImproved playerScript;
+    Player playerScript;
     Rigidbody2D playerRigidBody;
 
     void Start()
     {
-        playerScript = GetComponentInParent<PlayerImproved>();
+        playerScript = GetComponentInParent<Player>();
         playerRigidBody = GetComponentInParent<Rigidbody2D>();
     }
 
@@ -28,7 +28,7 @@ public class GroundCheck : MonoBehaviour
             {
                 if(playerScript.State == PLAYER_STATE.FALL)
                 {
-                    playerScript.State =PLAYER_STATE.LAND;
+                    playerScript.State = PLAYER_STATE.LAND;
                     playerScript.ChangeAnimationState(PLAYER_ANIMATION.LAND);
                 }
                 else if (playerScript.State != PLAYER_STATE.LAND)

@@ -13,9 +13,8 @@ public class Heart : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player" && m_player.HealthPoints < m_player.TotalHealthPoints)
+        if(collision.tag == "Player")
         {
-            m_player.ModifyHP(1);
             GameManager.Instance.ModifyPlayerHealth(1);
             this.gameObject.SetActive(false);
         }

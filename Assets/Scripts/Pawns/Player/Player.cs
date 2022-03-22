@@ -7,33 +7,7 @@ public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, GR
 
 public class Player : MonoBehaviour
 {
-    static Player m_instance;
-    [SerializeField] DashDust m_dashDustScript;
-    [SerializeField] Transicion m_transicionScript;
-
-    float m_reducedMovementSpeed = 30.0f;
-    bool m_hasUsedDash = false;
-    string m_objectGroundedTo;
-    SpriteRenderer m_spriteRenderer;
-    bool m_isUsingGroundBreaker = false;
-
-    int m_totalHealthPoints = 8;
-    int m_health = 8;
-
-    bool m_isInvulnerable = false;
-    Timer m_invulnerableTimer;
-    float pushVelX = -50.0f;
-    float pushVelY = 100.0f;
-
-    bool m_canIMove = false;
-    Timer m_noControlTimer;
-
-    Timer m_blinkTimer;
-    bool m_hasBlinked = false;
-    [SerializeField] float m_blinkDuration = 0.2f;
-
-    Animator m_animator;
-    int m_currentState;
+    #region Animation
 
     string m_idleAnimationName      = "idle";
     string m_runAnimationName       = "run";
@@ -47,47 +21,70 @@ public class Player : MonoBehaviour
     string m_groundbreakerLoopAnimationName       = "groundbreakerLoop";
     int[] m_animationHash = new int[(int)PLAYER_ANIMATION.LAST_NO_USE];
 
-    void ChangeAnimationState(int p_newState)
+    Animator m_animator;
+    PLAYER_ANIMATION m_animationState;
+    int m_currentAnimationHash = 0;
+
+    public void ChangeAnimationState(PLAYER_ANIMATION p_animationState)
     {
-        if (m_currentState == p_newState) return;   // stop the same animation from interrupting itself
-        m_animator.Play(p_newState);                // play the animation
-        m_currentState = p_newState;                // reassigning the new state
+        int newAnimationHash = m_animationHash[(int)p_animationState];
+
+        if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
+        m_animator.Play(newAnimationHash);                // play the animation
+        m_currentAnimationHash = newAnimationHash;                // reassigning the new state
     }
 
-    PLAYER_STATE m_state;
+    #endregion 
 
+    PLAYER_STATE m_state = PLAYER_STATE.IDLE;
+
+    /// MOVEMENT
     Rigidbody2D m_rb2D;
-    [SerializeField] float m_speed = 50.0f;
-    float m_direction;
+    int m_direction = 0;
+    bool m_isFacingRight = true;
+    [SerializeField] float m_normalMovementSpeed = 60;
+    [SerializeField] float m_reducedMovementSpeed = 30;
+    float m_currentSpeedX;
+    bool m_canMove = true;
 
-    float m_dashCurrentTime;
-    [SerializeField] float m_dashDistance = 100.0f;
-    [SerializeField] float m_dashDuration = 3/6f;
-    float m_dashSpeed = 200.0f;
-
-    public float m_maxHeight = 10.0f;
-    public float m_timeToPeak1 = 1.0f;
-    public float m_timeToPeak2 = 1.0f;
+    /// JUMP
+    [SerializeField] float m_maxHeight = 10.0f;
+    [SerializeField] float m_timeToPeak1 = 1.0f;
+    [SerializeField] float m_timeToPeak2 = 1.0f;
     float m_gravity1;
     float m_gravity2;
     float m_initialVelocityY;
     bool m_isGrounded;
-    
+    float m_maxFallingSpeed = 200;
 
-    bool m_isFacingRight;
+    /// DASH
+    bool m_hasUsedDash = false;
+    Timer m_dashTimer;
+    [SerializeField] float m_dashDuration = 3/6f;
+    [SerializeField] float m_dashDistance = 100.0f;
+    float m_dashSpeed = 200.0f;
+    [SerializeField] DashDust m_dashDustScript;
 
-    private void Awake()
-    {
-        if (m_instance == null) { m_instance = this; }
-
+    /// TODO: ORGANIZE THIS VARIABLES
+    string m_objectGroundedTo;
+    SpriteRenderer m_spriteRenderer;
+    [SerializeField] Transicion m_transicionScript;
+    bool m_isUsingGroundBreaker = false;
+    bool m_isInvulnerable = false;
+    Timer m_invulnerableTimer;
+    float pushVelX = -50.0f;
+    float pushVelY = 100.0f;
+    Timer m_noControlTimer;
+    Timer m_blinkTimer;
+    bool m_hasBlinked = false;
+    [SerializeField] float m_blinkDuration = 0.2f;
+/// END OF VARIABLES
+    private void Awake() {
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
 
-        m_state = PLAYER_STATE.IDLE;
-        m_direction = 0;
-
-        m_dashCurrentTime = 0;
         m_dashSpeed = m_dashDistance / m_dashDuration;
+        m_dashTimer = gameObject.AddComponent<Timer>();
 
         m_gravity1 = -2 * m_maxHeight / (m_timeToPeak1 * m_timeToPeak1);
         m_gravity2 = -2 * m_maxHeight / (m_timeToPeak2 * m_timeToPeak2);
@@ -96,22 +93,10 @@ public class Player : MonoBehaviour
         m_isGrounded = false;
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-
-        m_invulnerableTimer = gameObject.AddComponent<Timer>();
-        m_invulnerableTimer.Duration = 1f;
-        m_noControlTimer = gameObject.AddComponent<Timer>();
-        m_noControlTimer.Duration = 0.5f;
-        m_blinkTimer = gameObject.AddComponent<Timer>();
-        m_blinkTimer.Duration = m_blinkDuration;
-
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_objectGroundedTo = "";
+        
     }
 
-    private void Start()
-    {
-        m_isFacingRight = true;
-
+    private void Start() {
         m_animationHash[(int)PLAYER_ANIMATION.IDLE]                 = Animator.StringToHash(m_idleAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.RUN]                  = Animator.StringToHash(m_runAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.DASH]                 = Animator.StringToHash(m_dashAnimationName);
@@ -122,191 +107,158 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.HIT]                  = Animator.StringToHash(m_hitAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]        = Animator.StringToHash(m_groundbreakerAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]   = Animator.StringToHash(m_groundbreakerLoopAnimationName);
+
+        m_dashTimer.Duration = m_dashDuration;
+        m_currentSpeedX = m_normalMovementSpeed;
     }
 
-    private void Update()
-    {
-        if (Time.timeScale == 0) { return; } //Game Paused
+    private void Update() {
 
-        if (m_invulnerableTimer.IsRunning)
-        {
-            if (m_blinkTimer.IsFinished)
-            {
-                if (!m_hasBlinked) { m_spriteRenderer.color = new Color(1, 1, 1, 0.5f); }
-                else { m_spriteRenderer.color = new Color(1, 1, 1, 1); }
-                m_hasBlinked = !m_hasBlinked;
-                m_blinkTimer.Run();
-            }
-        }
+        CheckIfFalling();
 
-        if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
-        {
-        m_state = PLAYER_STATE.IDLE;
-        m_direction = 0;
-            m_isInvulnerable = false;
-            m_spriteRenderer.color = new Color(255, 255, 255, 255);
-            Physics2D.IgnoreLayerCollision(6, 7, false);
-            m_invulnerableTimer.Stop();
-            m_blinkTimer.Stop();
-            m_hasBlinked = false;
-        }
-
-        if (m_noControlTimer.IsFinished) { m_canIMove = true; }
-
-        switch (m_state)
-        {
+        switch(m_state){
             default: break;
-            case PLAYER_STATE.IDLE:
-                {
-                    Move(PLAYER_STATE.IDLE);
-                    Jump();
-                    Dash();
-
-
-                } break;
-            case PLAYER_STATE.MOVE:
-                {
-                    Move(PLAYER_STATE.IDLE);
-                    Jump();
-                    Dash();
-                } break;
-            case PLAYER_STATE.DASH:     { Dash(); } break;
-            case PLAYER_STATE.BOOST:
-                {
-                    Move(PLAYER_STATE.BOOST);
-                    Dash();
-                }
-                break;
-            case PLAYER_STATE.JUMP:     
-                {
-                    Move(PLAYER_STATE.JUMP);
-                    Dash();
-                } break;
-            case PLAYER_STATE.FALL:     
-                {
-                    Move(PLAYER_STATE.FALL);
-                    Dash();
-                } break;
-            case PLAYER_STATE.LAND:
-                {
-                    Move(PLAYER_STATE.LAND);
-                    Jump();
-                    Dash();
-                }
-                break;
-            //case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
+            case PLAYER_STATE.IDLE: { HandleIdleState(); } break;
+            case PLAYER_STATE.MOVE: { HandleMoveState(); } break;
+            case PLAYER_STATE.BOOST: { HandleBoostState(); } break;
+            case PLAYER_STATE.JUMP: { HandleJumpState(); } break;
+            case PLAYER_STATE.FALL: { HandleFallState(); } break;
+            case PLAYER_STATE.LAND: { HandleLandState(); } break;
+            case PLAYER_STATE.DASH: { HandleDashState(); } break; 
         }
     }
 
-    void Jump()
-    {
-        if (InputManager.Instance.JumpButtonPressed && m_isGrounded && m_objectGroundedTo != "enemy")
-        {
-            m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
-            m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
+    void HandleMoveState(){
 
-            SetPlayerState(PLAYER_STATE.BOOST);
-            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.BOOST]);
-            m_isGrounded = false;
+        m_direction = (int)Input.GetAxisRaw("Horizontal");
+        Move();
+        if(InputManager.Instance.JumpButtonPressed && m_isGrounded){ Jump();}
+        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+    }
+
+    void InitializeDash(){
+        SoundManager.Instance.PlayOnce(AudioClipName.DASH);
+        m_state = PLAYER_STATE.DASH;
+        m_hasUsedDash = true;
+
+        m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
+        m_rb2D.gravityScale = 0;
+
+        ChangeAnimationState(PLAYER_ANIMATION.DASH);
+        m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
+
+        Physics2D.IgnoreLayerCollision(6, 7, true);
+        m_hasUsedDash = true;
+        
+        m_dashTimer.Run();
+    }
+
+    void HandleDash(){
+        if (m_dashTimer.IsFinished)
+        {
+            m_state = PLAYER_STATE.IDLE;
+            m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+            m_rb2D.velocity = new Vector2(0,0);
+            ChangeAnimationState(PLAYER_ANIMATION.DASH);
+            Physics2D.IgnoreLayerCollision(6,7,false);
         }
     }
 
-    void Dash()
-    {
-        if (m_state == PLAYER_STATE.DASH)
-        {
-            m_dashCurrentTime += Time.deltaTime;
-            if (m_dashCurrentTime > m_dashDuration)
-            {
-                m_dashCurrentTime = 0;
+    void Move(){
+        if(m_direction != 0 && m_canMove){
+            m_rb2D.velocity = new Vector2(m_direction * m_currentSpeedX, m_rb2D.velocity.y);
+            FacePlayerToMovementDirection();
+            if(m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK){
+            m_state = PLAYER_STATE.MOVE;
+            ChangeAnimationState(PLAYER_ANIMATION.RUN);
+            }
+        }
+        else{
+            m_rb2D.velocity = new Vector2(0,m_rb2D.velocity.y);
+            if(m_isGrounded && m_state != PLAYER_STATE.LAND){
                 m_state = PLAYER_STATE.IDLE;
-                m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-                ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
-                Physics2D.IgnoreLayerCollision(6,7,false);
+                ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             }
-        }
-
-        if (InputManager.Instance.DashButtonPressed && m_state != PLAYER_STATE.DASH && m_noControlTimer.IsFinished && !m_hasUsedDash)
-        {
-            SoundManager.Instance.PlayOnce(AudioClipName.DASH);
-            m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
-            ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.DASH]);
-            m_state = PLAYER_STATE.DASH;
-            m_rb2D.gravityScale = 0;
-            Physics2D.IgnoreLayerCollision(6, 7, true);
-            m_hasUsedDash = true;
-            m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), IsFacingRight);
         }
     }
 
-    void Move(PLAYER_STATE p_defaultState)
-    {
-        float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
-        if (horizontalAxisValue != 0 && m_canIMove)
-        {
-            if (!m_isFacingRight && horizontalAxisValue > 0)    { FlipX(); }
-            if (m_isFacingRight && horizontalAxisValue < 0)     { FlipX(); }
+    void Jump(){
+        m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
+        m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
-            if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
-            {
-                m_state = PLAYER_STATE.MOVE;
-                ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.RUN]);
-            }
-        }
-        else
-        {
-            m_state = p_defaultState;
-            if (m_state != PLAYER_STATE.ATTACK) { ChangeAnimationState(m_animationHash[(int)p_defaultState]); }
-        }
+        m_isGrounded = false;
+        m_state = PLAYER_STATE.BOOST;
+        ChangeAnimationState(PLAYER_ANIMATION.BOOST);
+    }
 
-        if (m_canIMove)
-        {
-            m_direction = horizontalAxisValue;
-            m_rb2D.velocity = new Vector2(m_direction * m_speed, m_rb2D.velocity.y);
-        }
+    void HandleIdleState(){ HandleMoveState(); }
+    void HandleLandState() { HandleMoveState(); }
+    
 
-        if (m_rb2D.velocity.y < 0 && m_state != PLAYER_STATE.ATTACK)
+    void HandleDashState(){ HandleDash();}
+    void HandleJumpState(){
+        m_direction = (int)Input.GetAxisRaw("Horizontal");
+        Move();
+        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+    }
+
+    void HandleFallState(){  HandleJumpState(); }
+    void HandleBoostState(){ HandleJumpState(); }
+
+    void CheckIfFalling(){
+        if (m_rb2D.velocity.y < 0)
         {
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-            SetPlayerState(PLAYER_STATE.FALL);
-            SetPlayerAnimation(PLAYER_ANIMATION.FALL);
+            m_state = PLAYER_STATE.FALL;
+            ChangeAnimationState(PLAYER_ANIMATION.FALL);
+            // limit falling speed
+            if (m_rb2D.velocity.y < -m_maxFallingSpeed) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -m_maxFallingSpeed); }
         }
-
-        if (m_rb2D.velocity.y < -200) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -200.0f); }
     }
 
-    public void SetPlayerState(PLAYER_STATE value) { m_state = value; }
+    void FacePlayerToMovementDirection(){
+        if (!m_isFacingRight && m_direction > 0)    { FlipX(); }
+        if (m_isFacingRight && m_direction < 0)     { FlipX(); }
+    }
 
-    void FlipX()
-    {
+    void FlipX(){
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;       
     }
 
-    public int FacingDirection()
-    {
-        if (m_isFacingRight) return 1;
+    public int FacingDirection(){ 
+        if(m_isFacingRight){ return 1;} 
         else return -1;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "enemy" && !m_isInvulnerable)
-        {
-            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
-            float velocityY = pushVelY;
-            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+    public void PushAway(float velX, float velY) { pushVelX = velX; pushVelY = velY; }
 
-            Physics2D.IgnoreLayerCollision(6, 7, true);
-            m_isInvulnerable = true;
-            m_invulnerableTimer.Run();
-            m_noControlTimer.Duration = 0.5f;
-            m_noControlTimer.Run();
-            m_canIMove = false;
-            m_state = PLAYER_STATE.JUMP;
-            m_isGrounded = false;
+    public void SetToGrounded( string p_objectGroundedTo){
+        m_isGrounded = true;
+        m_objectGroundedTo = p_objectGroundedTo;
+        m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
+        m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, 0);
+
+        m_hasUsedDash = false;
+    }
+
+    public void ResetPlayer()
+    {
+        m_state = PLAYER_STATE.IDLE;
+        ChangeAnimationState((int)PLAYER_ANIMATION.IDLE);
+        m_isGrounded = false;
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+        m_rb2D.velocity = Vector2.zero;
+        SkillManager.Instance.ResetSkillStates();
+    }
+
+/// COLLITIONS
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "spike")
+        {
             GameManager.Instance.ModifyPlayerHealth(-1);
-            ModifyHP(-1);
+            m_transicionScript.LocalCheckpointTransition();
         }
     }
 
@@ -323,63 +275,41 @@ public class Player : MonoBehaviour
             m_invulnerableTimer.Run();
             m_noControlTimer.Duration = 0.2f;
             m_noControlTimer.Run();
-            m_canIMove = false;
+            m_canMove = false;
             Destroy(collision.gameObject);
             m_state = PLAYER_STATE.JUMP;
             m_isGrounded = false;
             GameManager.Instance.ModifyPlayerHealth(-1);
-            ModifyHP(-1);
         }
     }
 
-    public void ResetPlayer()
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        m_state = PLAYER_STATE.IDLE;
-        ChangeAnimationState(m_animationHash[(int)PLAYER_ANIMATION.IDLE]);
-        m_isGrounded = false;
-        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-        m_rb2D.velocity = Vector2.zero;
-        SkillManager.Instance.ResetSkillStates();
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "spike")
+        if(collision.gameObject.tag == "enemy" && !m_isInvulnerable)
         {
-            ModifyHP(-1);
+            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
+            float velocityY = pushVelY;
+            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+
+            Physics2D.IgnoreLayerCollision(6, 7, true);
+            m_isInvulnerable = true;
+            m_invulnerableTimer.Run();
+            m_noControlTimer.Duration = 0.5f;
+            m_noControlTimer.Run();
+            m_canMove = false;
+            m_state = PLAYER_STATE.JUMP;
+            m_isGrounded = false;
             GameManager.Instance.ModifyPlayerHealth(-1);
-            m_transicionScript.LocalCheckpointTransition();
         }
     }
 
-    static public Player Instance
-    {
-        get { return m_instance; }
-        private set { }
-    }
-    public void PushAway(float velX, float velY) { pushVelX = velX; pushVelY = velY; }
 
-    public void ModifyHP(int p_healthModifier) { m_health += p_healthModifier; }
-
-    public void StartInvulnerability(float p_invulnerableDuration)
-    {
-        m_invulnerableTimer.Duration = p_invulnerableDuration;
-        m_invulnerableTimer.Stop();
-        m_invulnerableTimer.Run();
-    }
 
     #region Accessors
 
     public bool IsFacingRight { get { return m_isFacingRight; } }
 
-    public int GetFacingDirection() {
-        if(m_isFacingRight){ return 1;}
-        else return -1;
-    }
 
-    public void SetPlayerAnimation(PLAYER_ANIMATION p_animation)
-    {
-        ChangeAnimationState(m_animationHash[(int)p_animation]);
-    }
     public PLAYER_STATE State
     {
         get { return m_state; }
@@ -389,6 +319,7 @@ public class Player : MonoBehaviour
             if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y); }
         }
     }
+
 
     public float Gravity1 { get { return m_gravity1; } }
 
@@ -407,17 +338,14 @@ public class Player : MonoBehaviour
 
     public void ReduceSpeed()
     {
-        if (IsGrounded) { m_speed = 0; }
-        else { m_speed = m_reducedMovementSpeed; }
+        if (IsGrounded) { m_currentSpeedX = 0; }
+        else { m_currentSpeedX = m_reducedMovementSpeed; }
     }
 
-    public void SetToNormalSpeed() { m_speed = 60; }
+    public void SetToNormalSpeed() { m_currentSpeedX = m_normalMovementSpeed; }
 
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
-    public int HealthPoints { get { return m_health; } }
-
-    public int TotalHealthPoints { get { return m_totalHealthPoints; } }
-
     #endregion
+
 }

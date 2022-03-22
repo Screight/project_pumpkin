@@ -47,7 +47,7 @@ public class CameraMovement : MonoBehaviour
         
         m_targetPosition.y = m_player.transform.position.y + m_offsetY;
         m_targetPosition.z = transform.position.z;
-        m_targetPosition.x = m_player.transform.position.x + m_playerScript.GetFacingDirection() * m_offsetX;
+        m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
 
         m_dampSpeedX = m_dampSpeedMovement;
 

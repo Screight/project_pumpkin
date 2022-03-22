@@ -138,7 +138,7 @@ public class Ghoul : Enemy
     {
         if (collision.gameObject.tag == "Player")
         {
-            Player.Instance.PushAway(-150.0f, 150.0f);
+            //Player.Instance.PushAway(-150.0f, 150.0f);
         }
     }
 

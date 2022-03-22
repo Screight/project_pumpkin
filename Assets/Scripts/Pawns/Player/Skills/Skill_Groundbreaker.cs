@@ -50,8 +50,8 @@ public class Skill_Groundbreaker : MonoBehaviour
         if (InputManager.Instance.Skill2ButtonPressed && m_cooldownTimer.IsFinished && !m_player.IsGrounded)
         {
             m_rb2D.velocity = new Vector2(0, m_maxSpeed);
-            m_player.SetPlayerState(PLAYER_STATE.GROUNDBREAKER);
-            m_player.SetPlayerAnimation(PLAYER_ANIMATION.GROUNDBREAKER);
+            m_player.State = PLAYER_STATE.GROUNDBREAKER;
+            m_player.ChangeAnimationState(PLAYER_ANIMATION.GROUNDBREAKER);
             m_rb2D.gravityScale = 0;
             Physics2D.IgnoreLayerCollision(6, 7, true);
             m_player.IsUsingGroundBreaker = true;
