@@ -6,7 +6,7 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager m_instance;
 
-    [SerializeField] Camera camera;
+    [SerializeField] Camera m_camera;
 
     int screenWidth;
     int screenHeight;
@@ -24,40 +24,30 @@ public class CameraManager : MonoBehaviour
         if (m_instance == null) { m_instance = this; }
         else { Destroy(this.gameObject); }
 
-        screenWidth = Screen.width;
-        screenHeight = Screen.height;
-        topLeftCorner = camera.ScreenToWorldPoint(new Vector2(0, screenHeight));
-        bottomLeftCorner = camera.ScreenToWorldPoint(new Vector2(0, 0));
-        topRighttCorner = camera.ScreenToWorldPoint(new Vector2(screenWidth, screenHeight));
-        bottomRightCorner = camera.ScreenToWorldPoint(new Vector2(screenWidth, 0));
-
-        leftLimit = topLeftCorner.x;
-        topLimit = topLeftCorner.y;
-        rightLimit = bottomRightCorner.x;
-        bottomLimit = bottomRightCorner.y;
+        UpdateCameraPosition();
     }
 
     private void Update() { UpdateCameraPosition(); }
 
-    public float LeftLimit { get { return leftLimit; } }
-    public float RightLimit { get { return rightLimit; } }
-    public float TopLimit { get { return topLimit; } }
-    public float BottomLimit { get { return bottomLimit; } }
-    public float Width { get { return rightLimit - leftLimit; } }
-    public float Height { get { return topLimit - bottomLimit; } }
+    public float LeftLimit      { get { return leftLimit; } }
+    public float RightLimit     { get { return rightLimit; } }
+    public float TopLimit       { get { return topLimit; } }
+    public float BottomLimit    { get { return bottomLimit; } }
+    public float Width          { get { return rightLimit - leftLimit; } }
+    public float Height         { get { return topLimit - bottomLimit; } }
 
     void UpdateCameraPosition()
     {
-        screenWidth = Screen.width;
-        screenHeight = Screen.height;
-        topLeftCorner = camera.ScreenToWorldPoint(new Vector2(0, screenHeight));
-        bottomLeftCorner = camera.ScreenToWorldPoint(new Vector2(0, 0));
-        topRighttCorner = camera.ScreenToWorldPoint(new Vector2(screenWidth, screenHeight));
-        bottomRightCorner = camera.ScreenToWorldPoint(new Vector2(screenWidth, 0));
+        screenWidth     = Screen.width;
+        screenHeight    = Screen.height;
+        topLeftCorner       = m_camera.ScreenToWorldPoint(new Vector2(0, screenHeight));
+        bottomLeftCorner    = m_camera.ScreenToWorldPoint(new Vector2(0, 0));
+        topRighttCorner     = m_camera.ScreenToWorldPoint(new Vector2(screenWidth, screenHeight));
+        bottomRightCorner   = m_camera.ScreenToWorldPoint(new Vector2(screenWidth, 0));
 
-        leftLimit = topLeftCorner.x;
-        topLimit = topLeftCorner.y;
-        rightLimit = bottomRightCorner.x;
+        leftLimit   = topLeftCorner.x;
+        topLimit    = topLeftCorner.y;
+        rightLimit  = bottomRightCorner.x;
         bottomLimit = bottomRightCorner.y;
     }
 

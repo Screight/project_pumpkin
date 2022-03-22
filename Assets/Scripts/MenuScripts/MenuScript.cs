@@ -61,12 +61,6 @@ public class MenuScript : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        foreach (var button in buttons) { button.interactable = true; }
-    }
-    void OnDisable()
-    {
-        foreach (var button in buttons) { button.interactable = false; }
-    }
+    void OnEnable() { foreach (var button in buttons) { button.interactable = true; } }
+    void OnDisable() { foreach (var button in buttons) { button.interactable = false; } }
 }
