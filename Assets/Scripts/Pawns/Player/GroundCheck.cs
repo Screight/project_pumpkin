@@ -13,7 +13,7 @@ public class GroundCheck : MonoBehaviour
     private void OnTriggerStay2D(Collider2D p_collider) {
         string colliderTag = p_collider.tag;
         bool canPlayerTransitionFromCurrentStateToGrounded = m_playerScript.State != PLAYER_STATE.BOOST && m_playerScript.State != PLAYER_STATE.JUMP && m_playerScript.State != PLAYER_STATE.DASH;
-        bool isObjectASurface = colliderTag == "floor" || colliderTag == "enemy" || colliderTag == "platform";
+        bool isObjectASurface = colliderTag == "floor" || colliderTag == "platform";
 
         if(isObjectASurface && canPlayerTransitionFromCurrentStateToGrounded){
             m_playerScript.SetToGrounded(colliderTag);
@@ -29,7 +29,5 @@ public class GroundCheck : MonoBehaviour
             m_playerScript.HandleOneWayPlatforms();
         }
     }
-
-
 
 }

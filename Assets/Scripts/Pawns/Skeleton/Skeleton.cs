@@ -7,6 +7,7 @@ public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, LAST_NO_USE }
 
 public class Skeleton : Enemy
 {   
+    [SerializeField] GameObject m_arrow;
     Rigidbody2D m_rb2D;
     Collider2D m_collider2D;
     Animator m_animator;
@@ -61,6 +62,7 @@ public class Skeleton : Enemy
 
     void Start()
     {
+        base.Start();
         m_animationHash[(int)SKELETON_ANIMATION.MOVE] = Animator.StringToHash(m_moveAnimationName);
         m_animationHash[(int)SKELETON_ANIMATION.RELOAD] = Animator.StringToHash(m_reloadAnimationName);
         m_animationHash[(int)SKELETON_ANIMATION.FIRE] = Animator.StringToHash(m_fireAnimationName);
@@ -170,9 +172,8 @@ public class Skeleton : Enemy
         {
             if (boneTimer.IsFinished)
             {
-                BoneScript boneScript= Instantiate(prefabBone).GetComponent<BoneScript>();
-                boneScript.gameObject.transform.position = transform.position;
-                boneScript.Shoot(FacingDirection(), AudioClipName.ARCHER_ATTACK);
+                Projectile m_boneArrowScript  = Instantiate(m_arrow, transform.position, Quaternion.identity).GetComponent<Projectile>();
+                m_boneArrowScript.Shoot(FacingDirection());
                 boneTimer.Run();
             }
         }
@@ -248,10 +249,6 @@ public class Skeleton : Enemy
     public bool IsPlayerAtRange
     {
         set { m_playerIsAtRange = value; }
-    }
-    public bool IsFacingRight
-    {
-        get { return m_isFacingRight; }
     }
     #endregion
 }

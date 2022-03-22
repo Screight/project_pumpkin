@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2458181297522305727}
   - component: {fileID: 6082105635725157419}
   - component: {fileID: 2642712279506312297}
-  - component: {fileID: 7841857062919525182}
   - component: {fileID: -3512217339886869979}
-  m_Layer: 0
+  - component: {fileID: -3383295564158270144}
+  m_Layer: 6
   m_Name: bone
   m_TagString: enemyProjectile
   m_Icon: {fileID: 0}
@@ -111,18 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 14, y: 7}
   m_EdgeRadius: 0
---- !u!114 &7841857062919525182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5072539391972705450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627eb44ddb323d64ca3df7de021d3583, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &-3512217339886869979
 Rigidbody2D:
   serializedVersion: 4
@@ -144,3 +132,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &-3383295564158270144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5072539391972705450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58736558365c6f6b8a82ec128f7905de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 40
+  m_maxAliveTime: 5
+  m_damage: 1
+  m_playerInvulnerableDuration: 0.5
+  m_playerNoControlDuration: 0.2
+  m_pushAwayPlayerVelocity: {x: 50, y: 100}
+  m_audioClip: 0

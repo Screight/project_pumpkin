@@ -37,7 +37,7 @@ public class CameraMovement : MonoBehaviour
     {
         m_rb2DPlayer = m_player.GetComponent<Rigidbody2D>();
         m_playerBoxCollider2D = m_player.GetComponent<BoxCollider2D>();
-        m_playerScript = m_player.GetComponent<Player>();
+        m_playerScript = Player.Instance;
     }
 
     // Update is called once per frame

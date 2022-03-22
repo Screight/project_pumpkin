@@ -61,7 +61,7 @@ public class BoundsManager : MonoBehaviour
         m_currentLimits[(int)DIRECTION.RIGHT] = m_mainBoundsScript.RightLimit;
     }
 
-    public async void UpdateBounds() {
+    public void UpdateBounds() {
 
         SetLimitsToMainBounds();
 
@@ -115,7 +115,7 @@ public class BoundsManager : MonoBehaviour
     }
 
     // Delete all the limits with an specific ID
-    public async void DeleteLimits(uint p_cameraBoundID)
+    public void DeleteLimits(uint p_cameraBoundID)
     {
         for (int i = 0; i < (int)DIRECTION.LAST_NO_USE; i++)
         {

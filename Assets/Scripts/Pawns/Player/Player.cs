@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PLAYER_STATE { IDLE, MOVE, DASH, JUMP, FALL, BOOST, LAND, ATTACK, DEATH, CAST, GROUNDBREAKER, HURT }
-public enum PLAYER_ANIMATION { IDLE, RUN, DASH, JUMP, FALL, BOOST, LAND, HIT, GROUNDBREAKER, GROUNDBREAKER_LOOP, LAST_NO_USE}
-
 public class Player : MonoBehaviour
 {
+    static Player m_instance;
+
+    public static Player Instance {
+        get { return m_instance;}
+        private set {}
+    }
+
     #region Animation
 
     string m_idleAnimationName      = "idle";
@@ -45,7 +49,7 @@ public class Player : MonoBehaviour
     [SerializeField] float m_normalMovementSpeed = 60;
     [SerializeField] float m_reducedMovementSpeed = 30;
     float m_currentSpeedX;
-    bool m_canMove = true;
+    bool m_canPerformAction = true;
 
     /// JUMP
     [SerializeField] float m_maxHeight = 10.0f;
@@ -66,26 +70,40 @@ public class Player : MonoBehaviour
     float m_dashSpeed = 200.0f;
     [SerializeField] DashDust m_dashDustScript;
 
+    /// DAMAGE CONTROL AND REACTION
+
+    bool m_isInvulnerable = false;
+    Timer m_invulnerableTimer;
+    Timer m_noControlTimer;
+
+    Timer m_blinkTimer;
+    bool m_hasBlinked = false;
+    [SerializeField] float m_blinkDuration = 0.2f;
+    [SerializeField] Vector2 m_pushAwayOnProjectileHitVelocity = new Vector2(-50.0f, 100.0f);
+
     /// TODO: ORGANIZE THIS VARIABLES
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
     [SerializeField] Transicion m_transicionScript;
     bool m_isUsingGroundBreaker = false;
-    bool m_isInvulnerable = false;
-    Timer m_invulnerableTimer;
-    float pushVelX = -50.0f;
-    float pushVelY = 100.0f;
-    Timer m_noControlTimer;
-    Timer m_blinkTimer;
-    bool m_hasBlinked = false;
-    [SerializeField] float m_blinkDuration = 0.2f;
+    
+
+
 /// END OF VARIABLES
     private void Awake() {
+
+        if(m_instance == null ){ m_instance = this;}
+        else { Destroy(this.gameObject);}
+
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
 
         m_dashSpeed = m_dashDistance / m_dashDuration;
         m_dashTimer = gameObject.AddComponent<Timer>();
+
+        m_invulnerableTimer = gameObject.AddComponent<Timer>();
+        m_noControlTimer = gameObject.AddComponent<Timer>();
+        m_blinkTimer = gameObject.AddComponent<Timer>();
 
         m_gravity1 = -2 * m_maxHeight / (m_timeToPeak1 * m_timeToPeak1);
         m_gravity2 = -2 * m_maxHeight / (m_timeToPeak2 * m_timeToPeak2);
@@ -94,6 +112,7 @@ public class Player : MonoBehaviour
         m_isGrounded = false;
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
         
     }
 
@@ -116,6 +135,31 @@ public class Player : MonoBehaviour
     private void Update() {
 
         CheckIfFalling();
+
+        if (m_invulnerableTimer.IsRunning)
+        {
+            if (m_blinkTimer.IsFinished)
+            {
+                if (!m_hasBlinked) { m_spriteRenderer.color = new Color(1, 1, 1, 0.5f); }
+                else { m_spriteRenderer.color = new Color(1, 1, 1, 1); }
+                m_hasBlinked = !m_hasBlinked;
+                m_blinkTimer.Run();
+            }
+        }
+
+        if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
+        {
+            m_state = PLAYER_STATE.IDLE;
+            m_direction = 0;
+            m_isInvulnerable = false;
+            m_spriteRenderer.color = new Color(255, 255, 255, 255);
+            Physics2D.IgnoreLayerCollision(6, 7, false);
+            m_invulnerableTimer.Stop();
+            m_blinkTimer.Stop();
+            m_hasBlinked = false;
+        }
+
+        if (m_noControlTimer.IsFinished) { m_canPerformAction = true; }
 
         switch(m_state){
             default: break;
@@ -166,7 +210,8 @@ public class Player : MonoBehaviour
     }
 
     void Move(){
-        if(m_direction != 0 && m_canMove){
+        if(!m_canPerformAction){return; }
+        if(m_direction != 0){
             m_rb2D.velocity = new Vector2(m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             FacePlayerToMovementDirection();
             if(m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK){
@@ -233,7 +278,7 @@ public class Player : MonoBehaviour
         else return -1;
     }
 
-    public void PushAway(float velX, float velY) { pushVelX = velX; pushVelY = velY; }
+
 
     public void HandleOneWayPlatforms(){
         m_isGrounded = false;
@@ -270,53 +315,41 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "enemyProjectile" && !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH)
-        {
-            PushAway(-50.0f, 100.0f);
-            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
-            float velocityY = pushVelY;
+    public void HandleHostileCollition(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage) {
 
-            m_rb2D.velocity = new Vector2(velocityX, velocityY);
-            m_isInvulnerable = true;
-            m_invulnerableTimer.Run();
-            m_noControlTimer.Duration = 0.2f;
-            m_noControlTimer.Run();
-            m_canMove = false;
-            Destroy(collision.gameObject);
-            m_state = PLAYER_STATE.JUMP;
-            m_isGrounded = false;
-            GameManager.Instance.ModifyPlayerHealth(-1);
-        }
+        m_rb2D.velocity = new Vector2(p_direction.x * p_pushAwayVelocity.x, p_direction.y * p_pushAwayVelocity.y);
+
+        m_isInvulnerable = true;
+        m_invulnerableTimer.Duration = p_invulnerableDuration;
+        m_blinkTimer.Duration = p_invulnerableDuration;
+        m_invulnerableTimer.Run();
+        m_noControlTimer.Duration = p_noControlDuration;
+        m_noControlTimer.Run();
+        m_canPerformAction = false;
+
+        Physics2D.IgnoreLayerCollision(6, 7, true);
+
+        m_state = PLAYER_STATE.JUMP;
+        GameManager.Instance.ModifyPlayerHealth(-p_damage);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D p_collider)
     {
-        if(collision.gameObject.tag == "enemy" && !m_isInvulnerable)
-        {
-            float velocityX = pushVelX * (collision.gameObject.transform.position - transform.position).normalized.x / Mathf.Abs((collision.gameObject.transform.position - transform.position).normalized.x);
-            float velocityY = pushVelY;
-            m_rb2D.velocity = new Vector2(velocityX, velocityY);
+        string colliderTag = p_collider.tag;
+        bool canPlayerGetHit = !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH;
 
-            Physics2D.IgnoreLayerCollision(6, 7, true);
-            m_isInvulnerable = true;
-            m_invulnerableTimer.Run();
-            m_noControlTimer.Duration = 0.5f;
-            m_noControlTimer.Run();
-            m_canMove = false;
-            m_state = PLAYER_STATE.JUMP;
-            m_isGrounded = false;
-            GameManager.Instance.ModifyPlayerHealth(-1);
+        if (colliderTag == "enemyProjectile" && canPlayerGetHit)
+        {
+            float distanceToEnemyX = transform.position.x - p_collider.gameObject.transform.position.x;
+            float distanceToEnemyY = transform.position.y - p_collider.gameObject.transform.position.y;
+            Vector2 direction = new Vector2(-distanceToEnemyX/Mathf.Abs(distanceToEnemyX), -distanceToEnemyY/Mathf.Abs(distanceToEnemyY)).normalized;
+
         }
     }
-
-
 
     #region Accessors
 
     public bool IsFacingRight { get { return m_isFacingRight; } }
-
 
     public PLAYER_STATE State
     {
@@ -327,11 +360,6 @@ public class Player : MonoBehaviour
             if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y); }
         }
     }
-
-
-    public float Gravity1 { get { return m_gravity1; } }
-
-    public float Gravity2 { get { return m_gravity2; } }
     public bool IsGrounded
     {
         set { m_isGrounded = value; }
@@ -342,7 +370,7 @@ public class Player : MonoBehaviour
 
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
 
-    public Vector3 Speed { get { return m_rb2D.velocity; } }
+    public bool IsInvulnerable { get { return m_isInvulnerable;}}
 
     public void ReduceSpeed()
     {
