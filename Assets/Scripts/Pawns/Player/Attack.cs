@@ -77,7 +77,7 @@ public class Attack : MonoBehaviour
         {
             if (m_player.State != PLAYER_STATE.ATTACK && m_player.IsGrounded) {
                 m_player.State = PLAYER_STATE.ATTACK;
-                m_player.ReduceSpeed();
+                //m_player.ReduceSpeed();
             }
 
             m_keepAttacking = true;
@@ -93,11 +93,11 @@ public class Attack : MonoBehaviour
         {
             if (m_player.IsGrounded)
             {
-                m_player.ReduceSpeed();
+                //m_player.ReduceSpeed();
             }
             else
             {
-                m_player.SetToNormalSpeed();
+                //m_player.SetToNormalSpeed();
             }
 
         }

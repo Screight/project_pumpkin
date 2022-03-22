@@ -61,7 +61,6 @@ public class Player : MonoBehaviour
     Rigidbody2D m_rb2D;
     [SerializeField] float m_speed = 50.0f;
     float m_direction;
-    bool m_canMoveHorizontal = true;
 
     float m_dashCurrentTime;
     [SerializeField] float m_dashDistance = 100.0f;
@@ -76,14 +75,8 @@ public class Player : MonoBehaviour
     float m_initialVelocityY;
     bool m_isGrounded;
     
-    int m_playerStateID;
-    bool m_isFacingRight;
 
-    [SerializeField] Transform m_attackPosition;
-    [SerializeField] LayerMask m_enemyLayer;
-    const float M_ATTACK_RANGE = 8.0f;
-    int m_keepAttackingID;
-    int m_attackComboCount;
+    bool m_isFacingRight;
 
     private void Awake()
     {
@@ -91,7 +84,6 @@ public class Player : MonoBehaviour
 
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
-        m_playerStateID = Animator.StringToHash("state");
 
         m_state = PLAYER_STATE.IDLE;
         m_direction = 0;
@@ -122,7 +114,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         m_isFacingRight = true;
-        m_keepAttackingID = Animator.StringToHash("nextAttack");
 
         m_animationHash[(int)PLAYER_ANIMATION.IDLE]                 = Animator.StringToHash(m_idleAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.RUN]                  = Animator.StringToHash(m_runAnimationName);
@@ -153,6 +144,8 @@ public class Player : MonoBehaviour
 
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
+        m_state = PLAYER_STATE.IDLE;
+        m_direction = 0;
             m_isInvulnerable = false;
             m_spriteRenderer.color = new Color(255, 255, 255, 255);
             Physics2D.IgnoreLayerCollision(6, 7, false);
@@ -171,6 +164,8 @@ public class Player : MonoBehaviour
                     Move(PLAYER_STATE.IDLE);
                     Jump();
                     Dash();
+
+
                 } break;
             case PLAYER_STATE.MOVE:
                 {
@@ -202,7 +197,7 @@ public class Player : MonoBehaviour
                     Dash();
                 }
                 break;
-            case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
+            //case PLAYER_STATE.ATTACK: { Move(PLAYER_STATE.ATTACK); } break;
         }
     }
 
@@ -394,7 +389,7 @@ public class Player : MonoBehaviour
         set
         {
             m_state = value;
-            if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(m_speed, m_rb2D.velocity.y); }
+            if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y); }
         }
     }
 
