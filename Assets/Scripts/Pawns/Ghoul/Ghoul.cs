@@ -50,6 +50,7 @@ public class Ghoul : Enemy
 
     void Start()
     {
+        base.Start();
         m_animationHash[(int)GHOUL_ANIMATION.IDLE]      = Animator.StringToHash(m_idleAnimationName);
         m_animationHash[(int)GHOUL_ANIMATION.MOVE]      = Animator.StringToHash(m_moveAnimationName);
         m_animationHash[(int)GHOUL_ANIMATION.ATTACK]    = Animator.StringToHash(m_attackAnimationName);
@@ -132,14 +133,6 @@ public class Ghoul : Enemy
     void Die()
     {
         Destroy(gameObject);
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            //Player.Instance.PushAway(-150.0f, 150.0f);
-        }
     }
 
     void ChangeAnimationState(int p_newState)

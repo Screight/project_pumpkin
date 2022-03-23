@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
             m_state = PLAYER_STATE.IDLE;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(0,0);
-            ChangeAnimationState(PLAYER_ANIMATION.DASH);
+            ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             Physics2D.IgnoreLayerCollision(6,7,false);
         }
     }

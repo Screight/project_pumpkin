@@ -18,6 +18,7 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] float m_offsetX;
     [SerializeField] float m_offsetY;
+    [SerializeField] float m_offsetAddUpY = 20;
 
     Vector3 m_velocityX = Vector3.zero;
     Vector3 m_velocityY = Vector3.zero;
@@ -43,6 +44,11 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown("down")){ m_offsetY += -m_offsetAddUpY;}
+        else if(Input.GetKeyUp("down")){m_offsetY += m_offsetAddUpY;}
+        if(Input.GetKeyDown("up")){ m_offsetY += m_offsetAddUpY;}
+        else if(Input.GetKeyUp("up")){m_offsetY += -m_offsetAddUpY;}
+
         m_targetPosition = new Vector3();
         
         m_targetPosition.y = m_player.transform.position.y + m_offsetY;
