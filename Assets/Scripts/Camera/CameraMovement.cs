@@ -9,16 +9,16 @@ public class CameraMovement : MonoBehaviour
     Rigidbody2D m_rb2DPlayer;
     BoxCollider2D m_playerBoxCollider2D;
 
-    [SerializeField] float m_dampSpeedUp;
-    [SerializeField] float m_dampSpeedDown;
-    [SerializeField] float m_dampSpeedMovement;
-    [SerializeField] float m_maxSpeedX;
+    [SerializeField] float m_dampSpeedUp = 0.3f;
+    [SerializeField] float m_dampSpeedDown = 0.1f;
+    [SerializeField] float m_dampSpeedMovement = 0.3f;
+    [SerializeField] float m_maxSpeedX =150.0f;
     float m_dampSpeedX;
     float m_dampSpeedY;
 
-    [SerializeField] float m_offsetX;
-    [SerializeField] float m_offsetY;
-    [SerializeField] float m_offsetAddUpY = 20;
+    [SerializeField] float m_offsetX = 20.0f;
+    [SerializeField] float m_offsetY = 0.0f;
+    [SerializeField] float m_offsetAddUpY = 20.0f;
 
     Vector3 m_velocityX = Vector3.zero;
     Vector3 m_velocityY = Vector3.zero;
@@ -30,7 +30,7 @@ public class CameraMovement : MonoBehaviour
     float m_leftLimit   = float.MaxValue;
     float m_rightLimit  = float.MaxValue;
 
-    float m_minimumHeightForCameraMovement = 0;
+    float m_minimumHeightForCameraMovement = -10000000;
 
     private void Awake() { m_player = GameObject.FindGameObjectWithTag("Player"); }
 
@@ -44,10 +44,11 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("down")){ m_offsetY += -m_offsetAddUpY;}
-        else if(Input.GetKeyUp("down")){m_offsetY += m_offsetAddUpY;}
-        if(Input.GetKeyDown("up")){ m_offsetY += m_offsetAddUpY;}
-        else if(Input.GetKeyUp("up")){m_offsetY += -m_offsetAddUpY;}
+        if(Input.GetKeyDown("down"))    { m_offsetY += -m_offsetAddUpY;}
+        else if(Input.GetKeyUp("down")) {m_offsetY += m_offsetAddUpY;}
+
+        if(Input.GetKeyDown("up"))      { m_offsetY += m_offsetAddUpY;}
+        else if(Input.GetKeyUp("up"))   {m_offsetY += -m_offsetAddUpY;}
 
         m_targetPosition = new Vector3();
         
@@ -78,16 +79,13 @@ public class CameraMovement : MonoBehaviour
         {
             if (m_player.transform.position.y > m_minimumHeightForCameraMovement)
             {
-                if (transform.position.y > m_targetPosition.y && m_rb2DPlayer.velocity.y < 0)
-                {
-                    m_dampSpeedY = m_dampSpeedDown;
-                }
+                if (transform.position.y > m_targetPosition.y && m_rb2DPlayer.velocity.y < 0) { m_dampSpeedY = m_dampSpeedDown; }
                 else { m_dampSpeedY = m_dampSpeedUp; }
             }
             else
             {
                 if (m_targetPosition.y < transform.position.y) { m_dampSpeedY = m_dampSpeedDown; }
-                else { m_dampSpeedY = 100000000; }
+                else { m_dampSpeedY = m_dampSpeedUp; }
             }
         }
     }

@@ -824,15 +824,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_normalMovementSpeed: 60
   m_reducedMovementSpeed: 30
-  m_maxHeight: 78
+  m_maxHeight: 50
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
   m_moveTowardsOneWayPlatform: 40
   m_dashDuration: 0.5
   m_dashDistance: 75
   m_dashDustScript: {fileID: 514142220}
-  m_transicionScript: {fileID: 0}
   m_blinkDuration: 0.2
+  m_pushAwayOnProjectileHitVelocity: {x: -50, y: 100}
+  m_transicionScript: {fileID: 0}
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -993,13 +994,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
---- !u!1 &4363923602384240782 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7469167060590964057, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
-  m_PrefabInstance: {fileID: 6568511856768249303}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4363923602384240776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7469167060590964063, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
+  m_PrefabInstance: {fileID: 6568511856768249303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4363923602384240782 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7469167060590964057, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
   m_PrefabInstance: {fileID: 6568511856768249303}
   m_PrefabAsset: {fileID: 0}

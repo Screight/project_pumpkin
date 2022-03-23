@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3781625552134042502}
   - component: {fileID: 7267645093181901656}
   - component: {fileID: 1352978130}
-  - component: {fileID: 1404127117206987007}
+  - component: {fileID: -6219797262491459347}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -103,10 +103,10 @@ MonoBehaviour:
   m_RefResolutionX: 320
   m_RefResolutionY: 180
   m_UpscaleRT: 0
-  m_PixelSnapping: 1
+  m_PixelSnapping: 0
   m_CropFrameX: 1
   m_CropFrameY: 1
-  m_StretchFill: 0
+  m_StretchFill: 1
 --- !u!114 &7267645093181901656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mainBounds: {fileID: 0}
---- !u!114 &1404127117206987007
+--- !u!114 &-6219797262491459347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6519586484710774235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 856fd88bede40014488b78b3eff8b439, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dfc5bbb5d73d873eb79577d0762933e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_dampSpeedUp: 0.3
@@ -151,3 +151,4 @@ MonoBehaviour:
   m_maxSpeedX: 150
   m_offsetX: 20
   m_offsetY: 0
+  m_offsetAddUpY: 20
