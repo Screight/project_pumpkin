@@ -140,6 +140,7 @@ public class CameraBound : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D p_collider)
     {
+        if (p_collider.tag != "Player") { return; }
         BoundsManager.Instance.DeleteLimits(m_ID);
         BoundsManager.Instance.UpdateBounds();
     }

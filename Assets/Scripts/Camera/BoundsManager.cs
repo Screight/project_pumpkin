@@ -38,19 +38,7 @@ public class BoundsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_cameraMovementScript.TopLimit = m_mainBoundsScript.TopLimit.position;
-        m_limitsList[(int)DIRECTION.TOP].Add(m_mainBoundsScript.TopLimit);
-
-        m_cameraMovementScript.BottomLimit = m_mainBoundsScript.BottomLimit.position;
-        m_limitsList[(int)DIRECTION.BOTTOM].Add(m_mainBoundsScript.BottomLimit);
-
-        m_cameraMovementScript.LeftLimit = m_mainBoundsScript.LeftLimit.position;
-        m_limitsList[(int)DIRECTION.LEFT].Add(m_mainBoundsScript.LeftLimit);
-
-        m_cameraMovementScript.RightLimit = m_mainBoundsScript.RightLimit.position;
-        m_limitsList[(int)DIRECTION.RIGHT].Add(m_mainBoundsScript.RightLimit);
-
-        m_cameraMovementScript.MinimumheightForCameraMovement = m_mainBoundsScript.GetMinimumPositionForCameraMovement();
+        
     }
 
     void SetLimitsToMainBounds()

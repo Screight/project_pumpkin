@@ -30,6 +30,9 @@ public class CameraMovement : MonoBehaviour
     float m_leftLimit   = float.MaxValue;
     float m_rightLimit  = float.MaxValue;
 
+    float m_cameraWidth;
+    float m_cameraHeight;
+
     float m_minimumHeightForCameraMovement = -10000000;
 
     private void Awake() { m_player = GameObject.FindGameObjectWithTag("Player"); }
@@ -39,15 +42,17 @@ public class CameraMovement : MonoBehaviour
         m_rb2DPlayer = m_player.GetComponent<Rigidbody2D>();
         m_playerBoxCollider2D = m_player.GetComponent<BoxCollider2D>();
         m_playerScript = Player.Instance;
+        m_cameraWidth = CameraManager.Instance.Width;
+        m_cameraHeight = CameraManager.Instance.Height;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("down"))    { m_offsetY += -m_offsetAddUpY;}
+        if(Input.GetKeyDown("down") && m_playerScript.State == PLAYER_STATE.IDLE)    { m_offsetY += -m_offsetAddUpY;}
         else if(Input.GetKeyUp("down")) {m_offsetY += m_offsetAddUpY;}
 
-        if(Input.GetKeyDown("up"))      { m_offsetY += m_offsetAddUpY;}
+        if(Input.GetKeyDown("up") && m_playerScript.State == PLAYER_STATE.IDLE)      { m_offsetY += m_offsetAddUpY;}
         else if(Input.GetKeyUp("up"))   {m_offsetY += -m_offsetAddUpY;}
 
         m_targetPosition = new Vector3();
@@ -58,22 +63,22 @@ public class CameraMovement : MonoBehaviour
 
         m_dampSpeedX = m_dampSpeedMovement;
 
-        if (m_targetPosition.x - CameraManager.Instance.Width / 2 <= m_leftLimit)
+        if (m_targetPosition.x - m_cameraWidth / 2 <= m_leftLimit)
         {
-            m_targetPosition.x = m_leftLimit + CameraManager.Instance.Width / 2;
+            m_targetPosition.x = m_leftLimit + m_cameraWidth / 2;
         }
-        else if (m_targetPosition.x + CameraManager.Instance.Width / 2 >= m_rightLimit)
+        else if (m_targetPosition.x + m_cameraWidth / 2 >= m_rightLimit)
         {
-            m_targetPosition.x = m_rightLimit - CameraManager.Instance.Width / 2;
+            m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
         }
 
-        if (m_targetPosition.y - CameraManager.Instance.Height / 2 <= m_bottomLimit)
+        if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
         {
-            m_targetPosition.y = m_bottomLimit + CameraManager.Instance.Height / 2;
+            m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
         }
-        else if (m_targetPosition.y + CameraManager.Instance.Height / 2 >= m_topLimit)
+        else if (m_targetPosition.y + m_cameraHeight / 2 >= m_topLimit)
         {
-            m_targetPosition.y = m_topLimit - CameraManager.Instance.Height / 2;
+            m_targetPosition.y = m_topLimit - m_cameraHeight / 2;
         }
         else 
         {
@@ -88,6 +93,7 @@ public class CameraMovement : MonoBehaviour
                 else { m_dampSpeedY = m_dampSpeedUp; }
             }
         }
+
     }
 
     private void LateUpdate()
@@ -95,12 +101,16 @@ public class CameraMovement : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(m_targetPosition.x, transform.position.y, m_targetPosition.z), ref m_velocityX, m_dampSpeedX, m_maxSpeedX);
 
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, m_targetPosition.y, m_targetPosition.z), ref m_velocityY, m_dampSpeedY);
+
     }
 
     public void SetCameraToPlayerPosition()
     {
         transform.position = new Vector3(m_player.transform.position.x, m_player.transform.position.y , transform.position.z);
     }
+
+    public Vector3 GetTarget(){ return m_targetPosition;}
+    public float GetSpeedX() {return m_velocityX.x;}
 
     public float LeftLimit      { set { m_leftLimit = value; } }
     public float RightLimit     { set { m_rightLimit = value; } }
