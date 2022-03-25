@@ -27,6 +27,8 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         m_camera = Camera.main;
+        m_referenceResolution = new Vector2Int(320, 180);
+        m_pixelsPerUnit = 1;
 
         if (m_instance == null) { m_instance = this; }
         else { Destroy(this.gameObject); }
@@ -36,7 +38,6 @@ public class CameraManager : MonoBehaviour
         
         InitializeCamera();
         UpdateCameraPosition();
-
     }
 
     private void Update() { UpdateCameraPosition(); }
@@ -60,7 +61,6 @@ public class CameraManager : MonoBehaviour
         float distanceToMainScene = (m_referenceResolution.y / 2) / (Mathf.Tan(PI*cameraAngle/360));
 
         m_mainScene.transform.position = new Vector3(m_mainScene.transform.position.x, m_mainScene.transform.position.y, distanceToMainScene);
-
     }
 
     public float LeftLimit      { get { return leftLimit; } }
@@ -69,7 +69,6 @@ public class CameraManager : MonoBehaviour
     public float BottomLimit    { get { return bottomLimit; } }
     public float Width          { get { return m_screenWidth; } }
     public float Height         { get { return m_screenHeight; } }
-    public Vector3 Position { get{ return transform.position;}}
+    public Vector3 Position     { get{ return transform.position;}}
     public float MainSceneDepth { get { return m_mainScene.transform.position.z - transform.position.z;}}
-
 }
