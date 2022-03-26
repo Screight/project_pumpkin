@@ -16,8 +16,6 @@ public class Attack : MonoBehaviour
     int m_currentState;
     int m_attackComboNumber = 0; // represents first attack(0), second(1) and third(2)
 
-    Timer m_windowToComboTimer;
-    float m_windowToComboDuration = 1f;
 
     const float M_ATTACK_RANGE = 8;
     [SerializeField] LayerMask m_enemyLayer;
@@ -27,7 +25,6 @@ public class Attack : MonoBehaviour
     private void Awake()
     {
         m_animator = GetComponent<Animator>();
-        m_windowToComboTimer = gameObject.AddComponent<Timer>();
         m_player = GetComponentInParent<Player>();
     }
 
@@ -38,7 +35,6 @@ public class Attack : MonoBehaviour
         m_animationHash[(int)ATTACK_ANIMATION.ATTACK_2] = Animator.StringToHash(m_attack_2_AnimationName);
         m_animationHash[(int)ATTACK_ANIMATION.ATTACK_3] = Animator.StringToHash(m_attack_3_AnimationName);
 
-        m_windowToComboTimer.Duration = m_windowToComboDuration;
     }
 
     private void Update()
@@ -84,7 +80,6 @@ public class Attack : MonoBehaviour
             if (!m_isAttacking /*&& m_windowToComboTimer.IsFinished*/)
             {
                 TransitionToNextComboAttack();
-                m_windowToComboTimer.Run();
                 m_isAttacking = true;
             }
         }
@@ -101,15 +96,6 @@ public class Attack : MonoBehaviour
             }
 
         }
-
-        //if (m_windowToComboTimer.IsRunning && !m_isAttacking && m_keepAttacking)
-        //{
-        //    TransitionToNextComboAttack();
-        //}
-        //else if (m_windowToComboTimer.IsFinished)
-        //{
-        //    m_keepAttacking = false;
-        //}
 
     }
 
@@ -141,8 +127,6 @@ public class Attack : MonoBehaviour
             else { m_attackComboNumber = 1; }
             ChangeAnimationState(m_animationHash[m_attackComboNumber]);
             m_keepAttacking = false;
-            m_windowToComboTimer.Stop();
-            m_windowToComboTimer.Restart();
         }
         else
         {

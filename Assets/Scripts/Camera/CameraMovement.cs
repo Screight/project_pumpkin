@@ -32,10 +32,15 @@ public class CameraMovement : MonoBehaviour
 
     float m_cameraWidth;
     float m_cameraHeight;
+    bool m_isCameraStatic = false;
+    bool m_clampCamera = false;
 
     float m_minimumHeightForCameraMovement = -10000000;
 
-    private void Awake() { m_player = GameObject.FindGameObjectWithTag("Player"); }
+    private void Awake() {
+         m_player = GameObject.FindGameObjectWithTag("Player"); 
+          
+    }
 
     void Start()
     {
@@ -49,6 +54,9 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(m_isCameraStatic) { return; }
+
         if(Input.GetKeyDown("down") && m_playerScript.State == PLAYER_STATE.IDLE)    { m_offsetY += -m_offsetAddUpY;}
         else if(Input.GetKeyUp("down")) {m_offsetY += m_offsetAddUpY;}
 
@@ -57,11 +65,11 @@ public class CameraMovement : MonoBehaviour
 
         m_targetPosition = new Vector3();
         
+        m_dampSpeedX = m_dampSpeedMovement;
+        
         m_targetPosition.y = m_player.transform.position.y + m_offsetY;
         m_targetPosition.z = transform.position.z;
         m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
-
-        m_dampSpeedX = m_dampSpeedMovement;
 
         if (m_targetPosition.x - m_cameraWidth / 2 <= m_leftLimit)
         {
@@ -98,6 +106,35 @@ public class CameraMovement : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(m_clampCamera){
+
+        m_targetPosition.y = m_player.transform.position.y + m_offsetY;
+        m_targetPosition.z = transform.position.z;
+        m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
+
+        if (m_targetPosition.x - m_cameraWidth / 2 <= m_leftLimit)
+        {
+            m_targetPosition.x = m_leftLimit + m_cameraWidth / 2;
+        }
+        else if (m_targetPosition.x + m_cameraWidth / 2 >= m_rightLimit)
+        {
+            m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
+        }
+
+        if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
+        {
+            m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
+        }
+        else if (m_targetPosition.y + m_cameraHeight / 2 >= m_topLimit)
+        {
+            m_targetPosition.y = m_topLimit - m_cameraHeight / 2;
+        }
+
+            transform.position = new Vector3(m_targetPosition.x, m_targetPosition.y,transform.position.z);
+            m_clampCamera = false;
+            return;
+        } 
+
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(m_targetPosition.x, transform.position.y, m_targetPosition.z), ref m_velocityX, m_dampSpeedX, m_maxSpeedX);
 
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, m_targetPosition.y, m_targetPosition.z), ref m_velocityY, m_dampSpeedY);
@@ -108,6 +145,9 @@ public class CameraMovement : MonoBehaviour
     {
         transform.position = new Vector3(m_player.transform.position.x, m_player.transform.position.y , transform.position.z);
     }
+
+    public bool IsCameraStatic { set { m_isCameraStatic = value;}}
+    public void ClampCamera(){ m_clampCamera = true;}
 
     public Vector3 GetTarget(){ return m_targetPosition;}
     public float GetSpeedX() {return m_velocityX.x;}

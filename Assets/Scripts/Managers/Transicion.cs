@@ -46,11 +46,23 @@ public class Transicion : MonoBehaviour
         m_currentState = m_animationHash[(int)p_newState];                // reassigning the new state
     }
 
-    public void FadeIn() { ChangeAnimationState(TRANSITION_ANIMATION.FADE_IN); }
-    private void FadeOut() { ChangeAnimationState(TRANSITION_ANIMATION.FADE_OUT); }
+    public void FadeIn() { 
+        CameraManager.Instance.SetCameraToStatic();
+        ChangeAnimationState(TRANSITION_ANIMATION.FADE_IN); 
+        
+        }
+    private void FadeOut() { 
+        ChangeAnimationState(TRANSITION_ANIMATION.FADE_OUT);
+    }
+
+    private void ClampCamera(){
+        CameraManager.Instance.ClampCameraToTarget();
+    }
+
     private void EndTransicion(){
         m_currentState = m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN];
         RoomManager.Instance.StartPlayerScripting();
+        CameraManager.Instance.SetCameraToNormal();
     }
 
 }

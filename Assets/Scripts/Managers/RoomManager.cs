@@ -17,6 +17,7 @@ public class RoomManager : MonoBehaviour
     Timer m_scriptPlayerTimer;
     bool m_isBeingScripted = false;
     bool m_isCurrentTransitionHorizontal;
+    bool m_isGoingUpwards;
     Vector3 m_positionToTransitionCameraTo;
     
     static public RoomManager Instance {
@@ -58,15 +59,26 @@ public class RoomManager : MonoBehaviour
 
     }
 
-    public void StartRoomTransicion(bool p_isCurrentTransitionHorizontal, float p_playerScriptingDuration){
+    public void StartRoomTransicion(bool p_isCurrentTransitionHorizontal, float p_playerScriptingDuration, bool p_isGoingUpwards){
         m_transicionScript.FadeIn();
         m_isCurrentTransitionHorizontal = p_isCurrentTransitionHorizontal;
         m_scriptPlayerTimer.Duration = p_playerScriptingDuration;
+        m_isGoingUpwards = p_isGoingUpwards;
         Player.Instance.SetPlayerToScripted();
     }
 
     public void StartPlayerScripting(){
-        if(m_isCurrentTransitionHorizontal){ Player.Instance.ScriptWalk(Player.Instance.FacingDirection()); }
+        if(m_isCurrentTransitionHorizontal){
+             Player.Instance.ScriptWalk(Player.Instance.FacingDirection()); 
+        }
+        else{
+            if(m_isGoingUpwards){
+                Player.Instance.ScriptTopImpulse(new Vector2(50,150));
+            }
+            else{
+                Player.Instance.ScriptFall();
+            }
+        }
         m_isBeingScripted = true;
         m_scriptPlayerTimer.Run();
         ChangeRoom(m_roomToTransicion);
@@ -74,6 +86,5 @@ public class RoomManager : MonoBehaviour
 
     public ROOMS CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }} 
     public ROOMS RoomToTransition { set {  m_roomToTransicion = value; }} 
-    public Vector3 PositionToTransitionCameraTo { set { m_positionToTransitionCameraTo = value;}}
 
 }

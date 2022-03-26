@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class RoomTransicion : MonoBehaviour
 {
-    [SerializeField] ROOMS m_room_1;
-    [SerializeField] ROOMS m_room_2;
-    [SerializeField] Transform m_room_1_position;
-    [SerializeField] Transform m_room_2_position;
+    [SerializeField] ROOMS m_rightTopRoom;
+    [SerializeField] ROOMS m_leftBottomRoom;
+    BoxCollider2D m_collider;
 
     [SerializeField] bool m_isHorizontalTransition;
     [SerializeField] float m_playerScriptingDuration = 0.5f;
@@ -17,29 +16,56 @@ public class RoomTransicion : MonoBehaviour
 
     RoomManager m_roomManager;
 
+    private void Awake() {
+        m_collider = GetComponent<BoxCollider2D>();
+    }
+
     private void Start() { m_roomManager = RoomManager.Instance; }
 
     private void OnTriggerEnter2D(Collider2D p_collider) {
         if(p_collider.tag != "Player"){ return; }
 
-        if(m_roomManager.CurrentRoom == m_room_1){ 
-            m_roomManager.RoomToTransition = m_room_2;
-            RoomManager.Instance.PositionToTransitionCameraTo = m_room_2_position.position;
+        if(m_roomManager.CurrentRoom == m_rightTopRoom){ 
+            m_roomManager.RoomToTransition = m_leftBottomRoom;
+            if(m_isHorizontalTransition){
+                Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.max.x, Player.Instance.transform.position.y, Player.Instance.transform.position.z));
+            }
+            else{
+                Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.min.y - p_collider.bounds.size.y/2, Player.Instance.transform.position.z));
+            }
+            
+            
         }
         else { 
-            m_roomManager.RoomToTransition = m_room_1;
-            RoomManager.Instance.PositionToTransitionCameraTo = m_room_1_position.position;
+            m_roomManager.RoomToTransition = m_rightTopRoom;
+            
+                if(m_isHorizontalTransition){
+                    Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.min.x, Player.Instance.transform.position.y, Player.Instance.transform.position.z));
+                }
+                else{
+                Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.max.y - p_collider.bounds.size.y/2, Player.Instance.transform.position.z));
+                }
+            
             }
-
-        RoomManager.Instance.StartRoomTransicion(m_isHorizontalTransition, m_playerScriptingDuration);
-        
+        bool m_isGoingUpwards = false;
+        if(Player.Instance.Speed.y > 0){ m_isGoingUpwards = true;}
+        RoomManager.Instance.StartRoomTransicion(m_isHorizontalTransition, m_playerScriptingDuration, m_isGoingUpwards);
 
     }
 
     private void OnDrawGizmos() {
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(collider.bounds.size.x, collider.bounds.size.y,1));
+        //Gizmos.DrawWireCube(transform.position, new Vector3(collider.bounds.size.x, collider.bounds.size.y,1));
+
+        Gizmos.DrawLine(new Vector3(collider.bounds.min.x, collider.bounds.min.y, transform.position.z), new Vector3(collider.bounds.min.x, collider.bounds.max.y, transform.position.z));
+
+        Gizmos.DrawLine(new Vector3(collider.bounds.max.x, collider.bounds.min.y, transform.position.z), new Vector3(collider.bounds.max.x, collider.bounds.max.y, transform.position.z));
+
+        Gizmos.DrawLine(new Vector3(collider.bounds.max.x, collider.bounds.max.y, transform.position.z), new Vector3(collider.bounds.min.x, collider.bounds.max.y, transform.position.z));
+
+        Gizmos.DrawLine(new Vector3(collider.bounds.min.x, collider.bounds.min.y, transform.position.z), new Vector3(collider.bounds.max.x, collider.bounds.min.y, transform.position.z));
+
         Gizmos.DrawLine(new Vector3(transform.position.x, collider.bounds.max.y, transform.position.z), new Vector3(transform.position.x, collider.bounds.min.y, transform.position.z));
     }
 

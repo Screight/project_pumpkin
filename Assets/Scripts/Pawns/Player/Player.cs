@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
         if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
         m_animator.Play(newAnimationHash);                // play the animation
         m_currentAnimationHash = newAnimationHash;                // reassigning the new state
+        m_animationState = p_animationState;
     }
 
     #endregion 
@@ -135,9 +136,9 @@ public class Player : MonoBehaviour
 
     private void Update() {
 
-        if(m_isBeingScripted){ return ;}
-
         CheckIfFalling();
+
+        if(m_isBeingScripted){ return ;}
 
         if (m_invulnerableTimer.IsRunning)
         {
@@ -181,7 +182,7 @@ public class Player : MonoBehaviour
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         if(InputManager.Instance.JumpButtonPressed && m_isGrounded){ Jump();}
-        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+        else if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
     }
 
     void InitializeDash(){
@@ -196,7 +197,6 @@ public class Player : MonoBehaviour
         m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
 
         Physics2D.IgnoreLayerCollision(6, 7, true);
-        m_hasUsedDash = true;
         
         m_dashTimer.Run();
     }
@@ -281,8 +281,6 @@ public class Player : MonoBehaviour
         else return -1;
     }
 
-
-
     public void HandleOneWayPlatforms(){
         m_isGrounded = false;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_moveTowardsOneWayPlatform);
@@ -298,10 +296,10 @@ public class Player : MonoBehaviour
         m_hasUsedDash = false;
     }
 
-    public void ResetPlayer()
+    public void ResetPlayer(PLAYER_STATE p_state, PLAYER_ANIMATION p_animationState)
     {
-        m_state = PLAYER_STATE.IDLE;
-        ChangeAnimationState((int)PLAYER_ANIMATION.IDLE);
+        m_state = p_state;
+        ChangeAnimationState(p_animationState);
         m_isGrounded = false;
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_rb2D.velocity = Vector2.zero;
@@ -317,17 +315,43 @@ public class Player : MonoBehaviour
         m_state = PLAYER_STATE.MOVE;
         ChangeAnimationState(PLAYER_ANIMATION.RUN);
         m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed ,0);
+    }
 
+    public void ScriptTopSuction(float p_suctionVelocity){
+        ChangeAnimationState(PLAYER_ANIMATION.JUMP);
+        m_rb2D.gravityScale = 0;
+        m_rb2D.velocity = new Vector2(0, p_suctionVelocity);
+    }
+
+    public void ScriptTopImpulse(Vector2 p_impulseVelocity){
+        m_rb2D.velocity = p_impulseVelocity;
+        m_rb2D.gravityScale = m_gravity1/ Physics2D.gravity.y;
+        ChangeAnimationState(PLAYER_ANIMATION.JUMP);
+        if(p_impulseVelocity.x > 0) { m_direction = 1;}
+        else { m_direction = -1;}
+        FacePlayerToMovementDirection();
+    }
+
+    public void ScriptFall(){
+        m_rb2D.gravityScale = m_gravity2/ Physics2D.gravity.y;
+        ChangeAnimationState(PLAYER_ANIMATION.FALL);
+        m_state = PLAYER_STATE.FALL;
     }
 
     public void SetPlayerToScripted(){
+        ResetPlayer(PLAYER_STATE.IDLE, PLAYER_ANIMATION.IDLE);
         m_isBeingScripted = true;
-        ResetPlayer();
+        m_rb2D.gravityScale = 0;
+        m_rb2D.velocity = Vector2.zero;
     }
 
     public void StopScripting(){
         m_isBeingScripted = false;
-        ResetPlayer();
+        ResetPlayer(m_state, m_animationState);
+    }
+
+    public void SetPlayerToPosition(Vector3 p_position){
+        transform.position = p_position;
     }
 
 /// COLLITIONS
@@ -390,6 +414,8 @@ public class Player : MonoBehaviour
         get { return m_isGrounded; }
     }
 
+    public Vector2 Speed { get { return m_rb2D.velocity;}}
+
     public bool IsUsingGroundBreaker { set { m_isUsingGroundBreaker = value; } }
 
     public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
@@ -407,5 +433,11 @@ public class Player : MonoBehaviour
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
     #endregion
+
+    private void OnDrawGizmos() {
+        BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(new Vector3( transform.position.x, collider.bounds.max.y, transform.position.z), new Vector3( transform.position.x, collider.bounds.min.y, transform.position.z));
+    }
 
 }

@@ -64,6 +64,17 @@ public class CameraManager : MonoBehaviour
         m_mainScene.transform.position = new Vector3(m_mainScene.transform.position.x, m_mainScene.transform.position.y, distanceToMainScene);
     }
     
+    public void ClampCameraToTarget(){
+        m_cameraMovementScript.ClampCamera();
+    }
+
+    public void SetCameraToStatic(){
+        m_cameraMovementScript.IsCameraStatic = true;
+    }
+
+    public void SetCameraToNormal(){
+        m_cameraMovementScript.IsCameraStatic = false;
+    }
 
     public float LeftLimit      { get { return leftLimit; } }
     public float RightLimit     { get { return rightLimit; } }
