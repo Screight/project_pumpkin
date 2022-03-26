@@ -5,8 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Player m_playerScript;
+    [SerializeField] float MAX_HEALTH = 3;
     [SerializeField] protected float m_health = 3;
     [SerializeField] protected int m_damage = 1;
+    [SerializeField] ROOMS m_room; 
     protected Vector2 m_spawnPos;
 
     /// PLAYER COLLITION
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start() {
         m_playerScript = Player.Instance;
+        m_health = MAX_HEALTH;
     }
 
     public virtual void Damage(float p_damage)
@@ -41,5 +44,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Reset() { transform.position = m_spawnPos; }
+    public virtual void Reset() {
+         transform.position = m_spawnPos;
+         m_health = MAX_HEALTH;
+         }
 }

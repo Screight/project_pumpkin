@@ -48,7 +48,7 @@ public class Ghoul : Enemy
         Physics2D.IgnoreLayerCollision(7, 7, true);
     }
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         m_animationHash[(int)GHOUL_ANIMATION.IDLE]      = Animator.StringToHash(m_idleAnimationName);
@@ -79,7 +79,7 @@ public class Ghoul : Enemy
 
     void Idle()
     {
-        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+        ChangeAnimationState(GHOUL_ANIMATION.IDLE);
         m_rb2D.velocity = Vector2.zero;
 
         if (m_playerIsNear) { m_ghoulState = GHOUL_STATE.CHASE; }
@@ -88,7 +88,7 @@ public class Ghoul : Enemy
     {
         if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
         if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
-        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.MOVE]);
+        ChangeAnimationState(GHOUL_ANIMATION.MOVE);
         //Player Near but Unnaccesible
         if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded)
         {
@@ -102,7 +102,7 @@ public class Ghoul : Enemy
                 m_playerPosX = player.transform.position.x;
                 chargeTimer.Run();
                 m_ghoulState = GHOUL_STATE.ATTACK;
-                ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+                ChangeAnimationState(GHOUL_ANIMATION.IDLE);
             }
             //Chasing
             m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
@@ -122,7 +122,7 @@ public class Ghoul : Enemy
             {
                 m_animator.speed = 55 / distance;
 
-                ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.ATTACK]);
+                ChangeAnimationState(GHOUL_ANIMATION.ATTACK);
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
                 if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
             }
@@ -135,14 +135,14 @@ public class Ghoul : Enemy
         Destroy(gameObject);
     }
 
-    void ChangeAnimationState(int p_newState)
+    void ChangeAnimationState(GHOUL_ANIMATION p_newState)
     {
-        if (m_currentState == p_newState && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
-        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT]) { m_animator.Play(p_newState, -1, 0); }
+        if (m_currentState == m_animationHash[(int)p_newState] && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
+        if (m_currentState == m_animationHash[(int)p_newState] && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT]) { m_animator.Play(m_animationHash[(int)p_newState], -1, 0); }
         else
         {
-            m_animator.Play(p_newState);
-            m_currentState = p_newState;
+            m_animator.Play(m_animationHash[(int)p_newState]);
+            m_currentState = m_animationHash[(int)p_newState];
         }
     }
 
@@ -161,8 +161,15 @@ public class Ghoul : Enemy
     public override void Damage(float p_damage)
     {
         m_ghoulState = GHOUL_STATE.HIT;
-        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.HIT]);
+        ChangeAnimationState(GHOUL_ANIMATION.HIT);
         base.Damage(p_damage);
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        m_ghoulState = GHOUL_STATE.IDLE;
+        ChangeAnimationState(GHOUL_ANIMATION.IDLE);
     }
 
     public GHOUL_STATE State 

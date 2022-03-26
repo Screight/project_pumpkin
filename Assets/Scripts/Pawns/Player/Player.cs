@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     Animator m_animator;
     PLAYER_ANIMATION m_animationState;
     int m_currentAnimationHash = 0;
+    bool m_isBeingScripted = false;
 
     public void ChangeAnimationState(PLAYER_ANIMATION p_animationState)
     {
@@ -133,6 +134,8 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+
+        if(m_isBeingScripted){ return ;}
 
         CheckIfFalling();
 
@@ -305,13 +308,34 @@ public class Player : MonoBehaviour
         SkillManager.Instance.ResetSkillStates();
     }
 
+    public void ScriptWalk(int p_direction){
+
+        if(p_direction > 0) { m_direction = 1;}
+        else { m_direction = -1;}
+        m_isBeingScripted = true;
+        FacePlayerToMovementDirection();
+        m_state = PLAYER_STATE.MOVE;
+        ChangeAnimationState(PLAYER_ANIMATION.RUN);
+        m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed ,0);
+
+    }
+
+    public void SetPlayerToScripted(){
+        m_isBeingScripted = true;
+        ResetPlayer();
+    }
+
+    public void StopScripting(){
+        m_isBeingScripted = false;
+        ResetPlayer();
+    }
+
 /// COLLITIONS
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "spike")
         {
             GameManager.Instance.ModifyPlayerHealth(-1);
-            m_transicionScript.LocalCheckpointTransition();
         }
     }
 

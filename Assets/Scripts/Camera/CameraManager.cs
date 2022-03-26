@@ -12,6 +12,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] int m_pixelsPerUnit;
 
     [SerializeField] GameObject m_mainScene;
+    [SerializeField] CameraMovement m_cameraMovementScript;
 
     int m_screenWidth;
     int m_screenHeight;
@@ -62,6 +63,7 @@ public class CameraManager : MonoBehaviour
 
         m_mainScene.transform.position = new Vector3(m_mainScene.transform.position.x, m_mainScene.transform.position.y, distanceToMainScene);
     }
+    
 
     public float LeftLimit      { get { return leftLimit; } }
     public float RightLimit     { get { return rightLimit; } }

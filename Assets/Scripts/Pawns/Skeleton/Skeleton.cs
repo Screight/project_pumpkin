@@ -60,7 +60,7 @@ public class Skeleton : Enemy
         Physics2D.IgnoreLayerCollision(7, 7, true);
     }
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         m_animationHash[(int)SKELETON_ANIMATION.MOVE] = Animator.StringToHash(m_moveAnimationName);
@@ -235,6 +235,11 @@ public class Skeleton : Enemy
     {
         m_skeletonState = SKELETON_STATE.MOVE;
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+    }
+
+    public override void Reset(){
+        base.Reset();
+        ReturnToNormalState();
     }
 
     #region Accessors
