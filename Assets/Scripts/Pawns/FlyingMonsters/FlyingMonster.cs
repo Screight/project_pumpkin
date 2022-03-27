@@ -223,7 +223,7 @@ public class FlyingMonster : Enemy
     void FaceToDirection(){
         if(m_rb2D.velocity.x > 0 && !m_isFacingRight){ FlipX(); return ;}
         else if (m_rb2D.velocity.x < 0 && m_isFacingRight) { FlipX(); return ;}
-
+        if(m_state == ENEMY_STATE.ATTACK) { return ;}
         if(m_pathFinder.GetDirection().y == 0){
             if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
                 FlipX();
@@ -397,6 +397,11 @@ public class FlyingMonster : Enemy
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, m_visionRange);
         Gizmos.color = Color.red;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(new Vector3(m_patrolPoint_1.position.x, m_patrolPoint_1.position.y, transform.position.z),3);
+        Gizmos.DrawSphere(new Vector3(m_patrolPoint_2.position.x, m_patrolPoint_2.position.y, transform.position.z),3);
+
     }
 
     private void EndRecovering() { m_isRecovering = false;}

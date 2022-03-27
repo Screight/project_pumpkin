@@ -54,13 +54,13 @@ public class Attack : MonoBehaviour
                 Attack1();
                 break;
             case PLAYER_STATE.BOOST:
-                //Attack1();
+                Attack1();
                 break;
             case PLAYER_STATE.JUMP:
-                //Attack1();
+                Attack1();
                 break;
             case PLAYER_STATE.FALL:
-                //Attack1();
+                Attack1();
                 break;
             default: break;
         }
@@ -68,7 +68,14 @@ public class Attack : MonoBehaviour
 
     void Attack1()
     {
-        
+        if(!m_player.IsGrounded){
+            if (InputManager.Instance.AttackButtonPressed)
+            {
+                ChangeAnimationState(m_animationHash[3]);
+                return ;
+            }
+            
+        }
         if (InputManager.Instance.AttackButtonPressed)
         {
             if (m_player.State != PLAYER_STATE.ATTACK && m_player.IsGrounded) {
@@ -107,7 +114,6 @@ public class Attack : MonoBehaviour
         foreach (Collider2D enemy in enemiesInAttackRange)
         {
             if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(GameManager.Instance.PlayerAttackDamage); }
-            Debug.Log("Enemy hit");
         }
 
         if(enemiesInAttackRange.Length == 0)
