@@ -82,7 +82,15 @@ public class Ghoul : Enemy
         ChangeAnimationState(GHOUL_ANIMATION.IDLE);
         m_rb2D.velocity = Vector2.zero;
 
-        if (m_playerIsNear) { m_ghoulState = GHOUL_STATE.CHASE; }
+        if (m_playerIsNear)
+        {
+            if (m_isGrounded) { m_ghoulState = GHOUL_STATE.CHASE; }
+            else
+            {
+                if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
+                if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
+            }
+        }
     }
     void Move(GHOUL_STATE p_defaultState)
     {
@@ -90,24 +98,23 @@ public class Ghoul : Enemy
         if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
         ChangeAnimationState(GHOUL_ANIMATION.MOVE);
         //Player Near but Unnaccesible
-        if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded)
-        {
-            m_ghoulState = p_defaultState;
-        }
-        else if (m_playerIsNear || m_playerIsAtRange)
-        {
-            //Ready to Attack
-            if (m_playerIsAtRange && m_isGrounded)
+        if ((m_playerIsNear || m_playerIsAtRange) && !m_isGrounded) { m_ghoulState = p_defaultState; }
+
+        if (m_playerIsNear) // Is Near
+        {           
+            if (m_playerIsAtRange)  //Is At Range
             {
-                m_playerPosX = player.transform.position.x;
-                chargeTimer.Run();
-                m_ghoulState = GHOUL_STATE.ATTACK;
-                ChangeAnimationState(GHOUL_ANIMATION.IDLE);
-            }
-            //Chasing
-            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
+                if (m_isGrounded) // Is Grounded
+                {
+                    m_playerPosX = player.transform.position.x;
+                    chargeTimer.Run();
+                    m_ghoulState = GHOUL_STATE.ATTACK;
+                    ChangeAnimationState(GHOUL_ANIMATION.IDLE);
+                }
+            }           
+            else {m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y); } //Nar but not at Range = Chase        
         }
-        else { m_ghoulState = p_defaultState; }
+        else { m_ghoulState = p_defaultState; } // Not Near
     }
     void Attack(GHOUL_STATE p_defaultState)
     {
@@ -184,5 +191,4 @@ public class Ghoul : Enemy
     public bool IsPlayerAtRange { set { m_playerIsAtRange = value; } }
     public bool IsFacingRight { get { return m_isFacingRight; } }
     #endregion
-
 }

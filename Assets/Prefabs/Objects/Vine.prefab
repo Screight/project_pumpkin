@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2948574162404310780}
   - component: {fileID: 2948574162404310781}
   - component: {fileID: 2948574162404310783}
+  - component: {fileID: 5064122210552218352}
+  - component: {fileID: 2280265434675320399}
   m_Layer: 0
   m_Name: Vine
   m_TagString: vine
@@ -26,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2948574162404310779}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -21, y: -21.581848, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -73,11 +75,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8262381199462447190, guid: 9f28a1a399119404eb1b541325172c6d, type: 3}
+  m_Sprite: {fileID: 4724932280361489380, guid: d91a7ee355eb57e499803ac4f8451c55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 16, y: 16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -96,7 +98,7 @@ BoxCollider2D:
   m_Material: {fileID: 6200000, guid: 2ce20ee907b2955408321eff6fea7b38, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,9 +106,9 @@ BoxCollider2D:
     oldSize: {x: 16, y: 16}
     newSize: {x: 16, y: 16}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 15, y: 16}
   m_EdgeRadius: 0
@@ -122,3 +124,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c89e766234b4564990d754e001dbf71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &5064122210552218352
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2948574162404310779}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 2ce20ee907b2955408321eff6fea7b38, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &2280265434675320399
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2948574162404310779}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 2ce20ee907b2955408321eff6fea7b38, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 1
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 2948574162404310781}
+    m_ColliderPaths:
+    - - X: 74999707
+        Y: -80000000
+      - X: 74999707
+        Y: 80000000
+      - X: -75000000
+        Y: 79999707
+      - X: -74999707
+        Y: -80000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 7.499942, y: -8}
+      - {x: 7.499942, y: 8}
+      - {x: -7.5, y: 7.999942}
+      - {x: -7.499942, y: -8}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
