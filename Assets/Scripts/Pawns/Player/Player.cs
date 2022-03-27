@@ -5,10 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     static Player m_instance;
-
-    public static Player Instance {
-        get { return m_instance;}
-        private set {}
+    public static Player Instance
+    {
+        get { return m_instance; }
+        private set { }
     }
 
     #region Animation
@@ -87,14 +87,12 @@ public class Player : MonoBehaviour
     SpriteRenderer m_spriteRenderer;
     [SerializeField] Transicion m_transicionScript;
     bool m_isUsingGroundBreaker = false;
-    
 
-
-/// END OF VARIABLES
-    private void Awake() {
-
-        if(m_instance == null ){ m_instance = this;}
-        else { Destroy(this.gameObject);}
+    /// END OF VARIABLES
+    private void Awake()
+    {
+        if (m_instance == null) { m_instance = this; }
+        else { Destroy(this.gameObject); }
 
         m_rb2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
@@ -114,7 +112,6 @@ public class Player : MonoBehaviour
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_spriteRenderer = GetComponent<SpriteRenderer>();
-        
     }
 
     private void Start() {
@@ -135,7 +132,7 @@ public class Player : MonoBehaviour
 
     private void Update() {
 
-        if(m_isBeingScripted){ return ;}
+        if (m_isBeingScripted) { return; }
 
         CheckIfFalling();
 
@@ -166,25 +163,26 @@ public class Player : MonoBehaviour
 
         switch(m_state){
             default: break;
-            case PLAYER_STATE.IDLE: { HandleIdleState(); } break;
-            case PLAYER_STATE.MOVE: { HandleMoveState(); } break;
-            case PLAYER_STATE.BOOST: { HandleBoostState(); } break;
-            case PLAYER_STATE.JUMP: { HandleJumpState(); } break;
-            case PLAYER_STATE.FALL: { HandleFallState(); } break;
-            case PLAYER_STATE.LAND: { HandleLandState(); } break;
-            case PLAYER_STATE.DASH: { HandleDashState(); } break; 
+            case PLAYER_STATE.IDLE:     { HandleIdleState(); }  break;
+            case PLAYER_STATE.MOVE:     { HandleMoveState(); }  break;
+            case PLAYER_STATE.BOOST:    { HandleBoostState(); } break;
+            case PLAYER_STATE.JUMP:     { HandleJumpState(); }  break;
+            case PLAYER_STATE.FALL:     { HandleFallState(); }  break;
+            case PLAYER_STATE.LAND:     { HandleLandState(); }  break;
+            case PLAYER_STATE.DASH:     { HandleDashState(); }  break; 
         }
     }
 
-    void HandleMoveState(){
-
+    void HandleMoveState()
+    {
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
-        if(InputManager.Instance.JumpButtonPressed && m_isGrounded){ Jump();}
-        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+        if (InputManager.Instance.JumpButtonPressed && m_isGrounded)    { Jump(); }
+        if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash)  { InitializeDash(); }
     }
 
-    void InitializeDash(){
+    void InitializeDash()
+    {
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
         m_hasUsedDash = true;
@@ -197,41 +195,48 @@ public class Player : MonoBehaviour
 
         Physics2D.IgnoreLayerCollision(6, 7, true);
         m_hasUsedDash = true;
-        
+
         m_dashTimer.Run();
     }
 
-    void HandleDash(){
+    void HandleDash()
+    {
         if (m_dashTimer.IsFinished)
         {
             m_state = PLAYER_STATE.IDLE;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-            m_rb2D.velocity = new Vector2(0,0);
+            m_rb2D.velocity = new Vector2(0, 0);
             ChangeAnimationState(PLAYER_ANIMATION.IDLE);
-            Physics2D.IgnoreLayerCollision(6,7,false);
+            Physics2D.IgnoreLayerCollision(6, 7, false);
         }
     }
 
-    void Move(){
-        if(!m_canPerformAction){return; }
-        if(m_direction != 0){
+    void Move()
+    {
+        if (!m_canPerformAction) { return; }
+        if (m_direction != 0)
+        {
             m_rb2D.velocity = new Vector2(m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             FacePlayerToMovementDirection();
-            if(m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK){
-            m_state = PLAYER_STATE.MOVE;
-            ChangeAnimationState(PLAYER_ANIMATION.RUN);
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
+            {
+                m_state = PLAYER_STATE.MOVE;
+                ChangeAnimationState(PLAYER_ANIMATION.RUN);
             }
         }
-        else{
-            m_rb2D.velocity = new Vector2(0,m_rb2D.velocity.y);
-            if(m_isGrounded && m_state != PLAYER_STATE.LAND){
+        else
+        {
+            m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND)
+            {
                 m_state = PLAYER_STATE.IDLE;
                 ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             }
         }
     }
 
-    void Jump(){
+    void Jump()
+    {
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
@@ -240,19 +245,18 @@ public class Player : MonoBehaviour
         ChangeAnimationState(PLAYER_ANIMATION.BOOST);
     }
 
-    void HandleIdleState(){ HandleMoveState(); }
+    void HandleIdleState() { HandleMoveState(); }
     void HandleLandState() { HandleMoveState(); }
-    
-
-    void HandleDashState(){ HandleDash();}
-    void HandleJumpState(){
+    void HandleDashState() { HandleDash(); }
+    void HandleJumpState()
+    {
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
-        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+        if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash) { InitializeDash(); }
     }
 
-    void HandleFallState(){  HandleJumpState(); }
-    void HandleBoostState(){ HandleJumpState(); }
+    void HandleFallState()  {  HandleJumpState(); }
+    void HandleBoostState() { HandleJumpState(); }
 
     void CheckIfFalling(){
         if (m_rb2D.velocity.y < 0)
@@ -266,30 +270,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    void FacePlayerToMovementDirection(){
+    void FacePlayerToMovementDirection()
+    {
         if (!m_isFacingRight && m_direction > 0)    { FlipX(); }
         if (m_isFacingRight && m_direction < 0)     { FlipX(); }
     }
 
-    void FlipX(){
+    void FlipX()
+    {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        m_isFacingRight = !m_isFacingRight;       
+        m_isFacingRight = !m_isFacingRight;
     }
 
-    public int FacingDirection(){ 
-        if(m_isFacingRight){ return 1;} 
-        else return -1;
+    public int FacingDirection()
+    {
+        if (m_isFacingRight) { return 1; }
+        else { return -1; }
     }
 
-
-
-    public void HandleOneWayPlatforms(){
+    public void HandleOneWayPlatforms()
+    {
         m_isGrounded = false;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_moveTowardsOneWayPlatform);
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
     }
 
-    public void SetToGrounded( string p_objectGroundedTo){
+    public void SetToGrounded(string p_objectGroundedTo)
+    {
         m_isGrounded = true;
         m_objectGroundedTo = p_objectGroundedTo;
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
@@ -308,27 +315,20 @@ public class Player : MonoBehaviour
         SkillManager.Instance.ResetSkillStates();
     }
 
-    public void ScriptWalk(int p_direction){
+    public void ScriptWalk(int p_direction)
+    {
+        if (p_direction > 0) { m_direction = 1; }
+        else { m_direction = -1; }
 
-        if(p_direction > 0) { m_direction = 1;}
-        else { m_direction = -1;}
         m_isBeingScripted = true;
         FacePlayerToMovementDirection();
         m_state = PLAYER_STATE.MOVE;
         ChangeAnimationState(PLAYER_ANIMATION.RUN);
-        m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed ,0);
-
+        m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed, 0);
     }
 
-    public void SetPlayerToScripted(){
-        m_isBeingScripted = true;
-        ResetPlayer();
-    }
-
-    public void StopScripting(){
-        m_isBeingScripted = false;
-        ResetPlayer();
-    }
+    public void SetPlayerToScripted()   { m_isBeingScripted = true; ResetPlayer(); }
+    public void StopScripting()         { m_isBeingScripted = false; ResetPlayer(); }
 
 /// COLLITIONS
     private void OnCollisionEnter2D(Collision2D collision)
@@ -339,8 +339,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void HandleHostileCollition(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage) {
-
+    public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage)
+    {
         m_rb2D.velocity = new Vector2(p_direction.x * p_pushAwayVelocity.x, p_direction.y * p_pushAwayVelocity.y);
 
         m_isInvulnerable = true;
@@ -367,7 +367,6 @@ public class Player : MonoBehaviour
             float distanceToEnemyX = transform.position.x - p_collider.gameObject.transform.position.x;
             float distanceToEnemyY = transform.position.y - p_collider.gameObject.transform.position.y;
             Vector2 direction = new Vector2(-distanceToEnemyX/Mathf.Abs(distanceToEnemyX), -distanceToEnemyY/Mathf.Abs(distanceToEnemyY)).normalized;
-
         }
     }
 
@@ -407,5 +406,4 @@ public class Player : MonoBehaviour
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
     #endregion
-
 }
