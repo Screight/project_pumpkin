@@ -184,4 +184,11 @@ public class Ghoul : Enemy
     public bool IsPlayerAtRange { set { m_playerIsAtRange = value; } }
     public bool IsFacingRight { get { return m_isFacingRight; } }
     #endregion
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(new Vector3(left_limit.position.x, left_limit.position.y , transform.position.z), 3);
+        Gizmos.DrawSphere(new Vector3(right_limit.position.x, right_limit.position.y , transform.position.z), 3);
+    }
+
 }

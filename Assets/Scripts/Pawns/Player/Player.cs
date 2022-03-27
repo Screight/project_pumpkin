@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
             m_state = PLAYER_STATE.IDLE;
             m_direction = 0;
             m_isInvulnerable = false;
-            m_spriteRenderer.color = new Color(255, 255, 255, 255);
+            m_spriteRenderer.color = new Color(255, 25if(m_state == ENEMY_STATE.DEAD){ return; }5, 255, 255);
             Physics2D.IgnoreLayerCollision(6, 7, false);
             m_invulnerableTimer.Stop();
             m_blinkTimer.Stop();
