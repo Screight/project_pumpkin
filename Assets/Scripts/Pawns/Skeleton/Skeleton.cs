@@ -197,7 +197,10 @@ public class Skeleton : Enemy
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)SKELETON_ANIMATION.HIT]) { return; }
         
-        if (m_currentState == p_newState && m_curreif(m_state == ENEMY_STATE.DEAD){ return; }
+        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)SKELETON_ANIMATION.HIT]) {
+            m_animator.Play(p_newState,-1,0);
+        }
+        else
         {
             m_animator.Play(p_newState);
             m_currentState = p_newState;
@@ -257,7 +260,7 @@ public class Skeleton : Enemy
     private void OnDrawGizmos() {
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(new Vector3(left_limit.position.x, left_limit.position.y , transform.position.z), 3);
-        Gizmos.DrawSphere(new Vector3(right_limit.position.x, right_limit.position.y , transform.position.z), 3);
+        Gizmos.DrawSphere(new Vector3(right_limit.position.x, left_limit.position.y , transform.position.z), 3);
     }
 
 }

@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
             m_state = PLAYER_STATE.IDLE;
             m_direction = 0;
             m_isInvulnerable = false;
-            m_spriteRenderer.color = new Color(255, 25if(m_state == ENEMY_STATE.DEAD){ return; }5, 255, 255);
+            m_spriteRenderer.color = new Color(255, 255, 255, 255);
             Physics2D.IgnoreLayerCollision(6, 7, false);
             m_invulnerableTimer.Stop();
             m_blinkTimer.Stop();
@@ -364,7 +364,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void HandleHostileCollition(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage) {
+    public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage) {
 
         m_rb2D.velocity = new Vector2(p_direction.x * p_pushAwayVelocity.x, p_direction.y * p_pushAwayVelocity.y);
 
