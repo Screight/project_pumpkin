@@ -255,6 +255,7 @@ public class Player : MonoBehaviour
     void HandleBoostState(){ HandleJumpState(); }
 
     void CheckIfFalling(){
+        if(m_state == PLAYER_STATE.DASH) { return ;}
         if (m_rb2D.velocity.y < 0)
         {
             m_isGrounded = false;
@@ -273,7 +274,7 @@ public class Player : MonoBehaviour
 
     void FlipX(){
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        m_isFacingRight = !m_isFacingRight;       
+        m_isFacingRight = !m_isFacingRight;    
     }
 
     public int FacingDirection(){ 

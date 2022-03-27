@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class GraphEdge {
+public class GraphEdge {
     protected int m_originNode;
     protected int m_destinationNode;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-class SparseGraph
+public class SparseGraph
 {
     private List<NavigationGraphNode> m_nodes; // nodes that form this graph
     private List<List<GraphEdge>> m_edges; // each node index keys into the list of edges associated with that node
