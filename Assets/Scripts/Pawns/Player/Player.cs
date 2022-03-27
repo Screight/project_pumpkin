@@ -330,7 +330,7 @@ public class Player : MonoBehaviour
     public void SetPlayerToScripted()   { m_isBeingScripted = true; ResetPlayer(); }
     public void StopScripting()         { m_isBeingScripted = false; ResetPlayer(); }
 
-/// COLLITIONS
+    /// COLLISIONS
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "spike")

@@ -6,20 +6,35 @@ using UnityEngine.Playables;
 public class Timeline : MonoBehaviour
 {
     public PlayableDirector m_director;
-    private BoxCollider2D m_collider;
-    private void Awake() { m_collider = GetComponent<BoxCollider2D>(); }
+    [SerializeField] GameObject m_player;
+    Player m_playerScript;
+    private bool hasPlayed;
+
+    private void Start()
+    {
+        hasPlayed = false;
+        m_player = GameObject.FindGameObjectWithTag("Player"); m_playerScript = m_player.GetComponent<Player>();
+    }
+
+    private void Update()
+    {
+        if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            startTimeline();
-        }
+        if (collision.gameObject.tag == "Player") { startCutScene(); }
     }
 
-    public void startTimeline()
+    public void startCutScene()
     {
+        m_playerScript.SetPlayerToScripted();
         m_director.Play();
+        hasPlayed = true;
+    }
+    public void endCutScene()
+    {
+        m_playerScript.StopScripting(); 
         gameObject.SetActive(false);
     }
 }
