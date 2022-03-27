@@ -15,13 +15,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] float m_playerInvulnerableDuration = 0.5f;
     [SerializeField] float m_playerNoControlDuration = 0.5f;
     [SerializeField] Vector2 m_pushAwayPlayerVelocity = new Vector2(50.0f, 100.0f);
-    protected virtual void Awake()
-    {
-        m_spawnPos = transform.position;
-        
-    }
+    protected virtual void Awake() { m_spawnPos = transform.position; }
 
-    protected virtual void Start() {
+    protected virtual void Start()
+    {
         m_playerScript = Player.Instance;
         m_health = MAX_HEALTH;
     }
@@ -40,12 +37,13 @@ public class Enemy : MonoBehaviour
             float distanceToEnemyY = p_collider.gameObject.transform.position.y - transform.position.y;
             Vector2 direction = new Vector2(distanceToEnemyX/Mathf.Abs(distanceToEnemyX), distanceToEnemyY/Mathf.Abs(distanceToEnemyY));
 
-            m_playerScript.HandleHostileCollition(m_pushAwayPlayerVelocity, direction, m_playerNoControlDuration, m_playerInvulnerableDuration, m_damage);
+            m_playerScript.HandleHostileCollision(m_pushAwayPlayerVelocity, direction, m_playerNoControlDuration, m_playerInvulnerableDuration, m_damage);
         }
     }
 
-    public virtual void Reset() {
-         transform.position = m_spawnPos;
-         m_health = MAX_HEALTH;
-         }
+    public virtual void Reset()
+    {
+        transform.position = m_spawnPos;
+        m_health = MAX_HEALTH;
+    }
 }
