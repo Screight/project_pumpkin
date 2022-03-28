@@ -19,7 +19,7 @@ public class BoneScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor") {
+        if (collision.gameObject.tag == "floor"|| collision.gameObject.tag == "Player") {
             Destroy(gameObject);
         }
     }
