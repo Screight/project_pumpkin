@@ -34,14 +34,15 @@ public class Enemy : MonoBehaviour
         if (p_collider.gameObject.tag == "Player" && !m_playerScript.IsInvulnerable)
         {
             float distanceToEnemyX = p_collider.gameObject.transform.position.x - transform.position.x;
-        //float distanceToEnemyY = p_collider.gameObject.transform.position.y - transform.position.y;
+            //float distanceToEnemyY = p_collider.gameObject.transform.position.y - transform.position.y;
             float distanceToEnemyY = 1;
             Vector2 direction = new Vector2(distanceToEnemyX/Mathf.Abs(distanceToEnemyX), distanceToEnemyY/Mathf.Abs(distanceToEnemyY));
             PushPlayer(direction);
         }
     }
 
-    protected virtual void PushPlayer(Vector2 p_direction){
+    protected virtual void PushPlayer(Vector2 p_direction)
+    {
         m_playerScript.HandleHostileCollision(m_pushAwayPlayerVelocity, p_direction, m_playerNoControlDuration, m_playerInvulnerableDuration, m_damage);
     }
 

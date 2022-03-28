@@ -69,17 +69,17 @@ public class Ghoul : Enemy
         switch (m_ghoulState)
         {
             default:break;
-            case GHOUL_STATE.IDLE:      { Idle(); } break;
-            case GHOUL_STATE.CHASE:     { Move(GHOUL_STATE.IDLE); } break;
-            case GHOUL_STATE.ATTACK:    { Attack(GHOUL_STATE.CHASE); } break;
-            case GHOUL_STATE.HIT:       { } break;
-            case GHOUL_STATE.DIE:       { Die(); } break;
+            case GHOUL_STATE.IDLE:      { Idle(); }                     break;
+            case GHOUL_STATE.CHASE:     { Move(GHOUL_STATE.IDLE); }     break;
+            case GHOUL_STATE.ATTACK:    { Attack(GHOUL_STATE.CHASE); }  break;
+            case GHOUL_STATE.HIT:       { }                             break;
+            case GHOUL_STATE.DIE:       { Die(); }                      break;
         }
     }
 
     void Idle()
     {
-        ChangeAnimationState(GHOUL_ANIMATION.IDLE);
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
         m_rb2D.velocity = Vector2.zero;
 
         if (m_playerIsNear)
@@ -96,7 +96,7 @@ public class Ghoul : Enemy
     {
         if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
         if (player.transform.position.x < transform.position.x && m_isFacingRight) { FlipX(); }
-        ChangeAnimationState(GHOUL_ANIMATION.MOVE);
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.MOVE]);
         //Player Near but Unnaccesible
         if ((m_playerIsNear || m_playerIsAtRange) && !m_isGrounded) { m_ghoulState = p_defaultState; }
 
@@ -109,7 +109,7 @@ public class Ghoul : Enemy
                     m_playerPosX = player.transform.position.x;
                     chargeTimer.Run();
                     m_ghoulState = GHOUL_STATE.ATTACK;
-                    ChangeAnimationState(GHOUL_ANIMATION.IDLE);
+                    ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
                 }
             }           
             else {m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y); } //Nar but not at Range = Chase        
@@ -129,7 +129,7 @@ public class Ghoul : Enemy
             {
                 m_animator.speed = 55 / distance;
 
-                ChangeAnimationState(GHOUL_ANIMATION.ATTACK);
+                ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.ATTACK]);
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
                 if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
             }
@@ -139,17 +139,21 @@ public class Ghoul : Enemy
     }
     void Die()
     {
-        Destroy(gameObject);
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.DIE]);
+        m_collider2D.enabled = false;
+        m_rb2D.velocity = Vector2.zero;
+        m_rb2D.gravityScale = 0;
+        Destroy(gameObject, 1.5f);
     }
 
-    void ChangeAnimationState(GHOUL_ANIMATION p_newState)
+    void ChangeAnimationState(int p_newState)
     {
-        if (m_currentState == m_animationHash[(int)p_newState] && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
-        if (m_currentState == m_animationHash[(int)p_newState] && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT]) { m_animator.Play(m_animationHash[(int)p_newState], -1, 0); }
+        if (m_currentState == p_newState && m_currentState != m_animationHash[(int)GHOUL_ANIMATION.HIT]) { return; }
+        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)GHOUL_ANIMATION.HIT]) { m_animator.Play(p_newState, -1, 0); }
         else
         {
-            m_animator.Play(m_animationHash[(int)p_newState]);
-            m_currentState = m_animationHash[(int)p_newState];
+            m_animator.Play(p_newState);
+            m_currentState = p_newState;
         }
     }
 
@@ -168,15 +172,17 @@ public class Ghoul : Enemy
     public override void Damage(float p_damage)
     {
         m_ghoulState = GHOUL_STATE.HIT;
-        ChangeAnimationState(GHOUL_ANIMATION.HIT);
+        m_rb2D.velocity = Vector2.zero;
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.HIT]);
         base.Damage(p_damage);
+        if (m_health <= 0) { m_ghoulState = GHOUL_STATE.DIE; }
     }
 
     public override void Reset()
     {
         base.Reset();
         m_ghoulState = GHOUL_STATE.IDLE;
-        ChangeAnimationState(GHOUL_ANIMATION.IDLE);
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
     }
 
     public GHOUL_STATE State 
