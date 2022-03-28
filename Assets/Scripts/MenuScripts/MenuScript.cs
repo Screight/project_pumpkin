@@ -19,7 +19,7 @@ public class MenuScript : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = !menu.enabled; }
+        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = true; }
 
         if (menu.enabled) { Pause(); } 
         else { Continue(); }
