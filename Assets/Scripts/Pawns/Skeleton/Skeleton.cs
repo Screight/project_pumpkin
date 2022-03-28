@@ -188,7 +188,9 @@ public class Skeleton : Enemy
     {
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
         m_collider2D.enabled = false;
-        Destroy(gameObject, 0.5f);
+        m_rb2D.velocity = Vector2.zero;
+        m_rb2D.gravityScale = 0;
+        Destroy(gameObject, 1.0f);
     }
 
     
@@ -196,10 +198,7 @@ public class Skeleton : Enemy
     void ChangeAnimationState(int p_newState)
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)SKELETON_ANIMATION.HIT]) { return; }
-        
-        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)SKELETON_ANIMATION.HIT]) {
-            m_animator.Play(p_newState,-1,0);
-        }
+        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)SKELETON_ANIMATION.HIT]) { m_animator.Play(p_newState, -1, 0); }
         else
         {
             m_animator.Play(p_newState);
@@ -224,9 +223,7 @@ public class Skeleton : Enemy
         m_skeletonState = SKELETON_STATE.HIT;
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.HIT]);
         base.Damage(p_damage);
-        if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
-            
-        }
+        if (m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE; }
     }
 
     public SKELETON_STATE State { set { m_skeletonState = value; } get { return m_skeletonState; } }
