@@ -87,7 +87,7 @@ public class Skeleton : Enemy
             case SKELETON_STATE.CHASE:      { Chase(SKELETON_STATE.MOVE); }     break;
             case SKELETON_STATE.ATTACK:     { Attack(SKELETON_STATE.CHASE); }   break;
             case SKELETON_STATE.HIT:        { }                                 break;
-            case SKELETON_STATE.DIE:        { Die(); }                          break;            
+            case SKELETON_STATE.DIE:        { }                          break;            
         }
 
         float delta = Time.fixedDeltaTime * 1000;
@@ -184,15 +184,6 @@ public class Skeleton : Enemy
         }
     }
 
-    void Die()
-    {
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
-        m_collider2D.enabled = false;
-        Destroy(gameObject, 0.5f);
-    }
-
-    
-
     void ChangeAnimationState(int p_newState)
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)SKELETON_ANIMATION.HIT]) { return; }
@@ -225,7 +216,8 @@ public class Skeleton : Enemy
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.HIT]);
         base.Damage(p_damage);
         if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
-            
+            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
+            m_collider2D.enabled = false;
         }
     }
 
@@ -239,6 +231,7 @@ public class Skeleton : Enemy
 
     public override void Reset(){
         base.Reset();
+        m_collider2D.enabled = true;
         ReturnToNormalState();
     }
 

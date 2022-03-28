@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    [SerializeField] Attack m_attackScript;
+
     static Player m_instance;
 
     public static Player Instance {
@@ -173,12 +176,13 @@ public class Player : MonoBehaviour
             case PLAYER_STATE.JUMP: { HandleJumpState(); } break;
             case PLAYER_STATE.FALL: { HandleFallState(); } break;
             case PLAYER_STATE.LAND: { HandleLandState(); } break;
-            case PLAYER_STATE.DASH: { HandleDashState(); } break; 
+            case PLAYER_STATE.DASH: { HandleDashState(); } break;
         }
     }
 
     void HandleMoveState(){
 
+        m_attackScript.HandleAttack(m_isGrounded);
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         if(InputManager.Instance.JumpButtonPressed && m_isGrounded){ Jump();}
@@ -240,7 +244,9 @@ public class Player : MonoBehaviour
         ChangeAnimationState(PLAYER_ANIMATION.BOOST);
     }
 
-    void HandleIdleState(){ HandleMoveState(); }
+    void HandleIdleState(){ 
+        HandleMoveState();
+    }
     void HandleLandState() { HandleMoveState(); }
     
 
@@ -248,6 +254,7 @@ public class Player : MonoBehaviour
     void HandleJumpState(){
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
+        m_attackScript.HandleAttack(m_isGrounded);
         if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
     }
 
@@ -256,11 +263,12 @@ public class Player : MonoBehaviour
 
     void CheckIfFalling(){
         if(m_state == PLAYER_STATE.DASH) { return ;}
+        
         if (m_rb2D.velocity.y < 0)
         {
             m_isGrounded = false;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-            m_state = PLAYER_STATE.FALL;
+            if(m_state != PLAYER_STATE.ATTACK) { m_state = PLAYER_STATE.FALL;}
             ChangeAnimationState(PLAYER_ANIMATION.FALL);
             // limit falling speed
             if (m_rb2D.velocity.y < -m_maxFallingSpeed) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -m_maxFallingSpeed); }
@@ -344,6 +352,7 @@ public class Player : MonoBehaviour
         m_isBeingScripted = true;
         m_rb2D.gravityScale = 0;
         m_rb2D.velocity = Vector2.zero;
+        Physics2D.IgnoreLayerCollision(6, 7, true);
     }
 
     public void StopScripting(){

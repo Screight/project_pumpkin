@@ -16,12 +16,12 @@ public class GroundCheck : MonoBehaviour
         bool isObjectASurface = colliderTag == "floor" || colliderTag == "platform";
 
         if(isObjectASurface && canPlayerTransitionFromCurrentStateToGrounded){
-            m_playerScript.SetToGrounded(colliderTag);
 
-            if(m_playerScript.State == PLAYER_STATE.FALL) {
+            if(m_playerScript.State == PLAYER_STATE.FALL && m_playerScript.State == PLAYER_STATE.ATTACK) {
                 m_playerScript.State = PLAYER_STATE.LAND;
                 m_playerScript.ChangeAnimationState(PLAYER_ANIMATION.LAND);
             }
+            m_playerScript.SetToGrounded(colliderTag);
         }
         bool isPlayerJumping = m_playerScript.State == PLAYER_STATE.JUMP || m_playerScript.State == PLAYER_STATE.BOOST;
 

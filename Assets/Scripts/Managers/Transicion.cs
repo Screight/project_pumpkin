@@ -56,6 +56,7 @@ public class Transicion : MonoBehaviour
     }
 
     private void ClampCamera(){
+        RoomManager.Instance.ChangeRoom();
         CameraManager.Instance.ClampCameraToTarget();
     }
 

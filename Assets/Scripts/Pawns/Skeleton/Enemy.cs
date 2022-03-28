@@ -47,7 +47,14 @@ public class Enemy : MonoBehaviour
 
     public virtual void Reset()
     {
-        transform.position = m_spawnPos;
+        transform.position = new Vector3(m_spawnPos.x, m_spawnPos.y, CameraManager.Instance.MainSceneDepth);
         m_health = MAX_HEALTH;
     }
+
+    void Die(){
+        this.gameObject.SetActive(false);
+    }
+
+    public ROOMS Room { get { return m_room;}}
+
 }

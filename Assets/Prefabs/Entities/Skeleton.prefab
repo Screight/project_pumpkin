@@ -404,8 +404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6effb6d4c98f74ba96790729223428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MAX_HEALTH: 3
   m_health: 3
   m_damage: 1
+  m_room: 2
   m_playerInvulnerableDuration: 0.5
   m_playerNoControlDuration: 0.5
   m_pushAwayPlayerVelocity: {x: 50, y: 100}

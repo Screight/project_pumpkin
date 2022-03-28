@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    Player m_player;
-
-    public enum ATTACK_ANIMATION { NO_ATTACK,ATTACK_1, ATTACK_2, ATTACK_3, LAST_NO_USE}
-    string m_noAttack_AnimationName = "noAttack";
-    string m_attack_1_AnimationName = "attack_1";
-    string m_attack_2_AnimationName = "attack_2";
-    string m_attack_3_AnimationName = "attack_3";
+    bool m_isAttachedToPlayer;
+    [SerializeField] Transform m_attackPosition;
+    public enum ATTACK_ANIMATION { NO_ATTACK, ATTACK_1, ATTACK_2, ATTACK_3,AERIAL, LAST_NO_USE}
+    string[] m_animationNames = {"noAttack", "attack_1", "attack_2", "attack_3", "aerial_attack"};
     Animator m_animator;
     int[] m_animationHash = new int[(int)ATTACK_ANIMATION.LAST_NO_USE];
-    int m_currentState;
-    int m_attackComboNumber = 0; // represents first attack(0), second(1) and third(2)
+    int m_animationCurrentHash;
+    int m_attackComboNumber = 0; // represents first attack(1), second(2) and third(3) and aerial 4
 
+    Timer m_attackTimer;
+    float[] m_attackDuration;
 
     const float M_ATTACK_RANGE = 8;
     [SerializeField] LayerMask m_enemyLayer;
@@ -25,92 +24,102 @@ public class Attack : MonoBehaviour
     private void Awake()
     {
         m_animator = GetComponent<Animator>();
-        m_player = GetComponentInParent<Player>();
+        m_attackTimer = gameObject.AddComponent<Timer>();
+        m_attackDuration = new float[(int)ATTACK_ANIMATION.LAST_NO_USE];
+        if(GetComponentInParent<Player>() != null){
+            m_isAttachedToPlayer = true;
+        }
+        else { m_isAttachedToPlayer = false;}
     }
 
     private void Start()
     {
-        m_animationHash[(int)ATTACK_ANIMATION.NO_ATTACK] = Animator.StringToHash(m_noAttack_AnimationName);
-        m_animationHash[(int)ATTACK_ANIMATION.ATTACK_1] = Animator.StringToHash(m_attack_1_AnimationName);
-        m_animationHash[(int)ATTACK_ANIMATION.ATTACK_2] = Animator.StringToHash(m_attack_2_AnimationName);
-        m_animationHash[(int)ATTACK_ANIMATION.ATTACK_3] = Animator.StringToHash(m_attack_3_AnimationName);
+        for(int i = 0; i < (int)ATTACK_ANIMATION.LAST_NO_USE; i++){
+            m_animationHash[i] = Animator.StringToHash(m_animationNames[i]);
+        }
 
-    }
-
-    private void Update()
-    {
-        switch (m_player.State)
+        foreach(AnimationClip m_animationClip in m_animator.runtimeAnimatorController.animationClips)
         {
-            case PLAYER_STATE.IDLE:
-                Attack1();
-                break;
-            case PLAYER_STATE.ATTACK:
-                Attack1();
-                break;
-            case PLAYER_STATE.MOVE:
-                Attack1();
-                break;
-            case PLAYER_STATE.LAND:
-                Attack1();
-                break;
-            case PLAYER_STATE.BOOST:
-                Attack1();
-                break;
-            case PLAYER_STATE.JUMP:
-                Attack1();
-                break;
-            case PLAYER_STATE.FALL:
-                Attack1();
-                break;
-            default: break;
+            for(int j = 0; j < (int)ATTACK_ANIMATION.LAST_NO_USE; j++){
+                if(m_animationClip.name == m_animationNames[j]){
+                    m_attackDuration[j] = m_animationClip.length;
+                    j = (int)ATTACK_ANIMATION.LAST_NO_USE;
+                }
+            }
         }
     }
 
-    void Attack1()
-    {
-        if(!m_player.IsGrounded){
-            if (InputManager.Instance.AttackButtonPressed)
-            {
-                ChangeAnimationState(m_animationHash[3]);
-                return ;
-            }
-            
-        }
-        if (InputManager.Instance.AttackButtonPressed)
-        {
-            if (m_player.State != PLAYER_STATE.ATTACK && m_player.IsGrounded) {
-                m_player.State = PLAYER_STATE.ATTACK;
-                //m_player.ReduceSpeed();
-            }
 
+    private void Update() {
+        if(m_attackTimer.IsFinished && m_isAttacking){
+            HandleCombo();
+        }
+    }
+
+    public void HandleAttack(bool p_isGrounded){
+        if(p_isGrounded){ HandleGroundAttackState(); }
+        else { HandleAerialAttackState(); }
+    }
+
+    void HandleAerialAttackState(){
+        if(InputManager.Instance.AttackButtonPressed && !m_isAttacking){
+            m_attackComboNumber = 4;
+            InitializeAttack();
+            m_isAttacking = true;
+        }
+    }
+
+    void HandleGroundAttackState(){
+        if(InputManager.Instance.AttackButtonPressed){
             m_keepAttacking = true;
-            if (!m_isAttacking /*&& m_windowToComboTimer.IsFinished*/)
-            {
-                TransitionToNextComboAttack();
-                m_isAttacking = true;
+            
+            if(!m_isAttacking){
+                StartCombo();
             }
         }
+    }
 
-        if (m_player.State == PLAYER_STATE.ATTACK)
-        {
-            if (m_player.IsGrounded)
-            {
-                //m_player.ReduceSpeed();
-            }
-            else
-            {
-                //m_player.SetToNormalSpeed();
-            }
 
+    void HandleCombo(){
+        if(!m_keepAttacking) {
+            EndCombo();
+            return;
         }
+        else{
+            m_attackComboNumber++;
+            if(m_attackComboNumber > 3){ m_attackComboNumber = 1;}
+            InitializeAttack();
+        }
+    }
 
+    void InitializeAttack(){
+        m_attackTimer.Duration = m_attackDuration[m_attackComboNumber];
+        m_attackTimer.Run();
+        ChangeAnimationState((ATTACK_ANIMATION)m_attackComboNumber);
+        if(!m_isAttachedToPlayer){
+            if(Player.Instance.IsFacingRight) { transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y,transform.localScale.z);}
+        else { transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y,transform.localScale.z);}
+        this.transform.position = m_attackPosition.position;
+        }
+        m_keepAttacking = false;
+    }
+
+    void StartCombo(){
+        m_isAttacking = true;
+        m_attackComboNumber = 1;
+        InitializeAttack();
+    }
+
+    void EndCombo(){
+        m_attackComboNumber = 0;
+        ChangeAnimationState(ATTACK_ANIMATION.NO_ATTACK);
+        m_isAttacking = false;
+        m_keepAttacking = false;
     }
 
     void Hit()
     {
-        float offset = 2 * m_player.FacingDirection();
-
-        Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - offset, transform.position.y), M_ATTACK_RANGE, m_enemyLayer);
+        Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), M_ATTACK_RANGE, m_enemyLayer);
         foreach (Collider2D enemy in enemiesInAttackRange)
         {
             if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(GameManager.Instance.PlayerAttackDamage); }
@@ -118,38 +127,22 @@ public class Attack : MonoBehaviour
 
         if(enemiesInAttackRange.Length == 0)
         {
-            SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.PLAYER_ATTACK_1 + (int)(m_attackComboNumber) -1));
-        }
-    }
-
-    void TransitionToNextComboAttack()
-    {
-        if (m_keepAttacking)
-        {
-            if(m_attackComboNumber < 3) {
-                m_attackComboNumber++;
+            if(m_attackComboNumber == 4){
+                SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.PLAYER_ATTACK_3));
             }
-            else { m_attackComboNumber = 1; }
-            ChangeAnimationState(m_animationHash[m_attackComboNumber]);
-            m_keepAttacking = false;
+            else
+            {
+                SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.PLAYER_ATTACK_1 + (int)(m_attackComboNumber) -1));
+            }
+            
         }
-        else
-        {
-            m_isAttacking = false;
-            m_keepAttacking = false;
-            m_player.State = PLAYER_STATE.IDLE;
-            ChangeAnimationState(m_animationHash[0]);
-            m_attackComboNumber = 0;
-            m_player.SetToNormalSpeed();
-        }
-        
     }
 
-    void ChangeAnimationState(int p_newState)
+    void ChangeAnimationState(ATTACK_ANIMATION p_newState)
     {
-        if (m_currentState == p_newState) return;   // stop the same animation from interrupting itself
-        m_animator.Play(p_newState);                // play the animation
-        m_currentState = p_newState;                // reassigning the new state
+        if (m_animationCurrentHash == m_animationHash[(int)p_newState]) return;   // stop the same animation from interrupting itself
+        m_animator.Play(m_animationHash[(int)p_newState]);                // play the animation
+        m_animationCurrentHash = m_animationHash[(int)p_newState];                // reassigning the new state
     }
 
     private void OnDrawGizmos()
@@ -157,5 +150,7 @@ public class Attack : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z),M_ATTACK_RANGE);
     }
+
+    public bool IsAttacking { get { return m_isAttacking;}}
 
 }

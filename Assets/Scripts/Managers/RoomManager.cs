@@ -9,8 +9,8 @@ public class RoomManager : MonoBehaviour
 
     Room[] m_rooms;
 
+    ROOMS m_lastRoom;
     ROOMS m_currentRoom;
-    ROOMS m_roomToTransicion;
     [SerializeField] ROOMS m_initialRoom;
 
     [SerializeField] Transicion m_transicionScript;
@@ -31,7 +31,32 @@ public class RoomManager : MonoBehaviour
 
         m_rooms = new Room[(int)ROOMS.LAST_NO_USE];
         m_currentRoom = m_initialRoom;
+        m_lastRoom = m_initialRoom;
         m_scriptPlayerTimer = gameObject.AddComponent<Timer>();
+
+    }
+
+    private async void Start() {
+
+        GameObject[] roomsInWorld = GameObject.FindGameObjectsWithTag("room");
+
+        foreach(GameObject room in  roomsInWorld ){
+            Room script = room.GetComponentInChildren<Room>();
+            AddRoom(script);
+        }
+
+        GameObject[] enemiesInWorld = GameObject.FindGameObjectsWithTag("enemy");
+
+        foreach(GameObject enemy in  enemiesInWorld ){
+            Enemy script = enemy.GetComponent<Enemy>();
+            m_rooms[(int)script.Room].AddEnemy(script);
+        }
+
+        for(int i = 0; i < (int)ROOMS.LAST_NO_USE; i++){
+            if( m_rooms[i] != null && m_rooms[i].ID != m_currentRoom){
+                m_rooms[i].gameObject.SetActive(false);
+            }
+        }
 
     }
 
@@ -43,17 +68,17 @@ public class RoomManager : MonoBehaviour
     }
 
     public void AddRoom(Room p_room){
-        m_rooms[(int)p_room.ID] = p_room;
+         m_rooms[(int)p_room.ID] = p_room;
     }
 
-    private void ChangeRoom(ROOMS p_room){
+    public void ChangeRoom(){
         // Reset enemies position and set all to unactive
-        m_rooms[(int)m_currentRoom].gameObject.GetComponent<Room>().Reset();
-        m_rooms[(int)m_currentRoom].gameObject.SetActive(false);
-        Debug.Log("Current Room unactive " + m_currentRoom);
+        m_rooms[(int)m_lastRoom].gameObject.GetComponent<Room>().Reset();
+        m_rooms[(int)m_lastRoom].gameObject.SetActive(false);
+        Debug.Log("Current Room unactive " + m_lastRoom);
 
         // Change current room and set all to active
-        m_currentRoom = p_room;
+        //m_currentRoom = m_roomToTransicion;
         m_rooms[(int)m_currentRoom].gameObject.SetActive(true);
         Debug.Log("Current Room active " + m_currentRoom);
 
@@ -81,10 +106,14 @@ public class RoomManager : MonoBehaviour
         }
         m_isBeingScripted = true;
         m_scriptPlayerTimer.Run();
-        ChangeRoom(m_roomToTransicion);
     }
 
-    public ROOMS CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }} 
-    public ROOMS RoomToTransition { set {  m_roomToTransicion = value; }} 
+    public void HandleRoomTransition(ROOMS p_roomToTransition){
+        m_lastRoom = m_currentRoom;
+        m_currentRoom = p_roomToTransition;
+
+    }
+
+    public ROOMS CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }}
 
 }
