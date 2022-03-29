@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class VineDestroyer : MonoBehaviour
 {
+    [SerializeField] bool m_respawnOnRoomCHange = true;
     private Tilemap vineSprite;
     Timer m_burnTimer;
     [SerializeField] float m_burnDuration = 0.5f;
@@ -43,4 +44,5 @@ public class VineDestroyer : MonoBehaviour
     }
 
     public ROOMS Room { get { return m_room;}}
+    public bool RespawnOnRoomCHange { get { return m_respawnOnRoomCHange; }}
 }

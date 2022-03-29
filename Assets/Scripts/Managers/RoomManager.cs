@@ -56,7 +56,7 @@ public class RoomManager : MonoBehaviour
 
         foreach(GameObject vine in  vinesInWorld ){
             VineDestroyer script = vine.GetComponent<VineDestroyer>();
-            if(script != null){
+            if(script != null && script.RespawnOnRoomCHange){
                 m_rooms[(int)script.Room].AddVine(script);
             }
         }

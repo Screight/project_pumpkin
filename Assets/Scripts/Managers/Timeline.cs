@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Playables;
 
 public class Timeline : MonoBehaviour
-{
+{   
+    [SerializeField] bool m_isCameraScripted = false;
     public PlayableDirector m_director;
     public Canvas m_HUD;
     [SerializeField] GameObject m_player;
@@ -32,8 +33,10 @@ public class Timeline : MonoBehaviour
     public void startCutScene()
     {
         //m_HUD.enabled = false;
+        if(m_isCameraScripted){
+            CameraManager.Instance.SetCameraToStatic();
+        }
         m_playerScript.SetPlayerToScripted();
-        CameraManager.Instance.SetCameraToStatic();
         m_director.Play();
         hasPlayed = true;
     }
@@ -41,7 +44,9 @@ public class Timeline : MonoBehaviour
     {
         //m_HUD.enabled = true;
         m_playerScript.StopScripting(); 
-        CameraManager.Instance.SetCameraToNormal();
+        if(m_isCameraScripted){
+            CameraManager.Instance.SetCameraToNormal();
+        }
         gameObject.SetActive(false);
     }
 }
