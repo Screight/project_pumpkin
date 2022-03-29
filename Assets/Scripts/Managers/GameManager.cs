@@ -37,12 +37,15 @@ public class GameManager : MonoBehaviour
     public void ModifyPlayerHealth(int p_amount)
     {
         m_playerHealth += p_amount;
-        if (m_playerHealth < 0) { m_playerHealth = 0; }
+        if (m_playerHealth <= 0) {
+            m_playerHealth = 0; 
+            Player.Instance.HandleDeath();
+        }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
 
         m_healthUI.SetHealth(m_playerHealth);
     }
 
     public float PlayerAttackDamage { get { return m_playerAttackDamage; } }
-
+    public int PlayerHealth { get { return m_playerHealth;}}
 }

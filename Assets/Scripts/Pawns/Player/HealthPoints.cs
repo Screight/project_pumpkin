@@ -33,6 +33,7 @@ public class HealthPoints : MonoBehaviour
         p_hearts[5].sprite = m_fullHeart;
         p_hearts[6].sprite = m_fullHeart;
         p_hearts[7].sprite = m_fullHeart;
+        SetHealth(GameManager.Instance.PlayerHealth);
     }
 
     public void SetHealth(int p_value)

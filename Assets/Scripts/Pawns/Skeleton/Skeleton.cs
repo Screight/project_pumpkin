@@ -219,6 +219,7 @@ public class Skeleton : Enemy
         if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
             m_collider2D.enabled = false;
+            m_rb2D.gravityScale = 0;
         }
     }
 
@@ -233,6 +234,7 @@ public class Skeleton : Enemy
     public override void Reset(){
         base.Reset();
         m_collider2D.enabled = true;
+        m_rb2D.gravityScale = 40;
         ReturnToNormalState();
     }
 
