@@ -16,7 +16,7 @@ public class GroundCheck : MonoBehaviour
             Player.Instance.StopPlayerMovement();
         }
         bool canPlayerTransitionFromCurrentStateToGrounded = m_playerScript.State != PLAYER_STATE.BOOST && m_playerScript.State != PLAYER_STATE.JUMP && m_playerScript.State != PLAYER_STATE.DASH && m_playerScript.State != PLAYER_STATE.DEATH;
-        bool isObjectASurface = colliderTag == "floor" || colliderTag == "platform";
+        bool isObjectASurface = colliderTag == "floor" || colliderTag == "platform" || colliderTag == "vine";
 
         if(isObjectASurface && canPlayerTransitionFromCurrentStateToGrounded){
 

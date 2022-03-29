@@ -140,7 +140,6 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
-
         CheckIfFalling();
 
         if(m_isBeingScripted){ return ;}

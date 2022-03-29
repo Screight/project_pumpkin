@@ -65,6 +65,7 @@ public class Ghoul : Enemy
 
     void Update()
     {
+        Debug.Log(m_isGrounded);
         if (Time.timeScale == 0) { return; } //Game Paused
         switch (m_ghoulState)
         {
@@ -147,6 +148,12 @@ public class Ghoul : Enemy
             m_animator.Play(p_newState);
             m_currentState = p_newState;
         }
+    }
+
+    void ReturnToNormalState()
+    {
+        m_ghoulState = GHOUL_STATE.IDLE;
+        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
     }
 
     void FlipX()
