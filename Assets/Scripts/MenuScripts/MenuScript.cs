@@ -6,12 +6,20 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+    static MenuScript m_instance;
+    public static MenuScript Instance { get { return m_instance; } private set { } }
+
     public Canvas menu;
     public Canvas HUD;
     public List<Button> buttons = new List<Button>();
+    private bool IsPlaying;
 
     private void Awake()
     {
+        if (m_instance == null) { m_instance = this; }
+        else { Destroy(this.gameObject); }
+
+        IsPlaying = false;
         menu = GetComponent<Canvas>();
         if (SceneManager.GetActiveScene().buildIndex == 0) { menu.enabled = true; }
         else { menu.enabled = false; }
@@ -19,10 +27,15 @@ public class MenuScript : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = true; }
+        if (!IsPlaying)
+        {
+            if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = true; }
 
-        if (menu.enabled) { Pause(); } 
-        else { Continue(); }
+
+            if (menu.enabled) { Pause(); }
+            else { Continue(); }
+        }
+        else { HUD.enabled = false; }
     }
 
     public void PlayGame()
@@ -61,6 +74,7 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    public bool CutSceneIsPlaying { set { IsPlaying = value; } }
     void OnEnable() { foreach (var button in buttons) { button.interactable = true; } }
     void OnDisable() { foreach (var button in buttons) { button.interactable = false; } }
 }
