@@ -378,7 +378,6 @@ public class Player : MonoBehaviour
         m_rb2D.velocity = Vector2.zero;
         Physics2D.IgnoreLayerCollision(6, 7, true);
     }
-
     public void FacePlayerToRight()
     {
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);

@@ -113,6 +113,7 @@ public class CameraMovement : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(m_isCameraStatic && !m_clampCamera) { return;}
         if(m_clampCamera){
 
         m_targetPosition.y = m_player.transform.position.y + m_offsetY;
