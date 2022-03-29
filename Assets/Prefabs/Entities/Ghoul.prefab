@@ -155,7 +155,7 @@ MonoBehaviour:
   m_room: 0
   m_playerInvulnerableDuration: 1
   m_playerNoControlDuration: 0.2
-  m_pushAwayPlayerVelocity: {x: 50, y: 100}
+  m_pushAwayPlayerVelocity: {x: 100, y: 150}
   player: {fileID: 0}
   m_speed: 50
   m_isFacingRight: 0
@@ -366,7 +366,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -15, y: -7}
+  m_Offset: {x: -15, y: -8}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -377,7 +377,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 1}
+  m_Size: {x: 5, y: 3}
   m_EdgeRadius: 0
 --- !u!114 &2938442696470821865
 MonoBehaviour:
