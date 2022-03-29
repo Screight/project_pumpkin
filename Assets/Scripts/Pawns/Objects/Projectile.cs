@@ -33,6 +33,7 @@ public class Projectile : MonoBehaviour
             Vector2 direction = new Vector2(distanceToEnemyX / Mathf.Abs(distanceToEnemyX), distanceToEnemyY / Mathf.Abs(distanceToEnemyY));
 
             Player.Instance.HandleHostileCollision(m_pushAwayPlayerVelocity, direction, m_playerNoControlDuration, m_playerInvulnerableDuration, m_damage);
+            Destroy(this.gameObject);
         }
     }
 }
