@@ -384,6 +384,12 @@ public class Player : MonoBehaviour
         m_isFacingRight = true;
     }
 
+    public void FacePlayerToLeft()
+    {
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        m_isFacingRight = false;
+    }
+
     public void StopScripting()
     {
         m_isBeingScripted = false;

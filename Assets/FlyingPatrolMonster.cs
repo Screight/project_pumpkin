@@ -13,6 +13,7 @@ public class FlyingPatrolMonster : Enemy
     int m_currentAnimationHash;
     ANIMATION_STATE m_animationState;
     Animator m_animator;
+    Collider2D m_collider;
      void ChangeAnimationState(ANIMATION_STATE p_animationState)
     {
         int newAnimationHash = m_animationHash[(int)p_animationState];
@@ -39,6 +40,7 @@ public class FlyingPatrolMonster : Enemy
         m_rb2D = GetComponent<Rigidbody2D>();
         m_pathFinder = GetComponent<PathFinderTest>();
         m_animator = GetComponent<Animator>();
+        m_collider = GetComponent<Collider2D>();
     }
 
     protected override void Start() {
@@ -155,6 +157,13 @@ public class FlyingPatrolMonster : Enemy
     {
         if (m_isFacingRight) { return 1; }
         else { return -1; }
+    }
+
+    public override void Reset(){
+        base.Reset();
+        m_collider.enabled = true;
+        m_state = ENEMY_STATE.PATROL;
+        ChangeAnimationState(ANIMATION_STATE.MOVE);
     }
 
     private void OnDrawGizmos() {
