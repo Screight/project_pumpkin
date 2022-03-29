@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1637297441518375385}
   m_Layer: 0
   m_Name: SamuFireball
-  m_TagString: Untagged
+  m_TagString: fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637297441518375390}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 958.5, y: 349.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

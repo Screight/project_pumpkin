@@ -215,7 +215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1637297441518375390, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
       propertyPath: m_Name
-      value: SamuFireball2
+      value: SamuFireball
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
