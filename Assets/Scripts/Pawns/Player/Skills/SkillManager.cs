@@ -30,7 +30,7 @@ public class SkillManager : MonoBehaviour
     }
 
     private void Start() {
-        UnlockFireball();
+        //UnlockFireball();
         UnlockPilar();
         UnlockGroundbreaker();
     }

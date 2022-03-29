@@ -7,6 +7,7 @@ using UnityEngine.Playables;
 public class Timeline : MonoBehaviour
 {   
     [SerializeField] bool m_isCameraScripted = false;
+    [SerializeField] bool m_isFireSpiritCutScene = false;
     public PlayableDirector m_director;
     public Canvas m_HUD;
     [SerializeField] GameObject m_player;
@@ -45,5 +46,8 @@ public class Timeline : MonoBehaviour
 
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToNormal(); }
         gameObject.SetActive(false);
+        if(m_isFireSpiritCutScene){
+            SkillManager.Instance.UnlockFireball();
+        }
     }
 }
