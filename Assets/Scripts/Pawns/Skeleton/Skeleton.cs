@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK, HIT, AIR }
-public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, LAST_NO_USE }
+public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, ATTACK, LAST_NO_USE }
 
 public class Skeleton : Enemy
 {   
@@ -19,6 +19,7 @@ public class Skeleton : Enemy
     string m_reloadAnimationName    = "Reload";
     string m_fireAnimationName      = "Fire";
     string m_hitAnimationName       = "hit";
+    string m_attackAnimationName       = "attack";
     string m_dieAnimationName       = "Die";
     int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
 
@@ -68,6 +69,7 @@ public class Skeleton : Enemy
         m_animationHash[(int)SKELETON_ANIMATION.FIRE] = Animator.StringToHash(m_fireAnimationName);
         m_animationHash[(int)SKELETON_ANIMATION.DIE] = Animator.StringToHash(m_dieAnimationName);
         m_animationHash[(int)SKELETON_ANIMATION.HIT] = Animator.StringToHash(m_hitAnimationName);
+        m_animationHash[(int)SKELETON_ANIMATION.ATTACK] = Animator.StringToHash(m_attackAnimationName);
 
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
@@ -165,23 +167,29 @@ public class Skeleton : Enemy
         if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
         if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
 
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
+        
         m_rb2D.velocity = Vector2.zero;
 
         if (m_playerIsAtRange)
         {
-            if (boneTimer.IsFinished)
+            /*if (boneTimer.IsFinished)
             {
                 Projectile m_boneArrowScript  = Instantiate(m_arrow, transform.position, Quaternion.identity).GetComponent<Projectile>();
                 m_boneArrowScript.Shoot(FacingDirection());
                 boneTimer.Run();
-            }
+            }*/
+            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.ATTACK]);
         }
         else
         {
             m_skeletonState = p_defaultState;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
         }
+    }
+
+    void LaunchFireBall(){
+        Projectile m_boneArrowScript  = Instantiate(m_arrow, transform.position, Quaternion.identity).GetComponent<Projectile>();
+        m_boneArrowScript.Shoot(FacingDirection());
     }
 
     void ChangeAnimationState(int p_newState)

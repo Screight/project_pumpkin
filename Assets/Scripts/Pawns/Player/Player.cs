@@ -416,6 +416,7 @@ public class Player : MonoBehaviour
 
     void Die(){
         Physics2D.IgnoreLayerCollision(6,7,true);
+        CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
         // RESET PLAYER
         // SCREEN TRANSITION
         // TP TO LAST CHECKPOINT (add room variable to checkpoint)

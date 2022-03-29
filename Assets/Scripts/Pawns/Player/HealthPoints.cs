@@ -19,7 +19,7 @@ public class HealthPoints : MonoBehaviour
 
     Image[] p_hearts;
 
-    int m_maxNumberOfHearts = 8;
+    int m_maxNumberOfHearts = 4;
     int m_currentNumberOfHearts = 8;
 
     private void Start()
