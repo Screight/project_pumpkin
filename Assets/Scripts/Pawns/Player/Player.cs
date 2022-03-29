@@ -384,6 +384,12 @@ public class Player : MonoBehaviour
         m_isFacingRight = true;
     }
 
+    public void FacePlayerToLeft()
+    {
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        m_isFacingRight = false;
+    }
+
     public void StopScripting()
     {
         m_isBeingScripted = false;
@@ -481,6 +487,16 @@ public class Player : MonoBehaviour
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
     #endregion
+
+    private void OnTriggerStay2D(Collider2D p_collider) {
+        if(p_collider.tag == "spike" && !m_isInvulnerable){
+            HandleHostileCollision(new Vector2(0,40), Vector2.up, 0.5f, 0.5f, 1);
+            CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
+            if(GameManager.Instance.PlayerHealth <= 0){
+                Player.Instance.ResetPlayer(PLAYER_STATE.IDLE,PLAYER_ANIMATION.IDLE);
+            }
+        }
+    }
 
     private void OnDrawGizmos()
     {

@@ -5,7 +5,7 @@ public class NavigationGraphNode: GraphNode
 {
     Vector3 m_position;
 
-    public NavigationGraphNode(int p_index, Vector2 p_position)
+    public NavigationGraphNode(int p_index, Vector3 p_position)
         :base(p_index)
     {
         m_position = p_position;

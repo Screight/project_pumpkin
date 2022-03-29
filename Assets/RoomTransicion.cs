@@ -31,6 +31,7 @@ public class RoomTransicion : MonoBehaviour
             if(m_isHorizontalTransition){
                 
                 Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.min.x, m_collider.bounds.min.y - 1, Player.Instance.transform.position.z));
+                Player.Instance.FacePlayerToLeft();
             }
             else{
                 
@@ -43,6 +44,7 @@ public class RoomTransicion : MonoBehaviour
             RoomManager.Instance.HandleRoomTransition(m_rightTopRoom);
                 if(m_isHorizontalTransition){
                     Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.max.x, m_collider.bounds.min.y - 1, Player.Instance.transform.position.z));
+                    Player.Instance.FacePlayerToRight();
                 }
                 else{
                 Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.max.y - p_collider.bounds.size.y/2, Player.Instance.transform.position.z));

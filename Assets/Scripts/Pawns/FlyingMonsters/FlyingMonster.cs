@@ -52,6 +52,7 @@ public class FlyingMonster : Enemy
     bool m_isInitialized = false;
     bool m_isRecovering = false;
     Vector2 m_directionToAttack;
+    Collider2D m_collider;
 
     ANIMATION_STATE m_animationState;
     int m_currentAnimationHash;
@@ -67,6 +68,7 @@ public class FlyingMonster : Enemy
         m_memoryTimer = gameObject.AddComponent<Timer>();
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_animator = GetComponent<Animator>();
+        m_collider = GetComponent<Collider2D>();
     }
 
     void ChangeAnimationState(ANIMATION_STATE p_animationState)
@@ -267,6 +269,7 @@ public class FlyingMonster : Enemy
     }
 
     public override void Reset(){
+        m_collider.enabled = true;
         base.Reset();
         ReturnToNormalState();
     }

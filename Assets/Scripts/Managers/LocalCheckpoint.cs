@@ -9,6 +9,7 @@ public class LocalCheckpoint : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             CheckpointsManager.Instance.SetLocalCheckPoint(transform);
+            
         }
     }
 }

@@ -37,7 +37,7 @@ public class RoomGraph : MonoBehaviour
 
         for(int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
-            Collider2D[] obstacles = Physics2D.OverlapCircleAll(m_graph.GetNode(i).Position, 4, m_obstacleLayer,-100,100);
+            Collider2D[] obstacles = Physics2D.OverlapCircleAll(m_graph.GetNode(i).Position, 4, m_obstacleLayer,-10000,10000);
 
             foreach (Collider2D enemy in obstacles)
             {
@@ -52,15 +52,17 @@ public class RoomGraph : MonoBehaviour
 
     private void OnDrawGizmos() {
         // DRAW ALL NODES
-        Gizmos.color = Color.black;
+        /*Gizmos.color = Color.black;
         Vector3 initialPosition = m_startingPoint.position;
         for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
-            if (!m_graph.GetNode(i).IsActive) { Gizmos.color = Color.yellow; }
-            else { Gizmos.color = Color.black; }
+            if (!m_graph.GetNode(i).IsActive) { Gizmos.color = Color.red; }
+            else { Gizmos.color = Color.yellow; }
 
+            //Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
         }
+        */
     }
 
 }
