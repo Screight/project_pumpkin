@@ -24,7 +24,7 @@ public class skellyGroundCheck : MonoBehaviour
         {
             skeletonScript.IsGrounded = true;
             skeletonRigidBody.velocity = Vector2.zero;
-            Physics2D.IgnoreLayerCollision(6, 7, false);
+            //Physics2D.IgnoreLayerCollision(6, 7, false);
             skeletonScript.State = SKELETON_STATE.MOVE;
         }
     }
