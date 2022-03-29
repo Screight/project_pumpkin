@@ -215,6 +215,7 @@ public class Skeleton : Enemy
         m_skeletonState = SKELETON_STATE.HIT;
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.HIT]);
         base.Damage(p_damage);
+        m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
             m_collider2D.enabled = false;

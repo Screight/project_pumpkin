@@ -73,7 +73,7 @@ public class Ghoul : Enemy
             case GHOUL_STATE.CHASE:     { Move(GHOUL_STATE.IDLE); }     break;
             case GHOUL_STATE.ATTACK:    { Attack(GHOUL_STATE.CHASE); }  break;
             case GHOUL_STATE.HIT:       { }                             break;
-            case GHOUL_STATE.DIE:       { Die(); }                      break;
+            case GHOUL_STATE.DIE:       {  }                      break;
         }
     }
 
@@ -137,14 +137,6 @@ public class Ghoul : Enemy
         }
         else { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
     }
-    void Die()
-    {
-        ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.DIE]);
-        m_collider2D.enabled = false;
-        m_rb2D.velocity = Vector2.zero;
-        m_rb2D.gravityScale = 0;
-        Destroy(gameObject, 1.5f);
-    }
 
     void ChangeAnimationState(int p_newState)
     {
@@ -175,12 +167,19 @@ public class Ghoul : Enemy
         m_rb2D.velocity = Vector2.zero;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.HIT]);
         base.Damage(p_damage);
-        if (m_health <= 0) { m_ghoulState = GHOUL_STATE.DIE; }
+        if (m_health <= 0) {
+            m_ghoulState = GHOUL_STATE.DIE; 
+            ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.DIE]);
+            m_collider2D.enabled = false;
+            m_rb2D.gravityScale = 0;
+        }
     }
 
     public override void Reset()
     {
         base.Reset();
+        m_rb2D.gravityScale = 40;
+        m_collider2D.enabled = true;
         m_ghoulState = GHOUL_STATE.IDLE;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
     }
