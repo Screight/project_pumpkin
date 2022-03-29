@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     string m_fallAnimationName      = "fall";
     string m_landAnimationName      = "land";
     string m_hitAnimationName       = "hit";
+    string m_dieAnimationName       = "die";
     string m_groundbreakerAnimationName       = "groundbreaker";
     string m_groundbreakerLoopAnimationName       = "groundbreakerLoop";
     int[] m_animationHash = new int[(int)PLAYER_ANIMATION.LAST_NO_USE];
@@ -132,13 +133,13 @@ public class Player : MonoBehaviour
         m_animationHash[(int)PLAYER_ANIMATION.HIT]                  = Animator.StringToHash(m_hitAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]        = Animator.StringToHash(m_groundbreakerAnimationName);
         m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]   = Animator.StringToHash(m_groundbreakerLoopAnimationName);
+        m_animationHash[(int)PLAYER_ANIMATION.DEATH]   = Animator.StringToHash(m_dieAnimationName);
 
         m_dashTimer.Duration = m_dashDuration;
         m_currentSpeedX = m_normalMovementSpeed;
     }
 
     private void Update() {
-
         CheckIfFalling();
 
         if(m_isBeingScripted){ return ;}
@@ -156,11 +157,12 @@ public class Player : MonoBehaviour
 
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
-            m_state = PLAYER_STATE.IDLE;
+            if(m_state != PLAYER_STATE.DEATH){
+                m_state = PLAYER_STATE.IDLE;
+            }
             m_direction = 0;
             m_isInvulnerable = false;
             m_spriteRenderer.color = new Color(255, 255, 255, 255);
-            Debug.Log("patata");
             Physics2D.IgnoreLayerCollision(6, 7, false);
             m_invulnerableTimer.Stop();
             m_blinkTimer.Stop();
@@ -192,7 +194,6 @@ public class Player : MonoBehaviour
 
     void InitializeDash()
     {
-        Debug.Log("START DASH");
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
         m_hasUsedDash = true;
@@ -217,9 +218,10 @@ public class Player : MonoBehaviour
             m_rb2D.velocity = new Vector2(0, 0);
             ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             Physics2D.IgnoreLayerCollision(6, 7, false);
-            Debug.Log("END DASH");
         }
     }
+
+
 
     void Move()
     {
@@ -271,6 +273,7 @@ public class Player : MonoBehaviour
     void CheckIfFalling()
     {
         if (m_state == PLAYER_STATE.DASH) { return; }
+        if (m_state == PLAYER_STATE.DEATH) { return; }
         if (m_state == PLAYER_STATE.GROUNDBREAKER) { return; }
         if (m_rb2D.velocity.y < 0)
         {
@@ -326,6 +329,10 @@ public class Player : MonoBehaviour
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_rb2D.velocity = Vector2.zero;
         SkillManager.Instance.ResetSkillStates();
+    }
+
+    public void StopPlayerMovement(){
+        m_rb2D.velocity = Vector2.zero;
     }
 
     public void ScriptWalk(int p_direction)
@@ -397,6 +404,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void HandleDeath(){
+        m_state = PLAYER_STATE.DEATH;
+        ChangeAnimationState(PLAYER_ANIMATION.DEATH);
+    }
+
+    void Die(){
+        Physics2D.IgnoreLayerCollision(6,7,true);
+        // RESET PLAYER
+        // SCREEN TRANSITION
+        // TP TO LAST CHECKPOINT (add room variable to checkpoint)
+        // MOVE CAMERA
+        // SET CHECKPOINT ROOM TO CURRENT ROOM
+    }
+
     public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage)
     {
         m_rb2D.velocity = new Vector2(p_direction.x * p_pushAwayVelocity.x, p_direction.y * p_pushAwayVelocity.y);
@@ -443,7 +464,10 @@ public class Player : MonoBehaviour
 
     public bool IsUsingGroundBreaker { set { m_isUsingGroundBreaker = value; } }
 
-    public string ObjectGroundedTo { set { m_objectGroundedTo = value; } }
+    public string ObjectGroundedTo { 
+        set { m_objectGroundedTo = value; } 
+        get { return m_objectGroundedTo;}
+        }
 
     public bool IsInvulnerable { get { return m_isInvulnerable;}}
 
