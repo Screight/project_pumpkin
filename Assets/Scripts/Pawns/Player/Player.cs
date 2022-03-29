@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
     private void Update() {
 
         CheckIfFalling();
-        Debug.Log(Physics2D.GetIgnoreLayerCollision(6,7));
+
         if(m_isBeingScripted){ return ;}
 
         if (m_invulnerableTimer.IsRunning)
@@ -171,26 +171,27 @@ public class Player : MonoBehaviour
 
         switch(m_state){
             default: break;
-            case PLAYER_STATE.IDLE: { HandleIdleState(); } break;
-            case PLAYER_STATE.MOVE: { HandleMoveState(); } break;
-            case PLAYER_STATE.BOOST: { HandleBoostState(); } break;
-            case PLAYER_STATE.JUMP: { HandleJumpState(); } break;
-            case PLAYER_STATE.FALL: { HandleFallState(); } break;
-            case PLAYER_STATE.LAND: { HandleLandState(); } break;
-            case PLAYER_STATE.DASH: { HandleDashState(); } break;
+            case PLAYER_STATE.IDLE:     { HandleIdleState(); }      break;
+            case PLAYER_STATE.MOVE:     { HandleMoveState(); }      break;
+            case PLAYER_STATE.BOOST:    { HandleBoostState(); }    break;
+            case PLAYER_STATE.JUMP:     { HandleJumpState(); }      break;
+            case PLAYER_STATE.FALL:     { HandleFallState(); }      break;
+            case PLAYER_STATE.LAND:     { HandleLandState(); }      break;
+            case PLAYER_STATE.DASH:     { HandleDashState(); }      break;
         }
     }
 
-    void HandleMoveState(){
-
+    void HandleMoveState()
+    {
         m_attackScript.HandleAttack(m_isGrounded);
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
-        if(InputManager.Instance.JumpButtonPressed && m_isGrounded){ Jump();}
-        else if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+        if (InputManager.Instance.JumpButtonPressed && m_isGrounded) { Jump(); }
+        else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash) { InitializeDash(); }
     }
 
-    void InitializeDash(){
+    void InitializeDash()
+    {
         Debug.Log("START DASH");
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
@@ -203,42 +204,49 @@ public class Player : MonoBehaviour
         m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
 
         Physics2D.IgnoreLayerCollision(6, 7, true);
-        
+
         m_dashTimer.Run();
     }
 
-    void HandleDash(){
+    void HandleDash()
+    {
         if (m_dashTimer.IsFinished)
         {
             m_state = PLAYER_STATE.IDLE;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-            m_rb2D.velocity = new Vector2(0,0);
+            m_rb2D.velocity = new Vector2(0, 0);
             ChangeAnimationState(PLAYER_ANIMATION.IDLE);
-            Physics2D.IgnoreLayerCollision(6,7,false);
+            Physics2D.IgnoreLayerCollision(6, 7, false);
             Debug.Log("END DASH");
         }
     }
 
-    void Move(){
-        if(!m_canPerformAction){return; }
-        if(m_direction != 0){
+    void Move()
+    {
+        if (!m_canPerformAction) { return; }
+        if (m_direction != 0)
+        {
             m_rb2D.velocity = new Vector2(m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             FacePlayerToMovementDirection();
-            if(m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK){
-            m_state = PLAYER_STATE.MOVE;
-            ChangeAnimationState(PLAYER_ANIMATION.RUN);
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
+            {
+                m_state = PLAYER_STATE.MOVE;
+                ChangeAnimationState(PLAYER_ANIMATION.RUN);
             }
         }
-        else{
-            m_rb2D.velocity = new Vector2(0,m_rb2D.velocity.y);
-            if(m_isGrounded && m_state != PLAYER_STATE.LAND){
+        else
+        {
+            m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
+            if (m_isGrounded && m_state != PLAYER_STATE.LAND)
+            {
                 m_state = PLAYER_STATE.IDLE;
                 ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             }
         }
     }
 
-    void Jump(){
+    void Jump()
+    {
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
@@ -247,59 +255,61 @@ public class Player : MonoBehaviour
         ChangeAnimationState(PLAYER_ANIMATION.BOOST);
     }
 
-    void HandleIdleState(){ 
-        HandleMoveState();
-    }
+    void HandleIdleState() { HandleMoveState(); }
     void HandleLandState() { HandleMoveState(); }
-    
-
-    void HandleDashState(){ HandleDash();}
-    void HandleJumpState(){
+    void HandleDashState() { HandleDash(); }
+    void HandleJumpState()
+    {
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         m_attackScript.HandleAttack(m_isGrounded);
-        if(InputManager.Instance.DashButtonPressed && !m_hasUsedDash){ InitializeDash();}
+        if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash) { InitializeDash(); }
     }
+    void HandleFallState() { HandleJumpState(); }
+    void HandleBoostState() { HandleJumpState(); }
 
-    void HandleFallState(){  HandleJumpState(); }
-    void HandleBoostState(){ HandleJumpState(); }
-
-    void CheckIfFalling(){
-        if(m_state == PLAYER_STATE.DASH) { return ;}
-        if(m_state == PLAYER_STATE.GROUNDBREAKER) { return ;}
+    void CheckIfFalling()
+    {
+        if (m_state == PLAYER_STATE.DASH) { return; }
+        if (m_state == PLAYER_STATE.GROUNDBREAKER) { return; }
         if (m_rb2D.velocity.y < 0)
         {
             m_isGrounded = false;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-            if(m_state != PLAYER_STATE.ATTACK) { m_state = PLAYER_STATE.FALL;}
+            if (m_state != PLAYER_STATE.ATTACK) { m_state = PLAYER_STATE.FALL; }
             ChangeAnimationState(PLAYER_ANIMATION.FALL);
             // limit falling speed
             if (m_rb2D.velocity.y < -m_maxFallingSpeed) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -m_maxFallingSpeed); }
         }
     }
 
-    void FacePlayerToMovementDirection(){
+    void FacePlayerToMovementDirection()
+    {
         if (!m_isFacingRight && m_direction > 0)    { FlipX(); }
         if (m_isFacingRight && m_direction < 0)     { FlipX(); }
     }
 
-    void FlipX(){
+    void FlipX()
+    {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        m_isFacingRight = !m_isFacingRight;    
+        m_isFacingRight = !m_isFacingRight;
     }
 
-    public int FacingDirection(){ 
-        if(m_isFacingRight){ return 1;} 
-        else return -1;
+    public int FacingDirection()
+    {
+        if (m_isFacingRight) { return 1; }
+        else { return -1; }
     }
 
-    public void HandleOneWayPlatforms(){
+    public void HandleOneWayPlatforms()
+    {
         m_isGrounded = false;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_moveTowardsOneWayPlatform);
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
     }
 
-    public void SetToGrounded( string p_objectGroundedTo){
+    public void SetToGrounded(string p_objectGroundedTo)
+    {
         m_isGrounded = true;
         m_objectGroundedTo = p_objectGroundedTo;
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
@@ -318,39 +328,43 @@ public class Player : MonoBehaviour
         SkillManager.Instance.ResetSkillStates();
     }
 
-    public void ScriptWalk(int p_direction){
-
-        if(p_direction > 0) { m_direction = 1;}
-        else { m_direction = -1;}
+    public void ScriptWalk(int p_direction)
+    {
+        if (p_direction > 0) { m_direction = 1; }
+        else { m_direction = -1; }
         m_isBeingScripted = true;
         FacePlayerToMovementDirection();
         m_state = PLAYER_STATE.MOVE;
         ChangeAnimationState(PLAYER_ANIMATION.RUN);
-        m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed ,0);
+        m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed, 0);
     }
 
-    public void ScriptTopSuction(float p_suctionVelocity){
+    public void ScriptTopSuction(float p_suctionVelocity)
+    {
         ChangeAnimationState(PLAYER_ANIMATION.JUMP);
         m_rb2D.gravityScale = 0;
         m_rb2D.velocity = new Vector2(0, p_suctionVelocity);
     }
 
-    public void ScriptTopImpulse(Vector2 p_impulseVelocity){
+    public void ScriptTopImpulse(Vector2 p_impulseVelocity)
+    {
         m_rb2D.velocity = p_impulseVelocity;
-        m_rb2D.gravityScale = m_gravity1/ Physics2D.gravity.y;
+        m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
         ChangeAnimationState(PLAYER_ANIMATION.JUMP);
-        if(p_impulseVelocity.x > 0) { m_direction = 1;}
-        else { m_direction = -1;}
+        if (p_impulseVelocity.x > 0) { m_direction = 1; }
+        else { m_direction = -1; }
         FacePlayerToMovementDirection();
     }
 
-    public void ScriptFall(){
-        m_rb2D.gravityScale = m_gravity2/ Physics2D.gravity.y;
+    public void ScriptFall()
+    {
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         ChangeAnimationState(PLAYER_ANIMATION.FALL);
         m_state = PLAYER_STATE.FALL;
     }
 
-    public void SetPlayerToScripted(){
+    public void SetPlayerToScripted()
+    {
         ResetPlayer(PLAYER_STATE.IDLE, PLAYER_ANIMATION.IDLE);
         m_isBeingScripted = true;
         m_rb2D.gravityScale = 0;
@@ -358,21 +372,21 @@ public class Player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(6, 7, true);
     }
 
-    public void FacePlayerToRight(){
-        transform.localScale = new Vector3( Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+    public void FacePlayerToRight()
+    {
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         m_isFacingRight = true;
     }
 
-    public void StopScripting(){
+    public void StopScripting()
+    {
         m_isBeingScripted = false;
         float speed = m_rb2D.velocity.y;
         ResetPlayer(m_state, m_animationState);
         m_rb2D.velocity = new Vector2(0, speed);
     }
 
-    public void SetPlayerToPosition(Vector3 p_position){
-        transform.position = p_position;
-    }
+    public void SetPlayerToPosition(Vector3 p_position) { transform.position = p_position; }
 
 /// COLLITIONS
     private void OnCollisionEnter2D(Collision2D collision)
@@ -383,8 +397,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage) {
-
+    public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage)
+    {
         m_rb2D.velocity = new Vector2(p_direction.x * p_pushAwayVelocity.x, p_direction.y * p_pushAwayVelocity.y);
 
         m_isInvulnerable = true;
@@ -401,7 +415,8 @@ public class Player : MonoBehaviour
         GameManager.Instance.ModifyPlayerHealth(-p_damage);
     }
 
-    public bool CanPlayerGetHit(){
+    public bool CanPlayerGetHit()
+    {
         return !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH;
     }
 
@@ -444,12 +459,12 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(new Vector3( transform.position.x, collider.bounds.max.y, transform.position.z), new Vector3( transform.position.x, collider.bounds.min.y, transform.position.z));
-        Gizmos.DrawLine(new Vector3( collider.bounds.min.x, collider.bounds.max.y, transform.position.z), new Vector3( collider.bounds.min.x, collider.bounds.min.y, transform.position.z));
-        Gizmos.DrawLine(new Vector3( collider.bounds.max.x, collider.bounds.max.y, transform.position.z), new Vector3( collider.bounds.max.x, collider.bounds.min.y, transform.position.z));
+        Gizmos.DrawLine(new Vector3(transform.position.x, collider.bounds.max.y, transform.position.z), new Vector3(transform.position.x, collider.bounds.min.y, transform.position.z));
+        Gizmos.DrawLine(new Vector3(collider.bounds.min.x, collider.bounds.max.y, transform.position.z), new Vector3(collider.bounds.min.x, collider.bounds.min.y, transform.position.z));
+        Gizmos.DrawLine(new Vector3(collider.bounds.max.x, collider.bounds.max.y, transform.position.z), new Vector3(collider.bounds.max.x, collider.bounds.min.y, transform.position.z));
     }
-
 }

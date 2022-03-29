@@ -19,8 +19,7 @@ public class Timeline : MonoBehaviour
     }
 
     private void Update()
-    {
-        Debug.Log(m_HUD.enabled);   
+    { 
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
     }
 
