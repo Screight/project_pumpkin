@@ -123,7 +123,7 @@ MonoBehaviour:
   m_referenceResolution: {x: 320, y: 180}
   m_pixelsPerUnit: 1
   m_mainScene: {fileID: 0}
-  m_cameraMovementScript: {fileID: 0}
+  m_cameraMovementScript: {fileID: 5035587074416154099}
 --- !u!114 &5035587074416154096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_dampSpeedDown: 0.1
   m_dampSpeedMovement: 0.3
   m_maxSpeedX: 150
+  m_maxSpeedY: 50
   m_offsetX: 20
   m_offsetY: 0
   m_offsetAddUpY: 20
