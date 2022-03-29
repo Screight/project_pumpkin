@@ -24,7 +24,7 @@ public class GhoulGroundCheck : MonoBehaviour
         {
             ghoulScript.IsGrounded = true;
             m_rb2D.velocity = Vector2.zero;
-            Physics2D.IgnoreLayerCollision(6, 7, false);
+            //Physics2D.IgnoreLayerCollision(6, 7, false);
             ghoulScript.State = GHOUL_STATE.IDLE;
         }
     }

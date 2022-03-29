@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void OnCollisionStay2D(Collision2D p_collider)
     {
-        if (p_collider.gameObject.tag == "Player" && !m_playerScript.IsInvulnerable)
+        if (p_collider.gameObject.tag == "Player" && !m_playerScript.IsInvulnerable && Player.Instance.CanPlayerGetHit())
         {
             float distanceToEnemyX = p_collider.gameObject.transform.position.x - transform.position.x;
             //float distanceToEnemyY = p_collider.gameObject.transform.position.y - transform.position.y;

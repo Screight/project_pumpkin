@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
     private void Update() {
 
         CheckIfFalling();
-
+        Debug.Log(Physics2D.GetIgnoreLayerCollision(6,7));
         if(m_isBeingScripted){ return ;}
 
         if (m_invulnerableTimer.IsRunning)
@@ -160,6 +160,7 @@ public class Player : MonoBehaviour
             m_direction = 0;
             m_isInvulnerable = false;
             m_spriteRenderer.color = new Color(255, 255, 255, 255);
+            Debug.Log("patata");
             Physics2D.IgnoreLayerCollision(6, 7, false);
             m_invulnerableTimer.Stop();
             m_blinkTimer.Stop();
@@ -190,6 +191,7 @@ public class Player : MonoBehaviour
     }
 
     void InitializeDash(){
+        Debug.Log("START DASH");
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
         m_hasUsedDash = true;
@@ -213,6 +215,7 @@ public class Player : MonoBehaviour
             m_rb2D.velocity = new Vector2(0,0);
             ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             Physics2D.IgnoreLayerCollision(6,7,false);
+            Debug.Log("END DASH");
         }
     }
 
@@ -391,25 +394,15 @@ public class Player : MonoBehaviour
         m_noControlTimer.Duration = p_noControlDuration;
         m_noControlTimer.Run();
         m_canPerformAction = false;
-
         Physics2D.IgnoreLayerCollision(6, 7, true);
+        m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
 
         m_state = PLAYER_STATE.JUMP;
         GameManager.Instance.ModifyPlayerHealth(-p_damage);
     }
 
-    private void OnTriggerStay2D(Collider2D p_collider)
-    {
-        string colliderTag = p_collider.tag;
-        bool canPlayerGetHit = !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH;
-
-        if (colliderTag == "enemyProjectile" && canPlayerGetHit)
-        {
-            float distanceToEnemyX = transform.position.x - p_collider.gameObject.transform.position.x;
-            float distanceToEnemyY = transform.position.y - p_collider.gameObject.transform.position.y;
-            Vector2 direction = new Vector2(-distanceToEnemyX/Mathf.Abs(distanceToEnemyX), -distanceToEnemyY/Mathf.Abs(distanceToEnemyY)).normalized;
-
-        }
+    public bool CanPlayerGetHit(){
+        return !m_isUsingGroundBreaker && !m_isInvulnerable && m_state != PLAYER_STATE.DASH;
     }
 
     #region Accessors
