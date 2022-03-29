@@ -24,6 +24,9 @@ public class GroundCheck : MonoBehaviour
                 m_playerScript.State = PLAYER_STATE.LAND;
                 m_playerScript.ChangeAnimationState(PLAYER_ANIMATION.LAND);
             }
+            if(m_playerScript.State == PLAYER_STATE.GROUNDBREAKER){
+                Physics2D.IgnoreLayerCollision(6,7,false);
+            }
             m_playerScript.SetToGrounded(colliderTag);
         }
         bool isPlayerJumping = m_playerScript.State == PLAYER_STATE.JUMP || m_playerScript.State == PLAYER_STATE.BOOST;

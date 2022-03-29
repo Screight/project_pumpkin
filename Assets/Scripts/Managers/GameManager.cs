@@ -46,6 +46,11 @@ public class GameManager : MonoBehaviour
         m_healthUI.SetHealth(m_playerHealth);
     }
 
+    public void RestorePlayerToFullHealth(){
+        m_playerHealth = PLAYER_MAX_HEALTH;
+        m_healthUI.SetHealth(m_playerHealth);
+    }
+
     public float PlayerAttackDamage { get { return m_playerAttackDamage; } }
     public int PlayerHealth { get { return m_playerHealth;}}
 }

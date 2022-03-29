@@ -9,10 +9,6 @@ public class HealthPoints : MonoBehaviour
     [SerializeField] Image m_secondHeart;
     [SerializeField] Image m_thirdHeart;
     [SerializeField] Image m_forthHeart;
-    [SerializeField] Image m_fifthHeart;
-    [SerializeField] Image m_sixthHeart;
-    [SerializeField] Image m_seventhHeart;
-    [SerializeField] Image m_octoHeart;
 
     [SerializeField] Sprite m_fullHeart;
     [SerializeField] Sprite m_emptyHeart;
@@ -20,19 +16,15 @@ public class HealthPoints : MonoBehaviour
     Image[] p_hearts;
 
     int m_maxNumberOfHearts = 4;
-    int m_currentNumberOfHearts = 8;
+    int m_currentNumberOfHearts = 4;
 
     private void Start()
     {
-        p_hearts = new Image[]{ m_firstHeart, m_secondHeart, m_thirdHeart, m_forthHeart , m_fifthHeart, m_sixthHeart, m_seventhHeart, m_octoHeart };
+        p_hearts = new Image[]{ m_firstHeart, m_secondHeart, m_thirdHeart, m_forthHeart};
         p_hearts[0].sprite = m_fullHeart;
         p_hearts[1].sprite = m_fullHeart;
         p_hearts[2].sprite = m_fullHeart;
         p_hearts[3].sprite = m_fullHeart;
-        p_hearts[4].sprite = m_fullHeart;
-        p_hearts[5].sprite = m_fullHeart;
-        p_hearts[6].sprite = m_fullHeart;
-        p_hearts[7].sprite = m_fullHeart;
         SetHealth(GameManager.Instance.PlayerHealth);
     }
 
@@ -40,7 +32,7 @@ public class HealthPoints : MonoBehaviour
     {
         Sprite sprite;
         m_currentNumberOfHearts = p_value;
-        for( int i = 0; i < m_maxNumberOfHearts; i++)
+        for( int i = 0; i < 4; i++)
         {
             if(i < m_currentNumberOfHearts){ sprite = m_fullHeart; }
             else { sprite = m_emptyHeart; }
