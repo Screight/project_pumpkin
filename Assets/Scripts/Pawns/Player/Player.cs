@@ -195,7 +195,6 @@ public class Player : MonoBehaviour
 
     void InitializeDash()
     {
-        Debug.Log("START DASH");
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
         m_hasUsedDash = true;
@@ -220,7 +219,6 @@ public class Player : MonoBehaviour
             m_rb2D.velocity = new Vector2(0, 0);
             ChangeAnimationState(PLAYER_ANIMATION.IDLE);
             Physics2D.IgnoreLayerCollision(6, 7, false);
-            Debug.Log("END DASH");
         }
     }
 
