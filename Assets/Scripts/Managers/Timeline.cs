@@ -25,13 +25,15 @@ public class Timeline : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") { startCutScene(); }
+        if (collision.gameObject.tag == "Player") { 
+            startCutScene(); }
     }
 
     public void startCutScene()
     {
         //m_HUD.enabled = false;
         m_playerScript.SetPlayerToScripted();
+        CameraManager.Instance.SetCameraToStatic();
         m_director.Play();
         hasPlayed = true;
     }
@@ -39,6 +41,7 @@ public class Timeline : MonoBehaviour
     {
         //m_HUD.enabled = true;
         m_playerScript.StopScripting(); 
+        CameraManager.Instance.SetCameraToNormal();
         gameObject.SetActive(false);
     }
 }

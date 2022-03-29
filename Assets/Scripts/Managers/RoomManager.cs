@@ -52,6 +52,15 @@ public class RoomManager : MonoBehaviour
             m_rooms[(int)script.Room].AddEnemy(script);
         }
 
+        GameObject[] vinesInWorld = GameObject.FindGameObjectsWithTag("vine");
+
+        foreach(GameObject vine in  vinesInWorld ){
+            VineDestroyer script = vine.GetComponent<VineDestroyer>();
+            if(script != null){
+                m_rooms[(int)script.Room].AddVine(script);
+            }
+        }
+
         for(int i = 0; i < (int)ROOMS.LAST_NO_USE; i++){
             if( m_rooms[i] != null && m_rooms[i].ID != m_currentRoom){
                 m_rooms[i].gameObject.SetActive(false);
@@ -75,12 +84,10 @@ public class RoomManager : MonoBehaviour
         // Reset enemies position and set all to unactive
         m_rooms[(int)m_lastRoom].gameObject.GetComponent<Room>().Reset();
         m_rooms[(int)m_lastRoom].gameObject.SetActive(false);
-        Debug.Log("Current Room unactive " + m_lastRoom);
 
         // Change current room and set all to active
         //m_currentRoom = m_roomToTransicion;
         m_rooms[(int)m_currentRoom].gameObject.SetActive(true);
-        Debug.Log("Current Room active " + m_currentRoom);
 
     }
 
