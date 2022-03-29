@@ -109,7 +109,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1978445833503857259, guid: dc6cb6c610cc9f14aaa546da7fe2ca8d, type: 3}
       propertyPath: m_Name
-      value: FireSpirit
+      value: FireSpirit3
       objectReference: {fileID: 0}
     - target: {fileID: 1978445833503857263, guid: dc6cb6c610cc9f14aaa546da7fe2ca8d, type: 3}
       propertyPath: m_RootOrder
@@ -117,11 +117,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1978445833503857263, guid: dc6cb6c610cc9f14aaa546da7fe2ca8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2709.5
+      value: 2983.4
       objectReference: {fileID: 0}
     - target: {fileID: 1978445833503857263, guid: dc6cb6c610cc9f14aaa546da7fe2ca8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -880.1
+      value: -884
       objectReference: {fileID: 0}
     - target: {fileID: 1978445833503857263, guid: dc6cb6c610cc9f14aaa546da7fe2ca8d, type: 3}
       propertyPath: m_LocalPosition.z
