@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Playables;
 
 public class Timeline : MonoBehaviour
 {
     public PlayableDirector m_director;
+    public Canvas m_HUD;
     [SerializeField] GameObject m_player;
     Player m_playerScript;
     private bool hasPlayed;
@@ -18,6 +20,7 @@ public class Timeline : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(m_HUD.enabled);   
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
     }
 
@@ -28,12 +31,14 @@ public class Timeline : MonoBehaviour
 
     public void startCutScene()
     {
+        m_HUD.enabled = false;
         m_playerScript.SetPlayerToScripted();
         m_director.Play();
         hasPlayed = true;
     }
     public void endCutScene()
     {
+        m_HUD.enabled = true;
         m_playerScript.StopScripting(); 
         gameObject.SetActive(false);
     }

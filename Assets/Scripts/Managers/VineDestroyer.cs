@@ -5,14 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class VineDestroyer : MonoBehaviour
 {
-    //private SpriteRenderer vineSprite;
     private Tilemap vineSprite;
 
-    private void Awake()
-    {
-        //vineSprite = GetComponent<SpriteRenderer>();
-        vineSprite = GetComponent<Tilemap>();
-    }
+    private void Awake() { vineSprite = GetComponent<Tilemap>(); }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

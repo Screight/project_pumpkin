@@ -1279,7 +1279,7 @@ Animator:
   m_GameObject: {fileID: 357976875219981878}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8ad81ae2f911906409af400e28e1b813, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1300,8 +1300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aacc267277f0304d898f98af6947feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_cameraScript: {fileID: 0}
-  m_image: {fileID: 357976874704036534}
 --- !u!1 &357976875797849452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1389,7 @@ GameObject:
   - component: {fileID: 357976875989882440}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1830,16 +1828,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773ac5fc93ec73a479691778b9480414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_firstHearth: {fileID: 1379833374}
-  m_secondHearth: {fileID: 1228466545}
-  m_thirdHearth: {fileID: 2136626523}
-  m_forthHearth: {fileID: 896941963703136595}
-  m_fifthHearth: {fileID: 6878074727492422811}
-  m_sixthHearth: {fileID: 7886439552288580267}
-  m_seventhHearth: {fileID: 2869895097688812288}
-  m_octoHearth: {fileID: 799725979027679931}
-  m_fullHearth: {fileID: 5941651614346352416, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
-  m_emptyHearth: {fileID: -2764825476995513921, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
+  m_firstHeart: {fileID: 0}
+  m_secondHeart: {fileID: 0}
+  m_thirdHeart: {fileID: 0}
+  m_forthHeart: {fileID: 0}
+  m_fifthHeart: {fileID: 0}
+  m_sixthHeart: {fileID: 0}
+  m_seventhHeart: {fileID: 0}
+  m_octoHeart: {fileID: 0}
+  m_fullHeart: {fileID: 0}
+  m_emptyHeart: {fileID: 0}
 --- !u!1 &8798996675533381019
 GameObject:
   m_ObjectHideFlags: 0
