@@ -15,6 +15,7 @@ TagManager:
   - hearth
   - cameraBound
   - room
+  - Spirit
   layers:
   - Default
   - TransparentFX

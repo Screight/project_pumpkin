@@ -10,7 +10,7 @@ public class VineDestroyer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "fireball")
+        if (collision.CompareTag("fireball")|| collision.CompareTag("Spirit"))
         {
             vineSprite.color = Color.Lerp(Color.white, Color.red, 10.0f);
             Destroy(gameObject, 0.5f);
