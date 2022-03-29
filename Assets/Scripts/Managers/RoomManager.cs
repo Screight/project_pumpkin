@@ -36,7 +36,7 @@ public class RoomManager : MonoBehaviour
 
     }
 
-    private async void Start() {
+    private void Start() {
 
         GameObject[] roomsInWorld = GameObject.FindGameObjectsWithTag("room");
 

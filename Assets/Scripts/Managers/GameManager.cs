@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     void Initiate()
     {
         m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        m_playerHealth = PLAYER_MAX_HEALTH;
     }
 
     static public GameManager Instance
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
         if (m_playerHealth < 0) { m_playerHealth = 0; }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
 
-        //m_healthUI.SetHealth(m_playerHealth);
+        m_healthUI.SetHealth(m_playerHealth);
     }
 
     public float PlayerAttackDamage { get { return m_playerAttackDamage; } }

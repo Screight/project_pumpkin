@@ -134,7 +134,9 @@ public class CameraBound : MonoBehaviour
         {
             if (m_limitsActive[i]) { BoundsManager.Instance.AddLimit(m_limits[i]); }
         }
-        BoundsManager.Instance.AddHeightLimit(m_heighLimit);
+        if(m_isCameraRestrictedInY){
+            BoundsManager.Instance.AddHeightLimit(m_heighLimit);
+        }
         BoundsManager.Instance.UpdateBounds();
     }
 
@@ -175,9 +177,9 @@ public class CameraBound : MonoBehaviour
         Gizmos.DrawLine(topLeftCorner,bottomLeftCorner);
 
         if(!m_isCameraRestrictedInY){ return; }
-        Gizmos.color = Color.black;
-        Vector2 leftPoint = new Vector2(m_boundsCollider.bounds.min.x, m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement);
-        Vector2 rightPoint = new Vector2(m_boundsCollider.bounds.max.x, m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement);
+        Gizmos.color = Color.yellow;
+        Vector2 leftPoint = new Vector2(m_boundsCollider.bounds.min.x, m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement + 16);
+        Vector2 rightPoint = new Vector2(m_boundsCollider.bounds.max.x, m_boundsCollider.bounds.min.y + m_minimumHeightForCameraMovement + 16);
         Gizmos.DrawLine(leftPoint,rightPoint);
     }
 }

@@ -263,7 +263,7 @@ public class Player : MonoBehaviour
 
     void CheckIfFalling(){
         if(m_state == PLAYER_STATE.DASH) { return ;}
-        
+        if(m_state == PLAYER_STATE.GROUNDBREAKER) { return ;}
         if (m_rb2D.velocity.y < 0)
         {
             m_isGrounded = false;
@@ -355,9 +355,16 @@ public class Player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(6, 7, true);
     }
 
+    public void FacePlayerToRight(){
+        transform.localScale = new Vector3( Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        m_isFacingRight = true;
+    }
+
     public void StopScripting(){
         m_isBeingScripted = false;
+        float speed = m_rb2D.velocity.y;
         ResetPlayer(m_state, m_animationState);
+        m_rb2D.velocity = new Vector2(0, speed);
     }
 
     public void SetPlayerToPosition(Vector3 p_position){
@@ -448,6 +455,8 @@ public class Player : MonoBehaviour
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
         Gizmos.color = Color.green;
         Gizmos.DrawLine(new Vector3( transform.position.x, collider.bounds.max.y, transform.position.z), new Vector3( transform.position.x, collider.bounds.min.y, transform.position.z));
+        Gizmos.DrawLine(new Vector3( collider.bounds.min.x, collider.bounds.max.y, transform.position.z), new Vector3( collider.bounds.min.x, collider.bounds.min.y, transform.position.z));
+        Gizmos.DrawLine(new Vector3( collider.bounds.max.x, collider.bounds.max.y, transform.position.z), new Vector3( collider.bounds.max.x, collider.bounds.min.y, transform.position.z));
     }
 
 }

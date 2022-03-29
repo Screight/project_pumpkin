@@ -94,7 +94,7 @@ public class Skill_Pilar : MonoBehaviour
 
         RaycastHit2D[] hits;
 
-       hits = Physics2D.RaycastAll(transform.position + Vector3.up, new Vector3(m_player.FacingDirection(), 0, 0), MARKER_MAX_DISTANCE);
+       hits = Physics2D.RaycastAll(transform.position + Vector3.up, new Vector3(m_player.FacingDirection(), 0, transform.position.z), MARKER_MAX_DISTANCE);
 
         bool hasFoundWall = false;
 
@@ -179,7 +179,7 @@ public class Skill_Pilar : MonoBehaviour
 
         if (hasFoundFloor)
         {
-            m_marker.transform.position = floorPosition;
+            m_marker.transform.position = new Vector3(floorPosition.x, floorPosition.y, transform.position.z);
             return true;
         }
         else
@@ -232,7 +232,7 @@ public class Skill_Pilar : MonoBehaviour
                     pilarPosition.x = hits[i].point.x - m_player.FacingDirection() * m_pilarColider.size.x / 2;
                 }
             }
-
+            pilarPosition = new Vector3(pilarPosition.x, pilarPosition.y, transform.position.z);
             m_pilarScript.Summon(pilarPosition);
 
             Debug.Log("Pillar summoned");

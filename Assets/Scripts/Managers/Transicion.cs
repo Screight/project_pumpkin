@@ -50,9 +50,6 @@ public class Transicion : MonoBehaviour
         CameraManager.Instance.SetCameraToStatic();
         ChangeAnimationState(TRANSITION_ANIMATION.FADE_IN); 
         
-        }
-    private void FadeOut() { 
-        ChangeAnimationState(TRANSITION_ANIMATION.FADE_OUT);
     }
 
     private void ClampCamera(){

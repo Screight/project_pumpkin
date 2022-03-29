@@ -29,6 +29,12 @@ public class SkillManager : MonoBehaviour
         m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
+    private void Start() {
+        UnlockFireball();
+        UnlockPilar();
+        UnlockGroundbreaker();
+    }
+
     private void Update()
     {
         switch (m_playerScript.State)

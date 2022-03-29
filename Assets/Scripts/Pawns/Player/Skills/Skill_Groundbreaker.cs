@@ -79,6 +79,8 @@ public class Skill_Groundbreaker : MonoBehaviour
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;
             m_cooldownTimer.Run();
+            Player.Instance.ChangeAnimationState(PLAYER_ANIMATION.IDLE);
+            Player.Instance.State = PLAYER_STATE.IDLE;
         }
     }
 

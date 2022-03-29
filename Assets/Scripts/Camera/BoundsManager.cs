@@ -15,6 +15,7 @@ public class BoundsManager : MonoBehaviour
 
     Limit[] m_currentLimits;
     HeightLimit m_currentHeightLimit;
+    HeightLimit m_defaultLimit;
 
     private void Awake() {
 
@@ -33,6 +34,8 @@ public class BoundsManager : MonoBehaviour
 
         m_currentLimits = new Limit[(int)DIRECTION.LAST_NO_USE];
         m_heightLimitList = new List<HeightLimit>();
+        m_defaultLimit = new HeightLimit(-1000000, 0, 0);
+        m_currentHeightLimit = m_defaultLimit;
     }
 
     // Start is called before the first frame update
@@ -85,7 +88,9 @@ public class BoundsManager : MonoBehaviour
             }
         }
 
-        if (m_heightLimitList.Count > 0) { m_currentHeightLimit = m_heightLimitList[0]; }
+        if (m_heightLimitList.Count == 0) { m_currentHeightLimit = m_defaultLimit; }
+        else { m_currentHeightLimit = m_heightLimitList[0];}
+        
         for (int i = 1; i < m_heightLimitList.Count; i++)
         {
             if (m_heightLimitList[i].height > m_currentHeightLimit.height)

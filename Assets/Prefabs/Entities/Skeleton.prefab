@@ -408,8 +408,8 @@ MonoBehaviour:
   m_health: 3
   m_damage: 1
   m_room: 2
-  m_playerInvulnerableDuration: 0.5
-  m_playerNoControlDuration: 0.5
+  m_playerInvulnerableDuration: 1
+  m_playerNoControlDuration: 0.2
   m_pushAwayPlayerVelocity: {x: 50, y: 100}
   m_arrow: {fileID: 5072539391972705450, guid: 6d0638c4f9e19a748a232a3f6b8a3839, type: 3}
   prefabBone: {fileID: 5072539391972705450, guid: 6d0638c4f9e19a748a232a3f6b8a3839, type: 3}

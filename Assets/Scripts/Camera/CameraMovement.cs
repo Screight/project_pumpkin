@@ -12,9 +12,12 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float m_dampSpeedUp = 0.3f;
     [SerializeField] float m_dampSpeedDown = 0.1f;
     [SerializeField] float m_dampSpeedMovement = 0.3f;
-    [SerializeField] float m_maxSpeedX =150.0f;
+    [SerializeField] float m_maxSpeedX = 150.0f;
+    [SerializeField] float m_maxSpeedY = 50.0f;
+    float m_currentMaxSpeedY;
     float m_dampSpeedX;
     float m_dampSpeedY;
+    bool m_isOutOfLimitsY = false;
 
     [SerializeField] float m_offsetX = 20.0f;
     [SerializeField] float m_offsetY = 0.0f;
@@ -80,13 +83,16 @@ public class CameraMovement : MonoBehaviour
             m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
         }
 
+        m_isOutOfLimitsY = false;
         if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
         {
             m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
+            m_isOutOfLimitsY = true;
         }
         else if (m_targetPosition.y + m_cameraHeight / 2 >= m_topLimit)
         {
             m_targetPosition.y = m_topLimit - m_cameraHeight / 2;
+            m_isOutOfLimitsY = true;
         }
         else 
         {
@@ -98,8 +104,9 @@ public class CameraMovement : MonoBehaviour
             else
             {
                 if (m_targetPosition.y < transform.position.y) { m_dampSpeedY = m_dampSpeedDown; }
-                else { m_dampSpeedY = m_dampSpeedUp; }
+                else { m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;  }
             }
+
         }
 
     }
@@ -121,6 +128,7 @@ public class CameraMovement : MonoBehaviour
             m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
         }
 
+        
         if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
         {
             m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
@@ -135,9 +143,13 @@ public class CameraMovement : MonoBehaviour
             return;
         } 
 
+        bool m_isMaxSpeedUnlimited = Player.Instance.State == PLAYER_STATE.FALL || Player.Instance.State == PLAYER_STATE.JUMP || Player.Instance.State == PLAYER_STATE.BOOST || Player.Instance.State == PLAYER_STATE.GROUNDBREAKER;
+
+        if (m_isMaxSpeedUnlimited){ m_currentMaxSpeedY = 10000; }// HIGH FOR IT TO BE INSTANT
+        else {m_currentMaxSpeedY = m_maxSpeedY;}
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(m_targetPosition.x, transform.position.y, m_targetPosition.z), ref m_velocityX, m_dampSpeedX, m_maxSpeedX);
 
-        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, m_targetPosition.y, m_targetPosition.z), ref m_velocityY, m_dampSpeedY);
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, m_targetPosition.y, m_targetPosition.z), ref m_velocityY, m_dampSpeedY, m_currentMaxSpeedY);
 
     }
 
