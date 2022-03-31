@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
     /// MOVEMENT
     Rigidbody2D m_rb2D;
-    int m_direction = 0;
+    float m_direction = 0;
     bool m_isFacingRight = true;
     [SerializeField] float m_normalMovementSpeed = 60;
     [SerializeField] float m_reducedMovementSpeed = 30;
@@ -186,7 +186,7 @@ public class Player : MonoBehaviour
     void HandleMoveState()
     {
         m_attackScript.HandleAttack(m_isGrounded);
-        m_direction = (int)Input.GetAxisRaw("Horizontal");
+        m_direction = Input.GetAxisRaw("Horizontal");
         Move();
         if (InputManager.Instance.JumpButtonPressed && m_isGrounded) { Jump(); }
         else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash) { InitializeDash(); }
@@ -228,7 +228,8 @@ public class Player : MonoBehaviour
         if (!m_canPerformAction) { return; }
         if (m_direction != 0)
         {
-            m_rb2D.velocity = new Vector2(m_direction * m_currentSpeedX, m_rb2D.velocity.y);
+            
+            m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             FacePlayerToMovementDirection();
             if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
             {

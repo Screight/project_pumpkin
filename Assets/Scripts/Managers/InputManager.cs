@@ -13,12 +13,22 @@ public class InputManager : MonoBehaviour
         private set { }
     }
 
-    KeyCode attackButton    = KeyCode.X;
-    KeyCode dashButton      = KeyCode.C;
-    KeyCode jumpButton      = KeyCode.Z;
-    KeyCode skill1Button    = KeyCode.A;
-    KeyCode skill2Button    = KeyCode.S;
-    KeyCode skill3Button    = KeyCode.D;
+    //------------------KEYBOARD--------------------------
+    KeyCode attackButton_k    = KeyCode.X;
+    KeyCode dashButton_k      = KeyCode.C;
+    KeyCode jumpButton_k      = KeyCode.Z;
+    KeyCode skill1Button_k    = KeyCode.A;
+    KeyCode skill2Button_k    = KeyCode.S;
+    KeyCode skill3Button_k    = KeyCode.D;
+
+
+    //-------------------JOYSTICK-------------------------
+    KeyCode attackButton_j = KeyCode.Joystick1Button2;
+    KeyCode dashButton_j = KeyCode.Joystick1Button4;
+    KeyCode jumpButton_j = KeyCode.Joystick1Button0;
+    KeyCode skill1Button_j = KeyCode.Joystick1Button5;
+    KeyCode skill2Button_j = KeyCode.Joystick1Button9;
+    KeyCode skill3Button_j = KeyCode.Joystick1Button10;
 
     bool[] buttonsPressed   = new bool[6];
     bool[] buttonsHold      = new bool[6];
@@ -45,29 +55,29 @@ public class InputManager : MonoBehaviour
             buttonsReleased[i] = false;
         }
 
-        if (Input.GetKeyDown(attackButton))     { buttonsPressed[(int)ACTIONS.ATTACK]   = true; }
-        if (Input.GetKey(attackButton))         { buttonsHold[(int)ACTIONS.ATTACK]      = true; }
-        if (Input.GetKeyUp(attackButton))       { buttonsReleased[(int)ACTIONS.ATTACK]  = true; }
+        if (Input.GetKeyDown(attackButton_k) || Input.GetKeyDown(attackButton_j))     { buttonsPressed[(int)ACTIONS.ATTACK]   = true; }
+        if (Input.GetKeyDown(attackButton_k) || Input.GetKeyDown(attackButton_j))         { buttonsHold[(int)ACTIONS.ATTACK]      = true; }
+        if (Input.GetKeyDown(attackButton_k) || Input.GetKeyDown(attackButton_j))       { buttonsReleased[(int)ACTIONS.ATTACK]  = true; }
 
-        if (Input.GetKeyDown(dashButton))       { buttonsPressed[(int)ACTIONS.DASH]     = true; }
-        if (Input.GetKey(dashButton))           { buttonsHold[(int)ACTIONS.DASH]        = true; }
-        if (Input.GetKeyUp(dashButton))         { buttonsReleased[(int)ACTIONS.DASH]    = true; }
+        if (Input.GetKeyDown(dashButton_k) || Input.GetKeyDown(dashButton_j))       { buttonsPressed[(int)ACTIONS.DASH]     = true; }
+        if (Input.GetKeyDown(dashButton_k) || Input.GetKeyDown(dashButton_j))           { buttonsHold[(int)ACTIONS.DASH]        = true; }
+        if (Input.GetKeyDown(dashButton_k) || Input.GetKeyDown(dashButton_j))         { buttonsReleased[(int)ACTIONS.DASH]    = true; }
 
-        if (Input.GetKeyDown(jumpButton))       { buttonsPressed[(int)ACTIONS.JUMP]     = true; }
-        if (Input.GetKey(jumpButton))           { buttonsHold[(int)ACTIONS.JUMP]        = true; }
-        if (Input.GetKeyUp(jumpButton))         { buttonsReleased[(int)ACTIONS.JUMP]    = true; }
+        if (Input.GetKeyDown(jumpButton_k) || Input.GetKeyDown(jumpButton_j))       { buttonsPressed[(int)ACTIONS.JUMP]     = true; }
+        if (Input.GetKeyDown(jumpButton_k) || Input.GetKeyDown(jumpButton_j))           { buttonsHold[(int)ACTIONS.JUMP]        = true; }
+        if (Input.GetKeyDown(jumpButton_k) || Input.GetKeyDown(jumpButton_j))         { buttonsReleased[(int)ACTIONS.JUMP]    = true; }
 
-        if (Input.GetKeyDown(skill1Button))     { buttonsPressed[(int)ACTIONS.SKILL_1]  = true; }
-        if (Input.GetKey(skill1Button))         { buttonsHold[(int)ACTIONS.SKILL_1]     = true; }
-        if (Input.GetKeyUp(skill1Button))       { buttonsReleased[(int)ACTIONS.SKILL_1] = true; }
+        if (Input.GetKeyDown(skill1Button_k))     { buttonsPressed[(int)ACTIONS.SKILL_1]  = true; }
+        if (Input.GetKey(skill1Button_k))         { buttonsHold[(int)ACTIONS.SKILL_1]     = true; }
+        if (Input.GetKeyUp(skill1Button_k))       { buttonsReleased[(int)ACTIONS.SKILL_1] = true; }
 
-        if (Input.GetKeyDown(skill2Button))     { buttonsPressed[(int)ACTIONS.SKILL_2]  = true; }
-        if (Input.GetKey(skill2Button))         { buttonsHold[(int)ACTIONS.SKILL_2]     = true; }
-        if (Input.GetKeyUp(skill2Button))       { buttonsReleased[(int)ACTIONS.SKILL_2] = true; }
+        if (Input.GetKeyDown(skill2Button_k))     { buttonsPressed[(int)ACTIONS.SKILL_2]  = true; }
+        if (Input.GetKey(skill2Button_k))         { buttonsHold[(int)ACTIONS.SKILL_2]     = true; }
+        if (Input.GetKeyUp(skill2Button_k))       { buttonsReleased[(int)ACTIONS.SKILL_2] = true; }
 
-        if (Input.GetKeyDown(skill3Button))     { buttonsPressed[(int)ACTIONS.SKILL_3]  = true; }
-        if (Input.GetKey(skill3Button))         { buttonsHold[(int)ACTIONS.SKILL_3]     = true; }
-        if (Input.GetKeyUp(skill3Button))       { buttonsReleased[(int)ACTIONS.SKILL_3] = true; }
+        if (Input.GetKeyDown(skill2Button_k))     { buttonsPressed[(int)ACTIONS.SKILL_3]  = true; }
+        if (Input.GetKey(skill2Button_k))         { buttonsHold[(int)ACTIONS.SKILL_3]     = true; }
+        if (Input.GetKeyUp(skill2Button_k))       { buttonsReleased[(int)ACTIONS.SKILL_3] = true; }
     }
 
     public bool AttackButtonPressed     { get { return buttonsPressed[(int)ACTIONS.ATTACK]; } }
