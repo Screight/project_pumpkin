@@ -9,7 +9,6 @@ public class Skeleton : Enemy
 {   
     [SerializeField] GameObject m_arrow;
     Rigidbody2D m_rb2D;
-    Collider2D m_collider2D;
     Timer boneTimer;
     SKELETON_STATE m_skeletonState;
     int m_currentState;
@@ -37,15 +36,17 @@ public class Skeleton : Enemy
     [SerializeField] float m_speed = 50.0f;
     [SerializeField] bool m_isFacingRight;
     bool m_isGrounded;
+    bool m_isHittingWall = false;
     bool m_playerIsNear;
     bool m_playerIsAtRange;
+    bool m_isAttacking = false;
+    [SerializeField] Transform m_attackPosition;
 
     protected override void Awake() 
     {
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_collider2D = GetComponent<Collider2D>();
         m_animator = GetComponent<Animator>();
         m_health = 3;
 
@@ -79,8 +80,9 @@ public class Skeleton : Enemy
         boneTimer.Duration = 2;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         switch (m_skeletonState)
         {
             default:break;
@@ -100,9 +102,11 @@ public class Skeleton : Enemy
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
         if (m_hasReturned)
         {
+            if(m_isHittingWall){
+                FlipX();
+                m_isHittingWall = false;
+            }
             m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
-
-            if (!m_isGrounded) { FlipX(); }
 
             if (transform.position.x < left_limit.position.x)
             {
@@ -124,7 +128,10 @@ public class Skeleton : Enemy
         }
         else
         {
-            if (!m_isGrounded) { FlipX(); }
+            if(m_isHittingWall){
+                FlipX();
+                m_isHittingWall = false;
+            }
             if (m_isFacingRight && transform.position.x > m_spawnPos.x)         { FlipX(); }
             else if(!m_isFacingRight && transform.position.x < m_spawnPos.x)    { FlipX(); }
 
@@ -147,7 +154,7 @@ public class Skeleton : Enemy
         //Player Near but Unnaccesible
         if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded) 
         { 
-            m_rb2D.velocity = Vector2.zero;
+            m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
         }
         else if (m_playerIsNear)
@@ -166,29 +173,25 @@ public class Skeleton : Enemy
         if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
         if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
 
-        
-        m_rb2D.velocity = Vector2.zero;
-
-        if (m_playerIsAtRange)
-        {
-            /*if (boneTimer.IsFinished)
-            {
-                Projectile m_boneArrowScript  = Instantiate(m_arrow, transform.position, Quaternion.identity).GetComponent<Projectile>();
-                m_boneArrowScript.Shoot(FacingDirection());
-                boneTimer.Run();
-            }*/
-            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.ATTACK]);
-        }
-        else
-        {
+        if(!m_isAttacking){
+            if (m_playerIsAtRange && m_isGrounded)
+            {        
+                m_rb2D.velocity = Vector2.zero;
+                ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.ATTACK]);
+                m_isAttacking = true;
+            }
+            else {
             m_skeletonState = p_defaultState;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+            }
         }
+        
     }
 
     void LaunchFireBall(){
-        Projectile m_boneArrowScript  = Instantiate(m_arrow, transform.position, Quaternion.identity).GetComponent<Projectile>();
+        Projectile m_boneArrowScript  = Instantiate(m_arrow, m_attackPosition.position, Quaternion.identity).GetComponent<Projectile>();
         m_boneArrowScript.Shoot(FacingDirection());
+        m_isAttacking = false;
     }
 
     void ChangeAnimationState(int p_newState)
@@ -209,7 +212,6 @@ public class Skeleton : Enemy
     {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         m_isFacingRight = !m_isFacingRight;
-        m_isGrounded = true;
     }
     public int FacingDirection()
     {
@@ -225,8 +227,7 @@ public class Skeleton : Enemy
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
-            m_collider2D.enabled = false;
-            m_rb2D.gravityScale = 0;
+            Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
     }
 
@@ -240,9 +241,9 @@ public class Skeleton : Enemy
 
     public override void Reset(){
         base.Reset();
-        m_collider2D.enabled = true;
         m_rb2D.gravityScale = 40;
         ReturnToNormalState();
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
     #region Accessors
@@ -258,6 +259,11 @@ public class Skeleton : Enemy
     {
         set { m_playerIsAtRange = value; }
     }
+
+    public bool IsHittingWall {
+        set { m_isHittingWall = value;}
+    }
+
     #endregion
 
     private void OnDrawGizmos() {

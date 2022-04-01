@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake() { 
         m_spawnPos = transform.position; 
         m_dieTimer = gameObject.AddComponent<Timer>();
+        m_collider = GetComponent<Collider2D>();
     }
 
     protected virtual void Start()
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
     public virtual void Damage(float p_damage)
     {
         m_health -= p_damage;
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         if (m_health <= 0) {
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL); 
             m_isDying = true;

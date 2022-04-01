@@ -34,7 +34,6 @@ public class Ghoul : Enemy
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_collider = GetComponent<Collider2D>();
         m_animator = GetComponent<Animator>();
         m_health = 5;
 
@@ -153,6 +152,8 @@ public class Ghoul : Enemy
         if(m_ghoulState == GHOUL_STATE.DIE){ return; }
         m_ghoulState = GHOUL_STATE.IDLE;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
+
     }
 
     void FlipX()

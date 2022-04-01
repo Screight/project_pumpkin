@@ -65,7 +65,6 @@ public class Skill_Groundbreaker : MonoBehaviour
             {
                 if (enemy.gameObject.tag == "enemy")
                 {
-                    enemy.GetComponent<Skeleton>().State = SKELETON_STATE.AIR;
                     enemy.gameObject.GetComponent<Enemy>().Damage(1);
                     float velocityX;
                     if (transform.position.x == enemy.transform.position.x) { velocityX = 0; }
