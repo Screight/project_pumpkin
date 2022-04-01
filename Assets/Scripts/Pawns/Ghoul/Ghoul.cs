@@ -8,8 +8,6 @@ public enum GHOUL_ANIMATION { IDLE, MOVE, ATTACK, HIT, DIE, LAST_NO_USE }
 public class Ghoul : Enemy
 {
     Rigidbody2D m_rb2D;
-    Collider2D m_collider2D;
-    Animator m_animator;
     GHOUL_STATE m_ghoulState;
     int m_currentState;
 
@@ -36,7 +34,7 @@ public class Ghoul : Enemy
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_collider2D = GetComponent<Collider2D>();
+        m_collider = GetComponent<Collider2D>();
         m_animator = GetComponent<Animator>();
         m_health = 5;
 
@@ -63,9 +61,9 @@ public class Ghoul : Enemy
         chargeTimer.Duration = 1;
     }
 
-    void Update()
+    protected override void Update()
     {
-        Debug.Log(m_isGrounded);
+        base.Update();
         if (Time.timeScale == 0) { return; } //Game Paused
         switch (m_ghoulState)
         {
@@ -128,7 +126,7 @@ public class Ghoul : Enemy
         {
             if (hasCharged && m_isGrounded)
             {
-                m_animator.speed = 55 / distance;
+                //m_animator.speed = 55 / distance;
 
                 ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.ATTACK]);
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
@@ -152,6 +150,7 @@ public class Ghoul : Enemy
 
     void ReturnToNormalState()
     {
+        if(m_ghoulState == GHOUL_STATE.DIE){ return; }
         m_ghoulState = GHOUL_STATE.IDLE;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
     }
@@ -177,8 +176,7 @@ public class Ghoul : Enemy
         if (m_health <= 0) {
             m_ghoulState = GHOUL_STATE.DIE; 
             ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.DIE]);
-            m_collider2D.enabled = false;
-            m_rb2D.gravityScale = 0;
+            Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
     }
 
@@ -186,9 +184,9 @@ public class Ghoul : Enemy
     {
         base.Reset();
         m_rb2D.gravityScale = 40;
-        m_collider2D.enabled = true;
         m_ghoulState = GHOUL_STATE.IDLE;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
     public GHOUL_STATE State 

@@ -12,7 +12,6 @@ public class FlyingPatrolMonster : Enemy
     int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
     int m_currentAnimationHash;
     ANIMATION_STATE m_animationState;
-    Animator m_animator;
     Collider2D m_collider;
      void ChangeAnimationState(ANIMATION_STATE p_animationState)
     {

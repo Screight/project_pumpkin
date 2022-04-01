@@ -56,7 +56,6 @@ public class FlyingMonster : Enemy
 
     ANIMATION_STATE m_animationState;
     int m_currentAnimationHash;
-    Animator m_animator;
 
     protected override void Awake()
     {

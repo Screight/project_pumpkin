@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     /// MOVEMENT
     Rigidbody2D m_rb2D;
     float m_direction = 0;
+    Collider2D m_collider;
     bool m_isFacingRight = true;
     [SerializeField] float m_normalMovementSpeed = 60;
     [SerializeField] float m_reducedMovementSpeed = 30;
@@ -90,7 +91,7 @@ public class Player : MonoBehaviour
     /// TODO: ORGANIZE THIS VARIABLES
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
-    [SerializeField] Transicion m_transicionScript;
+    [SerializeField] Transicion m_transicionScrDamageipt;
     bool m_isUsingGroundBreaker = false;
     
 
@@ -119,7 +120,9 @@ public class Player : MonoBehaviour
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_spriteRenderer = GetComponent<SpriteRenderer>();
-        
+
+        m_collider = GetComponent<Collider2D>();
+
     }
 
     private void Start() {
@@ -488,6 +491,8 @@ public class Player : MonoBehaviour
     public void SetToNormalSpeed() { m_currentSpeedX = m_normalMovementSpeed; }
 
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
+
+    public Collider2D GetCollider(){ return m_collider;}
 
     #endregion
 

@@ -121,6 +121,10 @@ public class RoomManager : MonoBehaviour
 
     }
 
+    public Room GetCurrentRoom(){
+        return m_rooms[(int)m_currentRoom];
+    }
+
     public ROOMS CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }}
 
 }

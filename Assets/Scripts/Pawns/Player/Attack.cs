@@ -122,7 +122,13 @@ public class Attack : MonoBehaviour
         Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), M_ATTACK_RANGE, m_enemyLayer);
         foreach (Collider2D enemy in enemiesInAttackRange)
         {
-            if (enemy.gameObject.tag == "enemy") { enemy.gameObject.GetComponent<Enemy>().Damage(GameManager.Instance.PlayerAttackDamage); }
+            if (enemy.gameObject.tag == "enemy") { 
+                Enemy enemyScript = enemy.gameObject.GetComponent<Enemy>();
+                if(!enemyScript.IsDying){
+                    enemyScript.Damage(GameManager.Instance.PlayerAttackDamage);
+                }
+                 
+                }
         }
 
         if(enemiesInAttackRange.Length == 0)

@@ -10,7 +10,6 @@ public class Skeleton : Enemy
     [SerializeField] GameObject m_arrow;
     Rigidbody2D m_rb2D;
     Collider2D m_collider2D;
-    Animator m_animator;
     Timer boneTimer;
     SKELETON_STATE m_skeletonState;
     int m_currentState;
