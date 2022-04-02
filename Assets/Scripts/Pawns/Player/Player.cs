@@ -143,6 +143,7 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        Debug.Log(m_state);
         CheckIfFalling();
 
         if(m_isBeingScripted){ return ;}
@@ -197,6 +198,7 @@ public class Player : MonoBehaviour
 
     void InitializeDash()
     {
+        Debug.Log("Initialize dash");
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
         m_hasUsedDash = true;
@@ -339,6 +341,11 @@ public class Player : MonoBehaviour
         m_rb2D.velocity = Vector2.zero;
     }
 
+    public void HandleBoostToJumpTransition(){
+        if(m_state == PLAYER_STATE.BOOST){
+            m_state = PLAYER_STATE.JUMP;
+        }
+    }
     public void ScriptWalk(int p_direction)
     {
         if (p_direction > 0) { m_direction = 1; }

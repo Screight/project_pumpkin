@@ -237,6 +237,7 @@ public class Skeleton : Enemy
     {
         m_skeletonState = SKELETON_STATE.MOVE;
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
     public override void Reset(){
