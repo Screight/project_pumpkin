@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class MainTitleScript : MonoBehaviour
 {
-   
 
+    public MainMenu main;
     public Canvas menu;
     public GameObject[] options;
+   
     private int option_counter = 0;
     public GameObject FireHUD;
     public EventSystem EvSys;
@@ -19,7 +20,7 @@ public class MainTitleScript : MonoBehaviour
     // Start is called before the first frame update
 
    
-        void Start()
+    void Start()
     {
       EvSys.SetSelectedGameObject(  EvSys.firstSelectedGameObject);
 
@@ -55,6 +56,8 @@ public class MainTitleScript : MonoBehaviour
                     PlayGame();
                     break;
                 case 1:
+                    main.setActiveMenuOptions();
+                    FireHUD.SetActive(false);
                     break;
                 case 2:
                     break;
