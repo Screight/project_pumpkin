@@ -7,15 +7,14 @@ public class FlyingMonster : Enemy
     enum ENEMY_STATE { PATROL, CHASE, ATTACK, IDLE, RETURN, HIT, DEAD, REPOSITION, PREPARE_ATTACK }
     enum ANIMATION_STATE { MOVE, PREPARE_ATTACK, ATTACK, RECOVER_FROM_ATTACK, HIT, DIE, LAST_NO_USE}
 
-    string m_moveAnimationName      = "move";
-    string m_prepareAttackAnimationName    = "prepare_attack";
-    string m_attackAnimationName      = "attack";
-    string m_recoverFromAttackAnimationName       = "recover_from_attack";
-    string m_hitAnimationName = "hit";
-    string m_dieAnimationName       = "die";
+    string m_moveAnimationName                  = "move";
+    string m_prepareAttackAnimationName         = "prepare_attack";
+    string m_attackAnimationName                = "attack";
+    string m_recoverFromAttackAnimationName     = "recover_from_attack";
+    string m_hitAnimationName                   = "hit";
+    string m_dieAnimationName                   = "die";
 
     int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
-
 
     [SerializeField] LayerMask m_obstacleLayer;
 
@@ -45,7 +44,7 @@ public class FlyingMonster : Enemy
     ENEMY_STATE m_state;
     [SerializeField] GameObject m_player;
     Player m_playerScript;
-    PathFinderTest m_pathFinder;
+    PathFinder m_pathFinder;
     bool m_isGoingFrom1To2;
     bool m_isCharging;
     bool m_hasCharged = false;
@@ -61,7 +60,7 @@ public class FlyingMonster : Enemy
     {
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_pathFinder = GetComponent<PathFinderTest>();
+        m_pathFinder = GetComponent<PathFinder>();
 
         m_restTimer = gameObject.AddComponent<Timer>();
         m_memoryTimer = gameObject.AddComponent<Timer>();
@@ -74,9 +73,9 @@ public class FlyingMonster : Enemy
     {
         int newAnimationHash = m_animationHash[(int)p_animationState];
 
-        if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
-        m_animator.Play(newAnimationHash);                // play the animation
-        m_currentAnimationHash = newAnimationHash;                // reassigning the new state
+        if (m_currentAnimationHash == newAnimationHash) return;     // stop the same animation from interrupting itself
+        m_animator.Play(newAnimationHash);                          // play the animation
+        m_currentAnimationHash = newAnimationHash;                  // reassigning the new state
         m_animationState = p_animationState;
     }
 
@@ -126,7 +125,8 @@ public class FlyingMonster : Enemy
         m_pathFinder.NavigateToTargetPosition();
     }
 
-    void InitializePrepareAttack(){
+    void InitializePrepareAttack()
+    {
         ChangeAnimationState(ANIMATION_STATE.PREPARE_ATTACK);
         m_directionToAttack = GetDirection(m_player.transform.position, transform.position);
     }
@@ -169,38 +169,38 @@ public class FlyingMonster : Enemy
         ChangeAnimationState(ANIMATION_STATE.MOVE);
     }
 
-    void Reposition() {
-        m_pathFinder.NavigateToTargetPosition(); 
-    }
+    void Reposition() { m_pathFinder.NavigateToTargetPosition(); }
 
-    bool CanEnemySeePlayer(Vector2 p_position) {
+    bool CanEnemySeePlayer(Vector2 p_position)
+    {
         Vector2 playerPosition = new Vector2(m_player.transform.position.x, m_player.transform.position.y);
         Vector2 raycastDirection = (playerPosition - p_position).normalized;
 
         RaycastHit2D obstaclesHit = Physics2D.Raycast(transform.position, raycastDirection, m_attackRange, m_obstacleLayer);
 
-        if(obstaclesHit.collider == null) { return true; }
+        if (obstaclesHit.collider == null) { return true; }
 
         float distanceToPlayer = (playerPosition - p_position).magnitude;
 
-        if(distanceToPlayer < obstaclesHit.distance) { return true; }
+        if (distanceToPlayer < obstaclesHit.distance) { return true; }
         return false;
     }
 
-    bool DoesEnemyKnowsWhereThePlayerIs(){
-        if(IsPlayerInRange(m_visionRange)){
+    bool DoesEnemyKnowsWhereThePlayerIs()
+    {
+        if (IsPlayerInRange(m_visionRange))
+        {
             m_isPlayerInEnemyRangeFlag = true;
             return true;
         }
-        else if(m_isPlayerInEnemyRangeFlag){ 
+        else if (m_isPlayerInEnemyRangeFlag)
+        {
             m_isPlayerInEnemyRangeFlag = false;
             m_memoryTimer.Stop();
             m_memoryTimer.Run();
             return true;
-            }
-        else if(!m_memoryTimer.IsFinished){
-            return true;
         }
+        else if (!m_memoryTimer.IsFinished) { return true; }
         return false;
     }
 
@@ -221,22 +221,23 @@ public class FlyingMonster : Enemy
         if (direction != FacingDirection()) { FlipX(); }
     }
 
-    void FaceToDirection(){
-        if(m_rb2D.velocity.x > 0 && !m_isFacingRight){ FlipX(); return ;}
-        else if (m_rb2D.velocity.x < 0 && m_isFacingRight) { FlipX(); return ;}
-        if(m_state == ENEMY_STATE.ATTACK) { return ;}
-        if(m_pathFinder.GetDirection().y == 0){
-            if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
-                FlipX();
-            }
-            else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
-                FlipX();
-            }
+    void FaceToDirection()
+    {
+        if (m_rb2D.velocity.x > 0 && !m_isFacingRight)      { FlipX(); return; }
+        else if (m_rb2D.velocity.x < 0 && m_isFacingRight)  { FlipX(); return; }
+
+        if (m_state == ENEMY_STATE.ATTACK) { return; }
+        if (m_pathFinder.GetDirection().y == 0)
+        {
+            if (m_pathFinder.GetDirection().x == 1 && !m_isFacingRight)         { FlipX(); }
+            else if (m_pathFinder.GetDirection().x == -1 && m_isFacingRight)    { FlipX(); }
         }
-        else if(m_state == ENEMY_STATE.REPOSITION || m_state == ENEMY_STATE.CHASE){
+        else if (m_state == ENEMY_STATE.REPOSITION || m_state == ENEMY_STATE.CHASE)
+        {
             FaceToPosition(Player.Instance.transform.position.x);
         }
-        else if(m_state == ENEMY_STATE.RETURN){
+        else if (m_state == ENEMY_STATE.RETURN)
+        {
             FaceToPosition(m_pathFinder.GetTargetNode().Position.x);
         }
     }
@@ -246,12 +247,13 @@ public class FlyingMonster : Enemy
         if(m_state == ENEMY_STATE.DEAD) { return ;}
         m_state = ENEMY_STATE.HIT;
         ChangeAnimationState(ANIMATION_STATE.HIT);
-        base.Damage(p_damage);
-        
+        base.Damage(p_damage);       
     }
 
-    public void EndHit(){
-        if(m_health <= 0) { 
+    public void EndHit()
+    {
+        if (m_health <= 0)
+        {
             m_state = ENEMY_STATE.DEAD;
             ChangeAnimationState(ANIMATION_STATE.DIE);
             m_state = ENEMY_STATE.DEAD;
@@ -267,7 +269,8 @@ public class FlyingMonster : Enemy
         ChangeAnimationState(ANIMATION_STATE.MOVE);
     }
 
-    public override void Reset(){
+    public override void Reset()
+    {
         m_collider.enabled = true;
         base.Reset();
         ReturnToNormalState();
@@ -322,8 +325,9 @@ public class FlyingMonster : Enemy
 
     private void Update()
     {
-        if(!m_isInitialized) {
-            InitializePatrol(); 
+        if (!m_isInitialized)
+        {
+            InitializePatrol();
             m_isInitialized = true;
         }
         FaceToDirection();
@@ -348,11 +352,8 @@ public class FlyingMonster : Enemy
                         SetState(ENEMY_STATE.PATROL);
                         InitializePatrol();
                     }
-                    else if (IsPlayerInRange(m_attackRange))
-                    {
-                        SetState(ENEMY_STATE.ATTACK);
-                    }
-                    else { Chase(); }               
+                    else if (IsPlayerInRange(m_attackRange)) { SetState(ENEMY_STATE.ATTACK); }
+                    else { Chase(); }
                 }
                 break;
             case ENEMY_STATE.IDLE:
@@ -375,14 +376,15 @@ public class FlyingMonster : Enemy
             case ENEMY_STATE.ATTACK:
                 {
                     if (m_isCharging) { return; }
-                    
+
                     InitializeReposition();
                     SetState(ENEMY_STATE.REPOSITION);
                 }
                 break;
             case ENEMY_STATE.REPOSITION:
                 {
-                    if (m_pathFinder.IsFinished()) {
+                    if (m_pathFinder.IsFinished())
+                    {
                         SetState(ENEMY_STATE.PREPARE_ATTACK);
                         InitializePrepareAttack();
                     }
@@ -403,7 +405,6 @@ public class FlyingMonster : Enemy
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(new Vector3(m_patrolPoint_1.position.x, m_patrolPoint_1.position.y, transform.position.z),3);
         Gizmos.DrawSphere(new Vector3(m_patrolPoint_2.position.x, m_patrolPoint_2.position.y, transform.position.z),3);
-
     }
 
     private void EndRecovering() { m_isRecovering = false;}

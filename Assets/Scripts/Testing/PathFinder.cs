@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinderTest : MonoBehaviour
+public class PathFinder : MonoBehaviour
 {
-
     Vector2 m_initialPosition;
     Vector2 m_targetPosition;
     int m_initialNode;
@@ -20,11 +19,7 @@ public class PathFinderTest : MonoBehaviour
     Dictionary<int, int> m_pathToTarget;
     Vector2 m_direction;
 
-    
-
-    private void Awake() {
-        m_pathToTarget = new Dictionary<int, int>();
-    }
+    private void Awake() { m_pathToTarget = new Dictionary<int, int>(); }
 
     private void Start()
     {
@@ -32,16 +27,9 @@ public class PathFinderTest : MonoBehaviour
         m_isInANode = true;
         for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
-            if (m_graph.GetNode(i).IsNearEnoughThisNode(5, m_initialPosition))
-            {
-                m_initialNode = i;
-            }
-            if (m_graph.GetNode(i).IsNearEnoughThisNode(16, m_targetPosition))
-            {
-                m_targetNode = i;
-            }
+            if (m_graph.GetNode(i).IsNearEnoughThisNode(5, m_initialPosition)) { m_initialNode = i; }
+            if (m_graph.GetNode(i).IsNearEnoughThisNode(16, m_targetPosition)) { m_targetNode = i; }
         }
-
     }
 
     void SearchTarget()
@@ -62,16 +50,11 @@ public class PathFinderTest : MonoBehaviour
         m_isInANode = false;
     }
 
-    void ClearPathToTarget()
-    {
-        m_pathToTarget.Clear();
-    }
+    void ClearPathToTarget() { m_pathToTarget.Clear(); }
 
     public void NavigateToTargetPosition()
     {
-        if(!m_hasNewPathStarted){
-            MoveToStartingNode();
-        }
+        if (!m_hasNewPathStarted) { MoveToStartingNode(); }
         else if (m_currentNodeIndex != m_targetNode)
         {
             if (m_isInANode)
@@ -84,7 +67,8 @@ public class PathFinderTest : MonoBehaviour
     }
 
     void MoveToStartingNode(){
-        if((m_graph.GetNode(m_initialNode).Position - transform.position).magnitude <= 1.0f){
+        if ((m_graph.GetNode(m_initialNode).Position - transform.position).magnitude <= 1.0f)
+        {
             transform.position = m_graph.GetNode(m_initialNode).Position;
             m_hasNewPathStarted = true;
             m_currentNodeIndex = m_initialNode;
@@ -92,10 +76,13 @@ public class PathFinderTest : MonoBehaviour
             return;
         }
         Vector3 direction = new Vector3 (m_graph.GetNode(m_initialNode).Position.x - transform.position.x, m_graph.GetNode(m_initialNode).Position.y - transform.position.y, 0.0f);
+
         direction = direction.normalized;
         transform.position += direction * m_speed * Time.deltaTime;
+
         float directionX = direction.x;
         if(directionX != 0) { directionX = directionX / Mathf.Abs(directionX);}
+
         float directionY = direction.y;
         if(directionY != 0) { directionY = directionY / Mathf.Abs(directionY);}
 
@@ -115,14 +102,13 @@ public class PathFinderTest : MonoBehaviour
 
         m_direction = new Vector2(directionX, directionY);
 
-        if((m_graph.GetNode(m_currentNodeIndex).Position - transform.position).magnitude > (m_graph.GetNode(m_currentNodeIndex).Position - m_graph.GetNode(m_pathToTarget[m_currentNodeIndex]).Position).magnitude)
+        if ((m_graph.GetNode(m_currentNodeIndex).Position - transform.position).magnitude > (m_graph.GetNode(m_currentNodeIndex).Position - m_graph.GetNode(m_pathToTarget[m_currentNodeIndex]).Position).magnitude)
         {
             transform.position = m_graph.GetNode(m_pathToTarget[m_currentNodeIndex]).Position;
             m_currentNodeIndex = m_pathToTarget[m_currentNodeIndex];
             m_pathToTarget.Clear();
             m_isInANode = true;
             m_initialNode = m_currentNodeIndex;
-            //Debug.Log(m_currentNodeIndex);
         }
     }
 
@@ -138,8 +124,7 @@ public class PathFinderTest : MonoBehaviour
                 if (m_graph.GetNode(i).IsActive) {
                     m_targetNode = i;
                     hasAnActiveNodeBeenFound = true;
-                }
-                
+                }                
             }
         }
 
@@ -154,16 +139,12 @@ public class PathFinderTest : MonoBehaviour
                     m_targetNode = i;
                     hasAnActiveNodeBeenFound = true;
                 }
-
             }
         }
 
     }
 
-    public void SnapToCurrentNode()
-    {
-        transform.position = m_graph.GetNode(m_currentNodeIndex).Position;
-    }
+    public void SnapToCurrentNode() { transform.position = m_graph.GetNode(m_currentNodeIndex).Position; }
 
     public void SnapToClosestNode()
     {
@@ -178,7 +159,6 @@ public class PathFinderTest : MonoBehaviour
                     m_currentNodeIndex = i;
                     hasAnActiveNodeBeenFound = true;
                 }
-
             }
         }
 
@@ -193,16 +173,16 @@ public class PathFinderTest : MonoBehaviour
                     m_currentNodeIndex = i;
                     hasAnActiveNodeBeenFound = true;
                 }
-
             }
         }
     }
 
-    public void SetInitialNodeToNone(){
+    public void SetInitialNodeToNone()
+    {
         m_currentNodeIndex = -1;
         m_hasNewPathStarted = false;
         m_isInANode = false;
-    }    
+    }  
 
     public void SetInitialNode(Vector2 p_origin)
     {
@@ -218,14 +198,9 @@ public class PathFinderTest : MonoBehaviour
                     m_initialNode = i;
                     hasAnActiveNodeBeenFound = true;
                 }
-
             }
         }
         
-        //transform.position = m_graph.GetNode(m_initialNode).Position;
-        //m_currentNodeIndex = m_initialNode;
-        //m_isInANode = true;
-
         if (hasAnActiveNodeBeenFound) { return; }
 
         for (int i = 0; i < m_graph.NumberOfNodes(); i++)
@@ -237,37 +212,20 @@ public class PathFinderTest : MonoBehaviour
                     m_initialNode = i;
                     hasAnActiveNodeBeenFound = true;
                 }
-
             }
         }
-
-        //transform.position = m_graph.GetNode(m_initialNode).Position;
-        //m_currentNodeIndex = m_initialNode;
-        //m_isInANode = true;
     }
 
-    public NavigationGraphNode GetTargetNode(){
-        return m_graph.GetNode(m_targetNode);
-    }
-
-    public void SetSpeed(float p_speed){
-        m_speed = p_speed;
-    }
-
-    public Vector2 GetDirection(){ 
-        return m_direction; 
-    }
-
-    public bool IsFinished()
-    {
-        return m_currentNodeIndex == m_targetNode;
-    }
+    public NavigationGraphNode GetTargetNode() { return m_graph.GetNode(m_targetNode); }
+    public void SetSpeed(float p_speed) { m_speed = p_speed; }
+    public Vector2 GetDirection() { return m_direction; }
+    public bool IsFinished() { return m_currentNodeIndex == m_targetNode; }
 
     private void OnDrawGizmos()
     {
         // DRAW CURRENT PATH
-
         if (!m_graphSearch.IsTargetFound) { return; }
+
         List<int> pathToTarget = m_graphSearch.GetPathToTarget();
         for (int i = 0; i < pathToTarget.Count - 1; i++)
         {
@@ -278,15 +236,16 @@ public class PathFinderTest : MonoBehaviour
         // DRAW BEGINNING AND END OF THE PATH
         for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
-            if(m_graph.GetNode(i).Index == m_initialNode){
+            if (m_graph.GetNode(i).Index == m_initialNode)
+            {
                 Gizmos.color = Color.green;
                 Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
             }
-            else if (m_graph.GetNode(i).Index == m_targetNode){
+            else if (m_graph.GetNode(i).Index == m_targetNode)
+            {
                 Gizmos.color = Color.red;
                 Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
             }
         }
     }
-
 }

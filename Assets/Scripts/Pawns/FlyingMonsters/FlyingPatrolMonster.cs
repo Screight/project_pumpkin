@@ -13,15 +13,6 @@ public class FlyingPatrolMonster : Enemy
     int m_currentAnimationHash;
     ANIMATION_STATE m_animationState;
     Collider2D m_collider;
-     void ChangeAnimationState(ANIMATION_STATE p_animationState)
-    {
-        int newAnimationHash = m_animationHash[(int)p_animationState];
-
-        if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
-        m_animator.Play(newAnimationHash);                // play the animation
-        m_currentAnimationHash = newAnimationHash;                // reassigning the new state
-        m_animationState = p_animationState;
-    }
 
     [SerializeField] LayerMask m_obstacleLayer;
     [SerializeField] float m_speed = 40;
@@ -29,49 +20,48 @@ public class FlyingPatrolMonster : Enemy
     [SerializeField] Transform m_patrolPoint_1;
     [SerializeField] Transform m_patrolPoint_2;
     ENEMY_STATE m_state;
-    PathFinderTest m_pathFinder;
+    PathFinder m_pathFinder;
     bool m_isFacingRight;
     bool m_isGoingFrom1To2;
     bool m_isInitialized = false;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_pathFinder = GetComponent<PathFinderTest>();
+        m_pathFinder = GetComponent<PathFinder>();
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider2D>();
     }
 
-    protected override void Start() {
+    protected override void Start()
+    {
         base.Start();
         m_isFacingRight = true;
         m_isGoingFrom1To2 = true;
-        
+
         m_state = ENEMY_STATE.PATROL;
         m_pathFinder.SetSpeed(m_speed);
 
         m_animationHash[(int)ANIMATION_STATE.MOVE] = Animator.StringToHash(m_moveAnimationName);
         m_animationHash[(int)ANIMATION_STATE.DIE] = Animator.StringToHash(m_dieAnimationName);
         m_animationHash[(int)ANIMATION_STATE.HIT] = Animator.StringToHash(m_hitAnimationName);
-
-
     }
 
     void Update()
     {
-        if(!m_isInitialized) {
-            InitializePatrol(); 
+        if (!m_isInitialized)
+        {
+            InitializePatrol();
             m_isInitialized = true;
         }
 
         FaceToDirection();
 
-        switch(m_state){
+        switch (m_state)
+        {
             default: break;
-            case ENEMY_STATE.PATROL:
-                Patrol();
-            break;
-
+            case ENEMY_STATE.PATROL:    { Patrol(); }   break;
         }
     }
 
@@ -88,11 +78,10 @@ public class FlyingPatrolMonster : Enemy
     void Patrol()
     {
         m_pathFinder.NavigateToTargetPosition();
-        if (m_pathFinder.IsFinished()) {
-             SwapPatrolTarget(); }
+        if (m_pathFinder.IsFinished()) { SwapPatrolTarget(); }
     }
 
-        void SwapPatrolTarget()
+    void SwapPatrolTarget()
     {
         if (m_isGoingFrom1To2)
         {
@@ -113,12 +102,13 @@ public class FlyingPatrolMonster : Enemy
         if(m_state == ENEMY_STATE.DEAD) { return ;}
         m_state = ENEMY_STATE.HIT;
         ChangeAnimationState(ANIMATION_STATE.HIT);
-        base.Damage(p_damage);
-        
+        base.Damage(p_damage);        
     }
 
-    public void EndHit(){
-        if(m_health <= 0) { 
+    public void EndHit()
+    {
+        if (m_health <= 0)
+        {
             m_state = ENEMY_STATE.DEAD;
             ChangeAnimationState(ANIMATION_STATE.DIE);
             m_state = ENEMY_STATE.DEAD;
@@ -128,14 +118,12 @@ public class FlyingPatrolMonster : Enemy
         ChangeAnimationState(ANIMATION_STATE.MOVE);
     }
 
-    void FaceToDirection(){
-        if(m_pathFinder.GetDirection().y == 0){
-            if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
-                FlipX();
-            }
-            else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
-                FlipX();
-            }
+    void FaceToDirection()
+    {
+        if (m_pathFinder.GetDirection().y == 0)
+        {
+            if (m_pathFinder.GetDirection().x == 1 && !m_isFacingRight)         { FlipX(); }
+            else if (m_pathFinder.GetDirection().x == -1 && m_isFacingRight)    { FlipX(); }
         }
     }
 
@@ -152,23 +140,34 @@ public class FlyingPatrolMonster : Enemy
         if (direction != FacingDirection()) { FlipX(); }
     }
 
-        int FacingDirection()
+    void ChangeAnimationState(ANIMATION_STATE p_animationState)
+    {
+        int newAnimationHash = m_animationHash[(int)p_animationState];
+
+        if (m_currentAnimationHash == newAnimationHash) return;     // stop the same animation from interrupting itself
+        m_animator.Play(newAnimationHash);                          // play the animation
+        m_currentAnimationHash = newAnimationHash;                  // reassigning the new state
+        m_animationState = p_animationState;
+    }
+
+    int FacingDirection()
     {
         if (m_isFacingRight) { return 1; }
         else { return -1; }
     }
 
-    public override void Reset(){
+    public override void Reset()
+    {
         base.Reset();
         m_collider.enabled = true;
         m_state = ENEMY_STATE.PATROL;
         ChangeAnimationState(ANIMATION_STATE.MOVE);
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(new Vector3(m_patrolPoint_1.position.x, m_patrolPoint_1.position.y, transform.position.z),3);
-        Gizmos.DrawSphere(new Vector3(m_patrolPoint_2.position.x, m_patrolPoint_2.position.y, transform.position.z),3);
+        Gizmos.DrawSphere(new Vector3(m_patrolPoint_1.position.x, m_patrolPoint_1.position.y, transform.position.z), 3);
+        Gizmos.DrawSphere(new Vector3(m_patrolPoint_2.position.x, m_patrolPoint_2.position.y, transform.position.z), 3);
     }
-
 }
