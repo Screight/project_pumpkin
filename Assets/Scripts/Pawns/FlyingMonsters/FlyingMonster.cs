@@ -45,7 +45,7 @@ public class FlyingMonster : Enemy
     ENEMY_STATE m_state;
     [SerializeField] GameObject m_player;
     Player m_playerScript;
-    PathFinderTest m_pathFinder;
+    PathFinder m_pathFinder;
     bool m_isGoingFrom1To2;
     bool m_isCharging;
     bool m_hasCharged = false;
@@ -60,7 +60,7 @@ public class FlyingMonster : Enemy
     {
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_pathFinder = GetComponent<PathFinderTest>();
+        m_pathFinder = GetComponent<PathFinder>();
 
         m_restTimer = gameObject.AddComponent<Timer>();
         m_memoryTimer = gameObject.AddComponent<Timer>();

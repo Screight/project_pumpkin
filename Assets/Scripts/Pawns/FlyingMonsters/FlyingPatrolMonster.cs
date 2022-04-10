@@ -12,7 +12,6 @@ public class FlyingPatrolMonster : Enemy
     int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
     int m_currentAnimationHash;
     ANIMATION_STATE m_animationState;    
-    Collider2D m_collider;
      void ChangeAnimationState(ANIMATION_STATE p_animationState)
     {
         int newAnimationHash = m_animationHash[(int)p_animationState];
@@ -29,7 +28,7 @@ public class FlyingPatrolMonster : Enemy
     [SerializeField] Transform m_patrolPoint_1;
     [SerializeField] Transform m_patrolPoint_2;
     ENEMY_STATE m_state;
-    PathFinderTest m_pathFinder;
+    PathFinder m_pathFinder;
     bool m_isFacingRight;
     bool m_isGoingFrom1To2;
     bool m_isInitialized = false;
@@ -37,7 +36,7 @@ public class FlyingPatrolMonster : Enemy
     protected override void Awake() {
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_pathFinder = GetComponent<PathFinderTest>();
+        m_pathFinder = GetComponent<PathFinder>();
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider2D>();
     }
