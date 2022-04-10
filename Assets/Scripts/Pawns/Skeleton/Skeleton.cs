@@ -233,8 +233,9 @@ public class Skeleton : Enemy
 
     public SKELETON_STATE State { set { m_skeletonState = value; } get { return m_skeletonState; } }
 
-    void ReturnToNormalState()
+    protected override void EndHit()
     {
+        base.EndHit();
         m_skeletonState = SKELETON_STATE.MOVE;
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
@@ -243,7 +244,7 @@ public class Skeleton : Enemy
     public override void Reset(){
         base.Reset();
         m_rb2D.gravityScale = 40;
-        ReturnToNormalState();
+        EndHit();
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 

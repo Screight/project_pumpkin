@@ -11,8 +11,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected int m_damage = 1;
     [SerializeField] ROOMS m_room; 
     protected Vector2 m_spawnPos;
-    Timer m_dieTimer;
+    Timer m_animationTimer;
+    float m_hitAnimationDuration;
+    float m_dieAnimationDuration;
     bool m_isDying = false;
+    bool m_isBeingHit = false;
     protected Collider2D m_collider;
 
     /// PLAYER COLLITION
@@ -21,7 +24,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Vector2 m_pushAwayPlayerVelocity = new Vector2(50.0f, 100.0f);
     protected virtual void Awake() { 
         m_spawnPos = transform.position; 
-        m_dieTimer = gameObject.AddComponent<Timer>();
+        m_animationTimer = gameObject.AddComponent<Timer>();
         m_collider = GetComponent<Collider2D>();
     }
 
@@ -33,15 +36,22 @@ public class Enemy : MonoBehaviour
         foreach(AnimationClip animationClip in m_animator.runtimeAnimatorController.animationClips)
         {
             if(animationClip.name == "Die"){
-                m_dieTimer.Duration = animationClip.length;
+                m_dieAnimationDuration = animationClip.length;
+            }
+            if(animationClip.name == "hit"){
+                m_hitAnimationDuration = animationClip.length;
             }
         }
     }
 
     protected virtual void Update() {
-        if(m_isDying && m_dieTimer.IsFinished){
+        if(m_isDying && m_animationTimer.IsFinished){
             Die();
             m_isDying = false;
+        }
+        else if(m_isBeingHit && m_animationTimer.IsFinished){
+            EndHit();
+            m_isBeingHit = false;
         }
     }
 
@@ -52,10 +62,21 @@ public class Enemy : MonoBehaviour
         if (m_health <= 0) {
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL); 
             m_isDying = true;
-            m_dieTimer.Run();
+            m_animationTimer.Duration = m_dieAnimationDuration;
+            m_animationTimer.Run();
             }
-        else { SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT); }
+        else {
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT); 
+            m_isBeingHit = true;
+            m_animationTimer.Duration = m_hitAnimationDuration;
+            m_animationTimer.Run();
+        }
     }
+
+    protected virtual void EndHit(){
+
+    }
+
     protected virtual void OnCollisionStay2D(Collision2D p_collider)
     {
         if (p_collider.gameObject.tag == "Player" && !m_playerScript.IsInvulnerable && Player.Instance.CanPlayerGetHit())
@@ -77,7 +98,7 @@ public class Enemy : MonoBehaviour
     {
         transform.position = new Vector3(m_spawnPos.x, m_spawnPos.y, CameraManager.Instance.MainSceneDepth);
         m_health = MAX_HEALTH;
-        m_dieTimer.Stop();
+        m_animationTimer.Stop();
         m_isDying = false;
     }
 

@@ -117,7 +117,8 @@ public class FlyingPatrolMonster : Enemy
         
     }
 
-    public void EndHit(){
+    protected override void EndHit(){
+        base.EndHit();
         if(m_health <= 0) { 
             m_state = ENEMY_STATE.DEAD;
             ChangeAnimationState(ANIMATION_STATE.DIE);

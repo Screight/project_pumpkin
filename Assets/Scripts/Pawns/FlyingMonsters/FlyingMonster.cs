@@ -57,7 +57,7 @@ public class FlyingMonster : Enemy
     int m_currentAnimationHash;
 
     protected override void Awake()
-    {
+    {   
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
         m_pathFinder = GetComponent<PathFinder>();
@@ -249,7 +249,8 @@ public class FlyingMonster : Enemy
         
     }
 
-    public void EndHit(){
+    protected override void EndHit(){
+        base.EndHit();
         if(m_health <= 0) { 
             m_state = ENEMY_STATE.DEAD;
             ChangeAnimationState(ANIMATION_STATE.DIE);
@@ -258,6 +259,7 @@ public class FlyingMonster : Enemy
         }
         m_state = ENEMY_STATE.PATROL;
         ChangeAnimationState(ANIMATION_STATE.MOVE);
+        m_rb2D.velocity = Vector2.zero;
     }
 
     void ReturnToNormalState()

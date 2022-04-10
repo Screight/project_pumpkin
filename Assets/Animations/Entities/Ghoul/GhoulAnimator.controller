@@ -45,11 +45,11 @@ AnimatorStateMachine:
     m_State: {fileID: -6205319206058202915}
     m_Position: {x: 470, y: 150, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -2259928475887769603}
-    m_Position: {x: 260, y: 230, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -8702539688619825921}
     m_Position: {x: 470, y: 200, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -655143860858784846}
+    m_Position: {x: 260, y: 210, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -86,14 +86,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-2259928475887769603
+--- !u!1102 &-655143860858784846
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hit
+  m_Name: hit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

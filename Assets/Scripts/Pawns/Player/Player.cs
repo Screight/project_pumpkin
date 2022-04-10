@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : AnimatedCharacter
 {
 
     [SerializeField] Attack m_attackScript;
@@ -14,37 +14,7 @@ public class Player : MonoBehaviour
         private set {}
     }
 
-    #region Animation
-
-    string m_idleAnimationName      = "idle";
-    string m_runAnimationName       = "run";
-    string m_dashAnimationName      = "dash";
-    string m_boostAnimationName     = "boost";
-    string m_jumpAnimationName      = "jump";
-    string m_fallAnimationName      = "fall";
-    string m_landAnimationName      = "land";
-    string m_hitAnimationName       = "hit";
-    string m_dieAnimationName       = "die";
-    string m_groundbreakerAnimationName       = "groundbreaker";
-    string m_groundbreakerLoopAnimationName       = "groundbreakerLoop";
-    int[] m_animationHash = new int[(int)PLAYER_ANIMATION.LAST_NO_USE];
-
-    Animator m_animator;
-    PLAYER_ANIMATION m_animationState;
-    int m_currentAnimationHash = 0;
     bool m_isBeingScripted = false;
-
-    public void ChangeAnimationState(PLAYER_ANIMATION p_animationState)
-    {
-        int newAnimationHash = m_animationHash[(int)p_animationState];
-
-        if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
-        m_animator.Play(newAnimationHash);                // play the animation
-        m_currentAnimationHash = newAnimationHash;                // reassigning the new state
-        m_animationState = p_animationState;
-    }
-
-    #endregion 
 
     PLAYER_STATE m_state = PLAYER_STATE.IDLE;
 
@@ -97,13 +67,14 @@ public class Player : MonoBehaviour
 
 
 /// END OF VARIABLES
-    private void Awake() {
+    protected override void Awake() {
+
+        base.Awake();
 
         if(m_instance == null ){ m_instance = this;}
         else { Destroy(this.gameObject);}
 
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_animator = GetComponent<Animator>();
 
         m_dashSpeed = m_dashDistance / m_dashDuration;
         m_dashTimer = gameObject.AddComponent<Timer>();
@@ -126,17 +97,6 @@ public class Player : MonoBehaviour
     }
 
     private void Start() {
-        m_animationHash[(int)PLAYER_ANIMATION.IDLE]                 = Animator.StringToHash(m_idleAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.RUN]                  = Animator.StringToHash(m_runAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.DASH]                 = Animator.StringToHash(m_dashAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.BOOST]                = Animator.StringToHash(m_boostAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.JUMP]                 = Animator.StringToHash(m_jumpAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.FALL]                 = Animator.StringToHash(m_fallAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.LAND]                 = Animator.StringToHash(m_landAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.HIT]                  = Animator.StringToHash(m_hitAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER]        = Animator.StringToHash(m_groundbreakerAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.GROUNDBREAKER_LOOP]   = Animator.StringToHash(m_groundbreakerLoopAnimationName);
-        m_animationHash[(int)PLAYER_ANIMATION.DEATH]   = Animator.StringToHash(m_dieAnimationName);
 
         m_dashTimer.Duration = m_dashDuration;
         m_currentSpeedX = m_normalMovementSpeed;
@@ -205,7 +165,7 @@ public class Player : MonoBehaviour
         m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
         m_rb2D.gravityScale = 0;
 
-        ChangeAnimationState(PLAYER_ANIMATION.DASH);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DASH);
         m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
 
         Physics2D.IgnoreLayerCollision(6, 7, true);
@@ -220,7 +180,7 @@ public class Player : MonoBehaviour
             m_state = PLAYER_STATE.IDLE;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(0, 0);
-            ChangeAnimationState(PLAYER_ANIMATION.IDLE);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
             Physics2D.IgnoreLayerCollision(6, 7, false);
         }
     }
@@ -238,7 +198,7 @@ public class Player : MonoBehaviour
             if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
             {
                 m_state = PLAYER_STATE.MOVE;
-                ChangeAnimationState(PLAYER_ANIMATION.RUN);
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN);
             }
         }
         else
@@ -247,7 +207,7 @@ public class Player : MonoBehaviour
             if (m_isGrounded && m_state != PLAYER_STATE.LAND)
             {
                 m_state = PLAYER_STATE.IDLE;
-                ChangeAnimationState(PLAYER_ANIMATION.IDLE);
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
             }
         }
     }
@@ -259,7 +219,7 @@ public class Player : MonoBehaviour
 
         m_isGrounded = false;
         m_state = PLAYER_STATE.BOOST;
-        ChangeAnimationState(PLAYER_ANIMATION.BOOST);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST);
     }
 
     void HandleIdleState() { HandleMoveState(); }
@@ -285,7 +245,7 @@ public class Player : MonoBehaviour
             m_isGrounded = false;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             if (m_state != PLAYER_STATE.ATTACK) { m_state = PLAYER_STATE.FALL; }
-            ChangeAnimationState(PLAYER_ANIMATION.FALL);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL);
             // limit falling speed
             if (m_rb2D.velocity.y < -m_maxFallingSpeed) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -m_maxFallingSpeed); }
         }
@@ -326,10 +286,10 @@ public class Player : MonoBehaviour
         m_hasUsedDash = false;
     }
 
-    public void ResetPlayer(PLAYER_STATE p_state, PLAYER_ANIMATION p_animationState)
+    public void ResetPlayer(PLAYER_STATE p_state, ANIMATION p_animationState)
     {
         m_state = p_state;
-        ChangeAnimationState(p_animationState);
+        AnimationManager.Instance.PlayAnimation(this, p_animationState);
         m_isGrounded = false;
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_rb2D.velocity = Vector2.zero;
@@ -352,13 +312,13 @@ public class Player : MonoBehaviour
         m_isBeingScripted = true;
         FacePlayerToMovementDirection();
         m_state = PLAYER_STATE.MOVE;
-        ChangeAnimationState(PLAYER_ANIMATION.RUN);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN);
         m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed, 0);
     }
 
     public void ScriptTopSuction(float p_suctionVelocity)
     {
-        ChangeAnimationState(PLAYER_ANIMATION.JUMP);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP);
         m_rb2D.gravityScale = 0;
         m_rb2D.velocity = new Vector2(0, p_suctionVelocity);
     }
@@ -367,7 +327,7 @@ public class Player : MonoBehaviour
     {
         m_rb2D.velocity = p_impulseVelocity;
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
-        ChangeAnimationState(PLAYER_ANIMATION.JUMP);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP);
         if (p_impulseVelocity.x > 0) { m_direction = 1; }
         else { m_direction = -1; }
         FacePlayerToMovementDirection();
@@ -376,13 +336,13 @@ public class Player : MonoBehaviour
     public void ScriptFall()
     {
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-        ChangeAnimationState(PLAYER_ANIMATION.FALL);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL);
         m_state = PLAYER_STATE.FALL;
     }
 
     public void SetPlayerToScripted()
     {
-        ResetPlayer(PLAYER_STATE.IDLE, PLAYER_ANIMATION.IDLE);
+        ResetPlayer(PLAYER_STATE.IDLE, ANIMATION.PLAYER_IDLE);
         m_isBeingScripted = true;
         m_rb2D.gravityScale = 0;
         m_rb2D.velocity = Vector2.zero;
@@ -421,7 +381,7 @@ public class Player : MonoBehaviour
 
     public void HandleDeath(){
         m_state = PLAYER_STATE.DEATH;
-        ChangeAnimationState(PLAYER_ANIMATION.DEATH);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH);
     }
 
     void Die(){
@@ -499,7 +459,6 @@ public class Player : MonoBehaviour
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
     public Collider2D GetCollider(){ return m_collider;}
-
     #endregion
 
     private void OnTriggerStay2D(Collider2D p_collider) {
@@ -507,7 +466,7 @@ public class Player : MonoBehaviour
             HandleHostileCollision(new Vector2(0,40), Vector2.up, 0.5f, 0.5f, 1);
             CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
             if(GameManager.Instance.PlayerHealth <= 0){
-                Player.Instance.ResetPlayer(PLAYER_STATE.IDLE,PLAYER_ANIMATION.IDLE);
+                Player.Instance.ResetPlayer(PLAYER_STATE.IDLE,ANIMATION.PLAYER_IDLE);
             }
         }
     }
