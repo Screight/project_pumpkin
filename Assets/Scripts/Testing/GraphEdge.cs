@@ -44,8 +44,9 @@ public class GraphEdge {
         get { return m_destinationNode; }
     }
 
-    float Cost
+    public float Cost
     {
+        get { return m_cost;}
         set { m_cost = value; }
     }
 

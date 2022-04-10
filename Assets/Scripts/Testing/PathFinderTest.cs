@@ -7,12 +7,12 @@ public class PathFinderTest : MonoBehaviour
 
     Vector2 m_initialPosition;
     Vector2 m_targetPosition;
-    int m_initialNode;
-    int m_targetNode;
+    [SerializeField] int m_initialNode;
+    [SerializeField] int m_targetNode;
     bool m_isInANode;
     bool m_hasNewPathStarted = true;
     SparseGraph m_graph;
-    GraphSearchBFS m_graphSearch;
+    Graph_SearchDijkstra m_graphSearch;
     [SerializeField] RoomGraph m_roomGraphScript;
     float m_speed = 10.0f;
     int m_currentNodeIndex;
@@ -49,7 +49,7 @@ public class PathFinderTest : MonoBehaviour
         m_currentNodeIndex = m_initialNode;
         transform.position = m_graph.GetNode(m_initialNode).Position;
 
-        m_graphSearch = new GraphSearchBFS(m_graph, m_initialNode, m_targetNode);
+        m_graphSearch = new Graph_SearchDijkstra(m_graph, m_initialNode, m_targetNode);
         if (m_graphSearch.IsTargetFound)
         {
             pathToTarget = m_graphSearch.GetPathToTarget();
@@ -79,7 +79,7 @@ public class PathFinderTest : MonoBehaviour
                 SetTargetNode(m_targetPosition);
                 SearchTarget();
             }
-            else { MoveToNextNode(); }
+            MoveToNextNode();
         }
     }
 
@@ -273,7 +273,6 @@ public class PathFinderTest : MonoBehaviour
         {
             Gizmos.DrawLine(m_graph.GetNode(pathToTarget[i]).Position, m_graph.GetNode(pathToTarget[i + 1]).Position);
         }
-
         Gizmos.color = Color.black;
         // DRAW BEGINNING AND END OF THE PATH
         for (int i = 0; i < m_graph.NumberOfNodes(); i++)

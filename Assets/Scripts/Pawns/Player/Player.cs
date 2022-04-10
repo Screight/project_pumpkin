@@ -143,7 +143,6 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
-        Debug.Log(m_state);
         CheckIfFalling();
 
         if(m_isBeingScripted){ return ;}

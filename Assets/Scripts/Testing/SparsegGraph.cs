@@ -109,4 +109,14 @@ public class SparseGraph
         for(int i = 0; i < m_edges.Count; i++) { m_edges.Clear(); }
     }
 
+    public List<int> GetAllActiveNodesIndex(){
+        List<int> activeNodesIndex = new List<int>();
+        for(int i = 0; i < m_nodes.Count; i++){
+            if(m_nodes[i].IsActive){
+                activeNodesIndex.Add(m_nodes[i].Index);
+            }
+        }
+        return activeNodesIndex;
+    }
+
 }

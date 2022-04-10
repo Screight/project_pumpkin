@@ -59,6 +59,12 @@ TagManager:
   - name: blocks
     uniqueID: 538339855
     locked: 0
+  - name: Enemies
+    uniqueID: 307840783
+    locked: 0
+  - name: Projectiles
+    uniqueID: 1829688273
+    locked: 0
   - name: UI
     uniqueID: 3744611799
     locked: 0

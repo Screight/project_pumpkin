@@ -10,7 +10,7 @@ public class RoomGraph : MonoBehaviour
     [SerializeField] int m_tileSize;
     SparseGraph m_graph;
     [SerializeField] LayerMask m_obstacleLayer;
-    private void Awake()
+    private async void Awake()
     {
         //m_target = GameObject.FindGameObjectWithTag("Player");
         m_graph = new SparseGraph(true);
@@ -19,7 +19,7 @@ public class RoomGraph : MonoBehaviour
         {
             for (int i = 0; i < m_width; i++)
             {
-                m_graph.AddNode(new NavigationGraphNode(i+j,new Vector3(i*m_tileSize, j*m_tileSize, 0) + m_startingPoint.transform.position));
+                m_graph.AddNode(new NavigationGraphNode(i+j * m_width,new Vector3(i*m_tileSize, j*m_tileSize, 0) + m_startingPoint.transform.position));
             }
         }
 
@@ -27,11 +27,38 @@ public class RoomGraph : MonoBehaviour
         {
             for (int j = 0; j < m_height; j++)
             {
-                if( i >= 0 && i < m_width - 1) { m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + j * m_width)); }
-                if( i >= 0 && i < m_width - 1) { m_graph.AddEdge(new GraphEdge((i + 1) + j * m_width, i + j * m_width)); }
+                if( i >= 0 && i < m_width - 1){
+                    m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + j * m_width, 1));
+                    m_graph.AddEdge(new GraphEdge((i + 1) + j * m_width, i + j * m_width, 1));
+                }
 
-                if( j >= 0 && j < m_height - 1) { m_graph.AddEdge(new GraphEdge(i + j * m_width, i + (j * m_width + m_width))); }
-                if( j >= 0 && j < m_height - 1) { m_graph.AddEdge(new GraphEdge(i + (j * m_width + m_width), i + j * m_width)); }
+                if(i > 0 && i < m_width){
+                    if(j >= 0 && j < m_height - 1){
+                        m_graph.AddEdge(new GraphEdge(i + j * m_width, (i - 1) + (j * m_width + m_width), Mathf.Sqrt(2)));
+                        m_graph.AddEdge(new GraphEdge(((i - 1) + (j * m_width + m_width)), i + j * m_width, Mathf.Sqrt(2)));
+                    }
+                    if (j > 0 && j < m_height){
+                        m_graph.AddEdge(new GraphEdge(i + j * m_width, (i - 1) + (j * m_width - m_width), Mathf.Sqrt(2)));
+                        m_graph.AddEdge(new GraphEdge(((i - 1) + (j * m_width - m_width)), i + j * m_width, Mathf.Sqrt(2)));
+                    }
+                }
+
+                if( j >= 0 && j < m_height - 1){
+                    m_graph.AddEdge(new GraphEdge(i + j * m_width, i + (j * m_width + m_width), 1));
+                    m_graph.AddEdge(new GraphEdge(i + (j * m_width + m_width), i + j * m_width, 1));
+                }
+
+                if(i >= 0 && i < m_width - 1){
+                    if(j >= 0 && j < m_height - 1){
+                        m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + (j * m_width + m_width), Mathf.Sqrt(2)));
+                        m_graph.AddEdge(new GraphEdge(((i + 1) + (j * m_width + m_width)), i + j * m_width, Mathf.Sqrt(2)));
+                    }
+                    if (j > 0 && j < m_height){
+                        m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + (j * m_width - m_width), Mathf.Sqrt(2)));
+                        m_graph.AddEdge(new GraphEdge(((i + 1) + (j * m_width - m_width)), i + j * m_width, Mathf.Sqrt(2)));
+                    }
+                }
+
             }
         }
 
@@ -52,17 +79,17 @@ public class RoomGraph : MonoBehaviour
 
     private void OnDrawGizmos() {
         // DRAW ALL NODES
-        /*Gizmos.color = Color.black;
+        Gizmos.color = Color.black;
         Vector3 initialPosition = m_startingPoint.position;
         for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
             if (!m_graph.GetNode(i).IsActive) { Gizmos.color = Color.red; }
             else { Gizmos.color = Color.yellow; }
 
-            //Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
+            Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
         }
-        */
+        
     }
 
 }

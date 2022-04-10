@@ -52,7 +52,6 @@ public class FlyingMonster : Enemy
     bool m_isInitialized = false;
     bool m_isRecovering = false;
     Vector2 m_directionToAttack;
-    Collider2D m_collider;
 
     ANIMATION_STATE m_animationState;
     int m_currentAnimationHash;
@@ -320,8 +319,9 @@ public class FlyingMonster : Enemy
         m_animationHash[(int)ANIMATION_STATE.DIE] = Animator.StringToHash(m_dieAnimationName);
     }
 
-    private void Update()
-    {
+    protected override void Update()
+    {   
+        base.Update();
         if(!m_isInitialized) {
             InitializePatrol(); 
             m_isInitialized = true;

@@ -11,7 +11,7 @@ public class FlyingPatrolMonster : Enemy
     string m_dieAnimationName    = "die";
     int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
     int m_currentAnimationHash;
-    ANIMATION_STATE m_animationState;
+    ANIMATION_STATE m_animationState;    
     Collider2D m_collider;
      void ChangeAnimationState(ANIMATION_STATE p_animationState)
     {
@@ -57,8 +57,9 @@ public class FlyingPatrolMonster : Enemy
 
     }
 
-    void Update()
-    {
+    protected override void Update()
+    {   
+        base.Update();
         if(!m_isInitialized) {
             InitializePatrol(); 
             m_isInitialized = true;
