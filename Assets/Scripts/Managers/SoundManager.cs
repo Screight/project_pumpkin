@@ -24,7 +24,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] float m_skeletonAttack = 1;
     [Range(0.0F, 1.0F)]
     [SerializeField] float m_playerAttackOne = 1;
-    [Range(0.0F, 1.0F)]
+    [Range(0.0F, 1.0F)] 
     [SerializeField] float m_playerAttackSecond = 1;
     [Range(0.0F, 1.0F)]
     [SerializeField] float m_playerAttackThird = 1;
