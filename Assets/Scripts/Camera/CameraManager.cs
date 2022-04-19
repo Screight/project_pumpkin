@@ -32,7 +32,7 @@ public class CameraManager : MonoBehaviour
         m_pixelsPerUnit = 1;
 
         if (m_instance == null) { m_instance = this; }
-        else { Destroy(this.gameObject); }
+        else { Destroy(gameObject); }
 
         m_screenWidth = m_referenceResolution.x / m_pixelsPerUnit;
         m_screenHeight = m_referenceResolution.y / m_pixelsPerUnit;
@@ -41,7 +41,10 @@ public class CameraManager : MonoBehaviour
         UpdateCameraPosition();
     }
 
-    private void Update() { UpdateCameraPosition(); }
+    private void Update() 
+    { 
+        UpdateCameraPosition(); 
+    }
 
     void UpdateCameraPosition()
     {
@@ -56,24 +59,29 @@ public class CameraManager : MonoBehaviour
         bottomLimit = bottomRightCorner.y;
     }
 
-    void InitializeCamera(){
+    void InitializeCamera()
+    {
         float cameraAngle = m_camera.fieldOfView;
         float PI = Mathf.PI;
-        float distanceToMainScene = (m_referenceResolution.y / 2) / (Mathf.Tan(PI*cameraAngle/360));
+        float distanceToMainScene = (m_referenceResolution.y / 2) / (Mathf.Tan(PI * cameraAngle / 360));
 
         m_mainScene.transform.position = new Vector3(m_mainScene.transform.position.x, m_mainScene.transform.position.y, distanceToMainScene);
     }
-    
-    public void ClampCameraToTarget(){
+
+    public void ClampCameraToTarget()
+    {
         m_cameraMovementScript.ClampCamera();
     }
 
-    public void SetCameraToStatic(){
+    public void SetCameraToStatic()
+    {
         m_cameraMovementScript.IsCameraStatic = true;
     }
 
-    public void SetCameraToNormal(){
+    public void SetCameraToNormal()
+    {
         m_cameraMovementScript.IsCameraStatic = false;
+        m_cameraMovementScript.IsCameraClamped = false;
     }
 
     public float LeftLimit      { get { return leftLimit; } }

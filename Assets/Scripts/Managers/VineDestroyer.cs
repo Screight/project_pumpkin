@@ -10,21 +10,24 @@ public class VineDestroyer : MonoBehaviour
     Timer m_burnTimer;
     [SerializeField] float m_burnDuration = 0.5f;
     bool m_isBurning = false;
-    [SerializeField] ROOMS m_room; 
+    [SerializeField] ROOMS m_room;
 
-    private void Awake() {
+    private void Awake()
+    {
         vineSprite = GetComponent<Tilemap>();
-        m_burnTimer = gameObject.AddComponent<Timer>();    
+        m_burnTimer = gameObject.AddComponent<Timer>();
     }
 
-    private void Start() {
+    private void Start()
+    {
         m_burnTimer.Duration = m_burnDuration;
     }
 
-    private void Update() {
-        if(m_burnTimer.IsFinished && m_isBurning){
-            this.gameObject.SetActive(false);
-            
+    private void Update()
+    {
+        if (m_burnTimer.IsFinished && m_isBurning)
+        {
+            gameObject.SetActive(false);
             m_isBurning = false;
         }
     }
@@ -38,8 +41,9 @@ public class VineDestroyer : MonoBehaviour
             m_isBurning = true;
         }
     }
-    
-    public void Reset(){
+
+    public void Reset()
+    {
         vineSprite.color = Color.white;
     }
 

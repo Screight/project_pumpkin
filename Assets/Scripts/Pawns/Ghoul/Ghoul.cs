@@ -126,11 +126,12 @@ public class Ghoul : Enemy
 
         if ((m_isFacingRight && transform.position.x <= m_playerPosX + 15) || (!m_isFacingRight && transform.position.x >= m_playerPosX - 15) || m_isHittingWall)
         {
-            if(m_isHittingWall){
+            if (m_isHittingWall)
+            {
                 m_ghoulState = p_defaultState;
                 chargeTimer.Stop();
                 hasCharged = false;
-                m_animator.speed = 1; 
+                m_animator.speed = 1;
             }
             else if (hasCharged && m_isGrounded)
             {
@@ -140,11 +141,12 @@ public class Ghoul : Enemy
                 m_rb2D.velocity = new Vector2(FacingDirection() * m_speed * 2, m_rb2D.velocity.y);
                 if (!m_isGrounded) { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
             }
-            else if (!m_isGrounded) {
+            else if (!m_isGrounded)
+            {
                 m_ghoulState = p_defaultState;
                 chargeTimer.Stop();
                 hasCharged = false;
-                m_animator.speed = 1; 
+                m_animator.speed = 1;
             }
         }
         else { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; m_animator.speed = 1; }
@@ -169,7 +171,6 @@ public class Ghoul : Enemy
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.IDLE]);
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
         m_rb2D.gravityScale = 40;
-
     }
 
     void FlipX()
@@ -190,8 +191,9 @@ public class Ghoul : Enemy
         m_rb2D.velocity = Vector2.zero;
         ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.HIT]);
         base.Damage(p_damage);
-        if (m_health <= 0) {
-            m_ghoulState = GHOUL_STATE.DIE; 
+        if (m_health <= 0)
+        {
+            m_ghoulState = GHOUL_STATE.DIE;
             ChangeAnimationState(m_animationHash[(int)GHOUL_ANIMATION.DIE]);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }

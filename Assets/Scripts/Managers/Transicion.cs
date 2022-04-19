@@ -20,8 +20,9 @@ public class Transicion : MonoBehaviour
     Animator m_animator;
     int m_currentState;
 
-    private void Awake() {
-        m_animator = GetComponent<Animator>(); 
+    private void Awake()
+    {
+        m_animator = GetComponent<Animator>();
         m_scriptPlayerTimer = gameObject.AddComponent<Timer>();
     }
 
@@ -32,8 +33,10 @@ public class Transicion : MonoBehaviour
         m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN] = Animator.StringToHash(m_emptyScreenAnimationName);
     }
 
-    private void Update() {
-        if(m_isBeingScripted && m_scriptPlayerTimer.IsFinished) {
+    private void Update()
+    {
+        if (m_isBeingScripted && m_scriptPlayerTimer.IsFinished)
+        {
             Player.Instance.StopScripting();
             m_isBeingScripted = false;
         }
@@ -41,26 +44,27 @@ public class Transicion : MonoBehaviour
 
     void ChangeAnimationState(TRANSITION_ANIMATION p_newState)
     {
-        if (m_currentState == m_animationHash[(int)p_newState]) return;   // stop the same animation from interrupting itself
+        if (m_currentState == m_animationHash[(int)p_newState]) { return; }   // stop the same animation from interrupting itself
         m_animator.Play(m_animationHash[(int)p_newState]);                // play the animation
         m_currentState = m_animationHash[(int)p_newState];                // reassigning the new state
     }
 
-    public void FadeIn() { 
+    public void FadeIn()
+    {
         CameraManager.Instance.SetCameraToStatic();
-        ChangeAnimationState(TRANSITION_ANIMATION.FADE_IN); 
-        
+        ChangeAnimationState(TRANSITION_ANIMATION.FADE_IN);
     }
 
-    private void ClampCamera(){
+    private void ClampCamera()
+    {
         RoomManager.Instance.ChangeRoom();
         CameraManager.Instance.ClampCameraToTarget();
     }
 
-    private void EndTransicion(){
+    private void EndTransicion()
+    {
         m_currentState = m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN];
         RoomManager.Instance.StartPlayerScripting();
         CameraManager.Instance.SetCameraToNormal();
     }
-
 }

@@ -7,7 +7,6 @@ public class CameraMovement : MonoBehaviour
     GameObject m_player;
     Player m_playerScript;
     Rigidbody2D m_rb2DPlayer;
-    BoxCollider2D m_playerBoxCollider2D;
 
     [SerializeField] float m_dampSpeedUp = 0.3f;
     [SerializeField] float m_dampSpeedDown = 0.1f;
@@ -17,7 +16,6 @@ public class CameraMovement : MonoBehaviour
     float m_currentMaxSpeedY;
     float m_dampSpeedX;
     float m_dampSpeedY;
-    bool m_isOutOfLimitsY = false;
 
     [SerializeField] float m_offsetX = 20.0f;
     [SerializeField] float m_offsetY = 0.0f;
@@ -40,15 +38,11 @@ public class CameraMovement : MonoBehaviour
 
     float m_minimumHeightForCameraMovement = -10000000;
 
-    private void Awake() {
-         m_player = GameObject.FindGameObjectWithTag("Player"); 
-          
-    }
+    private void Awake() { m_player = GameObject.FindGameObjectWithTag("Player"); }
 
     void Start()
     {
         m_rb2DPlayer = m_player.GetComponent<Rigidbody2D>();
-        m_playerBoxCollider2D = m_player.GetComponent<BoxCollider2D>();
         m_playerScript = Player.Instance;
         m_cameraWidth = CameraManager.Instance.Width;
         m_cameraHeight = CameraManager.Instance.Height;
@@ -57,7 +51,6 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(m_isCameraStatic) { return; }
 
         if(Input.GetKeyDown("down") && m_playerScript.State == PLAYER_STATE.IDLE)    { m_offsetY += -m_offsetAddUpY;}
@@ -83,18 +76,15 @@ public class CameraMovement : MonoBehaviour
             m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
         }
 
-        m_isOutOfLimitsY = false;
         if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
         {
             m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
-            m_isOutOfLimitsY = true;
         }
         else if (m_targetPosition.y + m_cameraHeight / 2 >= m_topLimit)
         {
             m_targetPosition.y = m_topLimit - m_cameraHeight / 2;
-            m_isOutOfLimitsY = true;
         }
-        else 
+        else
         {
             if (m_player.transform.position.y > m_minimumHeightForCameraMovement)
             {
@@ -113,31 +103,30 @@ public class CameraMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(m_isCameraStatic && !m_clampCamera) { return;}
-        if(m_clampCamera){
+        if(m_isCameraStatic && !m_clampCamera) { return; }
+        if(m_clampCamera)
+        {
+            m_targetPosition.y = m_player.transform.position.y + m_offsetY;
+            m_targetPosition.z = transform.position.z;
+            m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
 
-        m_targetPosition.y = m_player.transform.position.y + m_offsetY;
-        m_targetPosition.z = transform.position.z;
-        m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
+            if (m_targetPosition.x - m_cameraWidth / 2 <= m_leftLimit)
+            {
+                m_targetPosition.x = m_leftLimit + m_cameraWidth / 2;
+            }
+            else if (m_targetPosition.x + m_cameraWidth / 2 >= m_rightLimit)
+            {
+                m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
+            }
 
-        if (m_targetPosition.x - m_cameraWidth / 2 <= m_leftLimit)
-        {
-            m_targetPosition.x = m_leftLimit + m_cameraWidth / 2;
-        }
-        else if (m_targetPosition.x + m_cameraWidth / 2 >= m_rightLimit)
-        {
-            m_targetPosition.x = m_rightLimit - m_cameraWidth / 2;
-        }
-
-        
-        if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
-        {
-            m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
-        }
-        else if (m_targetPosition.y + m_cameraHeight / 2 >= m_topLimit)
-        {
-            m_targetPosition.y = m_topLimit - m_cameraHeight / 2;
-        }
+            if (m_targetPosition.y - m_cameraHeight / 2 <= m_bottomLimit)
+            {
+                m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
+            }
+            else if (m_targetPosition.y + m_cameraHeight / 2 >= m_topLimit)
+            {
+                m_targetPosition.y = m_topLimit - m_cameraHeight / 2;
+            }
 
             transform.position = new Vector3(m_targetPosition.x, m_targetPosition.y,transform.position.z);
             m_clampCamera = false;
@@ -160,10 +149,11 @@ public class CameraMovement : MonoBehaviour
     }
 
     public bool IsCameraStatic { set { m_isCameraStatic = value;}}
+    public bool IsCameraClamped { set { m_clampCamera = value;}}
     public void ClampCamera(){ m_clampCamera = true;}
 
-    public Vector3 GetTarget(){ return m_targetPosition;}
-    public float GetSpeedX() {return m_velocityX.x;}
+    public Vector3 GetTarget() { return m_targetPosition; }
+    public float GetSpeedX() { return m_velocityX.x; }
 
     public float LeftLimit      { set { m_leftLimit = value; } }
     public float RightLimit     { set { m_rightLimit = value; } }
