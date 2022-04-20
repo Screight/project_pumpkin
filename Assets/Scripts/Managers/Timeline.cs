@@ -48,7 +48,7 @@ public class Timeline : MonoBehaviour
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToNormal(); }
         gameObject.SetActive(false);
         if(m_isFireSpiritCutScene){
-            SkillManager.Instance.UnlockFireball();
+            GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true);
         }
     }
 }

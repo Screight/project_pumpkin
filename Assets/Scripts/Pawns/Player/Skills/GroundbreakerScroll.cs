@@ -8,7 +8,7 @@ public class GroundbreakerScroll : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            SkillManager.Instance.UnlockGroundbreaker();
+            GameManager.Instance.SetIsSkillAvailable(SKILLS.GROUNDBREAKER, true);
             gameObject.SetActive(false);
         }
     }

@@ -8,7 +8,7 @@ public class PilarScroll : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            SkillManager.Instance.UnlockPilar();
+            GameManager.Instance.SetIsSkillAvailable(SKILLS.PILAR, true);
             gameObject.SetActive(false);
         }
     }

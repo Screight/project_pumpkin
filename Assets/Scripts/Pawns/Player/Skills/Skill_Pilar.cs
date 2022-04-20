@@ -58,9 +58,9 @@ public class Skill_Pilar : MonoBehaviour
         m_markerSprite.enabled = false;
     }
 
-    public void Pilar(bool p_isPilarUnlocked)
+    public void Pilar()
     {
-        if (!p_isPilarUnlocked) { return ; }
+        if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.PILAR)) { return ; }
         if (InputManager.Instance.Skill3ButtonHold && m_player.IsGrounded && !m_isPilarOnCooldown && m_cooldownTimer.IsFinished)
         {
             if (!m_isCasting) { StartCasting(); }

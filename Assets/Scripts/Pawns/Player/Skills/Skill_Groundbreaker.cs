@@ -44,9 +44,9 @@ public class Skill_Groundbreaker : MonoBehaviour
         }
     }
 
-    public void Groundbreaker(bool p_isUnlocked)
+    public void Groundbreaker()
     {
-        if (!p_isUnlocked) { return; }
+        if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.GROUNDBREAKER)) { return; }
         if (InputManager.Instance.Skill2ButtonPressed && m_cooldownTimer.IsFinished && !m_player.IsGrounded)
         {
             m_rb2D.velocity = new Vector2(0, m_maxSpeed);

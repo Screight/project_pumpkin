@@ -35,9 +35,9 @@ public class Skill_Fireball : MonoBehaviour
         m_fireBall.SetActive(false);
     }
 
-    public void Fireball(bool p_isFireballUnlocked)
+    public void Fireball()
     {
-        if (!p_isFireballUnlocked) { return; }
+        if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.FIRE_BALL)) { return; }
         if (InputManager.Instance.Skill1ButtonPressed && m_cooldownTimer.IsFinished && m_isFireBallAvailable)
         {
             m_fireBall.SetActive(true);

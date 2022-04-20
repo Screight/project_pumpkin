@@ -8,7 +8,7 @@ public class FireballScroll : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            SkillManager.Instance.UnlockFireball();
+            GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true);
             gameObject.SetActive(false);
         }
     }

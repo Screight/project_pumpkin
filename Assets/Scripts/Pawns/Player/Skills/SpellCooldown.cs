@@ -17,15 +17,15 @@ public class SpellCooldown : MonoBehaviour
 
     private void Start()
     {
-        if (!SkillManager.Instance.IsFireballUnlocked)
+        if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.FIRE_BALL))
         {
             m_fireballUI.SetActive(false);
         }
-        if (!SkillManager.Instance.IsGroundbreakerUnlocked)
+        if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.GROUNDBREAKER))
         {
             m_groundbreakerUI.SetActive(false);
         }
-        if (!SkillManager.Instance.IsPilarUnlocked)
+        if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.PILAR))
         {
             m_pilarUI.SetActive(false);
         }
@@ -35,10 +35,10 @@ public class SpellCooldown : MonoBehaviour
     public void FillPilarCooldownUI(float p_percentage) { m_pilarCooldownUI.fillAmount = 1 - p_percentage; }
     public void FillGroundbreakerCooldownUI(float p_percentage) { m_groundbreakerCooldownUI.fillAmount = 1 - p_percentage; }
 
-    public void ActivateFireballUI() { m_fireballUI.SetActive(true); }
+    public void SetFireballUI(bool p_isActive) { m_fireballUI.SetActive(p_isActive); }
 
-    public void ActivateGroundbreakerUI() {  m_groundbreakerUI.SetActive(true);  }
+    public void SetGroundbreakerUI(bool p_isActive) {  m_groundbreakerUI.SetActive(p_isActive);  }
 
-    public void ActivatePilarUI() { m_pilarUI.SetActive(true); }
+    public void SetPilarUI(bool p_isActive) { m_pilarUI.SetActive(p_isActive); }
      
 }

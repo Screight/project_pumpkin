@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : AnimatedCharacter
 {
-
     [SerializeField] Attack m_attackScript;
 
     static Player m_instance;
@@ -152,12 +151,11 @@ public class Player : AnimatedCharacter
         m_direction = Input.GetAxisRaw("Horizontal");
         Move();
         if (InputManager.Instance.JumpButtonPressed && m_isGrounded) { Jump(); }
-        else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash) { InitializeDash(); }
+        else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash && GameManager.Instance.GetIsSkillAvailable(SKILLS.DASH)) { InitializeDash(); }
     }
 
     void InitializeDash()
     {
-        Debug.Log("Initialize dash");
         SoundManager.Instance.PlayOnce(AudioClipName.DASH);
         m_state = PLAYER_STATE.DASH;
         m_hasUsedDash = true;
@@ -230,7 +228,7 @@ public class Player : AnimatedCharacter
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         m_attackScript.HandleAttack(m_isGrounded);
-        if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash) { InitializeDash(); }
+        if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash && GameManager.Instance.GetIsSkillAvailable(SKILLS.DASH)) { InitializeDash(); }
     }
     void HandleFallState() { HandleJumpState(); }
     void HandleBoostState() { HandleJumpState(); }
