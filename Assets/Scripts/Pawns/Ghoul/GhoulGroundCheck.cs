@@ -23,7 +23,7 @@ public class GhoulGroundCheck : MonoBehaviour
         if (collision.gameObject.tag == "floor" && ghoulScript.State != GHOUL_STATE.DIE)
         {
             ghoulScript.IsGrounded = true;
-            m_rb2D.velocity = Vector2.zero;
+            m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, 0);
             //Physics2D.IgnoreLayerCollision(6, 7, false);
             ghoulScript.State = GHOUL_STATE.IDLE;
         }

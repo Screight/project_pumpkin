@@ -106,18 +106,20 @@ public class Skeleton : Enemy
                 FlipX();
                 m_isHittingWall = false;
             }
-            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
+            
 
             if (transform.position.x < left_limit.position.x)
             {
                 transform.position = new Vector3(left_limit.position.x, transform.position.y, transform.position.z);
                 FlipX();
             }
-            if (transform.position.x > right_limit.position.x)
+            else if (transform.position.x > right_limit.position.x)
             {
                 transform.position = new Vector3(right_limit.position.x, transform.position.y, transform.position.z);
                 FlipX();
             }
+
+            m_rb2D.velocity = new Vector2(FacingDirection() * m_speed, m_rb2D.velocity.y);
 
             //Player near?
             if (m_playerIsNear)
@@ -229,6 +231,7 @@ public class Skeleton : Enemy
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
+        m_isAttacking = false;
     }
 
     public SKELETON_STATE State { set { m_skeletonState = value; } get { return m_skeletonState; } }

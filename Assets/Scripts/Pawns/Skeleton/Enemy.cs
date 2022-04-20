@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : AnimatedCharacter
 {
     protected Animator m_animator;
     Player m_playerScript;
@@ -22,7 +22,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float m_playerInvulnerableDuration = 0.5f;
     [SerializeField] float m_playerNoControlDuration = 0.5f;
     [SerializeField] Vector2 m_pushAwayPlayerVelocity = new Vector2(50.0f, 100.0f);
-    protected virtual void Awake() { 
+    protected override void Awake() { 
+        base.Awake();
         m_spawnPos = transform.position; 
         m_animationTimer = gameObject.AddComponent<Timer>();
         m_collider = GetComponent<Collider2D>();
@@ -77,7 +78,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    protected virtual void OnCollisionStay2D(Collision2D p_collider)
+    protected virtual bool OnCollisionStay2D(Collision2D p_collider)
     {
         if (p_collider.gameObject.tag == "Player" && !m_playerScript.IsInvulnerable && Player.Instance.CanPlayerGetHit())
         {
@@ -86,7 +87,9 @@ public class Enemy : MonoBehaviour
             float distanceToEnemyY = 1;
             Vector2 direction = new Vector2(distanceToEnemyX/Mathf.Abs(distanceToEnemyX), distanceToEnemyY/Mathf.Abs(distanceToEnemyY));
             PushPlayer(direction);
+            return false;
         }
+        return true;
     }
 
     protected virtual void PushPlayer(Vector2 p_direction)

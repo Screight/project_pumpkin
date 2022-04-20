@@ -42,6 +42,13 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.PLAYER_GROUNDBREAKER] = Animator.StringToHash(m_playerGroundbreaker);
         m_animationHash[(int)ANIMATION.PLAYER_GROUNDBREAKER_LOOP] = Animator.StringToHash(m_playerGroundbreakerLoop);
         m_animationHash[(int)ANIMATION.PLAYER_DEATH] = Animator.StringToHash(m_playerDeath);
+
+        m_animationHash[(int)ANIMATION.GHOUL_ATTACK] = Animator.StringToHash("Attack");
+        m_animationHash[(int)ANIMATION.GHOUL_DIE] = Animator.StringToHash("Die");
+        m_animationHash[(int)ANIMATION.GHOUL_HIT] = Animator.StringToHash("hit");
+        m_animationHash[(int)ANIMATION.GHOUL_IDLE] = Animator.StringToHash("Idle");
+        m_animationHash[(int)ANIMATION.GHOUL_MOVE] = Animator.StringToHash("Move");
+        m_animationHash[(int)ANIMATION.GHOUL_CHARGE] = Animator.StringToHash("Charge");
     }    
 
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation){
