@@ -96,7 +96,6 @@ public class Ghoul : Enemy
 
     }
 
-
     void InitializePatrol(){
         m_state = ENEMY_STATE.PATROL;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_MOVE);
@@ -187,6 +186,7 @@ public class Ghoul : Enemy
         m_rb2D.velocity = Vector2.zero;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_IDLE);
         m_eventTimer.Duration = m_restDuration;
+        m_eventTimer.Stop();
         m_eventTimer.Run();
     }
 
@@ -288,11 +288,25 @@ public class Ghoul : Enemy
     protected override void EndHit()
     {
         base.EndHit();
-        if(m_ghoulState == GHOUL_STATE.DIE){ return; }
-        m_ghoulState = GHOUL_STATE.IDLE;
+        if(m_state == ENEMY_STATE.DEATH){ return; }
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_IDLE);
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
         m_rb2D.gravityScale = 40;
+        if(m_playerIsAtRange){
+            if(m_playerIsNear && !m_isHittingWall){
+                InitializeCharge();
+            }
+            if(!m_isHittingWall){
+                InitializeChase();
+            }
+            else{
+                InitializeRest();
+            }
+        }
+        else{
+            InitializePatrol();
+        }
+        
     }
 
     void FaceToDirection(float p_direction){
@@ -317,13 +331,15 @@ public class Ghoul : Enemy
 
     public override void Damage(float p_damage)
     {
-        m_ghoulState = GHOUL_STATE.HIT;
+        //m_ghoulState = GHOUL_STATE.HIT;
+        m_state = ENEMY_STATE.HIT;
         m_rb2D.velocity = Vector2.zero;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_HIT);
         base.Damage(p_damage);
         if (m_health <= 0)
         {
-            m_ghoulState = GHOUL_STATE.DIE;
+            //m_ghoulState = GHOUL_STATE.DIE;
+            m_state = ENEMY_STATE.DEATH;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_DIE);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
@@ -333,15 +349,16 @@ public class Ghoul : Enemy
     {
         base.Reset();
         m_rb2D.gravityScale = 40;
-        m_ghoulState = GHOUL_STATE.IDLE;
+        //m_ghoulState = GHOUL_STATE.IDLE;
+        m_state = ENEMY_STATE.IDLE;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_IDLE);
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
-    public GHOUL_STATE State 
+    public ENEMY_STATE State 
     { 
-        set { m_ghoulState = value; } 
-        get { return m_ghoulState; } 
+        set { m_state = value; } 
+        get { return m_state; } 
     }
 
     protected override bool OnCollisionStay2D(Collision2D p_collider) {

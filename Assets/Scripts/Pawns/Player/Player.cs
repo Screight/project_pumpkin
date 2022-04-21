@@ -142,16 +142,17 @@ public class Player : AnimatedCharacter
             case PLAYER_STATE.FALL:     { HandleFallState(); }      break;
             case PLAYER_STATE.LAND:     { HandleLandState(); }      break;
             case PLAYER_STATE.DASH:     { HandleDashState(); }      break;
+            case PLAYER_STATE.ATTACK: { m_attackScript.HandleAttack(m_isGrounded); } break;
         }
     }
 
     void HandleMoveState()
     {
-        m_attackScript.HandleAttack(m_isGrounded);
         m_direction = Input.GetAxisRaw("Horizontal");
         Move();
         if (InputManager.Instance.JumpButtonPressed && m_isGrounded) { Jump(); }
         else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash && GameManager.Instance.GetIsSkillAvailable(SKILLS.DASH)) { InitializeDash(); }
+        m_attackScript.HandleAttack(m_isGrounded);
     }
 
     void InitializeDash()
@@ -426,7 +427,8 @@ public class Player : AnimatedCharacter
         set
         {
             m_state = value;
-            if (m_state == PLAYER_STATE.ATTACK) { m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y); }
+            if (m_state == PLAYER_STATE.ATTACK) { 
+                m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y); }
         }
     }
     public bool IsGrounded

@@ -20,12 +20,11 @@ public class GhoulGroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor" && ghoulScript.State != GHOUL_STATE.DIE)
+        if (collision.gameObject.tag == "floor" && ghoulScript.State != ENEMY_STATE.DEATH)
         {
             ghoulScript.IsGrounded = true;
             m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, 0);
             //Physics2D.IgnoreLayerCollision(6, 7, false);
-            ghoulScript.State = GHOUL_STATE.IDLE;
         }
     }
 }

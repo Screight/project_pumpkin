@@ -72,7 +72,7 @@ public class Attack : MonoBehaviour
     void HandleGroundAttackState(){
         if(InputManager.Instance.AttackButtonPressed){
             m_keepAttacking = true;
-            
+            Player.Instance.State = PLAYER_STATE.ATTACK;
             if(!m_isAttacking){
                 StartCombo();
             }
@@ -107,6 +107,7 @@ public class Attack : MonoBehaviour
     void StartCombo(){
         m_isAttacking = true;
         m_attackComboNumber = 1;
+        Player.Instance.State = PLAYER_STATE.ATTACK;
         InitializeAttack();
     }
 
@@ -115,6 +116,7 @@ public class Attack : MonoBehaviour
         ChangeAnimationState(ATTACK_ANIMATION.NO_ATTACK);
         m_isAttacking = false;
         m_keepAttacking = false;
+        Player.Instance.State = PLAYER_STATE.IDLE;
     }
 
     void Hit()
