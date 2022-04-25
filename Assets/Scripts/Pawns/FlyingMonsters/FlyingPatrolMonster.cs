@@ -125,6 +125,7 @@ public class FlyingPatrolMonster : Enemy
             m_state = ENEMY_STATE.DEAD;
             return;
         }
+        m_rb2D.velocity = Vector2.zero;
         m_state = ENEMY_STATE.PATROL;
         ChangeAnimationState(ANIMATION_STATE.MOVE);
     }

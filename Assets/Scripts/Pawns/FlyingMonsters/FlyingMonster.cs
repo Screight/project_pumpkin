@@ -329,7 +329,9 @@ public class FlyingMonster : Enemy
             m_isInitialized = true;
         }
         FaceToDirection();
-
+        if(m_state != ENEMY_STATE.ATTACK){
+            m_rb2D.velocity = Vector2.zero;
+        }
         switch (m_state)
         {
             default: break;
@@ -409,6 +411,20 @@ public class FlyingMonster : Enemy
     }
 
     private void EndRecovering() { m_isRecovering = false;}
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if((collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform") && m_state == ENEMY_STATE.ATTACK && m_state != ENEMY_STATE.DEAD)
+        {
+            m_pathFinder.SetInitialNodeToNone();
+            m_state = ENEMY_STATE.IDLE;
+            m_rb2D.velocity = Vector2.zero;
+            m_memoryTimer.Stop();
+            m_isRecovering = true;
+            m_isCharging = false;
+            ChangeAnimationState(ANIMATION_STATE.RECOVER_FROM_ATTACK);
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

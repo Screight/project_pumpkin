@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6cff8232b0b908cb7f03eae114480b, type: 3}
+  m_Name: dialogueTest
+  m_EditorClassIdentifier: 
+  m_icon:
+  - {fileID: -1685362205908074047, guid: 2ea914ce4a9380c09a1990d8536d3fcb, type: 3}
+  - {fileID: -7917194882312367782, guid: 15b5982ee34fa124fa65a96b9a9026bf, type: 3}
+  m_name:
+  - Ura
+  - Fire Spirit
+  m_sentences:
+  - Fueguito, fueguito que llamas mas grandes tienes...
+  - Son para quemarte mejor MUAHAHAHAHAHA
+  - Preparate para morir, ha llegado tu fin!
+  m_characterTalkingSentence: 000000000100000001000000

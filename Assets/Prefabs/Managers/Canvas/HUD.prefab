@@ -290,7 +290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5941651614346352416, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
+  m_Sprite: {fileID: 1505637646939104201, guid: c7ccc79023dc71be8aa685ceb6769686, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5941651614346352416, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
+  m_Sprite: {fileID: 1505637646939104201, guid: c7ccc79023dc71be8aa685ceb6769686, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5941651614346352416, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
+  m_Sprite: {fileID: 1505637646939104201, guid: c7ccc79023dc71be8aa685ceb6769686, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -467,7 +467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8737867685726218882
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1569,7 +1569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4659392893205392942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1692,7 +1692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5941651614346352416, guid: 23ebcc387c201a74eb8d93f9ea3d056d, type: 3}
+  m_Sprite: {fileID: 1505637646939104201, guid: c7ccc79023dc71be8aa685ceb6769686, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1719,7 +1719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7108694161465416137
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1828,16 +1828,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773ac5fc93ec73a479691778b9480414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_firstHeart: {fileID: 0}
-  m_secondHeart: {fileID: 0}
-  m_thirdHeart: {fileID: 0}
-  m_forthHeart: {fileID: 0}
-  m_fifthHeart: {fileID: 0}
-  m_sixthHeart: {fileID: 0}
-  m_seventhHeart: {fileID: 0}
-  m_octoHeart: {fileID: 0}
-  m_fullHeart: {fileID: 0}
-  m_emptyHeart: {fileID: 0}
+  m_firstHeart: {fileID: 1379833374}
+  m_secondHeart: {fileID: 1228466545}
+  m_thirdHeart: {fileID: 2136626523}
+  m_forthHeart: {fileID: 896941963703136595}
+  m_fullHeart: {fileID: 1505637646939104201, guid: c7ccc79023dc71be8aa685ceb6769686, type: 3}
+  m_emptyHeart: {fileID: -8204063819509166832, guid: c7ccc79023dc71be8aa685ceb6769686, type: 3}
 --- !u!1 &8798996675533381019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1855,7 +1851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7144416525568107056
 RectTransform:
   m_ObjectHideFlags: 0

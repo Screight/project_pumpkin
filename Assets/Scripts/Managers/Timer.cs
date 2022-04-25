@@ -83,6 +83,6 @@ public class Timer: MonoBehaviour
     public float Duration
     {
         get { return m_duration; }
-        set { if (!m_isRunning) { m_duration = value; } }
+        set { m_duration = value; }
     }
 }

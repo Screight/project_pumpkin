@@ -148,7 +148,7 @@ public class Player : AnimatedCharacter
 
     void HandleMoveState()
     {
-        m_direction = Input.GetAxisRaw("Horizontal");
+        m_direction = InputManager.Instance.HorizontalAxisFlat;
         Move();
         if (InputManager.Instance.JumpButtonPressed && m_isGrounded) { Jump(); }
         else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash && GameManager.Instance.GetIsSkillAvailable(SKILLS.DASH)) { InitializeDash(); }
@@ -469,6 +469,12 @@ public class Player : AnimatedCharacter
                 Player.Instance.ResetPlayer(PLAYER_STATE.IDLE,ANIMATION.PLAYER_IDLE);
             }
         }
+    }
+
+    public void StartTalking(){
+        m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
+        m_state = PLAYER_STATE.TALKING;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
     }
 
     private void OnDrawGizmos()
