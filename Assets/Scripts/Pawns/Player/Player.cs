@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : AnimatedCharacter
@@ -7,10 +5,10 @@ public class Player : AnimatedCharacter
     [SerializeField] Attack m_attackScript;
 
     static Player m_instance;
-
-    public static Player Instance {
-        get { return m_instance;}
-        private set {}
+    public static Player Instance
+    {
+        get { return m_instance; }
+        private set { }
     }
 
     bool m_isBeingScripted = false;
@@ -62,16 +60,14 @@ public class Player : AnimatedCharacter
     SpriteRenderer m_spriteRenderer;
     [SerializeField] Transicion m_transicionScrDamageipt;
     bool m_isUsingGroundBreaker = false;
-    
 
-
-/// END OF VARIABLES
+    /// END OF VARIABLES
     protected override void Awake() {
 
         base.Awake();
 
-        if(m_instance == null ){ m_instance = this;}
-        else { Destroy(this.gameObject);}
+        if (m_instance == null) { m_instance = this; }
+        else { Destroy(gameObject); }
 
         m_rb2D = GetComponent<Rigidbody2D>();
 
@@ -92,19 +88,19 @@ public class Player : AnimatedCharacter
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         m_collider = GetComponent<Collider2D>();
-
     }
 
-    private void Start() {
-
+    private void Start()
+    {
         m_dashTimer.Duration = m_dashDuration;
         m_currentSpeedX = m_normalMovementSpeed;
     }
 
-    private void Update() {
+    private void Update()
+    {
         CheckIfFalling();
 
-        if(m_isBeingScripted){ return ;}
+        if (m_isBeingScripted) { return; }
 
         if (m_invulnerableTimer.IsRunning)
         {
@@ -119,9 +115,8 @@ public class Player : AnimatedCharacter
 
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
-            if(m_state != PLAYER_STATE.DEATH){
-                m_state = PLAYER_STATE.IDLE;
-            }
+            if (m_state != PLAYER_STATE.DEATH) { m_state = PLAYER_STATE.IDLE; }
+
             m_direction = 0;
             m_isInvulnerable = false;
             m_spriteRenderer.color = new Color(255, 255, 255, 255);
@@ -133,16 +128,17 @@ public class Player : AnimatedCharacter
 
         if (m_noControlTimer.IsFinished) { m_canPerformAction = true; }
 
-        switch(m_state){
+        switch (m_state)
+        {
             default: break;
-            case PLAYER_STATE.IDLE:     { HandleIdleState(); }      break;
-            case PLAYER_STATE.MOVE:     { HandleMoveState(); }      break;
-            case PLAYER_STATE.BOOST:    { HandleBoostState(); }    break;
-            case PLAYER_STATE.JUMP:     { HandleJumpState(); }      break;
-            case PLAYER_STATE.FALL:     { HandleFallState(); }      break;
-            case PLAYER_STATE.LAND:     { HandleLandState(); }      break;
-            case PLAYER_STATE.DASH:     { HandleDashState(); }      break;
-            case PLAYER_STATE.ATTACK: { m_attackScript.HandleAttack(m_isGrounded); } break;
+            case PLAYER_STATE.IDLE:     { HandleIdleState(); } break;
+            case PLAYER_STATE.MOVE:     { HandleMoveState(); } break;
+            case PLAYER_STATE.BOOST:    { HandleBoostState(); } break;
+            case PLAYER_STATE.JUMP:     { HandleJumpState(); } break;
+            case PLAYER_STATE.FALL:     { HandleFallState(); } break;
+            case PLAYER_STATE.LAND:     { HandleLandState(); } break;
+            case PLAYER_STATE.DASH:     { HandleDashState(); } break;
+            case PLAYER_STATE.ATTACK:   { m_attackScript.HandleAttack(m_isGrounded); } break;
         }
     }
 
@@ -150,7 +146,10 @@ public class Player : AnimatedCharacter
     {
         m_direction = InputManager.Instance.HorizontalAxisFlat;
         Move();
-        if (InputManager.Instance.JumpButtonPressed && m_isGrounded) { Jump(); }
+        if (InputManager.Instance.JumpButtonPressed && m_isGrounded)
+        {
+            Jump();
+        }
         else if (InputManager.Instance.DashButtonPressed && !m_hasUsedDash && GameManager.Instance.GetIsSkillAvailable(SKILLS.DASH)) { InitializeDash(); }
         m_attackScript.HandleAttack(m_isGrounded);
     }
@@ -183,8 +182,6 @@ public class Player : AnimatedCharacter
             Physics2D.IgnoreLayerCollision(6, 7, false);
         }
     }
-
-
 
     void Move()
     {
@@ -295,19 +292,17 @@ public class Player : AnimatedCharacter
         SkillManager.Instance.ResetSkillStates();
     }
 
-    public void StopPlayerMovement(){
-        m_rb2D.velocity = Vector2.zero;
-    }
+    public void StopPlayerMovement() { m_rb2D.velocity = Vector2.zero; }
 
-    public void HandleBoostToJumpTransition(){
-        if(m_state == PLAYER_STATE.BOOST){
-            m_state = PLAYER_STATE.JUMP;
-        }
+    public void HandleBoostToJumpTransition()
+    {
+        if (m_state == PLAYER_STATE.BOOST) { m_state = PLAYER_STATE.JUMP; }
     }
     public void ScriptWalk(int p_direction)
     {
         if (p_direction > 0) { m_direction = 1; }
         else { m_direction = -1; }
+
         m_isBeingScripted = true;
         FacePlayerToMovementDirection();
         m_state = PLAYER_STATE.MOVE;
@@ -327,6 +322,7 @@ public class Player : AnimatedCharacter
         m_rb2D.velocity = p_impulseVelocity;
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP);
+        
         if (p_impulseVelocity.x > 0) { m_direction = 1; }
         else { m_direction = -1; }
         FacePlayerToMovementDirection();
@@ -369,22 +365,30 @@ public class Player : AnimatedCharacter
 
     public void SetPlayerToPosition(Vector3 p_position) { transform.position = p_position; }
 
-/// COLLITIONS
-    private void OnCollisionEnter2D(Collision2D collision)
+    /// COLLISIONS
+    private void OnCollisionStay2D(Collision2D p_collider)
     {
-        if (collision.gameObject.tag == "spike")
+        if (p_collider.gameObject.CompareTag("spike"))
         {
-            GameManager.Instance.ModifyPlayerHealth(-1);
+            HandleHostileCollision(new Vector2(0, 40), Vector2.up, 0.5f, 0.5f, 1);
+            CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
+            if (GameManager.Instance.PlayerHealth <= 0)
+            {
+                Instance.ResetPlayer(PLAYER_STATE.IDLE, ANIMATION.PLAYER_IDLE);
+            }
         }
     }
 
-    public void HandleDeath(){
+    public void HandleDeath()
+    {
         m_state = PLAYER_STATE.DEATH;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH);
     }
 
-    void Die(){
-        Physics2D.IgnoreLayerCollision(6,7,true);
+    //!NOT IN USE!
+    void Die()
+    {
+        Physics2D.IgnoreLayerCollision(6, 7, true);
         CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
         GameManager.Instance.RestorePlayerToFullHealth();
         // RESET PLAYER
@@ -461,17 +465,8 @@ public class Player : AnimatedCharacter
     public Collider2D GetCollider(){ return m_collider;}
     #endregion
 
-    private void OnTriggerStay2D(Collider2D p_collider) {
-        if(p_collider.tag == "spike" && !m_isInvulnerable){
-            HandleHostileCollision(new Vector2(0,40), Vector2.up, 0.5f, 0.5f, 1);
-            CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
-            if(GameManager.Instance.PlayerHealth <= 0){
-                Player.Instance.ResetPlayer(PLAYER_STATE.IDLE,ANIMATION.PLAYER_IDLE);
-            }
-        }
-    }
-
-    public void StartTalking(){
+    public void StartTalking()
+    {
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         m_state = PLAYER_STATE.TALKING;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
