@@ -116,7 +116,9 @@ public class Attack : MonoBehaviour
         ChangeAnimationState(ATTACK_ANIMATION.NO_ATTACK);
         m_isAttacking = false;
         m_keepAttacking = false;
-        Player.Instance.State = PLAYER_STATE.IDLE;
+        if(Player.Instance.State != PLAYER_STATE.DASH){
+            Player.Instance.State = PLAYER_STATE.IDLE;
+        }
     }
 
     void Hit()

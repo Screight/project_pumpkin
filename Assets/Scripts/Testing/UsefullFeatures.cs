@@ -26,7 +26,8 @@ public class UsefullFeatures : MonoBehaviour
 
     private void Update() {
         if(Input.GetKeyDown("k")){
-            RoomManager.Instance.GetCurrentRoom().Reset();
+            //RoomManager.Instance.GetCurrentRoom().Reset();
+            GameManager.Instance.ModifyPlayerHealth(-10000);
         }
 
     }

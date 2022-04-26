@@ -60,6 +60,10 @@ public class Player : AnimatedCharacter
     SpriteRenderer m_spriteRenderer;
     [SerializeField] Transicion m_transicionScrDamageipt;
     bool m_isUsingGroundBreaker = false;
+    bool m_isInsideActiveInteractiveZone = false;
+
+    Timer m_eventTimer;
+    float m_deathDuration;
 
     /// END OF VARIABLES
     protected override void Awake() {
@@ -88,12 +92,14 @@ public class Player : AnimatedCharacter
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         m_collider = GetComponent<Collider2D>();
+        m_eventTimer = gameObject.AddComponent<Timer>();
     }
 
     private void Start()
     {
         m_dashTimer.Duration = m_dashDuration;
         m_currentSpeedX = m_normalMovementSpeed;
+        m_deathDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PLAYER_DEATH);
     }
 
     private void Update()
@@ -139,6 +145,7 @@ public class Player : AnimatedCharacter
             case PLAYER_STATE.LAND:     { HandleLandState(); } break;
             case PLAYER_STATE.DASH:     { HandleDashState(); } break;
             case PLAYER_STATE.ATTACK:   { m_attackScript.HandleAttack(m_isGrounded); } break;
+            case PLAYER_STATE.DEATH: { HandleDeathState(); } break;
         }
     }
 
@@ -146,7 +153,7 @@ public class Player : AnimatedCharacter
     {
         m_direction = InputManager.Instance.HorizontalAxisFlat;
         Move();
-        if (InputManager.Instance.JumpButtonPressed && m_isGrounded)
+        if (InputManager.Instance.JumpButtonPressed && m_isGrounded && !m_isInsideActiveInteractiveZone)
         {
             Jump();
         }
@@ -167,7 +174,6 @@ public class Player : AnimatedCharacter
         m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
 
         Physics2D.IgnoreLayerCollision(6, 7, true);
-
         m_dashTimer.Run();
     }
 
@@ -379,18 +385,29 @@ public class Player : AnimatedCharacter
         }
     }
 
+    void HandleDeathState(){
+        if(m_eventTimer.IsFinished){
+            Die();
+            // START TRANSITION
+        }
+    }
+
     public void HandleDeath()
     {
         m_state = PLAYER_STATE.DEATH;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH);
+        m_eventTimer.Duration = m_deathDuration;
+        m_eventTimer.Run();
     }
 
     //!NOT IN USE!
     void Die()
     {
         Physics2D.IgnoreLayerCollision(6, 7, true);
-        CheckpointsManager.Instance.MovePlayerToLocalCheckPoint();
+        CheckpointsManager.Instance.MovePlayerToGlobalCheckPoint();
         GameManager.Instance.RestorePlayerToFullHealth();
+        CameraManager.Instance.SetCameraToPlayerPosition();
+        CameraManager.Instance.ClampCameraToTarget();
         // RESET PLAYER
         // SCREEN TRANSITION
         // TP TO LAST CHECKPOINT (add room variable to checkpoint)
@@ -451,6 +468,11 @@ public class Player : AnimatedCharacter
         }
 
     public bool IsInvulnerable { get { return m_isInvulnerable;}}
+
+    public bool IsInsideActiveInteractiveZone {
+        set { m_isInsideActiveInteractiveZone = value; }
+    }
+
 
     public void ReduceSpeed()
     {

@@ -32,6 +32,11 @@ public class CheckpointsManager : MonoBehaviour
         m_localCheckPoint = m_checkpoint;
     }
 
+    public void SetGlobalCheckPoint(Transform p_checkpoint){
+        m_globalCheckPoint = p_checkpoint;
+        m_localCheckPoint = p_checkpoint;
+    }
+
     public void MovePlayerToLocalCheckPoint()
     {
         m_player.ResetPlayer(PLAYER_STATE.IDLE,ANIMATION.PLAYER_IDLE);

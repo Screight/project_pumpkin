@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         m_healthUI.SetHealth(m_playerHealth);
     }
 
+
     public void RestorePlayerToFullHealth(){
         m_playerHealth = PLAYER_MAX_HEALTH;
         m_healthUI.SetHealth(m_playerHealth);
