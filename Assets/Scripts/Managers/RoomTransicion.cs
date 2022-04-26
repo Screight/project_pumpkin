@@ -10,58 +10,59 @@ public class RoomTransicion : MonoBehaviour
 
     [SerializeField] bool m_isHorizontalTransition;
     [SerializeField] float m_playerScriptingDuration = 0.5f;
-    [SerializeField] float m_transitionDuration = 2.0f;
+    //[SerializeField] float m_transitionDuration = 2.0f;
     
     bool m_isBeingScripted = false;
 
     RoomManager m_roomManager;
 
-    private void Awake() {
+    private void Awake()
+    {
         m_collider = GetComponent<BoxCollider2D>();
     }
 
     private void Start() { m_roomManager = RoomManager.Instance; }
 
     private void OnTriggerEnter2D(Collider2D p_collider) {
-        if(p_collider.tag == "enemyProjectile"){  Destroy(p_collider.gameObject); }
-        if(p_collider.tag != "Player"){ return; }
+        if (p_collider.CompareTag("enemyProjectile")) { Destroy(p_collider.gameObject); }
+        if (!p_collider.CompareTag("Player")) { return; }
 
-        if(m_roomManager.CurrentRoom == m_rightTopRoom){
-            RoomManager.Instance.HandleRoomTransition(m_leftBottomRoom); 
-            if(m_isHorizontalTransition){
-                
+        if (m_roomManager.CurrentRoom == m_rightTopRoom)
+        {
+            RoomManager.Instance.HandleRoomTransition(m_leftBottomRoom);
+            if (m_isHorizontalTransition)
+            {
                 Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.min.x, m_collider.bounds.min.y - 1, Player.Instance.transform.position.z));
                 Player.Instance.FacePlayerToLeft();
             }
-            else{
-                
-                Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.min.y - p_collider.bounds.size.y/2, Player.Instance.transform.position.z));
+            else
+            {
+                Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.min.y - p_collider.bounds.size.y / 2, Player.Instance.transform.position.z));
             }
-            
-            
         }
-        else {
+        else
+        {
             RoomManager.Instance.HandleRoomTransition(m_rightTopRoom);
-                if(m_isHorizontalTransition){
-                    Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.max.x, m_collider.bounds.min.y - 1, Player.Instance.transform.position.z));
-                    Player.Instance.FacePlayerToRight();
-                }
-                else{
-                Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.max.y - p_collider.bounds.size.y/2, Player.Instance.transform.position.z));
+            if (m_isHorizontalTransition)
+            {
+                Player.Instance.SetPlayerToPosition(new Vector3(m_collider.bounds.max.x, m_collider.bounds.min.y - 1, Player.Instance.transform.position.z));
                 Player.Instance.FacePlayerToRight();
-                }
-            
             }
+            else
+            {
+                Player.Instance.SetPlayerToPosition(new Vector3(transform.position.x, m_collider.bounds.max.y - p_collider.bounds.size.y / 2, Player.Instance.transform.position.z));
+                Player.Instance.FacePlayerToRight();
+            }
+        }
         bool m_isGoingUpwards = false;
         if(Player.Instance.Speed.y > 0){ m_isGoingUpwards = true;}
         RoomManager.Instance.StartRoomTransicion(m_isHorizontalTransition, m_playerScriptingDuration, m_isGoingUpwards);
-
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
         Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireCube(transform.position, new Vector3(collider.bounds.size.x, collider.bounds.size.y,1));
 
         Gizmos.DrawLine(new Vector3(collider.bounds.min.x, collider.bounds.min.y, transform.position.z), new Vector3(collider.bounds.min.x, collider.bounds.max.y, transform.position.z));
 
@@ -73,5 +74,4 @@ public class RoomTransicion : MonoBehaviour
 
         Gizmos.DrawLine(new Vector3(transform.position.x, collider.bounds.max.y, transform.position.z), new Vector3(transform.position.x, collider.bounds.min.y, transform.position.z));
     }
-
 }

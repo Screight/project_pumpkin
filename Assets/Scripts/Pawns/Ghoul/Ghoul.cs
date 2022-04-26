@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum GHOUL_STATE { IDLE, CHASE, ATTACK, HIT, DIE}
@@ -30,7 +28,6 @@ public class Ghoul : Enemy
     [SerializeField] float m_restDuration = 1.0f;
     [SerializeField] float m_chargeDistance = 50.0f;
     float m_attackDuration;
-
 
     protected override void Awake()
     {
@@ -65,38 +62,30 @@ public class Ghoul : Enemy
     {
         base.Update();
         if (Time.timeScale == 0) { return; } //Game Paused
-        /*switch (m_ghoulState)
+
+        switch (m_state)
         {
-            default:break;
-            case GHOUL_STATE.IDLE:      { Idle(); }                     break;
-            case GHOUL_STATE.CHASE:     { Move(GHOUL_STATE.IDLE); }     break;
-            case GHOUL_STATE.ATTACK:    { Attack(GHOUL_STATE.CHASE); }  break;
-            case GHOUL_STATE.HIT:       { }                             break;
-            case GHOUL_STATE.DIE:       {  }                      break;
-        }*/
-
-        switch(m_state){
-            default: break;
+            default: { break; }
             case ENEMY_STATE.PATROL:
-                HandlePatrol();
-            break;
+                { HandlePatrol(); }
+                break;
             case ENEMY_STATE.CHASE:
-                HandleChase();
-            break;
+                { HandleChase(); }
+                break;
             case ENEMY_STATE.CHARGE:
-                HandleCharge();
-            break;
+                { HandleCharge(); }
+                break;
             case ENEMY_STATE.ATTACK:
-                HandleAttack();
-            break;
+                { HandleAttack(); }
+                break;
             case ENEMY_STATE.REST:
-                HandleRest();
-            break;
+                { HandleRest(); }
+                break;
         }
-
     }
 
-    void InitializePatrol(){
+    void InitializePatrol()
+    {
         m_state = ENEMY_STATE.PATROL;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_MOVE);
         float direction = (m_leftPatrolPosition.position.x - transform.position.x) / Mathf.Abs((m_leftPatrolPosition.position.x - transform.position.x));
@@ -104,25 +93,31 @@ public class Ghoul : Enemy
         FaceToDirection(direction);
     }
 
-    void HandlePatrol(){
-        if(m_playerIsNear && !Player.Instance.IsInvulnerable){
+    void HandlePatrol()
+    {
+        if (m_playerIsNear && !Player.Instance.IsInvulnerable)
+        {
             InitializeChase();
             return;
         }
         Patrol();
     }
 
-    void InitializeChase(){
+    void InitializeChase()
+    {
         m_state = ENEMY_STATE.CHASE;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_MOVE);
     }
 
-    void Patrol(){
-        if(transform.position.x > m_rightPatrolPosition.position.x){
+    void Patrol()
+    {
+        if (transform.position.x > m_rightPatrolPosition.position.x)
+        {
             m_rb2D.velocity = new Vector2(-m_speed, 0);
             FaceToDirection(-1);
         }
-        else if(transform.position.x < m_leftPatrolPosition.position.x){
+        else if (transform.position.x < m_leftPatrolPosition.position.x)
+        {
             m_rb2D.velocity = new Vector2(m_speed, 0);
             FaceToDirection(1);
         }
@@ -174,13 +169,13 @@ public class Ghoul : Enemy
         m_eventTimer.Run();
     }
 
-    void HandleAttack(){
-        if(m_eventTimer.IsFinished){
-            InitializeRest();
-        }
+    void HandleAttack()
+    {
+        if (m_eventTimer.IsFinished) { InitializeRest(); }
     }
 
-    void InitializeRest(){
+    void InitializeRest()
+    {
         FaceToDirection(player.transform.position.x - transform.position.x);
         m_state = ENEMY_STATE.REST;
         m_rb2D.velocity = Vector2.zero;
@@ -190,23 +185,24 @@ public class Ghoul : Enemy
         m_eventTimer.Run();
     }
 
-    void HandleRest(){
-        if(m_eventTimer.IsFinished){
-            if(m_playerIsAtRange){
-                if(m_playerIsNear && !m_isHittingWall){
+    void HandleRest()
+    {
+        if (m_eventTimer.IsFinished)
+        {
+            if (m_playerIsAtRange)
+            {
+                if (m_playerIsNear && !m_isHittingWall)
+                {
                     InitializeCharge();
                 }
-                if(!m_isHittingWall){
+                if (!m_isHittingWall)
+                {
                     InitializeChase();
                 }
-                else{
-                    InitializeRest();
-                }
-            }
-            else{
-                InitializePatrol();
+                else { InitializeRest(); }
             }
         }
+        else { InitializePatrol(); }
     }
 
     void Idle()
@@ -288,32 +284,30 @@ public class Ghoul : Enemy
     protected override void EndHit()
     {
         base.EndHit();
-        if(m_state == ENEMY_STATE.DEATH){ return; }
+        if (m_state == ENEMY_STATE.DEATH) { return; }
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_IDLE);
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
         m_rb2D.gravityScale = 40;
-        if(m_playerIsAtRange){
-            if(m_playerIsNear && !m_isHittingWall){
-                InitializeCharge();
-            }
-            if(!m_isHittingWall){
+        if (m_playerIsAtRange)
+        {
+            if (m_playerIsNear && !m_isHittingWall) { InitializeCharge(); }
+            if (!m_isHittingWall)
+            {
                 InitializeChase();
             }
-            else{
-                InitializeRest();
-            }
+            else { InitializeRest(); }
         }
-        else{
-            InitializePatrol();
-        }
-        
+        else { InitializePatrol(); }
     }
 
-    void FaceToDirection(float p_direction){
-        if(p_direction >= 0 && !m_isFacingRight){
+    void FaceToDirection(float p_direction)
+    {
+        if (p_direction >= 0 && !m_isFacingRight)
+        {
             FlipX();
         }
-        else if(p_direction < 0 && m_isFacingRight){
+        else if (p_direction < 0 && m_isFacingRight)
+        {
             FlipX();
         }
     }
@@ -361,10 +355,12 @@ public class Ghoul : Enemy
         get { return m_state; } 
     }
 
-    protected override bool OnCollisionStay2D(Collision2D p_collider) {
-        if(base.OnCollisionStay2D(p_collider)){ return false; }
+    protected override bool OnCollisionStay2D(Collision2D p_collider)
+    {
+        if (base.OnCollisionStay2D(p_collider)) { return false; }
 
-        if(m_state == ENEMY_STATE.ATTACK){
+        if (m_state == ENEMY_STATE.ATTACK)
+        {
             m_eventTimer.Stop();
             InitializeRest();
         }

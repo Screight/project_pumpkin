@@ -10,16 +10,15 @@ public class RoomGraph : MonoBehaviour
     [SerializeField] int m_tileSize;
     SparseGraph m_graph;
     [SerializeField] LayerMask m_obstacleLayer;
-    private async void Awake()
+    private void Awake()
     {
-        //m_target = GameObject.FindGameObjectWithTag("Player");
         m_graph = new SparseGraph(true);
-        
+
         for (int j = 0; j < m_height; j++)
         {
             for (int i = 0; i < m_width; i++)
             {
-                m_graph.AddNode(new NavigationGraphNode(i+j * m_width,new Vector3(i*m_tileSize, j*m_tileSize, 0) + m_startingPoint.transform.position));
+                m_graph.AddNode(new NavigationGraphNode(i + j * m_width, new Vector3(i * m_tileSize, j * m_tileSize, 0) + m_startingPoint.transform.position));
             }
         }
 
@@ -27,52 +26,57 @@ public class RoomGraph : MonoBehaviour
         {
             for (int j = 0; j < m_height; j++)
             {
-                if( i >= 0 && i < m_width - 1){
+                if (i >= 0 && i < m_width - 1)
+                {
                     m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + j * m_width, 1));
                     m_graph.AddEdge(new GraphEdge((i + 1) + j * m_width, i + j * m_width, 1));
                 }
 
-                if(i > 0 && i < m_width){
-                    if(j >= 0 && j < m_height - 1){
+                if (i > 0 && i < m_width)
+                {
+                    if (j >= 0 && j < m_height - 1)
+                    {
                         m_graph.AddEdge(new GraphEdge(i + j * m_width, (i - 1) + (j * m_width + m_width), Mathf.Sqrt(2)));
                         m_graph.AddEdge(new GraphEdge(((i - 1) + (j * m_width + m_width)), i + j * m_width, Mathf.Sqrt(2)));
                     }
-                    if (j > 0 && j < m_height){
+                    if (j > 0 && j < m_height)
+                    {
                         m_graph.AddEdge(new GraphEdge(i + j * m_width, (i - 1) + (j * m_width - m_width), Mathf.Sqrt(2)));
                         m_graph.AddEdge(new GraphEdge(((i - 1) + (j * m_width - m_width)), i + j * m_width, Mathf.Sqrt(2)));
                     }
                 }
 
-                if( j >= 0 && j < m_height - 1){
+                if (j >= 0 && j < m_height - 1)
+                {
                     m_graph.AddEdge(new GraphEdge(i + j * m_width, i + (j * m_width + m_width), 1));
                     m_graph.AddEdge(new GraphEdge(i + (j * m_width + m_width), i + j * m_width, 1));
                 }
 
-                if(i >= 0 && i < m_width - 1){
-                    if(j >= 0 && j < m_height - 1){
+                if (i >= 0 && i < m_width - 1)
+                {
+                    if (j >= 0 && j < m_height - 1)
+                    {
                         m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + (j * m_width + m_width), Mathf.Sqrt(2)));
                         m_graph.AddEdge(new GraphEdge(((i + 1) + (j * m_width + m_width)), i + j * m_width, Mathf.Sqrt(2)));
                     }
-                    if (j > 0 && j < m_height){
+                    if (j > 0 && j < m_height)
+                    {
                         m_graph.AddEdge(new GraphEdge(i + j * m_width, (i + 1) + (j * m_width - m_width), Mathf.Sqrt(2)));
                         m_graph.AddEdge(new GraphEdge(((i + 1) + (j * m_width - m_width)), i + j * m_width, Mathf.Sqrt(2)));
                     }
                 }
-
             }
         }
 
-        for(int i = 0; i < m_graph.NumberOfNodes(); i++)
+        for (int i = 0; i < m_graph.NumberOfNodes(); i++)
         {
-            Collider2D[] obstacles = Physics2D.OverlapCircleAll(m_graph.GetNode(i).Position, 4, m_obstacleLayer,-10000,10000);
+            Collider2D[] obstacles = Physics2D.OverlapCircleAll(m_graph.GetNode(i).Position, 4, m_obstacleLayer, -10000, 10000);
 
             foreach (Collider2D enemy in obstacles)
             {
-                if (enemy.gameObject.tag == "floor") { m_graph.GetNode(i).IsActive = false; }
+                if (enemy.gameObject.CompareTag("floor")) { m_graph.GetNode(i).IsActive = false; }
             }
-
         }
-
     }
 
     public SparseGraph Graph { get { return m_graph;}}
@@ -88,8 +92,6 @@ public class RoomGraph : MonoBehaviour
 
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
-        }
-        
+        }   
     }
-
 }

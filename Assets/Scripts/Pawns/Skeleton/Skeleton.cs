@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK, HIT, AIR }
@@ -17,7 +15,7 @@ public class Skeleton : Enemy
     string m_reloadAnimationName    = "Reload";
     string m_fireAnimationName      = "Fire";
     string m_hitAnimationName       = "hit";
-    string m_attackAnimationName       = "attack";
+    string m_attackAnimationName    = "attack";
     string m_dieAnimationName       = "Die";
     int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
 
@@ -42,7 +40,7 @@ public class Skeleton : Enemy
     bool m_isAttacking = false;
     [SerializeField] Transform m_attackPosition;
 
-    protected override void Awake() 
+    protected override void Awake()
     {
         base.Awake();
 
@@ -102,11 +100,11 @@ public class Skeleton : Enemy
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
         if (m_hasReturned)
         {
-            if(m_isHittingWall){
+            if (m_isHittingWall)
+            {
                 FlipX();
                 m_isHittingWall = false;
             }
-            
 
             if (transform.position.x < left_limit.position.x)
             {
@@ -130,7 +128,8 @@ public class Skeleton : Enemy
         }
         else
         {
-            if(m_isHittingWall){
+            if (m_isHittingWall)
+            {
                 FlipX();
                 m_isHittingWall = false;
             }
@@ -175,23 +174,25 @@ public class Skeleton : Enemy
         if (player.transform.position.x > transform.position.x && !m_isFacingRight) { FlipX(); }
         if (player.transform.position.x < transform.position.x && m_isFacingRight)  { FlipX(); }
 
-        if(!m_isAttacking){
+        if (!m_isAttacking)
+        {
             if (m_playerIsAtRange && m_isGrounded)
-            {        
+            {
                 m_rb2D.velocity = Vector2.zero;
                 ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.ATTACK]);
                 m_isAttacking = true;
             }
-            else {
-            m_skeletonState = p_defaultState;
-            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+            else
+            {
+                m_skeletonState = p_defaultState;
+                ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
             }
-        }
-        
+        }        
     }
 
-    void LaunchFireBall(){
-        Projectile m_boneArrowScript  = Instantiate(m_arrow, m_attackPosition.position, Quaternion.identity).GetComponent<Projectile>();
+    void LaunchFireBall()
+    {
+        Projectile m_boneArrowScript = Instantiate(m_arrow, m_attackPosition.position, Quaternion.identity).GetComponent<Projectile>();
         m_boneArrowScript.Shoot(FacingDirection());
         m_isAttacking = false;
     }
@@ -199,9 +200,10 @@ public class Skeleton : Enemy
     void ChangeAnimationState(int p_newState)
     {
         if (m_currentState == p_newState && m_currentState != m_animationHash[(int)SKELETON_ANIMATION.HIT]) { return; }
-        
-        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)SKELETON_ANIMATION.HIT]) {
-            m_animator.Play(p_newState,-1,0);
+
+        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)SKELETON_ANIMATION.HIT])
+        {
+            m_animator.Play(p_newState, -1, 0);
         }
         else
         {
@@ -227,7 +229,9 @@ public class Skeleton : Enemy
         ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.HIT]);
         base.Damage(p_damage);
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
-        if(m_health <= 0) { m_skeletonState = SKELETON_STATE.DIE;
+        if (m_health <= 0)
+        {
+            m_skeletonState = SKELETON_STATE.DIE;
             ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
@@ -244,7 +248,8 @@ public class Skeleton : Enemy
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
-    public override void Reset(){
+    public override void Reset()
+    {
         base.Reset();
         m_rb2D.gravityScale = 40;
         EndHit();
@@ -271,10 +276,10 @@ public class Skeleton : Enemy
 
     #endregion
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawSphere(new Vector3(left_limit.position.x, left_limit.position.y , transform.position.z), 3);
-        Gizmos.DrawSphere(new Vector3(right_limit.position.x, left_limit.position.y , transform.position.z), 3);
+        Gizmos.DrawSphere(new Vector3(left_limit.position.x, left_limit.position.y, transform.position.z), 3);
+        Gizmos.DrawSphere(new Vector3(right_limit.position.x, left_limit.position.y, transform.position.z), 3);
     }
-
 }

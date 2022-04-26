@@ -9,12 +9,12 @@ public class GhoulWallCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor") { ghoulScript.IsHittingWall = true; }
+        if (collision.gameObject.CompareTag("floor")) { ghoulScript.IsHittingWall = true; }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor") { ghoulScript.IsHittingWall = false; }
+        if (collision.gameObject.CompareTag("floor")) { ghoulScript.IsHittingWall = false; }
     }
 
 }
