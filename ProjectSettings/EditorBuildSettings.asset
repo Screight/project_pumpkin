@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Alfa/cemetery.unity
     guid: f700065eeab9b9a4b97040b913a99d71
   - enabled: 0
-    path: Assets/Scenes/Others/Kit_testing.unity
+    path: Assets/Scenes/TESTING/Kit_testing.unity
     guid: 54b3aea2fb1ec6d418e3382d3f93af49
   - enabled: 0
-    path: Assets/Scenes/Proto Scenes/protoScene.unity
+    path: Assets/Scenes/Prototipo/protoScene.unity
     guid: 58b711fcf38ad5b4c8de846f42e30237
   - enabled: 0
-    path: Assets/Scenes/Proto Scenes/Title.unity
+    path: Assets/Scenes/Prototipo/Title.unity
     guid: 18c77e11ae273e5498f6fd09bdd651b4
   - enabled: 0
     path: Assets/Scenes/Others/BlockOutMatias.unity
