@@ -11,7 +11,7 @@ public class FlyingPatrolMonster : Enemy
     string m_dieAnimationName    = "die";
     int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
     int m_currentAnimationHash;
-    ANIMATION_STATE m_animationState;    
+
      void ChangeAnimationState(ANIMATION_STATE p_animationState)
     {
         int newAnimationHash = m_animationHash[(int)p_animationState];
@@ -19,7 +19,6 @@ public class FlyingPatrolMonster : Enemy
         if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
         m_animator.Play(newAnimationHash);                // play the animation
         m_currentAnimationHash = newAnimationHash;                // reassigning the new state
-        m_animationState = p_animationState;
     }
 
     [SerializeField] LayerMask m_obstacleLayer;

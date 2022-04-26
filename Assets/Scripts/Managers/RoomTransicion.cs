@@ -11,8 +11,6 @@ public class RoomTransicion : MonoBehaviour
     [SerializeField] bool m_isHorizontalTransition;
     [SerializeField] float m_playerScriptingDuration = 0.5f;
     //[SerializeField] float m_transitionDuration = 2.0f;
-    
-    bool m_isBeingScripted = false;
 
     RoomManager m_roomManager;
 

@@ -48,12 +48,10 @@ public class FlyingMonster : Enemy
     PathFinder m_pathFinder;
     bool m_isGoingFrom1To2;
     bool m_isCharging;
-    bool m_hasCharged = false;
     bool m_isInitialized = false;
     bool m_isRecovering = false;
     Vector2 m_directionToAttack;
 
-    ANIMATION_STATE m_animationState;
     int m_currentAnimationHash;
 
     protected override void Awake()
@@ -76,7 +74,6 @@ public class FlyingMonster : Enemy
         if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
         m_animator.Play(newAnimationHash);                // play the animation
         m_currentAnimationHash = newAnimationHash;                // reassigning the new state
-        m_animationState = p_animationState;
     }
 
     void InitializePatrol()
@@ -140,14 +137,12 @@ public class FlyingMonster : Enemy
     {
         m_isCharging = true;
         m_rb2D.velocity = m_chargeSpeed * m_directionToAttack;
-        m_hasCharged = true;
         ChangeAnimationState(ANIMATION_STATE.ATTACK);
         m_state = ENEMY_STATE.ATTACK;
     }
 
     void InitializeReposition()
     {
-        m_hasCharged = false;
         float repositionAngle = Random.Range(m_minAngleReposition, m_maxAngleReposition);
         //Vector2 targetPosition = new Vector2(transform.position.x, transform.position.y) + new Vector2(m_attackRange * Mathf.Sin(repositionAngle), m_attackRange * Mathf.CoETURN, HIT, DEAD, REPOSITION }s(repositionAngle));
 

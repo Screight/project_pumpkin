@@ -14,7 +14,6 @@ public class Transicion : MonoBehaviour
 
     Timer m_scriptPlayerTimer;
     bool m_isBeingScripted = false;
-    bool m_isCurrentTransitionHorizontal = false;
     float m_currentScriptingDuration = 0.5f;
 
     Animator m_animator;

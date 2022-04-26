@@ -15,7 +15,6 @@ public class HealthPoints : MonoBehaviour
 
     Image[] p_hearts;
 
-    int m_maxNumberOfHearts = 4;
     int m_currentNumberOfHearts = 4;
 
     private void Start()
@@ -32,9 +31,9 @@ public class HealthPoints : MonoBehaviour
     {
         Sprite sprite;
         m_currentNumberOfHearts = p_value;
-        for( int i = 0; i < 4; i++)
+        for( int i = 0; i < p_hearts.Length; i++)
         {
-            if(i < m_currentNumberOfHearts){ sprite = m_fullHeart; }
+            if (i < m_currentNumberOfHearts) { sprite = m_fullHeart; }
             else { sprite = m_emptyHeart; }
             p_hearts[i].sprite = sprite;
         }
