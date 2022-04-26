@@ -73,6 +73,10 @@ public class CameraManager : MonoBehaviour
         m_cameraMovementScript.ClampCamera();
     }
 
+    public void SetCameraToPlayerPosition(){
+        m_cameraMovementScript.SetCameraToPlayerPosition();
+    }
+
     public void SetCameraToStatic()
     {
         m_cameraMovementScript.IsCameraStatic = true;

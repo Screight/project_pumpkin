@@ -26,32 +26,37 @@ public abstract class InteractiveItem : MonoBehaviour
     }
 
     protected virtual void Awake() {
+        m_icon.SetActive(false);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D p_collider) {
+        if(p_collider.tag != "Player" || !m_canPlayerInteract) { return ;}
+        m_isPlayerInside = true;
         if(!m_isAutomatic){
+            m_icon.SetActive(true);
+            Player.Instance.IsInsideActiveInteractiveZone = true;
+        }
+        else{
             m_icon.SetActive(false);
         }
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player") { return ;}
-        m_isPlayerInside = true;
-        if(m_canPlayerInteract){
-            if(!m_isAutomatic){
-            m_icon.SetActive(true);
-            }
-        }
-    }
-
     protected virtual void OnTriggerExit2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player") { return ;}
+        if(p_collider.tag != "Player" || !m_canPlayerInteract) { return ;}
         if(!m_isAutomatic){
             m_icon.SetActive(false);
         }
         m_isPlayerInside = false;
         if(m_isAutomatic && !m_isOneUseOnly) { m_hasBeenUsed = false; }
+        Player.Instance.IsInsideActiveInteractiveZone = false;
     }
 
     protected virtual void HandleInteraction(){
         m_hasBeenUsed = true;
+        if(m_isOneUseOnly){
+            m_canPlayerInteract = false;
+            Player.Instance.IsInsideActiveInteractiveZone = false;
+        }
     }
     protected void SetIconTo(bool p_state){
         if(!m_isAutomatic){
