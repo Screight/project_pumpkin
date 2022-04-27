@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 using System.IO;
 
 struct Menu{
@@ -47,8 +47,11 @@ public class MenuManager : MonoBehaviour
     }
     
     private void Update() {
-        if(m_isMenuActive && Game.SceneManager.Instance.Scene == SCENE.MAIN_MENU){
+        if(m_isMenuActive){
             if(InputManager.Instance.CancelButtonPressed){
+                if(Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1){
+                    GameObject.FindObjectOfType<PauseMenu>().UnPause();
+                }
                 GoBack();
             }
         }
@@ -56,7 +59,9 @@ public class MenuManager : MonoBehaviour
 
     private void OnEnable() {
         EventSystem.current.SetSelectedGameObject(null);
+        if(m_menu[m_initialMenu].initialSelectecButton == null) { return ;}
         EventSystem.current.SetSelectedGameObject(m_menu[m_initialMenu].initialSelectecButton);
+        m_menu[m_initialMenu].initialSelectecButton.GetComponent<Button>().OnSelect(null);
     }
 
     void InitializeMenu(){
@@ -108,6 +113,7 @@ public class MenuManager : MonoBehaviour
         }
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menuStack.Peek().initialSelectecButton);
+        m_currentMenu = m_menuStack.Peek().ID;
     }
 
     public void GoBack(){
@@ -120,6 +126,7 @@ public class MenuManager : MonoBehaviour
         m_menuStack.Peek().gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menuStack.Peek().initialSelectecButton);
+        m_currentMenu = m_menuStack.Peek().ID;
     }
     
     public int GetCurrentMenuIndex(){

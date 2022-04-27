@@ -13,15 +13,15 @@ public class HandleSettings : MonoBehaviour
     int m_currentSlider = 0;
 
     private void OnEnable() {
-        m_fillSlider[0].sprite = m_darkGreenFill;
+        /*m_fillSlider[0].sprite = m_darkGreenFill;
         m_currentSlider = 0;
         for(int i = 1; i < m_fillSlider.Length; i++){
             m_fillSlider[i].sprite = m_greenFill;
-        }
+        }*/
     }
 
     private void Update() {
-        if(InputManager.Instance.UpButtonPressed){
+        /*if(InputManager.Instance.UpButtonPressed || InputManager.Instance.VerticalAxisRaw == 1){
             m_fillSlider[m_currentSlider].sprite = m_greenFill;
             if(m_currentSlider > 0){
                 m_currentSlider--;
@@ -29,14 +29,14 @@ public class HandleSettings : MonoBehaviour
             else{ m_currentSlider = m_fillSlider.Length - 1;}
             m_fillSlider[m_currentSlider].sprite = m_darkGreenFill;
         }
-        else if(InputManager.Instance.DownButtonPressed){
+        else if(InputManager.Instance.DownButtonPressed || InputManager.Instance.VerticalAxisRaw == -1){
             m_fillSlider[m_currentSlider].sprite = m_greenFill;
             if(m_currentSlider < m_fillSlider.Length - 1){
                 m_currentSlider++;
             }
             else{ m_currentSlider = 0;}
             m_fillSlider[m_currentSlider].sprite = m_darkGreenFill;
-        }
+        }*/
     }
 
     private void Start() {

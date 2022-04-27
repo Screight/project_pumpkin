@@ -148,7 +148,6 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("END OF CONVERSATION");
             m_textBox.SetActive(false);
             m_conversationStarted = false;
             Player.Instance.State = PLAYER_STATE.IDLE;

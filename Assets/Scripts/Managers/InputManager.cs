@@ -38,6 +38,20 @@ public class InputManager : MonoBehaviour
 
     float m_horizontalAxis;
     float m_verticalAxis;
+
+    bool m_axisXPositivePressed = false;
+    bool m_axisXPositiveHold = false;
+    bool m_axisXPositiveReleased = false;
+    bool m_axisYPositivePressed = false;
+    bool m_axisYPositiveHold = false;
+    bool m_axisYPositiveReleased = false;
+    bool m_axisXNegativePressed = false;
+    bool m_axisXNegativeHold = false;
+    bool m_axisXNegativeReleased = false;
+    bool m_axisYNegativePressed = false;
+    bool m_axisYNegativeHold = false;
+    bool m_axisYNegativeReleased = false;
+
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
@@ -65,6 +79,68 @@ public class InputManager : MonoBehaviour
 
         m_horizontalAxis = Input.GetAxis("Horizontal");
         m_verticalAxis = Input.GetAxis("Vertical");
+
+        if(m_horizontalAxis == 1 && !m_axisXPositiveHold){
+            m_axisXPositivePressed = true;
+        }
+        else if (m_horizontalAxis == 1 && m_axisXPositivePressed){
+            m_axisXPositivePressed = false;
+            m_axisXPositiveHold = true;
+        }
+        else if(m_horizontalAxis != 1 && m_axisXPositiveHold){
+            m_axisXPositiveHold = false;
+            m_axisXPositiveReleased = true;
+        }
+        else if(m_axisXPositiveReleased){
+            m_axisXPositiveReleased = false;
+        }
+
+        if(m_horizontalAxis == -1 && !m_axisXNegativeHold){
+            m_axisXNegativePressed = true;
+        }
+        else if (m_horizontalAxis == -1 && m_axisXNegativePressed){
+            m_axisXNegativePressed = false;
+            m_axisXNegativeHold = true;
+        }
+        else if(m_horizontalAxis != -1 && m_axisXNegativeHold){
+            m_axisXNegativeHold = false;
+            m_axisXNegativeReleased = true;
+        }
+        else if(m_axisXNegativeReleased){
+            m_axisXNegativeReleased = false;
+        }
+
+
+
+        if(m_verticalAxis == 1 && !m_axisYPositiveHold){
+            m_axisYPositivePressed = true;
+        }
+        else if (m_verticalAxis == 1 && m_axisYPositivePressed){
+            m_axisYPositivePressed = false;
+            m_axisYPositiveHold = true;
+        }
+        else if(m_verticalAxis != 1 && m_axisYPositiveHold){
+            m_axisYPositiveHold = false;
+            m_axisYPositiveReleased = true;
+        }
+        else if(m_axisYPositiveReleased){
+            m_axisYPositiveReleased = false;
+        }
+
+        if(m_verticalAxis == -1 && !m_axisYNegativeHold){
+            m_axisYNegativePressed = true;
+        }
+        else if (m_verticalAxis == -1 && m_axisYNegativePressed){
+            m_axisYNegativePressed = false;
+            m_axisYNegativeHold = true;
+        }
+        else if(m_verticalAxis != -1 && m_axisYNegativeHold){
+            m_axisYNegativeHold = false;
+            m_axisYNegativeReleased = true;
+        }
+        else if(m_axisYNegativeReleased){
+            m_axisYNegativeReleased = false;
+        }
 
         if (Input.GetKeyDown(m_attackButton_k) || Input.GetKeyDown(m_attackButton_j))       { m_buttonsPressed[(int)ACTIONS.ATTACK]   = true; }
         if (Input.GetKeyDown(m_attackButton_k) || Input.GetKeyDown(m_attackButton_j))       { m_buttonsHold[(int)ACTIONS.ATTACK]      = true; }
@@ -168,4 +244,39 @@ public class InputManager : MonoBehaviour
             else { return 0; }
         }
     }
+
+    public float HorizontalAxisRaw
+    {
+        get
+        {
+            if (m_horizontalAxis == 1) { return 1; }
+            else if (m_horizontalAxis == -1) { return -1; }
+            else { return 0; }
+        }
+    }
+    public float VerticalAxisRaw
+    {
+        get
+        {
+            if (m_verticalAxis == 1) { return 1; }
+            else if (m_verticalAxis == -1) { return -1; }
+            else { return 0; }
+        }
+    }
+
+    public bool HorizontalPositiveAxisPressed { get { return m_axisXPositivePressed; } }
+    public bool HorizontalPositiveAxisHold { get { return m_axisXPositiveHold; } }
+    public bool HorizontalPositiveAxisReleased { get { return m_axisXPositiveReleased; } }
+
+    public bool HorizontalNegativeAxisPressed { get { return m_axisXNegativePressed; } }
+    public bool HorizontalNegativeAxisHold { get { return m_axisXNegativeHold; } }
+    public bool HorizontalNegativeAxisReleased { get { return m_axisXNegativeReleased; } }
+
+    public bool VerticalPositiveAxisPressed { get { return m_axisYPositivePressed; } }
+    public bool VerticalPositiveAxisHold { get { return m_axisYPositiveHold; } }
+    public bool VerticalPositiveAxisReleased { get { return m_axisYPositiveReleased; } }
+    public bool VerticalNegativeAxisPressed { get { return m_axisYNegativePressed; } }
+    public bool VerticalNegativeAxisHold { get { return m_axisYNegativeHold; } }
+    public bool VerticalNegativeAxisReleased { get { return m_axisYNegativeReleased; } }
+
 }

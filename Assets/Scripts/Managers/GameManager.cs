@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthPoints m_healthUI;
     bool[] m_isSkillAvailable;
     bool m_isPlayerInvincible = false;
+    bool m_isGamePaused = false;
 
     private void Awake()
     {
@@ -90,4 +91,10 @@ public class GameManager : MonoBehaviour
         get { return m_isPlayerInvincible; }
         set { m_isPlayerInvincible = value; }
     }
+
+    public bool IsGamePaused {
+        get { return m_isGamePaused; }
+        set { m_isGamePaused = value; }
+    }
+
 }

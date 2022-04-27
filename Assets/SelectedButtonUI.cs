@@ -1,30 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SelectedButtonUI : MonoBehaviour
+public class SelectedButtonUI : MonoBehaviour, ISelectHandler
 {
-    [SerializeField] GameObject[] m_buttons;
-    int m_currentButton = 0;
-    private void OnEnable() {
-        m_currentButton = 0;
-        transform.position = m_buttons[m_currentButton].transform.position;
+    [SerializeField] GameObject m_flames;
+
+    public void OnSelect(BaseEventData p_eventData){
+        m_flames.transform.position = transform.position;
     }
 
-    private void Update() {
-        if(InputManager.Instance.UpButtonPressed){
-            if(m_currentButton > 0){
-                m_currentButton--;
-            }
-            else{ m_currentButton = m_buttons.Length - 1;}
-            transform.position = m_buttons[m_currentButton].transform.position;
-        }
-        else if(InputManager.Instance.DownButtonPressed){
-            if(m_currentButton < m_buttons.Length - 1){
-                m_currentButton++;
-            }
-            else{ m_currentButton = 0;}
-            transform.position = m_buttons[m_currentButton].transform.position;
-        }
-    }
 }

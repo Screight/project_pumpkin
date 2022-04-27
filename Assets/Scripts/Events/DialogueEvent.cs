@@ -35,6 +35,7 @@ public class DialogueEvent : MonoBehaviour
     {
         m_isEventActive = false;
         Player.Instance.State = PLAYER_STATE.IDLE;
+        
     }
 
     public Dialogue Dialogue{ get { return m_dialogue;} }
