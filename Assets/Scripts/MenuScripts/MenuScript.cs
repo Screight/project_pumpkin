@@ -13,29 +13,24 @@ public class MenuScript : MonoBehaviour
     public Canvas HUD;
     public List<Button> buttons = new List<Button>();
     private bool IsPlaying;
+    private bool m_isPaused = false;
 
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
-        else { Destroy(this.gameObject); }
+        else { Destroy(gameObject); }
 
         IsPlaying = false;
         menu = GetComponent<Canvas>();
         if (SceneManager.GetActiveScene().buildIndex == 0) { menu.enabled = true; }
-        else { menu.enabled = false; }
     }
 
     public void Update()
     {
-        if (!IsPlaying)
-        {
-            if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = true; }
+        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0 && !IsPlaying) { menu.enabled = true; }
 
 
-            if (menu.enabled) { Pause(); }
-            else { Continue(); }
-        }
-        else { HUD.enabled = false; }
+        if (menu.enabled && !m_isPaused) { m_isPaused = true; Pause(); }
     }
 
     public void PlayGame()
@@ -62,6 +57,7 @@ public class MenuScript : MonoBehaviour
             menu.enabled = false;
             Time.timeScale = 1;
             HUD.enabled = true;
+            m_isPaused = false;
         }
     }
 

@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
     static AnimationManager m_instance;
 
-    static public AnimationManager Instance {
-        get { return m_instance;}
-        private set {}
+    static public AnimationManager Instance
+    {
+        get { return m_instance; }
+        private set { }
     }
 
-    private void Awake() {
-        if(m_instance == null){ m_instance = this;}
-        else { Destroy(this.gameObject);}
+    private void Awake()
+    {
+        if (m_instance == null) { m_instance = this; }
+        else { Destroy(gameObject); }
     }
 
     int[] m_animationHash = new int[(int)ANIMATION.LAST_NO_USE];
     string[] m_animationClipName = new string[(int)ANIMATION.LAST_NO_USE];
 
+<<<<<<< HEAD
     private void OnEnable() {
 
         // PLAYER ------------------------
@@ -67,6 +68,32 @@ public class AnimationManager : MonoBehaviour
 
     private void Start() {
         // PLAYER ---------------------------
+=======
+    private void OnEnable()
+    {
+        m_animationClipName[(int)ANIMATION.PLAYER_IDLE]                 = "idle";
+        m_animationClipName[(int)ANIMATION.PLAYER_RUN]                  = "run";
+        m_animationClipName[(int)ANIMATION.PLAYER_DASH]                 = "dash";
+        m_animationClipName[(int)ANIMATION.PLAYER_JUMP]                 = "jump";
+        m_animationClipName[(int)ANIMATION.PLAYER_FALL]                 = "fall";
+        m_animationClipName[(int)ANIMATION.PLAYER_BOOST]                = "boost";
+        m_animationClipName[(int)ANIMATION.PLAYER_LAND]                 = "land";
+        m_animationClipName[(int)ANIMATION.PLAYER_HIT]                  = "hit";
+        m_animationClipName[(int)ANIMATION.PLAYER_GROUNDBREAKER]        = "groundbreaker";
+        m_animationClipName[(int)ANIMATION.PLAYER_GROUNDBREAKER_LOOP]   = "groundbreakerLoop";
+        m_animationClipName[(int)ANIMATION.PLAYER_DEATH]                = "die";
+
+        m_animationClipName[(int)ANIMATION.GHOUL_ATTACK]    = "Attack";
+        m_animationClipName[(int)ANIMATION.GHOUL_DIE]       = "Die";
+        m_animationClipName[(int)ANIMATION.GHOUL_HIT]       = "hit";
+        m_animationClipName[(int)ANIMATION.GHOUL_IDLE]      = "Idle";
+        m_animationClipName[(int)ANIMATION.GHOUL_MOVE]      = "Move";
+        m_animationClipName[(int)ANIMATION.GHOUL_CHARGE]    = "Charge";
+    }
+
+    private void Start()
+    {
+>>>>>>> 5141f31796685e191b0105769677a1aa9e60b652
         m_animationHash[(int)ANIMATION.PLAYER_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PLAYER_IDLE]);
         m_animationHash[(int)ANIMATION.PLAYER_RUN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PLAYER_RUN]);
         m_animationHash[(int)ANIMATION.PLAYER_DASH] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PLAYER_DASH]);
@@ -86,6 +113,7 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.GHOUL_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.GHOUL_IDLE]);
         m_animationHash[(int)ANIMATION.GHOUL_MOVE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.GHOUL_MOVE]);
         m_animationHash[(int)ANIMATION.GHOUL_CHARGE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.GHOUL_CHARGE]);
+<<<<<<< HEAD
 
         // CHARGE BAT ----------------------------
         m_animationHash[(int)ANIMATION.CHARGE_BAT_ATTACK] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.CHARGE_BAT_ATTACK]);
@@ -117,22 +145,31 @@ public class AnimationManager : MonoBehaviour
             return;
         }
 
+=======
+    }
+
+    public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation)
+    {
+        if (p_animatedCharacter.AnimationState == p_animation) { return; }
+>>>>>>> 5141f31796685e191b0105769677a1aa9e60b652
         p_animatedCharacter.Animator.Play(m_animationHash[(int)p_animation]);
         p_animatedCharacter.AnimationState = p_animation;
     }
 
-    public void PlayAnimation(Animator p_animator, ANIMATION p_animation){
+    public void PlayAnimation(Animator p_animator, ANIMATION p_animation)
+    {
         p_animator.Play(m_animationHash[(int)p_animation]);
     }
 
-    public float GetClipDuration(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation){
-        foreach(AnimationClip animationClip in p_animatedCharacter.Animator.runtimeAnimatorController.animationClips)
+    public float GetClipDuration(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation)
+    {
+        foreach (AnimationClip animationClip in p_animatedCharacter.Animator.runtimeAnimatorController.animationClips)
         {
-            if(animationClip.name == m_animationClipName[(int)p_animation]){
+            if (animationClip.name == m_animationClipName[(int)p_animation])
+            {
                 return animationClip.length;
             }
         }
         return -1;
     }
-
 }

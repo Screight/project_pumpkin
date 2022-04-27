@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6cff8232b0b908cb7f03eae114480b, type: 3}
+  m_Name: Dialogue4.1
+  m_EditorClassIdentifier: 
+  m_icon:
+  - {fileID: 3599551554615973448, guid: 4993e57a020ce8d4691e042478efe13f, type: 3}
+  - {fileID: 3599551554615973448, guid: 4993e57a020ce8d4691e042478efe13f, type: 3}
+  - {fileID: 3599551554615973448, guid: 4993e57a020ce8d4691e042478efe13f, type: 3}
+  m_name:
+  - Darkness Spirit
+  m_sentences:
+  - ...
+  - Tu... atrapado?...
+  - Ven...
+  m_characterTalkingSentence: 000000000000000000000000

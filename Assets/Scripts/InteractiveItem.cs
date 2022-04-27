@@ -12,56 +12,68 @@ public abstract class InteractiveItem : MonoBehaviour
     [SerializeField] bool m_isAutomatic = false;
     bool m_hasBeenUsed = false;
 
-    protected virtual bool Update() {
-        if(m_isOneUseOnly && m_hasBeenUsed) {
-            if(m_icon != null) {m_icon.SetActive(false);}
-            }
-        if((m_isOneUseOnly && !m_hasBeenUsed) || !m_isOneUseOnly){
-            if(m_isPlayerInside && m_canPlayerInteract){
-                if(m_isAutomatic && !m_hasBeenUsed || !m_isAutomatic && InputManager.Instance.InteractButtonPressed)
-                HandleInteraction();
+    protected virtual bool Update()
+    {
+        if (m_isOneUseOnly && m_hasBeenUsed)
+        {
+            if (m_icon != null) { m_icon.SetActive(false); }
+        }
+        if ((m_isOneUseOnly && !m_hasBeenUsed) || !m_isOneUseOnly)
+        {
+            if (m_isPlayerInside && m_canPlayerInteract)
+            {
+                if (m_isAutomatic && !m_hasBeenUsed || !m_isAutomatic && InputManager.Instance.InteractButtonPressed)
+                    HandleInteraction();
             }
         }
         return true;
     }
 
-    protected virtual void Awake() {
+    protected virtual void Awake()
+    {
         m_icon.SetActive(false);
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player" || !m_canPlayerInteract) { return ;}
+    protected virtual void OnTriggerEnter2D(Collider2D p_collider)
+    {
+        if (!p_collider.CompareTag("Player") || !m_canPlayerInteract) { return; }
         m_isPlayerInside = true;
-        if(!m_isAutomatic){
+        if (!m_isAutomatic)
+        {
             m_icon.SetActive(true);
             Player.Instance.IsInsideActiveInteractiveZone = true;
         }
-        else{
+        else
+        {
             m_icon.SetActive(false);
         }
     }
 
-    protected virtual void OnTriggerExit2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player" || !m_canPlayerInteract) { return ;}
-        if(!m_isAutomatic){
-            m_icon.SetActive(false);
-        }
+    protected virtual void OnTriggerExit2D(Collider2D p_collider)
+    {
+        if (!p_collider.CompareTag("Player") || !m_canPlayerInteract) { return; }
+        if (!m_isAutomatic) { m_icon.SetActive(false); }
+
         m_isPlayerInside = false;
-        if(m_isAutomatic && !m_isOneUseOnly) { m_hasBeenUsed = false; }
+        if (m_isAutomatic && !m_isOneUseOnly) { m_hasBeenUsed = false; }
         Player.Instance.IsInsideActiveInteractiveZone = false;
     }
 
-    protected virtual void HandleInteraction(){
+    protected virtual void HandleInteraction()
+    {
         m_hasBeenUsed = true;
-        if(m_isOneUseOnly){
+        if (m_isOneUseOnly)
+        {
             m_canPlayerInteract = false;
             Player.Instance.IsInsideActiveInteractiveZone = false;
         }
     }
-    protected void SetIconTo(bool p_state){
-        if(!m_isAutomatic){
+    protected void SetIconTo(bool p_state)
+    {
+        if (!m_isAutomatic)
+        {
             m_icon.SetActive(p_state);
         }
-        else Debug.LogWarning("THERE IS NO ICON ATTACHED.");
+        else { Debug.LogWarning("THERE IS NO ICON ATTACHED."); }
     }
 }

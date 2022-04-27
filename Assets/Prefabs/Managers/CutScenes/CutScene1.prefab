@@ -219,6 +219,10 @@ PrefabInstance:
       value: 78.705765
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_hideHud
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_director
       value: 
       objectReference: {fileID: 7389002141123689423}

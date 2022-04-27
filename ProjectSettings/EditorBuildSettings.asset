@@ -12,9 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Alfa/cemetery.unity
     guid: f700065eeab9b9a4b97040b913a99d71
   - enabled: 0
+<<<<<<< HEAD
     path: Assets/Scenes/Alfa/MainTitle.unity
     guid: ef4e35db78b0674408c1801aec864988
   - enabled: 0
+=======
+>>>>>>> 5141f31796685e191b0105769677a1aa9e60b652
     path: Assets/Scenes/TESTING/Kit_testing.unity
     guid: 54b3aea2fb1ec6d418e3382d3f93af49
   - enabled: 0
