@@ -17,7 +17,7 @@ public class MenuScript : MonoBehaviour
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
-        else { Destroy(this.gameObject); }
+        else { Destroy(gameObject); }
 
         IsPlaying = false;
         menu = GetComponent<Canvas>();
@@ -27,15 +27,11 @@ public class MenuScript : MonoBehaviour
 
     public void Update()
     {
-        if (!IsPlaying)
-        {
-            if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0) { menu.enabled = true; }
+        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().buildIndex != 0 && !IsPlaying) { menu.enabled = true; }
 
 
-            if (menu.enabled) { Pause(); }
-            else { Continue(); }
-        }
-        else { HUD.enabled = false; }
+        if (menu.enabled) { Pause(); }
+        else { Continue(); }
     }
 
     public void PlayGame()
