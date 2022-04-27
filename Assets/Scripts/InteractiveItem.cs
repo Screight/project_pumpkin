@@ -31,7 +31,9 @@ public abstract class InteractiveItem : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_icon.SetActive(false);
+        if(m_icon != null){
+            m_icon.SetActive(false);
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D p_collider)
@@ -42,10 +44,6 @@ public abstract class InteractiveItem : MonoBehaviour
         {
             m_icon.SetActive(true);
             Player.Instance.IsInsideActiveInteractiveZone = true;
-        }
-        else
-        {
-            m_icon.SetActive(false);
         }
     }
 
