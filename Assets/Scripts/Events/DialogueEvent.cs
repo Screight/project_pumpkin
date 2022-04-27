@@ -10,7 +10,6 @@ public class DialogueEvent : MonoBehaviour
     protected int m_eventCount = 0;
     protected bool m_isEventActive = false;
     [SerializeField] protected Dialogue m_dialogue;
-    bool m_isInteractive;
 
     protected virtual void Awake()
     {

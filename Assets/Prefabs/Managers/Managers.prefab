@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799879348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 78.74628, y: -25.663717, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6455235162950911169}
@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 2642076292021052267}
   - component: {fileID: 625734743}
   - component: {fileID: 7177820135721099047}
+  - component: {fileID: 489614315}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -351,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efce5ef35059c54cb3c930fefbd5766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PLAYER_MAX_HEALTH: 1000
+  PLAYER_MAX_HEALTH: 4
   m_healthUI: {fileID: 0}
 --- !u!114 &141253593
 MonoBehaviour:
@@ -390,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c0503a41f662641928d4a48c40e02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_initialRoom: 2
+  m_initialRoom: 0
   m_transicionScript: {fileID: 0}
 --- !u!114 &7177820135721099047
 MonoBehaviour:
@@ -404,3 +405,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8377bafd8232d32c885020973b7fbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &489614315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455235162950911171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6d9961973f89b8f993b943fb27e28f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textBox: {fileID: 0}
+  m_nameUI: {fileID: 0}
+  m_iconUI: {fileID: 0}
+  m_textUI: {fileID: 0}
+  m_timeBetweenCharacters: 0.05
+  m_timeBetweenCharactersFast: 0.01

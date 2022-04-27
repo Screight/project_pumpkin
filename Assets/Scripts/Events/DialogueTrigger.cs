@@ -6,8 +6,9 @@ public class DialogueTrigger : InteractiveItem
 {
     DialogueEvent m_dialogue;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         m_dialogue = GetComponent<DialogueEvent>();
     }
 

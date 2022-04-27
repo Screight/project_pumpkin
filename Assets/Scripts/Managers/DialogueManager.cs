@@ -4,17 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public struct DialogueLine{
+public struct DialogueLine
+{
     public Sprite icon;
     public string name;
     public string sentence;
 
-    public DialogueLine(Sprite p_icon, string p_name, string p_sentence){
+    public DialogueLine(Sprite p_icon, string p_name, string p_sentence)
+    {
         icon = p_icon;
         name = p_name;
         sentence = p_sentence;
     }
-
 }
 
 public class DialogueManager : MonoBehaviour
@@ -40,38 +41,49 @@ public class DialogueManager : MonoBehaviour
     DialogueEvent m_currentDialogueEvent;
 
     static DialogueManager m_instance;
-    public static DialogueManager Instance {
+    public static DialogueManager Instance
+    {
         get { return m_instance; }
         private set { }
     }
 
-    private void Awake() {
-        if(m_instance == null) {
-            m_instance = this; 
+    private void Awake()
+    {
+        if (m_instance == null)
+        {
+            m_instance = this;
             Initialize();
         }
-        else { Destroy(this.gameObject); }
+        else { Destroy(gameObject); }
     }
 
-    private void Update() {
-        if(m_currentDialogueEvent == null) { return ; }
-        if(m_isPrintingText && InputManager.Instance.InteractButtonPressed){
+    private void Update()
+    {
+        if (m_currentDialogueEvent == null) { return; }
+        if (m_isPrintingText && InputManager.Instance.InteractButtonPressed)
+        {
             m_writeEffectTimer.Duration = m_timeBetweenCharactersFast;
         }
-        else if(m_isPrintingText && InputManager.Instance.InteractButtonReleased){
+        else if (m_isPrintingText && InputManager.Instance.InteractButtonReleased)
+        {
             m_writeEffectTimer.Duration = m_timeBetweenCharacters;
         }
-        if(m_textBox.activeSelf != false){
-            if(m_isPrintingText && m_writeEffectTimer.IsFinished){
-                if(m_currentNumberOfCharactersPrinted <= m_currentSentece.Length){
-                    m_textUI.text = m_currentSentece.Substring(0,m_currentNumberOfCharactersPrinted);
-                    for(int i = m_currentNumberOfCharactersPrinted; i < m_currentSentece.Length; i ++){
+        if (m_textBox.activeSelf != false)
+        {
+            if (m_isPrintingText && m_writeEffectTimer.IsFinished)
+            {
+                if (m_currentNumberOfCharactersPrinted <= m_currentSentece.Length)
+                {
+                    m_textUI.text = m_currentSentece.Substring(0, m_currentNumberOfCharactersPrinted);
+                    for (int i = m_currentNumberOfCharactersPrinted; i < m_currentSentece.Length; i++)
+                    {
                         m_textUI.text += " ";
                     }
                     m_currentNumberOfCharactersPrinted++;
                     m_writeEffectTimer.Run();
                 }
-                else{
+                else
+                {
                     m_currentNumberOfCharactersPrinted = 0;
                     m_isPrintingText = false;
                     m_canGoToNextSentence = true;
@@ -79,12 +91,14 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        if(InputManager.Instance.InteractButtonPressed && m_conversationStarted && m_canGoToNextSentence && !m_isPrintingText){
+        if (InputManager.Instance.InteractButtonPressed && m_conversationStarted && m_canGoToNextSentence && !m_isPrintingText)
+        {
             ShowNextSentence();
         }
     }
 
-    private void Initialize(){
+    private void Initialize()
+    {
         m_textUI.text = "";
         m_dialogue = new Queue<DialogueLine>();
         m_textBox.SetActive(false);
@@ -92,7 +106,8 @@ public class DialogueManager : MonoBehaviour
         m_writeEffectTimer.Duration = m_timeBetweenCharacters;
     }
 
-    public void StartConversation(DialogueEvent p_dialogueEvent){
+    public void StartConversation(DialogueEvent p_dialogueEvent)
+    {
         m_currentDialogueEvent = p_dialogueEvent;
         m_textBox.gameObject.SetActive(true);
         m_textBox.SetActive(true);
@@ -103,7 +118,8 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine[] dialogueLines = p_dialogueEvent.Dialogue.GetDialogueLines();
         m_dialogue.Clear();
-        for(int i = 0; i < dialogueLines.Length; i++){
+        for (int i = 0; i < dialogueLines.Length; i++)
+        {
             m_dialogue.Enqueue(dialogueLines[i]);
         }
 
@@ -112,22 +128,26 @@ public class DialogueManager : MonoBehaviour
         Player.Instance.StartTalking();
     }
 
-    void SetUpNextSentence(){
+    void SetUpNextSentence()
+    {
         DialogueLine dialogueLine = m_dialogue.Dequeue();
         m_currentSentece = dialogueLine.sentence;
         m_iconUI.sprite = dialogueLine.icon;
         m_nameUI.text = dialogueLine.name;
     }
 
-    public void ShowNextSentence(){
+    public void ShowNextSentence()
+    {
         m_writeEffectTimer.Duration = m_timeBetweenCharacters;
         m_textUI.text = "";
-        if(m_dialogue.Count > 0){
+        if (m_dialogue.Count > 0)
+        {
             SetUpNextSentence();
-            if(m_currentSentece.Length != 0){ m_isPrintingText = true; }
+            if (m_currentSentece.Length != 0) { m_isPrintingText = true; }
             m_sentenceCount++;
         }
-        else {
+        else
+        {
             Debug.Log("END OF CONVERSATION");
             m_textBox.SetActive(false);
             m_conversationStarted = false;
@@ -141,11 +161,7 @@ public class DialogueManager : MonoBehaviour
     public bool CanGoToNextSentence { set { m_canGoToNextSentence = value; }}
     public int SentenceCount { get { return m_sentenceCount; } }
 
-    public void HideDialogue(){
-        m_textBox.gameObject.SetActive(false);
-    }
-    public void ShowDialogue(){
-        m_textBox.gameObject.SetActive(true);
-    }
+    public void HideDialogue() { m_textBox.gameObject.SetActive(false); }
+    public void ShowDialogue() { m_textBox.gameObject.SetActive(true); }
     public bool IsDialogueFinished { get { return m_conversationStarted; }}
 }

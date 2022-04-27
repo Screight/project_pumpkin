@@ -46,11 +46,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 856.5
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3053
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -84,6 +84,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2423965441624984257, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+      propertyPath: m_Size.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423965441624984257, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+      propertyPath: m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423965441624984258, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+      propertyPath: m_dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 0816e2a9477db78499cf7024c0407115, type: 2}
     - target: {fileID: 2423965441624984284, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_Name
       value: Dialogue4.1
@@ -108,7 +120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367190, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 855.4
+      value: 856.8
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367190, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -145,6 +157,10 @@ PrefabInstance:
     - target: {fileID: 1475660981935367190, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367191, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_Size.x
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_hideHud
