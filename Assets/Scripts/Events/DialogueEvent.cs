@@ -19,6 +19,7 @@ public class DialogueEvent : MonoBehaviour
 
     public void StartDialogueEvent()
     {
+        Player.Instance.SetPlayerToScripted();
         DialogueManager.Instance.StartConversation(this);
         m_isEventActive = true;
     }
@@ -34,6 +35,7 @@ public class DialogueEvent : MonoBehaviour
     public virtual void FinishDialogueEvent()
     {
         m_isEventActive = false;
+        Player.Instance.StopScripting();
         Player.Instance.State = PLAYER_STATE.IDLE;
     }
 

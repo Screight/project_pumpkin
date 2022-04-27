@@ -104,8 +104,8 @@ public class Player : AnimatedCharacter
 
     private void Update()
     {
-        CheckIfFalling(); 
         if (m_isBeingScripted) { return; }
+        CheckIfFalling();
 
         if (m_invulnerableTimer.IsRunning)
         {
