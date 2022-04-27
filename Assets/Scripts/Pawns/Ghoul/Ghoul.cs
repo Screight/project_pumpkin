@@ -34,7 +34,6 @@ public class Ghoul : Enemy
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_animator = GetComponent<Animator>();
         m_health = 5;
 
         m_isGrounded = true;
