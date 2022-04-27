@@ -8,6 +8,8 @@ public class Timeline : MonoBehaviour
 {   
     [SerializeField] bool m_isCameraScripted = false;
     [SerializeField] bool m_isFireSpiritCutScene = false;
+    [SerializeField] bool m_hideHud = false;
+
     public PlayableDirector m_director;
     public Canvas m_HUD;
     [SerializeField] GameObject m_player;
@@ -27,8 +29,7 @@ public class Timeline : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) { 
-            startCutScene(); }
+        if (collision.gameObject.CompareTag("Player")) { startCutScene(); }
     }
 
     public void startCutScene()
@@ -46,9 +47,7 @@ public class Timeline : MonoBehaviour
         m_playerScript.StopScripting();
 
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToNormal(); }
+        if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
         gameObject.SetActive(false);
-        if(m_isFireSpiritCutScene){
-            GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true);
-        }
     }
 }
