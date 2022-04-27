@@ -4,19 +4,6 @@ using UnityEngine;
 
 public class FlyingMonster : Enemy
 {
-    enum ENEMY_STATE { PATROL, CHASE, ATTACK, IDLE, RETURN, HIT, DEAD, REPOSITION, PREPARE_ATTACK }
-    enum ANIMATION_STATE { MOVE, PREPARE_ATTACK, ATTACK, RECOVER_FROM_ATTACK, HIT, DIE, LAST_NO_USE}
-
-    string m_moveAnimationName      = "move";
-    string m_prepareAttackAnimationName    = "prepare_attack";
-    string m_attackAnimationName      = "attack";
-    string m_recoverFromAttackAnimationName       = "recover_from_attack";
-    string m_hitAnimationName = "hit";
-    string m_dieAnimationName       = "die";
-
-    int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
-
-
     [SerializeField] LayerMask m_obstacleLayer;
 
     [SerializeField] float m_speed = 40;
@@ -63,17 +50,7 @@ public class FlyingMonster : Enemy
         m_restTimer = gameObject.AddComponent<Timer>();
         m_memoryTimer = gameObject.AddComponent<Timer>();
         m_player = GameObject.FindGameObjectWithTag("Player");
-        m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider2D>();
-    }
-
-    void ChangeAnimationState(ANIMATION_STATE p_animationState)
-    {
-        int newAnimationHash = m_animationHash[(int)p_animationState];
-
-        if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
-        m_animator.Play(newAnimationHash);                // play the animation
-        m_currentAnimationHash = newAnimationHash;                // reassigning the new state
     }
 
     void InitializePatrol()
@@ -82,7 +59,7 @@ public class FlyingMonster : Enemy
         //m_pathFinder.SnapToClosestNode();
         m_pathFinder.SetTargetNode(m_patrolPoint_2.position);
         m_isGoingFrom1To2 = true;
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);
         m_state = ENEMY_STATE.PATROL;
     }
 
@@ -113,7 +90,7 @@ public class FlyingMonster : Enemy
         //m_pathFinder.SnapToClosestNode();
         m_pathFinder.SetInitialNode(transform.position);
         m_pathFinder.SetTargetNode(m_player.transform.position);
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);
     }
 
     void Chase()
@@ -123,13 +100,13 @@ public class FlyingMonster : Enemy
     }
 
     void InitializePrepareAttack(){
-        ChangeAnimationState(ANIMATION_STATE.PREPARE_ATTACK);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_PREPARE_ATTACK, false);
         m_directionToAttack = GetDirection(m_player.transform.position, transform.position);
     }
 
     void InitializeAttack()
     {
-        ChangeAnimationState(ANIMATION_STATE.PREPARE_ATTACK);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_PREPARE_ATTACK, false);
         FaceToPosition(Player.Instance.transform.position.x);
     }
 
@@ -137,7 +114,7 @@ public class FlyingMonster : Enemy
     {
         m_isCharging = true;
         m_rb2D.velocity = m_chargeSpeed * m_directionToAttack;
-        ChangeAnimationState(ANIMATION_STATE.ATTACK);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_ATTACK, false);
         m_state = ENEMY_STATE.ATTACK;
     }
 
@@ -160,7 +137,7 @@ public class FlyingMonster : Enemy
         //m_pathFinder.SnapToClosestNode();
         m_pathFinder.SetInitialNode(transform.position);
         m_pathFinder.SetTargetNode(targetPosition);
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);
     }
 
     void Reposition() {
@@ -237,9 +214,9 @@ public class FlyingMonster : Enemy
 
     public override void Damage(float p_damage)
     {
-        if(m_state == ENEMY_STATE.DEAD) { return ;}
+        if(m_state == ENEMY_STATE.DEATH) { return ;}
         m_state = ENEMY_STATE.HIT;
-        ChangeAnimationState(ANIMATION_STATE.HIT);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_HIT, true);
         base.Damage(p_damage);
         
     }
@@ -247,20 +224,20 @@ public class FlyingMonster : Enemy
     protected override void EndHit(){
         base.EndHit();
         if(m_health <= 0) { 
-            m_state = ENEMY_STATE.DEAD;
-            ChangeAnimationState(ANIMATION_STATE.DIE);
-            m_state = ENEMY_STATE.DEAD;
+            m_state = ENEMY_STATE.DEATH;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_DIE, false);
+            m_state = ENEMY_STATE.DEATH;
             return;
         }
         m_state = ENEMY_STATE.PATROL;
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);
         m_rb2D.velocity = Vector2.zero;
     }
 
     void ReturnToNormalState()
     {
         m_state = ENEMY_STATE.PATROL;
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);
     }
 
     public override void Reset(){
@@ -307,13 +284,6 @@ public class FlyingMonster : Enemy
         
         m_state = ENEMY_STATE.PATROL;
         m_pathFinder.SetSpeed(m_speed);
-
-        m_animationHash[(int)ANIMATION_STATE.MOVE] = Animator.StringToHash(m_moveAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.PREPARE_ATTACK] = Animator.StringToHash(m_prepareAttackAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.ATTACK] = Animator.StringToHash(m_attackAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.RECOVER_FROM_ATTACK] = Animator.StringToHash(m_recoverFromAttackAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.HIT] = Animator.StringToHash(m_hitAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.DIE] = Animator.StringToHash(m_dieAnimationName);
     }
 
     protected override void Update()
@@ -408,7 +378,7 @@ public class FlyingMonster : Enemy
     private void EndRecovering() { m_isRecovering = false;}
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if((collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform") && m_state == ENEMY_STATE.ATTACK && m_state != ENEMY_STATE.DEAD)
+        if((collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform") && m_state == ENEMY_STATE.ATTACK && m_state != ENEMY_STATE.DEATH)
         {
             m_pathFinder.SetInitialNodeToNone();
             m_state = ENEMY_STATE.IDLE;
@@ -416,14 +386,14 @@ public class FlyingMonster : Enemy
             m_memoryTimer.Stop();
             m_isRecovering = true;
             m_isCharging = false;
-            ChangeAnimationState(ANIMATION_STATE.RECOVER_FROM_ATTACK);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_RECOVER_FROM_ATTACK, false);
         }
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if((collision.tag == "floor" || collision.tag == "platform") && m_state == ENEMY_STATE.ATTACK && m_state != ENEMY_STATE.DEAD)
+        if((collision.tag == "floor" || collision.tag == "platform") && m_state == ENEMY_STATE.ATTACK && m_state != ENEMY_STATE.DEATH)
         {
             m_pathFinder.SetInitialNodeToNone();
             m_state = ENEMY_STATE.IDLE;
@@ -431,7 +401,7 @@ public class FlyingMonster : Enemy
             m_memoryTimer.Stop();
             m_isRecovering = true;
             m_isCharging = false;
-            ChangeAnimationState(ANIMATION_STATE.RECOVER_FROM_ATTACK);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_RECOVER_FROM_ATTACK, false);
         }
     }
 }

@@ -293,8 +293,8 @@ MonoBehaviour:
   m_leftPatrolPosition: {fileID: 486594726904783400}
   m_rightPatrolPosition: {fileID: 6338435450151708501}
   m_chargeDuration: 0.5
-  m_chargeSpeed: 0
-  m_restDuration: 0
+  m_chargeSpeed: 100
+  m_restDuration: 1
   m_chargeDistance: 50
 --- !u!95 &5427788410928942784
 Animator:

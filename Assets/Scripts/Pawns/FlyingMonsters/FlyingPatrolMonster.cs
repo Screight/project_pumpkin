@@ -4,23 +4,6 @@ using UnityEngine;
 
 public class FlyingPatrolMonster : Enemy
 {
-    enum ENEMY_STATE { PATROL, IDLE, HIT, DEAD }
-    enum ANIMATION_STATE {MOVE, DIE, HIT, LAST_NO_USE}
-    string m_moveAnimationName      = "move";
-    string m_hitAnimationName = "hit";
-    string m_dieAnimationName    = "die";
-    int[] m_animationHash = new int[(int)ANIMATION_STATE.LAST_NO_USE];
-    int m_currentAnimationHash;
-
-     void ChangeAnimationState(ANIMATION_STATE p_animationState)
-    {
-        int newAnimationHash = m_animationHash[(int)p_animationState];
-
-        if (m_currentAnimationHash == newAnimationHash) return;   // stop the same animation from interrupting itself
-        m_animator.Play(newAnimationHash);                // play the animation
-        m_currentAnimationHash = newAnimationHash;                // reassigning the new state
-    }
-
     [SerializeField] LayerMask m_obstacleLayer;
     [SerializeField] float m_speed = 40;
     Rigidbody2D m_rb2D;
@@ -36,7 +19,6 @@ public class FlyingPatrolMonster : Enemy
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
         m_pathFinder = GetComponent<PathFinder>();
-        m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider2D>();
     }
 
@@ -48,9 +30,8 @@ public class FlyingPatrolMonster : Enemy
         m_state = ENEMY_STATE.PATROL;
         m_pathFinder.SetSpeed(m_speed);
 
-        m_animationHash[(int)ANIMATION_STATE.MOVE] = Animator.StringToHash(m_moveAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.DIE] = Animator.StringToHash(m_dieAnimationName);
-        m_animationHash[(int)ANIMATION_STATE.HIT] = Animator.StringToHash(m_hitAnimationName);
+        m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_DIE);
+        m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_HIT);
 
 
     }
@@ -81,7 +62,7 @@ public class FlyingPatrolMonster : Enemy
         //m_pathFinder.SnapToClosestNode();
         m_pathFinder.SetTargetNode(m_patrolPoint_2.position);
         m_isGoingFrom1To2 = true;
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_MOVE, false);
     }
 
     void Patrol()
@@ -109,24 +90,23 @@ public class FlyingPatrolMonster : Enemy
 
     public override void Damage(float p_damage)
     {
-        if(m_state == ENEMY_STATE.DEAD) { return ;}
+        if(m_state == ENEMY_STATE.DEATH) { return ;}
         m_state = ENEMY_STATE.HIT;
-        ChangeAnimationState(ANIMATION_STATE.HIT);
-        base.Damage(p_damage);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_HIT, true);
         
     }
 
     protected override void EndHit(){
         base.EndHit();
         if(m_health <= 0) { 
-            m_state = ENEMY_STATE.DEAD;
-            ChangeAnimationState(ANIMATION_STATE.DIE);
-            m_state = ENEMY_STATE.DEAD;
+            m_state = ENEMY_STATE.DEATH;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_DIE, false);
+            m_state = ENEMY_STATE.DEATH;
             return;
         }
         m_rb2D.velocity = Vector2.zero;
         m_state = ENEMY_STATE.PATROL;
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_MOVE, false);
     }
 
     void FaceToDirection(){
@@ -162,8 +142,7 @@ public class FlyingPatrolMonster : Enemy
     public override void Reset(){
         base.Reset();
         m_collider.enabled = true;
-        m_state = ENEMY_STATE.PATROL;
-        ChangeAnimationState(ANIMATION_STATE.MOVE);
+        InitializePatrol();
     }
 
     private void OnDrawGizmos() {

@@ -22,7 +22,7 @@ public class GroundCheck : MonoBehaviour
 
             if(m_playerScript.State == PLAYER_STATE.FALL && m_playerScript.State == PLAYER_STATE.ATTACK) {
                 m_playerScript.State = PLAYER_STATE.LAND;
-                AnimationManager.Instance.PlayAnimation(m_playerScript, ANIMATION.PLAYER_LAND);
+                AnimationManager.Instance.PlayAnimation(m_playerScript, ANIMATION.PLAYER_LAND, false);
             }
             if(m_playerScript.State == PLAYER_STATE.GROUNDBREAKER){
                 Physics2D.IgnoreLayerCollision(6,7,false);

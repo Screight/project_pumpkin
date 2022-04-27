@@ -11,14 +11,6 @@ public class Skeleton : Enemy
     SKELETON_STATE m_skeletonState;
     int m_currentState;
 
-    string m_moveAnimationName      = "Move";
-    string m_reloadAnimationName    = "Reload";
-    string m_fireAnimationName      = "Fire";
-    string m_hitAnimationName       = "hit";
-    string m_attackAnimationName    = "attack";
-    string m_dieAnimationName       = "Die";
-    int[] m_animationHash = new int[(int)SKELETON_ANIMATION.LAST_NO_USE];
-
     [SerializeField] GameObject prefabBone;
     GameObject Bone;
     BoneScript m_boneScript;
@@ -45,7 +37,6 @@ public class Skeleton : Enemy
         base.Awake();
 
         m_rb2D = GetComponent<Rigidbody2D>();
-        m_animator = GetComponent<Animator>();
         m_health = 3;
 
         m_isGrounded = true;
@@ -62,12 +53,8 @@ public class Skeleton : Enemy
     protected override void Start()
     {
         base.Start();
-        m_animationHash[(int)SKELETON_ANIMATION.MOVE] = Animator.StringToHash(m_moveAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.RELOAD] = Animator.StringToHash(m_reloadAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.FIRE] = Animator.StringToHash(m_fireAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.DIE] = Animator.StringToHash(m_dieAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.HIT] = Animator.StringToHash(m_hitAnimationName);
-        m_animationHash[(int)SKELETON_ANIMATION.ATTACK] = Animator.StringToHash(m_attackAnimationName);
+        m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SKELETON_HIT);
+        m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SKELETON_DIE);
 
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
@@ -97,7 +84,7 @@ public class Skeleton : Enemy
 
     void Move(SKELETON_STATE p_defaultState)
     {
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
         if (m_hasReturned)
         {
             if (m_isHittingWall)
@@ -156,7 +143,7 @@ public class Skeleton : Enemy
         if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded) 
         { 
             m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
-            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.RELOAD]);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_RELOAD, false);
         }
         else if (m_playerIsNear)
         {
@@ -179,13 +166,13 @@ public class Skeleton : Enemy
             if (m_playerIsAtRange && m_isGrounded)
             {
                 m_rb2D.velocity = Vector2.zero;
-                ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.ATTACK]);
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_ATTACK, false);
                 m_isAttacking = true;
             }
             else
             {
                 m_skeletonState = p_defaultState;
-                ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
             }
         }        
     }
@@ -195,21 +182,6 @@ public class Skeleton : Enemy
         Projectile m_boneArrowScript = Instantiate(m_arrow, m_attackPosition.position, Quaternion.identity).GetComponent<Projectile>();
         m_boneArrowScript.Shoot(FacingDirection());
         m_isAttacking = false;
-    }
-
-    void ChangeAnimationState(int p_newState)
-    {
-        if (m_currentState == p_newState && m_currentState != m_animationHash[(int)SKELETON_ANIMATION.HIT]) { return; }
-
-        if (m_currentState == p_newState && m_currentState == m_animationHash[(int)SKELETON_ANIMATION.HIT])
-        {
-            m_animator.Play(p_newState, -1, 0);
-        }
-        else
-        {
-            m_animator.Play(p_newState);
-            m_currentState = p_newState;
-        }
     }
 
     void FlipX()
@@ -226,13 +198,13 @@ public class Skeleton : Enemy
     public override void Damage(float p_damage)
     {
         m_skeletonState = SKELETON_STATE.HIT;
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.HIT]);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_HIT, false);
         base.Damage(p_damage);
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         if (m_health <= 0)
         {
             m_skeletonState = SKELETON_STATE.DIE;
-            ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.DIE]);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_DIE, false);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
         m_isAttacking = false;
@@ -244,7 +216,7 @@ public class Skeleton : Enemy
     {
         base.EndHit();
         m_skeletonState = SKELETON_STATE.MOVE;
-        ChangeAnimationState(m_animationHash[(int)SKELETON_ANIMATION.MOVE]);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 

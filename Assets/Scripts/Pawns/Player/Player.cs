@@ -170,7 +170,7 @@ public class Player : AnimatedCharacter
         m_rb2D.velocity = new Vector2(FacingDirection() * m_dashSpeed, 0);
         m_rb2D.gravityScale = 0;
 
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DASH);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DASH, false);
         m_dashDustScript.ActivateDashDustAnimation(new Vector3(transform.position.x - 12 * FacingDirection(), transform.position.y, transform.position.z), m_isFacingRight);
 
         Physics2D.IgnoreLayerCollision(6, 7, true);
@@ -184,7 +184,7 @@ public class Player : AnimatedCharacter
             m_state = PLAYER_STATE.IDLE;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             m_rb2D.velocity = new Vector2(0, 0);
-            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
             Physics2D.IgnoreLayerCollision(6, 7, false);
         }
     }
@@ -200,7 +200,7 @@ public class Player : AnimatedCharacter
             if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
             {
                 m_state = PLAYER_STATE.MOVE;
-                AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN);
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN, false);
             }
         }
         else
@@ -209,7 +209,7 @@ public class Player : AnimatedCharacter
             if (m_isGrounded && m_state != PLAYER_STATE.LAND)
             {
                 m_state = PLAYER_STATE.IDLE;
-                AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
             }
         }
     }
@@ -221,7 +221,7 @@ public class Player : AnimatedCharacter
 
         m_isGrounded = false;
         m_state = PLAYER_STATE.BOOST;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST, false);
     }
 
     void HandleIdleState() { HandleMoveState(); }
@@ -247,7 +247,7 @@ public class Player : AnimatedCharacter
             m_isGrounded = false;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             if (m_state != PLAYER_STATE.ATTACK) { m_state = PLAYER_STATE.FALL; }
-            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL, false);
             // limit falling speed
             if (m_rb2D.velocity.y < -m_maxFallingSpeed) { m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, -m_maxFallingSpeed); }
         }
@@ -291,7 +291,7 @@ public class Player : AnimatedCharacter
     public void ResetPlayer(PLAYER_STATE p_state, ANIMATION p_animationState)
     {
         m_state = p_state;
-        AnimationManager.Instance.PlayAnimation(this, p_animationState);
+        AnimationManager.Instance.PlayAnimation(this, p_animationState, false);
         m_isGrounded = false;
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_rb2D.velocity = Vector2.zero;
@@ -312,13 +312,13 @@ public class Player : AnimatedCharacter
         m_isBeingScripted = true;
         FacePlayerToMovementDirection();
         m_state = PLAYER_STATE.MOVE;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN, false);
         m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed, 0);
     }
 
     public void ScriptTopSuction(float p_suctionVelocity)
     {
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP, false);
         m_rb2D.gravityScale = 0;
         m_rb2D.velocity = new Vector2(0, p_suctionVelocity);
     }
@@ -327,7 +327,7 @@ public class Player : AnimatedCharacter
     {
         m_rb2D.velocity = p_impulseVelocity;
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP, false);
         
         if (p_impulseVelocity.x > 0) { m_direction = 1; }
         else { m_direction = -1; }
@@ -337,7 +337,7 @@ public class Player : AnimatedCharacter
     public void ScriptFall()
     {
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL, false);
         m_state = PLAYER_STATE.FALL;
     }
 
@@ -395,7 +395,7 @@ public class Player : AnimatedCharacter
     public void HandleDeath()
     {
         m_state = PLAYER_STATE.DEATH;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH, false);
         m_eventTimer.Duration = m_deathDuration;
         m_eventTimer.Run();
     }
@@ -491,7 +491,7 @@ public class Player : AnimatedCharacter
     {
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         m_state = PLAYER_STATE.TALKING;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
     }
 
     private void OnDrawGizmos()

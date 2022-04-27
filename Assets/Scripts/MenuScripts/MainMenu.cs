@@ -2,36 +2,12 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-
-    public GameObject[] Menus;
-
-    void Start()
-    {
-        
-        for (int i = 0; i < Menus.Length; i++)
-        {
-            Menus[i].SetActive(false);
-            
-        }
-        Menus[0].SetActive(true);
+    public void ExitGame(){
+        Application.Quit();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X) && Menus[1].activeSelf)
-        {
-            setActiveMenuMain();
-        }
+    public void EnterGame(){
+        Game.SceneManager.Instance.LoadScene((int)SCENE.GAME);
     }
 
-    public void setActiveMenuOptions()
-    {
-        for (int i = 0; i < Menus.Length; i++) { Menus[i].SetActive(false); }
-        Menus[1].SetActive(true);
-    }
-    public void setActiveMenuMain()
-    {
-        for (int i = 0; i < Menus.Length; i++) { Menus[i].SetActive(false); }
-        Menus[0].SetActive(true);
-    }
 }

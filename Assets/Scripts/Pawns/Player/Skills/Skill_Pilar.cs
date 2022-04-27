@@ -85,7 +85,7 @@ public class Skill_Pilar : MonoBehaviour
         if (m_player.IsFacingRight) m_markerDirection = 1;
         else m_markerDirection = -1;
         m_player.State = PLAYER_STATE.CAST;
-        AnimationManager.Instance.PlayAnimation(m_player, ANIMATION.PLAYER_IDLE);
+        AnimationManager.Instance.PlayAnimation(m_player, ANIMATION.PLAYER_IDLE, false);
         m_rb2D.velocity = Vector2.zero;
         m_markerInitialRaycastPosition = m_player.transform.position + 5 * Vector3.up;
         m_markerLastRaycastPosition = m_markerInitialRaycastPosition;

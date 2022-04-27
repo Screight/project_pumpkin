@@ -51,7 +51,7 @@ public class Skill_Groundbreaker : MonoBehaviour
         {
             m_rb2D.velocity = new Vector2(0, m_maxSpeed);
             m_player.State = PLAYER_STATE.GROUNDBREAKER;
-            AnimationManager.Instance.PlayAnimation(m_player, ANIMATION.PLAYER_GROUNDBREAKER);
+            AnimationManager.Instance.PlayAnimation(m_player, ANIMATION.PLAYER_GROUNDBREAKER, false);
             m_rb2D.gravityScale = 0;
             Physics2D.IgnoreLayerCollision(6, 7, true);
             m_player.IsUsingGroundBreaker = true;
@@ -78,7 +78,7 @@ public class Skill_Groundbreaker : MonoBehaviour
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;
             m_cooldownTimer.Run();
-            AnimationManager.Instance.PlayAnimation(m_player, ANIMATION.PLAYER_IDLE);
+            AnimationManager.Instance.PlayAnimation(m_player, ANIMATION.PLAYER_IDLE, false);
             Player.Instance.State = PLAYER_STATE.IDLE;
         }
     }

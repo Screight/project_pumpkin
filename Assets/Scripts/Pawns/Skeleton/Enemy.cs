@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : AnimatedCharacter
-{
-    protected Animator m_animator;
-    Player m_playerScript;
+{    Player m_playerScript;
     [SerializeField] float MAX_HEALTH = 3;
     [SerializeField] protected float m_health = 3;
     [SerializeField] protected int m_damage = 1;
     [SerializeField] ROOMS m_room; 
     protected Vector2 m_spawnPos;
     Timer m_animationTimer;
-    float m_hitAnimationDuration;
-    float m_dieAnimationDuration;
+    protected float m_hitAnimationDuration;
+    protected float m_dieAnimationDuration;
     bool m_isDying = false;
     bool m_isBeingHit = false;
     protected Collider2D m_collider;
@@ -33,16 +31,6 @@ public class Enemy : AnimatedCharacter
     {
         m_playerScript = Player.Instance;
         m_health = MAX_HEALTH;
-        
-        foreach(AnimationClip animationClip in m_animator.runtimeAnimatorController.animationClips)
-        {
-            if(animationClip.name == "Die"){
-                m_dieAnimationDuration = animationClip.length;
-            }
-            if(animationClip.name == "hit"){
-                m_hitAnimationDuration = animationClip.length;
-            }
-        }
     }
 
     protected virtual void Update() {
@@ -64,12 +52,14 @@ public class Enemy : AnimatedCharacter
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL); 
             m_isDying = true;
             m_animationTimer.Duration = m_dieAnimationDuration;
+            m_animationTimer.Stop();
             m_animationTimer.Run();
             }
         else {
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT); 
             m_isBeingHit = true;
             m_animationTimer.Duration = m_hitAnimationDuration;
+            m_animationTimer.Stop();
             m_animationTimer.Run();
         }
     }
