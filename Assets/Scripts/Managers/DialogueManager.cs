@@ -110,7 +110,7 @@ public class DialogueManager : MonoBehaviour
     {
         m_currentDialogueEvent = p_dialogueEvent;
         m_textBox.gameObject.SetActive(true);
-        m_textBox.SetActive(true);
+        m_textBox.SetActive(true);       
         m_isPrintingText = true;
         m_writeEffectTimer.Duration = m_timeBetweenCharacters;
         m_currentNumberOfCharactersPrinted = 0;
