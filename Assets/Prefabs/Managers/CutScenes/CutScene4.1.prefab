@@ -46,15 +46,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 874.5398
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2960.4255
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -947.44385
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalRotation.w
@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984284, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_Name
-      value: Dialogue
+      value: Dialogue4.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
