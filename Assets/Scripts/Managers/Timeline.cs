@@ -13,15 +13,9 @@ public class Timeline : MonoBehaviour
 
     public PlayableDirector m_director;
     public Canvas m_HUD;
-    [SerializeField] GameObject m_player;
-    Player m_playerScript;
     private bool hasPlayed;
 
-    private void Start()
-    {
-        hasPlayed = false;
-        m_player = GameObject.FindGameObjectWithTag("Player"); m_playerScript = m_player.GetComponent<Player>();
-    }
+    private void Start() { hasPlayed = false; }
 
     private void Update()
     {
@@ -38,7 +32,7 @@ public class Timeline : MonoBehaviour
         MenuScript.Instance.CutSceneIsPlaying = true;
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToStatic(); }
         if (m_hideHud) { m_HUD.enabled = false; }
-        if (!m_playerCanMove) { m_playerScript.SetPlayerToScripted(); }
+        if (!m_playerCanMove) { Player.Instance.SetPlayerToScripted(); }
 
         m_director.Play();
         hasPlayed = true;
@@ -46,7 +40,7 @@ public class Timeline : MonoBehaviour
     public void endCutScene()
     {
         MenuScript.Instance.CutSceneIsPlaying = false;
-        if (!m_playerCanMove) { m_playerScript.StopScripting(); }
+        if (!m_playerCanMove) { Player.Instance.StopScripting(); }
 
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToNormal(); }
         if (m_hideHud) { m_HUD.enabled = true; }

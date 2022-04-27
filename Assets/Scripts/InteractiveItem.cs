@@ -23,7 +23,7 @@ public abstract class InteractiveItem : MonoBehaviour
             if (m_isPlayerInside && m_canPlayerInteract)
             {
                 if (m_isAutomatic && !m_hasBeenUsed || !m_isAutomatic && InputManager.Instance.InteractButtonPressed)
-                    HandleInteraction();
+                HandleInteraction();
             }
         }
         return true;
@@ -31,9 +31,7 @@ public abstract class InteractiveItem : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if(m_icon != null){
-            m_icon.SetActive(false);
-        }
+        if (m_icon != null) { m_icon.SetActive(false); }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D p_collider)
