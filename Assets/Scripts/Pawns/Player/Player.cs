@@ -104,8 +104,7 @@ public class Player : AnimatedCharacter
 
     private void Update()
     {
-        CheckIfFalling();
-
+        CheckIfFalling(); 
         if (m_isBeingScripted) { return; }
 
         if (m_invulnerableTimer.IsRunning)
@@ -345,8 +344,6 @@ public class Player : AnimatedCharacter
     {
         ResetPlayer(PLAYER_STATE.IDLE, ANIMATION.PLAYER_IDLE);
         m_isBeingScripted = true;
-        m_rb2D.gravityScale = 0;
-        m_rb2D.velocity = Vector2.zero;
         Physics2D.IgnoreLayerCollision(6, 7, true);
     }
     public void FacePlayerToRight()
@@ -364,9 +361,8 @@ public class Player : AnimatedCharacter
     public void StopScripting()
     {
         m_isBeingScripted = false;
-        float speed = m_rb2D.velocity.y;
         ResetPlayer(m_state, m_animationState);
-        m_rb2D.velocity = new Vector2(0, speed);
+        m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
     }
 
     public void SetPlayerToPosition(Vector3 p_position) { transform.position = p_position; }
