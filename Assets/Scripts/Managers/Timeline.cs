@@ -11,11 +11,16 @@ public class Timeline : MonoBehaviour
     [SerializeField] bool m_hideHud = false;
     [SerializeField] bool m_playerCanMove = false;
 
+    public PauseMenu pausemenu;
     public PlayableDirector m_director;
     public Canvas m_HUD;
     private bool hasPlayed;
 
-    private void Start() { hasPlayed = false; }
+    private void Start() 
+    {
+        pausemenu = FindObjectOfType<PauseMenu>();
+        hasPlayed = false; 
+    }
 
     private void Update()
     {
@@ -29,7 +34,7 @@ public class Timeline : MonoBehaviour
 
     public void startCutScene()
     {
-        MenuScript.Instance.CutSceneIsPlaying = true;
+        pausemenu.IsCutScenePlaying = true;
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToStatic(); }
         if (m_hideHud) { m_HUD.enabled = false; }
         if (!m_playerCanMove) { Player.Instance.SetPlayerToScripted(); }
@@ -39,7 +44,7 @@ public class Timeline : MonoBehaviour
     }
     public void endCutScene()
     {
-        MenuScript.Instance.CutSceneIsPlaying = false;
+        pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
 
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToNormal(); }

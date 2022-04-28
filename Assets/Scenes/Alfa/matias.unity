@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b8c605368b7cd2a8df01204014d0cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_interface: {fileID: 0}
 --- !u!4 &170135361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5817150657330477115, guid: 0e7ec45f9b9538a9b9e3c0f60f9cc08e, type: 3}
@@ -1161,6 +1162,10 @@ PrefabInstance:
     - target: {fileID: 4483043690889805528, guid: 1a9d54376e727ae42bbd583bfddb8120, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487127374975681743, guid: 1a9d54376e727ae42bbd583bfddb8120, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5351944887183287238, guid: 1a9d54376e727ae42bbd583bfddb8120, type: 3}
       propertyPath: m_Navigation.m_Mode

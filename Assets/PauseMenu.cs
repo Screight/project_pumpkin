@@ -6,21 +6,20 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject m_interface;
     bool m_isGamePaused = false;
+    bool m_isGameInCutscene = false;
     public void ReturnToMainMenu()
     {
         Game.SceneManager.Instance.LoadScene((int)SCENE.MAIN_MENU);
     }
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.P) && !m_isGamePaused){
-            Pause();
-        }
-        else if(Input.GetKeyDown(KeyCode.P) && m_isGamePaused){
-            UnPause();
-        }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !m_isGamePaused && !m_isGameInCutscene) { Pause(); }
+        else if (Input.GetKeyDown(KeyCode.Escape) && m_isGamePaused) { UnPause(); }
     }
 
-    public void Pause(){
+    public void Pause()
+    {
         MenuManager.Instance.GoTo(1);
         Time.timeScale = 0;
         m_isGamePaused = true;
@@ -28,11 +27,13 @@ public class PauseMenu : MonoBehaviour
         m_interface.SetActive(false);
     }
 
-    public void UnPause(){
+    public void UnPause()
+    {
         MenuManager.Instance.GoTo(0);
         Time.timeScale = 1;
         m_isGamePaused = false;
-        GameManager.Instance.IsGamePaused = false;m_interface.SetActive(true);
+        GameManager.Instance.IsGamePaused = false; m_interface.SetActive(true);
     }
 
+    public bool IsCutScenePlaying { set { m_isGameInCutscene = value; } }
 }
