@@ -33,17 +33,19 @@ public class DialogueEvent : MonoBehaviour
     {
         if (!m_isEventActive) { return false; }
         m_dialogueCount = DialogueManager.Instance.SentenceCount;
-        if (m_dialogueCount != (int)m_nextEvent || m_dialogueCount < 0 || m_eventTriggered[(int)m_eventCount]) { return false; }
+        if (m_dialogueCount != m_nextEvent || m_dialogueCount < 0 || m_eventTriggered[m_eventCount]) { return false; }
         return true;
     }
 
     public virtual void FinishDialogueEvent()
     {
+        Debug.Log("kaka");
         m_isEventActive = false;
-        Player.Instance.StopScripting();
         m_cutscene.Resume();
-        Player.Instance.State = PLAYER_STATE.IDLE;
-        
+
+        if (m_cutscene.state != PlayState.Playing) { Player.Instance.StopScripting(); }
+        else { Player.Instance.SetPlayerToScripted(); }
+        Player.Instance.State = PLAYER_STATE.IDLE;        
     }
 
     public Dialogue Dialogue{ get { return m_dialogue;} }

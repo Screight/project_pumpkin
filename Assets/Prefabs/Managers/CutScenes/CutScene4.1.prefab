@@ -96,6 +96,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0816e2a9477db78499cf7024c0407115, type: 2}
     - target: {fileID: 2423965441624984259, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+      propertyPath: m_CutSceneStart
+      value: 
+      objectReference: {fileID: 5364827651591515782}
+    - target: {fileID: 2423965441624984259, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_CutSceneTrigger
       value: 
       objectReference: {fileID: 5364827651591515782}

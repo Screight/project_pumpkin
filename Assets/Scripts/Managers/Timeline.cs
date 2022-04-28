@@ -24,6 +24,7 @@ public class Timeline : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(m_director.state);
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
     }
 
@@ -44,6 +45,7 @@ public class Timeline : MonoBehaviour
     }
     public void endCutScene()
     {
+        Debug.Log("ara ma puc moure");
         pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
 

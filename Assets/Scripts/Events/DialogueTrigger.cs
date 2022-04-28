@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueTrigger : InteractiveItem
 {
     DialogueEvent m_dialogue;
-    public Timeline m_CutSceneTrigger;
+    public Timeline m_CutSceneStart;
 
     protected override void Awake()
     {
@@ -14,9 +14,9 @@ public class DialogueTrigger : InteractiveItem
     }
     protected override void Update()
     {
-        if (m_CutSceneTrigger != null)
+        if (m_CutSceneStart != null)
         {
-            if (m_CutSceneTrigger.HasStartedplaying && m_CutSceneTrigger.m_cutSceneStartsWithDialog)
+            if (m_CutSceneStart.HasStartedplaying && m_CutSceneStart.m_cutSceneStartsWithDialog)
             {
                 m_dialogue.StartDialogueEvent();
                 gameObject.SetActive(false);
@@ -28,9 +28,8 @@ public class DialogueTrigger : InteractiveItem
 
     protected override void HandleInteraction()
     {
-        if (m_CutSceneTrigger == null || !m_CutSceneTrigger.m_cutSceneStartsWithDialog)
+        if (m_CutSceneStart == null || !m_CutSceneStart.m_cutSceneStartsWithDialog)
         {
-            Debug.Log("entra");
             base.HandleInteraction();
             m_dialogue.StartDialogueEvent();
             gameObject.SetActive(false);
