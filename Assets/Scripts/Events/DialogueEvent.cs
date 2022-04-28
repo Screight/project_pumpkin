@@ -10,9 +10,11 @@ public class DialogueEvent : MonoBehaviour
     protected int m_eventCount = 0;
     protected bool m_isEventActive = false;
     [SerializeField] protected Dialogue m_dialogue;
+    [SerializeField] protected Timeline m_cutscene;
 
     protected virtual void Awake()
     {
+        m_cutscene=GetComponentInParent<Timeline>();
         m_eventTriggered = new bool[m_dialogue.GetNumberOfSentences()];
         for (int i = 0; i < m_eventTriggered.Length; i++) { m_eventTriggered[i] = false; }
     }
