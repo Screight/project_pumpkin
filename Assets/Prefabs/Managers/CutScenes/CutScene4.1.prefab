@@ -29,7 +29,6 @@ Transform:
   m_Children:
   - {fileID: 3481523992316989243}
   - {fileID: 5364827651591515784}
-  - {fileID: 1432433971}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38,11 +37,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2542101719442374983}
+    m_TransformParent: {fileID: 3481523992316989243}
     m_Modifications:
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_LocalPosition.x
@@ -96,6 +95,10 @@ PrefabInstance:
       propertyPath: m_dialogue
       value: 
       objectReference: {fileID: 11400000, guid: 0816e2a9477db78499cf7024c0407115, type: 2}
+    - target: {fileID: 2423965441624984259, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+      propertyPath: m_CutSceneTrigger
+      value: 
+      objectReference: {fileID: 5364827651591515782}
     - target: {fileID: 2423965441624984284, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_Name
       value: Dialogue4.1
@@ -105,11 +108,6 @@ PrefabInstance:
 --- !u!1 &1432433967 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2423965441624984284, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
-  m_PrefabInstance: {fileID: 2423965440192577523}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1432433971 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
   m_PrefabInstance: {fileID: 2423965440192577523}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6775994990547389086
@@ -179,6 +177,10 @@ PrefabInstance:
       propertyPath: m_director
       value: 
       objectReference: {fileID: 3481523992316989240}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_cutSceneStartsWithDialog
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367193, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_Name
       value: CutSceneStart4.1
@@ -190,6 +192,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475660981935367190, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
   m_PrefabInstance: {fileID: 6775994990547389086}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5364827651591515782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+  m_PrefabInstance: {fileID: 6775994990547389086}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc411ec3a5ea7914e9b0d87fb1bf450e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8872680149733923315
 PrefabInstance:
   m_ObjectHideFlags: 0

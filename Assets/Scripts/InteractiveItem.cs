@@ -12,7 +12,7 @@ public abstract class InteractiveItem : MonoBehaviour
     [SerializeField] bool m_isAutomatic = false;
     bool m_hasBeenUsed = false;
 
-    protected virtual bool Update()
+    protected virtual void Update()
     {
         if (m_isOneUseOnly && m_hasBeenUsed)
         {
@@ -26,7 +26,6 @@ public abstract class InteractiveItem : MonoBehaviour
                 HandleInteraction();
             }
         }
-        return true;
     }
 
     protected virtual void Awake()

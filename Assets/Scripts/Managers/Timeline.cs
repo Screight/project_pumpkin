@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Playables;
 
 public class Timeline : MonoBehaviour
@@ -10,6 +9,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] bool m_isFireSpiritCutScene = false;
     [SerializeField] bool m_hideHud = false;
     [SerializeField] bool m_playerCanMove = false;
+    public bool m_cutSceneStartsWithDialog = false;
 
     public PauseMenu pausemenu;
     public PlayableDirector m_director;
@@ -52,4 +52,6 @@ public class Timeline : MonoBehaviour
         if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
         gameObject.SetActive(false);
     }
+
+    public bool HasStartedplaying { get { return hasPlayed; } }
 }
