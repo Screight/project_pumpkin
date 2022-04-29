@@ -14,13 +14,10 @@ public class DialogueEvent : MonoBehaviour
     [SerializeField] protected Dialogue m_dialogue;
     [SerializeField] protected PlayableDirector m_cutscene;
     [SerializeField] protected Timeline m_cutSceneStart;
-    [SerializeField] protected GameObject[] m_cutSceneEntities;
-    private Transform[] m_cutSceneEntitiesPosition;
+    private double m_cutSceneCurrentTime;
 
     protected virtual void Awake()
     {
-        m_cutSceneEntitiesPosition = new Transform[m_cutSceneEntities.Length];
-
         m_cutscene = GetComponentInParent<PlayableDirector>();
         m_eventTriggered = new bool[m_dialogue.GetNumberOfSentences()];
         for (int i = 0; i < m_eventTriggered.Length; i++) { m_eventTriggered[i] = false; }
@@ -31,9 +28,7 @@ public class DialogueEvent : MonoBehaviour
         //Debug.Log("Dialogo empezado");
         Player.Instance.SetPlayerToScripted();
         
-        for (int i = 0; i < m_cutSceneEntities.Length; i++) { m_cutSceneEntitiesPosition[i] = m_cutSceneEntities[i].transform; }
-        if (m_cutscene != null) { m_cutscene.Pause(); }
-        for (int i = 0; i < m_cutSceneEntities.Length; i++) { m_cutSceneEntities[i].transform.position = m_cutSceneEntitiesPosition[i].position; }
+        if (m_cutscene != null) { m_cutSceneCurrentTime = m_cutscene.time; m_cutscene.Stop(); }
 
         DialogueManager.Instance.StartConversation(this);
         m_isEventActive = true;
@@ -51,7 +46,7 @@ public class DialogueEvent : MonoBehaviour
     {
         //Debug.Log("Dialogo terminado");
         m_isEventActive = false;
-        if (m_cutscene != null) { m_cutscene.Play(); }
+        if (m_cutscene != null) { m_cutscene.Play(); m_cutscene.time = m_cutSceneCurrentTime; }
 
         if ((m_cutscene != null && m_cutscene.state != PlayState.Playing) || (m_cutscene != null && m_cutSceneStart != null && m_cutSceneStart.PlayerCanMove) || m_cutscene == null) { Player.Instance.StopScripting(); }
         else { Player.Instance.SetPlayerToScripted(); }
