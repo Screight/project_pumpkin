@@ -2091,7 +2091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3513670171296691320, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
       propertyPath: m_Name
-      value: Dialogue
+      value: DialogueCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
