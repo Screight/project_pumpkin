@@ -31,6 +31,8 @@ public class SpiderBoss : AnimatedCharacter
     float m_eggSpawnCooldown = 2.0f;
     float m_acidAttackDuration;
     bool m_hasReachedSpawnEggPosition = false;
+    bool m_hasDrillBeenDestroyed = false;
+    bool m_hasEclosionedEggs = false;
 
     [SerializeField] int m_minNumberOfAcidAttacks = 1;
     [SerializeField] int m_maxNumberOfAcidAttacks = 3;
@@ -61,10 +63,10 @@ public class SpiderBoss : AnimatedCharacter
         m_roarDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ROAR);
         m_acidAttackDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ATTACK_SPIT);
 
-        InitializeReturnToCenter();
+        InitializeChaseState();
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = m_headMaxHealth;
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = m_drillMaxHealth;
-        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_headMaxHealth;
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_drillMaxHealth;
         m_healthBar.fillAmount = 1;
 
         for(int i = 0; i  < (int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE; i++){
@@ -126,7 +128,7 @@ public class SpiderBoss : AnimatedCharacter
         }
         else if (!m_hasReachedSpawnEggPosition){
             m_hasReachedSpawnEggPosition = true;
-            //transform.position = new Vector3(transform.position.x, m_spawnEggPosition.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x, m_spawnEggPosition.position.y, transform.position.z);
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ROAR, false);
             m_eventTimer.Duration = m_roarDuration;
             m_eventTimer.Restart();
@@ -134,7 +136,7 @@ public class SpiderBoss : AnimatedCharacter
 
         if(m_eventTimer.IsFinished){
             SpawnEggs();
-            InitializeIdleState();
+            InitializeReturnToCenter();
         }
 
     }
@@ -152,7 +154,7 @@ public class SpiderBoss : AnimatedCharacter
 
     void HandleChaseState(){
         if(m_numberOfAttacks >= m_numberOfDrillAttacks){
-            InitializeIdleState();
+            InitializeAcidAttack();
             m_numberOfAttacks = 0;
             // ECLOSION EGGS
             return;
@@ -185,6 +187,17 @@ public class SpiderBoss : AnimatedCharacter
         m_state = SPIDER_BOSS_STATE.ATTACK_DRILL;
         m_eventTimer.Duration = m_drillDuration;
         m_eventTimer.Restart();
+
+        if(m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] <= 0){
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_RIGHT, false);
+            m_rightDrill.CanDamagePlayer = true;
+            return ;
+        }
+        else if(m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] <= 0){
+            m_leftDrill.CanDamagePlayer = true;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_LEFT, false);
+            return ;
+        }
 
         if(Player.Instance.transform.position.x < transform.position.x){
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_LEFT, false);
@@ -226,6 +239,11 @@ public class SpiderBoss : AnimatedCharacter
 
     void HandleRecoverTerrainState(){
         if(m_eventTimer.IsFinished){
+            if(m_hasDrillBeenDestroyed){
+                m_hasDrillBeenDestroyed = false;
+                InitializeReturnToCenter();
+                return ;
+            }
             InitializeChaseState();
         }
     }
@@ -283,30 +301,70 @@ public class SpiderBoss : AnimatedCharacter
         m_numberOfAttacks++;
     }
 
-    void InitializeReturnToCenter(){
+    public void InitializeReturnToCenter(){
         m_state = SPIDER_BOSS_STATE.RETURN_TO_CENTER;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_MOVE_RIGHT, false);
 
-        if(transform.position.x == m_initialPosition.x){
-            InitializeEggSpawn();
+        if(transform.position.x == m_initialPosition.x && transform.position.y == m_initialPosition.y){
+            if(!m_hasEclosionedEggs){
+                InitializeEggSpawn();
+            }
+            else{
+                InitializeChaseState();
+            }
+            m_hasEclosionedEggs = !m_hasEclosionedEggs;
             return ;
         }
 
         if(transform.position.x > m_initialPosition.x){
             m_direction = -1;
+            return ;
         }
-        else{ m_direction = 1;}
+        else if(transform.position.x < m_initialPosition.x) {
+            m_direction = 1;
+            return ;
+        }
+        
+        if(transform.position.y > m_initialPosition.y){
+            m_direction = -1;
+        }
+        else if(transform.position.y < m_initialPosition.y) { m_direction = 1;}
     }
 
     void HanldeReturnToCenter(){
-        if(m_direction == 1 && transform.position.x > m_initialPosition.x || m_direction == -1 && transform.position.x < m_initialPosition.x){
-            transform.position = new Vector3(m_initialPosition.x, m_initialPosition.y, transform.position.z);
-            m_direction = 0;
-            InitializeEggSpawn();
-            return;
+        if(transform.position.x != m_initialPosition.x){
+            ReturnToCenterX();
+        }
+        else {
+            ReturnToCenterY();
         }
         
+        if( transform.position.x ==  m_initialPosition.x && transform.position.y == m_initialPosition.y){
+            m_direction = 0;
+            InitializeEggSpawn();
+        }
+        
+        
+    }
+
+    void ReturnToCenterX(){
+        if(m_direction == 1 && transform.position.x > m_initialPosition.x || m_direction == -1 && transform.position.x < m_initialPosition.x){
+            transform.position = new Vector3(m_initialPosition.x, transform.position.y, transform.position.z);
+            if(transform.position.y > m_initialPosition.y){
+            m_direction = -1;
+            }
+            else{ m_direction = 1;}
+            return;
+        }
         transform.position += new Vector3(m_direction * m_speed * Time.deltaTime, 0, 0);
+    }
+
+    void ReturnToCenterY(){
+        if(m_direction == 1 && transform.position.y > m_initialPosition.y || m_direction == -1 && transform.position.y < m_initialPosition.y){
+            transform.position = new Vector3(transform.position.x, m_initialPosition.y, transform.position.z);
+            return ;
+        }
+        transform.position += new Vector3(0, m_direction * m_speed * Time.deltaTime, 0);
     }
 
     bool IsPlayerInRange(float p_range){
@@ -323,6 +381,7 @@ public class SpiderBoss : AnimatedCharacter
         }
         else if(!m_isPartDestroyed[(int)p_part]){
             m_isPartDestroyed[(int)p_part] = true;
+            m_hasDrillBeenDestroyed = true;
             switch(p_part){
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL:
                     m_leftDrill.InitializeExplosion();

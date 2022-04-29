@@ -65,7 +65,7 @@ public class Enemy : AnimatedCharacter
     }
 
     protected virtual void EndHit(){
-
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
     protected virtual bool OnCollisionStay2D(Collision2D p_collider)

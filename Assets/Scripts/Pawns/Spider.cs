@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spider : Enemy
 {
     Rigidbody2D m_rb2d;
+    Collider2D m_collider;
     ENEMY_STATE m_state;
     [SerializeField] float m_speed;
     [SerializeField] Transform m_leftPatrolPoint;
@@ -19,6 +20,7 @@ public class Spider : Enemy
         base.Awake();
         m_rb2d = GetComponent<Rigidbody2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
+        m_collider = GetComponent<Collider2D>();
     }
 
     protected override void Start() {
@@ -30,11 +32,16 @@ public class Spider : Enemy
             m_rightPatrolPoint = provitional;
         }
         InitializeEclosion();
-        
+        m_collider.enabled = false;
+        m_rb2d.gravityScale = 0;
     }
 
     protected override void Update() {
         base.Update();
+
+        if(m_rb2d.velocity.x > 0 && transform.localScale.x < 0 || m_rb2d.velocity.x < 0 && transform.localScale.x > 0){
+            FlipX();
+        }
 
         switch(m_state){
             case ENEMY_STATE.PATROL:
@@ -73,6 +80,8 @@ public class Spider : Enemy
 
     public void Hatch(){
         // INSTANTIATE PARTICLES
+        m_collider.enabled = true;
+        m_rb2d.gravityScale = 1;
         InitializePatrol();
     }
 
@@ -97,12 +106,12 @@ public class Spider : Enemy
         if(transform.position.x > m_rightPatrolPoint.transform.position.x ){
             transform.position = new Vector3(m_rightPatrolPoint.position.x, transform.position.y, transform.position.z);
             m_rb2d.velocity = new Vector2(-m_rb2d.velocity.x, m_rb2d.velocity.y);
-            FlipX();
+            //FlipX();
         }
         else if(transform.position.x < m_leftPatrolPoint.transform.position.x){
             transform.position = new Vector3(m_leftPatrolPoint.position.x, transform.position.y, transform.position.z);
             m_rb2d.velocity = new Vector2(-m_rb2d.velocity.x, m_rb2d.velocity.y);
-            FlipX();
+            //FlipX();
         }
     }
 
