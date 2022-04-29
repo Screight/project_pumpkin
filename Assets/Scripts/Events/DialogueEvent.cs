@@ -23,6 +23,7 @@ public class DialogueEvent : MonoBehaviour
 
     public void StartDialogueEvent()
     {
+        Debug.Log("Dialogo empezado");
         Player.Instance.SetPlayerToScripted();
         m_cutscene.Pause();
         DialogueManager.Instance.StartConversation(this);
@@ -39,7 +40,7 @@ public class DialogueEvent : MonoBehaviour
 
     public virtual void FinishDialogueEvent()
     {
-        Debug.Log("kaka");
+        Debug.Log("Dialogo terminado");
         m_isEventActive = false;
         m_cutscene.Resume();
 
