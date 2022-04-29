@@ -19,7 +19,7 @@ public class Drill : MonoBehaviour
         m_spiderBoss = GameObject.FindObjectOfType<SpiderBoss>();
     }
 
-    private void OnTriggerEnter2D(Collider2D p_collider) {
+    private void OnTriggerStay2D(Collider2D p_collider) {
         if( p_collider.tag != "Player" || !m_canDamagePlayer){ return ;}
         m_canDamagePlayer = false;
         Vector2 direction = new Vector2(1,1);

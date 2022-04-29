@@ -194,18 +194,23 @@ public class SpiderBoss : AnimatedCharacter
             return ;
         }
         else if(m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] <= 0){
-            m_leftDrill.CanDamagePlayer = true;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_LEFT, false);
             return ;
         }
 
         if(Player.Instance.transform.position.x < transform.position.x){
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_LEFT, false);
-            m_leftDrill.CanDamagePlayer = true;
             return ;
         }
         m_rightDrill.CanDamagePlayer = true;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_RIGHT, false);
+    }
+
+    void ActivateLeftDrill(){
+        m_leftDrill.CanDamagePlayer = true;
+    }
+    void ActivateRightDrill(){
+        m_rightDrill.CanDamagePlayer = true;
     }
 
     void HandleDrillState(){
