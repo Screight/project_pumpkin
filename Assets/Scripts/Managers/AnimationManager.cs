@@ -63,6 +63,21 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.PATROL_BAT_HIT] = "hit";
         m_animationClipName[(int)ANIMATION.PATROL_BAT_MOVE] = "move";
 
+        // SPIDER BOSS ------------------------
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_IDLE] = "idle";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ROAR] = "roar";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ROAR_LOOP] = "roarLoop";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_MOVE_LEFT] = "moveLeft";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_MOVE_RIGHT] = "moveRight";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_LEFT] = "atkLeftCenter";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_RIGHT] = "atkRightCenter";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT] = "trappedRecoverLeft";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_RIGHT] = "trappedRecoverRight";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_LEFT] = "normalRecoverLeft";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT] = "normalRecoverRight";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = "headAtk";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = "spitWeb";
+
     }
 
     private void Start()
@@ -107,6 +122,21 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.PATROL_BAT_DIE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PATROL_BAT_DIE]);
         m_animationHash[(int)ANIMATION.PATROL_BAT_HIT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PATROL_BAT_HIT]);
         m_animationHash[(int)ANIMATION.PATROL_BAT_MOVE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PATROL_BAT_MOVE]);
+
+        // SPIDER BOSS ---------------------------
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_IDLE]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_ROAR] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ROAR]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_ROAR_LOOP] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ROAR_LOOP]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_MOVE_LEFT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_MOVE_LEFT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_MOVE_RIGHT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_MOVE_RIGHT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_LEFT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_LEFT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_RIGHT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_RIGHT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_RIGHT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_RIGHT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_LEFT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_LEFT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT]);
     }    
 
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation, bool p_startAgainIfSameAnimation){
@@ -116,13 +146,6 @@ public class AnimationManager : MonoBehaviour
             p_animatedCharacter.Animator.Play(m_animationHash[(int)p_animation], -1, 0f);
             return;
         }
-        p_animatedCharacter.Animator.Play(m_animationHash[(int)p_animation]);
-        p_animatedCharacter.AnimationState = p_animation;
-    }
-
-    public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation)
-    {
-        if (p_animatedCharacter.AnimationState == p_animation) { return; }
         p_animatedCharacter.Animator.Play(m_animationHash[(int)p_animation]);
         p_animatedCharacter.AnimationState = p_animation;
     }

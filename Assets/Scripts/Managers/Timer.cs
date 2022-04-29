@@ -56,7 +56,8 @@ public class Timer: MonoBehaviour
     }
     public void Restart()
     {
-        if (m_isRunning && !m_isFinished) { Run(); }
+        Stop();
+        Run();
     }
     public void Pause() { if (m_isRunning && !m_isFinished) { m_isRunning = false; } }
 
