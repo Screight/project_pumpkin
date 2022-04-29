@@ -15,7 +15,6 @@ public class Spider : Enemy
     [SerializeField] float m_eclosionDuration = 2.0f;
     Timer m_eventTimer;
 
-
     protected override void Awake() {
         base.Awake();
         m_rb2d = GetComponent<Rigidbody2D>();
@@ -52,7 +51,7 @@ public class Spider : Enemy
 
     }
 
-    void InitializeEclosion(){
+    public void InitializeEclosion(){
         m_state = ENEMY_STATE.EGG;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_EGG, false);
         if(m_isEclosionAutomatic){
@@ -72,7 +71,7 @@ public class Spider : Enemy
         }
     }
 
-    void Hatch(){
+    public void Hatch(){
         // INSTANTIATE PARTICLES
         InitializePatrol();
     }
@@ -80,20 +79,35 @@ public class Spider : Enemy
     void InitializePatrol(){
         m_state = ENEMY_STATE.PATROL;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_WALK, false);
-        m_rb2d.velocity = new Vector2(m_speed, 0);
+
+        bool startLeft = false;
+        float randomNumber = Random.Range(0,2);
+
+        if(randomNumber == 0) { startLeft = true;}
+
+        if(startLeft){
+            m_rb2d.velocity = new Vector2(-m_speed, 0);
+            FlipX();
+        }
+        else{ m_rb2d.velocity = new Vector2(m_speed, 0); }
+        
     }
 
     void HandlePatrol(){
         if(transform.position.x > m_rightPatrolPoint.transform.position.x ){
             transform.position = new Vector3(m_rightPatrolPoint.position.x, transform.position.y, transform.position.z);
             m_rb2d.velocity = new Vector2(-m_rb2d.velocity.x, m_rb2d.velocity.y);
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            FlipX();
         }
         else if(transform.position.x < m_leftPatrolPoint.transform.position.x){
             transform.position = new Vector3(m_leftPatrolPoint.position.x, transform.position.y, transform.position.z);
             m_rb2d.velocity = new Vector2(-m_rb2d.velocity.x, m_rb2d.velocity.y);
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            FlipX();
         }
+    }
+
+    void FlipX(){
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
 }
