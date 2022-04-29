@@ -26,7 +26,8 @@ public class Timeline : MonoBehaviour
 
     private void Update()
     {
-        if (m_director.time == m_director.duration) { hasPlayed = true; Debug.Log("Hasplayed puesto a true"); }
+        if ((int)m_director.time == (int)m_director.duration) { hasPlayed = true; Debug.Log("Hasplayed puesto a true"); }
+
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
     }
 
