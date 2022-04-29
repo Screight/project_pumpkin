@@ -15,16 +15,19 @@ public class Timeline : MonoBehaviour
     public PlayableDirector m_director;
     public Canvas m_HUD;
     private bool hasPlayed;
+    private bool hasStartedPlaying;
 
     private void Start() 
     {
         pausemenu = FindObjectOfType<PauseMenu>();
-        hasPlayed = false; 
+        hasPlayed = false;
+        hasStartedPlaying = false; 
     }
 
     private void Update()
     {
-        Debug.Log(m_director.state);
+        if ((int)m_director.time == (int)m_director.duration && !hasPlayed) { hasPlayed = true; }
+
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
     }
 
@@ -35,17 +38,18 @@ public class Timeline : MonoBehaviour
 
     public void startCutScene()
     {
+        //Debug.Log("Empieza CutScene");
         pausemenu.IsCutScenePlaying = true;
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToStatic(); }
         if (m_hideHud) { m_HUD.enabled = false; }
         if (!m_playerCanMove) { Player.Instance.SetPlayerToScripted(); }
 
         m_director.Play();
-        hasPlayed = true;
+        hasStartedPlaying = true;
     }
     public void endCutScene()
     {
-        Debug.Log("ara ma puc moure");
+        //Debug.Log("Termina CutScene y me puedo mover");
         pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
 
@@ -55,5 +59,6 @@ public class Timeline : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool HasStartedplaying { get { return hasPlayed; } }
+    public bool HasStartedplaying { get { return hasStartedPlaying; } }
+    public bool PlayerCanMove { get { return m_playerCanMove; } }
 }
