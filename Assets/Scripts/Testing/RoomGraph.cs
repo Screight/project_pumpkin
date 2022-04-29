@@ -81,7 +81,7 @@ public class RoomGraph : MonoBehaviour
 
     public SparseGraph Graph { get { return m_graph;}}
 
-    private void OnDrawGizmos() {
+    /*private void OnDrawGizmos() {
         // DRAW ALL NODES
         Gizmos.color = Color.black;
         Vector3 initialPosition = m_startingPoint.position;
@@ -93,5 +93,5 @@ public class RoomGraph : MonoBehaviour
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
             Gizmos.DrawSphere(new Vector3(m_graph.GetNode(i).Position.x, m_graph.GetNode(i).Position.y, m_graph.GetNode(i).Position.z), 1f);
         }   
-    }
+    }*/
 }

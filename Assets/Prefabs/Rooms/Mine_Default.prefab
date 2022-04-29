@@ -2044,7 +2044,7 @@ GameObject:
   - component: {fileID: 435170752094953971}
   m_Layer: 0
   m_Name: Breakable Ground
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

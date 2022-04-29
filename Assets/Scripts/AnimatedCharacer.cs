@@ -8,6 +8,7 @@ public class AnimatedCharacter : MonoBehaviour
     protected ANIMATION m_animationState;
     protected virtual void Awake() {
         m_animator = GetComponent<Animator>();
+        m_animationState = ANIMATION.LAST_NO_USE;
     }
 
     public Animator Animator { get { return m_animator;}}
