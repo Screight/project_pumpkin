@@ -77,6 +77,9 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT] = "normalRecoverRight";
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = "headAtk";
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = "spitWeb";
+        
+        // SPIDER -------------------------
+        m_animationClipName[(int)ANIMATION.SPIDER_WALK] = "spider_Walk";
 
         // EFFECTS -------------------------
             // ACID BALL
@@ -142,6 +145,9 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT]);
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE]);
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT]);
+
+        // SPIDER ---------------------------
+        m_animationHash[(int)ANIMATION.SPIDER_WALK] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_WALK]);
 
         // EFFECTS ---------------------------
             // ACID BALL

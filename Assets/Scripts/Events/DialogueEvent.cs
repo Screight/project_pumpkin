@@ -14,6 +14,7 @@ public class DialogueEvent : MonoBehaviour
     [SerializeField] protected Dialogue m_dialogue;
     [SerializeField] protected PlayableDirector m_cutscene;
     [SerializeField] protected Timeline m_cutSceneStart;
+    private double m_cutSceneCurrentTime;
 
     protected virtual void Awake()
     {
@@ -26,7 +27,9 @@ public class DialogueEvent : MonoBehaviour
     {
         //Debug.Log("Dialogo empezado");
         Player.Instance.SetPlayerToScripted();
-        if (m_cutscene != null) { m_cutscene.Pause(); }
+        
+        if (m_cutscene != null) { m_cutSceneCurrentTime = m_cutscene.time; m_cutscene.Stop(); }
+
         DialogueManager.Instance.StartConversation(this);
         m_isEventActive = true;
     }
@@ -43,7 +46,7 @@ public class DialogueEvent : MonoBehaviour
     {
         //Debug.Log("Dialogo terminado");
         m_isEventActive = false;
-        if (m_cutscene != null) { m_cutscene.Resume(); }
+        if (m_cutscene != null) { m_cutscene.Play(); m_cutscene.time = m_cutSceneCurrentTime; }
 
         if ((m_cutscene != null && m_cutscene.state != PlayState.Playing) || (m_cutscene != null && m_cutSceneStart != null && m_cutSceneStart.PlayerCanMove) || m_cutscene == null) { Player.Instance.StopScripting(); }
         else { Player.Instance.SetPlayerToScripted(); }
