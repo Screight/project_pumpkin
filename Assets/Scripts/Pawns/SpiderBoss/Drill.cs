@@ -13,6 +13,7 @@ public class Drill : MonoBehaviour
 
     Collider2D m_collider;
     bool m_canDamagePlayer = false;
+    bool m_canBeDamaged = false;
 
     private void Awake() {
         m_collider = GetComponent<Collider2D>();
@@ -32,11 +33,17 @@ public class Drill : MonoBehaviour
     }
 
     public void Damage(float p_damage){
+        if(!m_canBeDamaged){ return ;}
         m_spiderBoss.Damage(p_damage, m_part);
+        Debug.Log(m_part + "DAMAGED");
     }
 
     public bool CanDamagePlayer {
         set { m_canDamagePlayer = value;}
+    }
+
+    public bool CanBeDamaged {
+        set { m_canBeDamaged = value; }
     }
 
     public void InitializeExplosion(){
