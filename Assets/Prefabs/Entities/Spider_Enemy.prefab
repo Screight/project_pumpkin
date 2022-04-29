@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 386804985677495908}
   - component: {fileID: 351930647417588648}
   - component: {fileID: 3330346875839255077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pawn
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 132521220986216169, guid: 2763473b75d56f845b2d898e933a964f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd46f5b486a04117c91ad12437d2a879, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,7 +147,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -172,7 +172,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.4375}
     oldSize: {x: 16, y: 16}
     newSize: {x: 16, y: 16}
     adaptiveTilingThreshold: 0.5
@@ -204,6 +204,9 @@ MonoBehaviour:
   m_speed: 0
   m_leftPatrolPoint: {fileID: 0}
   m_rightPatrolPoint: {fileID: 0}
+  m_minimumDistanceToEclosion: 50
+  m_isEclosionAutomatic: 0
+  m_eclosionDuration: 2
 --- !u!1 &6296672092179184479
 GameObject:
   m_ObjectHideFlags: 0
