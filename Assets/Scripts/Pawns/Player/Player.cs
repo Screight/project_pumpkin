@@ -64,6 +64,7 @@ public class Player : AnimatedCharacter
 
     Timer m_eventTimer;
     float m_deathDuration;
+    float m_hurtDuration;
 
     /// END OF VARIABLES
     protected override void Awake() {
@@ -100,6 +101,7 @@ public class Player : AnimatedCharacter
         m_dashTimer.Duration = m_dashDuration;
         m_currentSpeedX = m_normalMovementSpeed;
         m_deathDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PLAYER_DEATH);
+        m_hurtDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PLAYER_HIT);
     }
 
     private void Update()
@@ -144,6 +146,7 @@ public class Player : AnimatedCharacter
             case PLAYER_STATE.LAND:     { HandleLandState(); } break;
             case PLAYER_STATE.DASH:     { HandleDashState(); } break;
             case PLAYER_STATE.ATTACK:   { m_attackScript.HandleAttack(m_isGrounded); } break;
+            case PLAYER_STATE.HURT: { HandleHurtState(); } break;
             case PLAYER_STATE.DEATH: { HandleDeathState(); } break;
         }
     }
@@ -223,9 +226,17 @@ public class Player : AnimatedCharacter
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST, false);
     }
 
+    void InitializeIdleState(){
+        m_state = PLAYER_STATE.IDLE;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
+    }
     void HandleIdleState() { HandleMoveState(); }
     void HandleLandState() { HandleMoveState(); }
     void HandleDashState() { HandleDash(); }
+    void InitializeJumpState(){
+        m_state = PLAYER_STATE.JUMP;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_JUMP, false);
+    }
     void HandleJumpState()
     {
         m_direction = (int)Input.GetAxisRaw("Horizontal");
@@ -235,6 +246,20 @@ public class Player : AnimatedCharacter
     }
     void HandleFallState() { HandleJumpState(); }
     void HandleBoostState() { HandleJumpState(); }
+
+    void InitializeHurtState(){
+        m_state = PLAYER_STATE.HURT;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_HIT, true);
+        m_eventTimer.Duration = m_hurtDuration;
+        m_eventTimer.Restart();
+    }
+
+    void HandleHurtState(){
+        if(m_eventTimer.IsFinished){
+            if(m_isGrounded){ InitializeIdleState();}
+            else { InitializeJumpState();}
+        }
+    }
 
     void CheckIfFalling()
     {
@@ -425,7 +450,7 @@ public class Player : AnimatedCharacter
         Physics2D.IgnoreLayerCollision(6, 7, true);
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
 
-        m_state = PLAYER_STATE.JUMP;
+        InitializeHurtState();
         GameManager.Instance.ModifyPlayerHealth(-p_damage);
     }
 

@@ -78,6 +78,11 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = "headAtk";
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = "spitWeb";
 
+        // EFFECTS -------------------------
+            // ACID BALL
+        m_animationClipName[(int)ANIMATION.EFFECT_ACID_LOOP] = "acid_ball_loop";
+        m_animationClipName[(int)ANIMATION.EFFECT_ACID_EXPLOSION] = "acid_ball_explosion";
+
     }
 
     private void Start()
@@ -137,6 +142,11 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT]);
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE]);
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT]);
+
+        // EFFECTS ---------------------------
+            // ACID BALL
+        m_animationHash[(int)ANIMATION.EFFECT_ACID_LOOP] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.EFFECT_ACID_LOOP]);
+        m_animationHash[(int)ANIMATION.EFFECT_ACID_EXPLOSION] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.EFFECT_ACID_EXPLOSION]);
     }    
 
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation, bool p_startAgainIfSameAnimation){

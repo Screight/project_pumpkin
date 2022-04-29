@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Drill : MonoBehaviour
 {
+    [SerializeField] SPIDER_BOSS_DAMAGEABLE_PARTS m_part;
     SpiderBoss m_spiderBoss;
     [SerializeField] Vector2 m_pushAwayVelocity = new Vector2(50.0f,0);
     [SerializeField] float m_noControlDuration = 0.4f;
@@ -30,8 +31,17 @@ public class Drill : MonoBehaviour
 
     }
 
+    public void Damage(float p_damage){
+        m_spiderBoss.Damage(p_damage, m_part);
+    }
+
     public bool CanDamagePlayer {
         set { m_canDamagePlayer = value;}
+    }
+
+    public void InitializeExplosion(){
+        this.gameObject.SetActive(false);
+        Debug.Log("INITIALIZING EXPLOSION");
     }
 
 }

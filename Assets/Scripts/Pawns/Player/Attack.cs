@@ -132,7 +132,13 @@ public class Attack : MonoBehaviour
                     enemyScript.Damage(GameManager.Instance.PlayerAttackDamage);
                 }
                  
-                }
+            }
+
+            if (enemy.gameObject.tag == "spiderBoss") { 
+                   Drill script = enemy.gameObject.GetComponent<Drill>();
+                script.Damage(GameManager.Instance.PlayerAttackDamage);
+            }
+
         }
 
         if(enemiesInAttackRange.Length == 0)
