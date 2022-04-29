@@ -26,7 +26,7 @@ public class Timeline : MonoBehaviour
 
     private void Update()
     {
-        if ((int)m_director.time == (int)m_director.duration) { hasPlayed = true; Debug.Log("Hasplayed puesto a true"); }
+        if ((int)m_director.time == (int)m_director.duration && !hasPlayed) { hasPlayed = true; }
 
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
     }
@@ -38,7 +38,7 @@ public class Timeline : MonoBehaviour
 
     public void startCutScene()
     {
-        Debug.Log("Empieza CutScene");
+        //Debug.Log("Empieza CutScene");
         pausemenu.IsCutScenePlaying = true;
         if (m_isCameraScripted) { CameraManager.Instance.SetCameraToStatic(); }
         if (m_hideHud) { m_HUD.enabled = false; }
@@ -49,7 +49,7 @@ public class Timeline : MonoBehaviour
     }
     public void endCutScene()
     {
-        Debug.Log("Termina CutScene y me puedo mover");
+        //Debug.Log("Termina CutScene y me puedo mover");
         pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
 
@@ -60,4 +60,5 @@ public class Timeline : MonoBehaviour
     }
 
     public bool HasStartedplaying { get { return hasStartedPlaying; } }
+    public bool PlayerCanMove { get { return m_playerCanMove; } }
 }
