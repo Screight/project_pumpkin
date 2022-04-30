@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject m_panel;
     // Player stats
     [SerializeField] int PLAYER_MAX_HEALTH;
     SpellCooldown m_spellCooldown;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
         m_isSkillAvailable = new bool[(int)SKILLS.LAST_NO_USE];
         for (int i = 0; i < m_isSkillAvailable.Length; i++) { m_isSkillAvailable[i] = false; }
         m_spellCooldown = GameObject.FindObjectOfType<SpellCooldown>();
+        m_panel.SetActive(false);
     }
 
     static public GameManager Instance
@@ -94,7 +96,13 @@ public class GameManager : MonoBehaviour
 
     public bool IsGamePaused {
         get { return m_isGamePaused; }
-        set { m_isGamePaused = value; }
+        set {
+            m_isGamePaused = value;
+            if(m_isGamePaused == false){
+                InputManager.Instance.PauseInputFor1Frame();
+            }
+            m_panel.SetActive(m_isGamePaused);
+        }
     }
 
 }

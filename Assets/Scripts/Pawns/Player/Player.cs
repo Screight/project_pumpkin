@@ -52,7 +52,6 @@ public class Player : AnimatedCharacter
 
     Timer m_blinkTimer;
     bool m_hasBlinked = false;
-    [SerializeField] float m_blinkDuration = 0.2f;
     [SerializeField] Vector2 m_pushAwayOnProjectileHitVelocity = new Vector2(-50.0f, 100.0f);
 
     /// TODO: ORGANIZE THIS VARIABLES
@@ -106,6 +105,7 @@ public class Player : AnimatedCharacter
 
     private void Update()
     {
+        if(GameManager.Instance.IsGamePaused){ return ;}
         if (m_isBeingScripted) { return; }
         CheckIfFalling();
 

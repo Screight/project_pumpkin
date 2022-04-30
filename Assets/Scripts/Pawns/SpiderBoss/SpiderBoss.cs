@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SpiderBoss : AnimatedCharacter
 {
+    Door[] m_doors = new Door[2];
+    [SerializeField] GameObject m_spiderHUD;
     [SerializeField] GameObject[] m_spiderEggs;
     Spider[] m_spiderEggsScript;
     SPIDER_BOSS_STATE m_state;
@@ -15,7 +17,6 @@ public class SpiderBoss : AnimatedCharacter
 
         
     [SerializeField] float m_speed = 20.0f;
-    [SerializeField] float m_speedVertical = 30.0f;
     [SerializeField] Transform m_spawnEggPosition;
     [SerializeField] Drill m_leftDrill;
     [SerializeField] Drill m_rightDrill;
@@ -27,9 +28,8 @@ public class SpiderBoss : AnimatedCharacter
     float m_biteDuration;
     [SerializeField] float m_acidAttackCooldown;
     bool m_hasRoared = false;
-    bool m_hasFiredAcidAttack = false;
+    //bool m_hasFiredAcidAttack = false;
     float m_roarDuration;
-    float m_eggSpawnCooldown = 2.0f;
     float m_normalRecoverDuration;
     float m_acidAttackDuration;
     bool m_hasReachedSpawnEggPosition = false;
@@ -88,7 +88,7 @@ public class SpiderBoss : AnimatedCharacter
         for(int i = 0; i < m_spiderEggs.Length; i++){
             m_spiderEggsScript[i] = m_spiderEggs[i].GetComponentInChildren<Spider>();
         }
-
+        m_spiderHUD.SetActive(false);
     }
 
     private void Update() {
@@ -376,7 +376,7 @@ public class SpiderBoss : AnimatedCharacter
                 m_head.transform.eulerAngles = Vector3.zero;
             }
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_SPIT, false);
-            m_hasFiredAcidAttack = false;
+            //m_hasFiredAcidAttack = false;
             m_eventTimer.Run();
         }
 
@@ -386,7 +386,7 @@ public class SpiderBoss : AnimatedCharacter
         AcidBall script = Instantiate(m_acidBall, m_acidAttackPosition.transform.position, Quaternion.identity).GetComponent<AcidBall>();
         Vector2 direction = (Player.Instance.transform.position - script.gameObject.transform.position).normalized;
         script.Initialize(direction);
-        m_hasFiredAcidAttack = true;
+        //m_hasFiredAcidAttack = true;
         m_numberOfAttacks++;
     }
 
@@ -440,15 +440,12 @@ public class SpiderBoss : AnimatedCharacter
                 }
             }
             else{
-                CameraShake.Instance.InitializeShake(1.5f, 4.0f, 0.5f, 0.5f);
+                CameraShake.Instance.InitializeShake(1.5f, 1.0f, 0.5f, 0.5f);
                 m_hasEnteredScene = true;
                 InitializeAcidAttack();
             }
-
-            
             
         }
-        
         
     }
 
@@ -526,6 +523,10 @@ public class SpiderBoss : AnimatedCharacter
                 break;
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD:
                     InitializeIdleState();
+                    m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES];
+                    for(int i = 0; i < m_doors.Length; i++){
+                        m_doors[i].OpenDoor();
+                    }
                     Debug.Log("END OF COMBAT");
                 break;
             }
@@ -548,6 +549,11 @@ public class SpiderBoss : AnimatedCharacter
     public void StartBossFight(){
         m_isBossInactive = false;
         InitializeReturnToCenter();
+    }
+
+    public void ActivateBossHUD(){
+        if(m_spiderHUD.activeInHierarchy){ return ;}
+        m_spiderHUD.SetActive(true);
     }
 
 }

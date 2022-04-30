@@ -51,8 +51,9 @@ public class MenuManager : MonoBehaviour
             if(InputManager.Instance.CancelButtonPressed){
                 if(Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1){
                     GameObject.FindObjectOfType<PauseMenu>().UnPause();
+                }else{
+                    GoBack();
                 }
-                GoBack();
             }
         }
     }

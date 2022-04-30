@@ -31,7 +31,6 @@ public class FlyingMonster : Enemy
     bool m_isFacingRight;
     ENEMY_STATE m_state;
     [SerializeField] GameObject m_player;
-    Player m_playerScript;
     PathFinder m_pathFinder;
     bool m_isGoingFrom1To2;
     bool m_isCharging;
@@ -274,7 +273,6 @@ public class FlyingMonster : Enemy
         m_restTimer.Duration = m_timeToWaitBetweenAttacks;
         m_memoryTimer.Duration = m_timeToRememberPlayer;
 
-        m_playerScript = m_player.GetComponent<Player>();
         m_isGoingFrom1To2 = true;
         m_isCharging = false;
 

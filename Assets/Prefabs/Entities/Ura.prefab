@@ -383,6 +383,63 @@ MonoBehaviour:
   m_enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!1 &3502814943749642449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8347023987580299525}
+  - component: {fileID: 5648406238162979362}
+  m_Layer: 7
+  m_Name: TransitionTrigger
+  m_TagString: transitionTrigger
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8347023987580299525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3502814943749642449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.52, y: 8.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2483708738412794923}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &5648406238162979362
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3502814943749642449}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 16}
+  m_EdgeRadius: 0
 --- !u!1 &4577418816438749576
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +718,7 @@ Transform:
   - {fileID: 8100820308285545279}
   - {fileID: 540352105}
   - {fileID: 589468387329552510}
+  - {fileID: 8347023987580299525}
   m_Father: {fileID: 6054658956129048168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -864,9 +922,8 @@ MonoBehaviour:
   m_dashDuration: 0.5
   m_dashDistance: 75
   m_dashDustScript: {fileID: 514142220}
-  m_blinkDuration: 0.2
   m_pushAwayOnProjectileHitVelocity: {x: -50, y: 100}
-  m_transicionScript: {fileID: 0}
+  m_transicionScrDamageipt: {fileID: 0}
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -810,7 +810,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -906,7 +906,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2051,6 +2051,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 732448247}
     m_Modifications:
+    - target: {fileID: 4182199992543459440, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182199992570960985, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4182199992924800027, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

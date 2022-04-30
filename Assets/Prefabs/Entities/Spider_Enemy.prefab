@@ -202,8 +202,8 @@ MonoBehaviour:
   m_playerNoControlDuration: 0.5
   m_pushAwayPlayerVelocity: {x: 50, y: 100}
   m_speed: 0
-  m_leftPatrolPoint: {fileID: 0}
-  m_rightPatrolPoint: {fileID: 0}
+  m_leftPatrolPoint: {fileID: 2331971606948251092}
+  m_rightPatrolPoint: {fileID: 5098824844858482048}
   m_minimumDistanceToEclosion: 50
   m_isEclosionAutomatic: 0
   m_eclosionDuration: 2

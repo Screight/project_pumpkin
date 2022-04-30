@@ -57,6 +57,7 @@ public class Attack : MonoBehaviour
     }
 
     public void HandleAttack(bool p_isGrounded){
+        if(GameManager.Instance.IsGamePaused){ return; }
         if(p_isGrounded){ HandleGroundAttackState(); }
         else { HandleAerialAttackState(); }
     }

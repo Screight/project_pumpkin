@@ -131,11 +131,16 @@ public class BoundsManager : MonoBehaviour
 
     public void AddLimit(Limit p_limit)
     {
+        m_limitsList[(int)p_limit.direction].Clear();
+
         m_limitsList[(int)p_limit.direction].Add(p_limit);
         // TODO: check if there is an already existing limit for that id and if there is dont add a new one
     }
 
-    public void AddHeightLimit(HeightLimit p_heightLimit) { m_heightLimitList.Add(p_heightLimit); }
+    public void AddHeightLimit(HeightLimit p_heightLimit) {
+        m_heightLimitList.Clear();
+        m_heightLimitList.Add(p_heightLimit);
+    }
 
     static public BoundsManager Instance
     {

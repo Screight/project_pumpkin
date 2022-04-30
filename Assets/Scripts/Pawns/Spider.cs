@@ -5,7 +5,6 @@ using UnityEngine;
 public class Spider : Enemy
 {
     Rigidbody2D m_rb2d;
-    Collider2D m_collider;
     ENEMY_STATE m_state;
     [SerializeField] float m_speed;
     [SerializeField] Transform m_leftPatrolPoint;

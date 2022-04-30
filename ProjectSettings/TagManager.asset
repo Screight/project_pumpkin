@@ -18,6 +18,7 @@ TagManager:
   - Spirit
   - HUD
   - spiderBoss
+  - transitionTrigger
   layers:
   - Default
   - TransparentFX
