@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class SpiderBoss : AnimatedCharacter
 {
     [SerializeField] GameObject[] m_spiderEggs;
-    [SerializeField] Spider[] m_spiderEggsScript;
-
+    Spider[] m_spiderEggsScript;
     SPIDER_BOSS_STATE m_state;
     [SerializeField] Transform m_acidAttackPosition;
     [SerializeField] GameObject m_acidBall;
@@ -20,6 +19,7 @@ public class SpiderBoss : AnimatedCharacter
     [SerializeField] Transform m_spawnEggPosition;
     [SerializeField] Drill m_leftDrill;
     [SerializeField] Drill m_rightDrill;
+    [SerializeField] Drill m_headScript;
     [SerializeField] GameObject m_head;
     Timer m_eventTimer;
     float m_drillDuration;
@@ -46,8 +46,14 @@ public class SpiderBoss : AnimatedCharacter
 
     [SerializeField] Image m_healthBar;
     [SerializeField] float m_drillMaxHealth = 33.0f;
-    [SerializeField] float m_headMaxHealth = 64.0f;
+    [SerializeField] float m_eyeMaxHealth = 10.0f;
     float m_maxHealth;
+    const int NUMBER_OF_EYES = 6;
+    [SerializeField] Sprite[] m_eyesSprite = new Sprite[NUMBER_OF_EYES + 1];
+    [SerializeField] SpriteRenderer m_headRenderer;
+    int m_numberOfEyesLeft = NUMBER_OF_EYES;
+    bool m_hasEyeBeenDestroyed = false;
+
     float[] m_partsHealth = new float[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE];
     bool[] m_isPartDestroyed = new bool[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE];
 
@@ -65,7 +71,7 @@ public class SpiderBoss : AnimatedCharacter
         m_acidAttackDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ATTACK_SPIT);
 
         InitializeChaseState();
-        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = m_headMaxHealth;
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = NUMBER_OF_EYES * m_eyeMaxHealth;
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = m_drillMaxHealth;
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_drillMaxHealth;
         m_healthBar.fillAmount = 1;
@@ -173,9 +179,10 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     void HandleChaseState(){
-        if(m_numberOfAttacks >= m_numberOfDrillAttacks){
+        if(m_numberOfAttacks >= m_numberOfDrillAttacks || m_hasEyeBeenDestroyed){
             InitializeAcidAttack();
             m_numberOfAttacks = 0;
+            m_hasEyeBeenDestroyed = false;
             // ECLOSION EGGS
             return;
         }
@@ -188,7 +195,7 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     void InitializeAttackState(){
-        if(IsPlayerInRange(m_biteRange)){
+        if(IsPlayerInRange(m_biteRange) || m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] && m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL]){
             InitializeBiteState();
             return ;
         }
@@ -201,6 +208,10 @@ public class SpiderBoss : AnimatedCharacter
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_BITE, false);
         m_eventTimer.Duration = m_biteDuration;
         m_eventTimer.Restart();
+        if(m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] && m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL]){
+            m_headScript.CanBeDamaged = true;
+        }
+        m_headScript.CanDamagePlayer = true;
     }
 
     void InitializeDrillState(){
@@ -272,14 +283,22 @@ public class SpiderBoss : AnimatedCharacter
     void HandleRecoverTerrainState(){
         if(m_eventTimer.IsFinished){
             if(m_hasDrillBeenDestroyed){
+
                 m_hasDrillBeenDestroyed = false;
                 InitializeReturnToCenter();
 
                 if(m_animationState == ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT){
                     m_leftDrill.CanDamagePlayer = false;
+                }else{
+                     m_rightDrill.CanDamagePlayer = false;
                 }
 
                 return ;
+            }
+            if(m_animationState == ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT){
+                m_leftDrill.CanDamagePlayer = false;
+            }else{
+                m_rightDrill.CanDamagePlayer = false;
             }
             InitializeChaseState();
         }
@@ -419,12 +438,41 @@ public class SpiderBoss : AnimatedCharacter
 
     public void Damage(float p_amount, SPIDER_BOSS_DAMAGEABLE_PARTS p_part){
 
+        if(p_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD && m_hasEyeBeenDestroyed){
+            return ;
+        }
+
         if(m_partsHealth[(int)p_part] > 0){
             m_partsHealth[(int)p_part] -= p_amount;
         }
-        
+
+        if(p_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD  && !m_hasEyeBeenDestroyed && m_partsHealth[(int)p_part] < (m_numberOfEyesLeft - 1) * m_eyeMaxHealth){
+            m_numberOfEyesLeft--;
+            m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES - m_numberOfEyesLeft];
+            Debug.Log(m_numberOfEyesLeft + "EYES LEFT");
+
+            switch(m_numberOfEyesLeft){
+                case 1:
+                    m_hasEyeBeenDestroyed = true;
+                break;
+                case 2:
+                    m_hasEyeBeenDestroyed = true;
+                break;
+                case 4:
+                    m_hasEyeBeenDestroyed = true;
+                break;
+            }
+
+        }
+
         if(m_partsHealth[(int)p_part] == 0 && !m_isPartDestroyed[(int)p_part]){
             
+            m_isPartDestroyed[(int)p_part] = true;
+
+            if(p_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
+                m_hasDrillBeenDestroyed = true;
+            }
+
             m_hasDrillBeenDestroyed = true;
             switch(p_part){
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL:
@@ -434,6 +482,8 @@ public class SpiderBoss : AnimatedCharacter
                     m_rightDrill.InitializeExplosion();
                 break;
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD:
+                    InitializeIdleState();
+                    Debug.Log("END OF COMBAT");
                 break;
             }
         }
