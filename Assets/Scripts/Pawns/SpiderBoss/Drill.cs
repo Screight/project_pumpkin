@@ -29,6 +29,10 @@ public class Drill : MonoBehaviour
         }
         else{ direction.x = 1; }
         Player.Instance.HandleHostileCollision(m_pushAwayVelocity, direction,m_noControlDuration, m_invulnerableDuration, m_damage);
+        if(m_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
+            m_spiderBoss.HasHitPlayer = true;
+        }
+        
 
     }
 
