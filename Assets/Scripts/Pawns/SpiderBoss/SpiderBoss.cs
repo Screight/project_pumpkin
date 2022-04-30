@@ -30,10 +30,12 @@ public class SpiderBoss : AnimatedCharacter
     bool m_hasFiredAcidAttack = false;
     float m_roarDuration;
     float m_eggSpawnCooldown = 2.0f;
+    float m_normalRecoverDuration;
     float m_acidAttackDuration;
     bool m_hasReachedSpawnEggPosition = false;
     bool m_hasDrillBeenDestroyed = false;
     bool m_hasEclosionedEggs = false;
+    bool m_hasHitPlayer = false;
 
     [SerializeField] int m_minNumberOfAcidAttacks = 1;
     [SerializeField] int m_maxNumberOfAcidAttacks = 3;
@@ -69,6 +71,7 @@ public class SpiderBoss : AnimatedCharacter
         m_biteDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ATTACK_BITE);
         m_roarDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ROAR);
         m_acidAttackDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ATTACK_SPIT);
+        m_normalRecoverDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_LEFT);
 
         InitializeChaseState();
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = NUMBER_OF_EYES * m_eyeMaxHealth;
@@ -115,6 +118,9 @@ public class SpiderBoss : AnimatedCharacter
             break;
             case SPIDER_BOSS_STATE.EGG_SPAWN:
                 HandleEggSpawn();
+            break;
+            case SPIDER_BOSS_STATE.RECOVER_NORMAL:
+                HandleNormalRecoverState();
             break;
         }
     }
@@ -257,7 +263,32 @@ public class SpiderBoss : AnimatedCharacter
                 m_leftDrill.CanDamagePlayer = false; 
                 m_leftDrill.CanBeDamaged = true;
             }
-            InitializeRecoverTerrainState();
+
+            if(m_hasHitPlayer){
+                InitializeNormalRecoverState();
+                m_hasHitPlayer = false;
+            }
+            else{
+                InitializeRecoverTerrainState();
+            }
+        }
+    }
+
+    void InitializeNormalRecoverState(){
+        m_state = SPIDER_BOSS_STATE.RECOVER_NORMAL;
+        m_eventTimer.Duration = m_normalRecoverDuration;
+        m_eventTimer.Restart();
+        if(m_animationState == ANIMATION.SPIDER_BOSS_ATTACK_LEFT){
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_LEFT, false);
+        }
+        else{
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT, false);
+        }
+    }
+
+    void HandleNormalRecoverState(){
+        if(m_eventTimer.IsFinished){
+            InitializeChaseState();
         }
     }
 
@@ -496,6 +527,10 @@ public class SpiderBoss : AnimatedCharacter
         }
 
         m_healthBar.fillAmount = health / m_maxHealth;
+    }
+
+    public bool HasHitPlayer {
+        set { m_hasHitPlayer = value; }
     }
 
 }
