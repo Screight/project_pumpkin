@@ -29,11 +29,6 @@ public class Door : MonoBehaviour
 
     private void Update() {
 
-        if(Input.GetKeyDown(KeyCode.Space)){
-            OpenDoor();
-            CloseDoor();
-        }
-
         if(m_event){
             if(!m_isOpen && transform.position.y > m_closePosition.y){
                 transform.position += new Vector3(0, -m_speed * Time.deltaTime, 0);
