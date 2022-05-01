@@ -64,6 +64,7 @@ public class Player : AnimatedCharacter
     Timer m_eventTimer;
     float m_deathDuration;
     float m_hurtDuration;
+    bool m_eventStart = false;
 
     /// END OF VARIABLES
     protected override void Awake() {
@@ -109,9 +110,10 @@ public class Player : AnimatedCharacter
         CheckIfFalling();
 
         if(m_isBeingScripted){
-            if(m_eventTimer.IsFinished){
+            if(m_eventTimer.IsFinished && m_eventStart){
                 m_isBeingScripted = false;
                 InitializeIdleState();
+                m_eventStart = false;
             }
             return;
         }
@@ -347,6 +349,7 @@ public class Player : AnimatedCharacter
         m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed, 0);
         m_eventTimer.Duration = m_walkDuration;
         m_eventTimer.Restart();
+        m_eventStart = true;
     }
 
     public void ScriptTopSuction(float p_suctionVelocity)

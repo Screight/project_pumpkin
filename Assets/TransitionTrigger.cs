@@ -25,6 +25,8 @@ public class TransitionTrigger : InteractiveItem
             int direction = 1;
             if(!m_isPositive){ direction = -1;}
                 Player.Instance.ScriptWalk(direction, 0.2f);
+        }else{
+            Player.Instance.StopScripting();
         }
         m_transicionScript.RemoveListenerToEndOfTransition(ReturnPlayerToNormal);
     }
