@@ -78,6 +78,8 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = "headAtk";
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = "spitWeb";
         m_animationClipName[(int)ANIMATION.SPIDER_BOSS_MOVE] = "move";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_LOSE_LEFT_LEG] = "lose_Left_leg";
+        m_animationClipName[(int)ANIMATION.SPIDER_BOSS_LOSE_RIGHT_LEG] = "lose_Right_leg";
         
         // SPIDER -------------------------
         m_animationClipName[(int)ANIMATION.SPIDER_WALK] = "spider_Walk";
@@ -148,6 +150,8 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_BITE]);
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_ATTACK_SPIT]);
         m_animationHash[(int)ANIMATION.SPIDER_BOSS_MOVE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_MOVE]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_LOSE_LEFT_LEG] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_LOSE_LEFT_LEG]);
+        m_animationHash[(int)ANIMATION.SPIDER_BOSS_LOSE_RIGHT_LEG] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_BOSS_LOSE_RIGHT_LEG]);
 
         // SPIDER ---------------------------
         m_animationHash[(int)ANIMATION.SPIDER_WALK] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_WALK]);

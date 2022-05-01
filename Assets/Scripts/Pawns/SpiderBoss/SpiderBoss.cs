@@ -5,7 +5,16 @@ using UnityEngine.UI;
 
 public class SpiderBoss : AnimatedCharacter
 {
-    Door[] m_doors = new Door[2];
+    [SerializeField] GameObject m_bodyDestroyed;
+    [SerializeField] GameObject[] m_leftArmParts;
+    [SerializeField] GameObject[] m_rightArmParts;
+
+    [SerializeField] GameObject m_leftArmDestroyed;
+    [SerializeField] GameObject m_leftArmNormal;
+    [SerializeField] GameObject m_rightArmDestroyed;
+    [SerializeField] GameObject m_rightArmNormal;
+
+    [SerializeField] Door[] m_doors = new Door[2];
     [SerializeField] GameObject m_spiderHUD;
     [SerializeField] GameObject[] m_spiderEggs;
     Spider[] m_spiderEggsScript;
@@ -93,6 +102,14 @@ public class SpiderBoss : AnimatedCharacter
         }
         m_spiderHUD.SetActive(false);
         m_initialPosition = transform.position;
+
+        m_leftArmDestroyed.GetComponent<Destroy_anim>().AddListenerLoseLeg(LoseLegEvent);
+
+        m_rightArmDestroyed.GetComponent<Destroy_anim>().AddListenerLoseLeg(LoseLegEvent);
+
+        m_leftArmDestroyed.SetActive(false);
+        m_rightArmDestroyed.SetActive(false);
+        m_bodyDestroyed.SetActive(false);
     }
 
     private void Update() {
@@ -322,14 +339,17 @@ public class SpiderBoss : AnimatedCharacter
             if(m_hasDrillBeenDestroyed){
 
                 m_hasDrillBeenDestroyed = false;
-                InitializeReturnToCenter();
 
                 if(m_animationState == ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT){
                     m_leftDrill.CanDamagePlayer = false;
+                    m_rightArmNormal.SetActive(false);
+                    m_leftArmDestroyed.SetActive(true);
                 }else{
-                     m_rightDrill.CanDamagePlayer = false;
+                    m_rightDrill.CanDamagePlayer = false;
+                    m_leftArmNormal.SetActive(false);
+                    m_rightArmDestroyed.SetActive(true);
                 }
-
+                InitializeLoseLeg();
                 return ;
             }
             if(m_animationState == ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT){
@@ -341,11 +361,26 @@ public class SpiderBoss : AnimatedCharacter
         }
     }
 
+    void InitializeLoseLeg(){
+        m_state = SPIDER_BOSS_STATE.LOSE_LEG;
+        if(m_animationState == ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT){
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_LOSE_LEFT_LEG, false);
+        }
+        else{
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_LOSE_RIGHT_LEG, false);
+        }
+    }
+
+    void HandleLoseLeg(){
+
+    }
+
     void InitializeAcidAttack(){
         m_state = SPIDER_BOSS_STATE.ATTACK_ACID;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ROAR, false);
         m_eventTimer.Duration = m_roarDuration;
         m_eventTimer.Restart();
+        m_numberOfAttacks = 0;
         m_currentNumberOfAcidAttacks = Random.Range(m_minNumberOfAcidAttacks, m_maxNumberOfAcidAttacks + 1);
     }
 
@@ -516,15 +551,7 @@ public class SpiderBoss : AnimatedCharacter
             if(p_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
                 m_hasDrillBeenDestroyed = true;
             }
-
-            m_hasDrillBeenDestroyed = true;
             switch(p_part){
-                case SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL:
-                    m_leftDrill.InitializeExplosion();
-                break;
-                case SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL:
-                    m_rightDrill.InitializeExplosion();
-                break;
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD:
                     InitializeIdleState();
                     m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES];
@@ -533,6 +560,10 @@ public class SpiderBoss : AnimatedCharacter
                     }
                     Debug.Log("END OF COMBAT");
                     GameManager.Instance.IsPlayerInSpiderBossFight = false;
+                    m_bodyDestroyed.SetActive(true);
+                    m_bodyDestroyed.transform.position = transform.position;
+                    m_bodyDestroyed.transform.rotation = transform.rotation;
+                    this.gameObject.SetActive(false);
                 break;
             }
         }
@@ -556,6 +587,22 @@ public class SpiderBoss : AnimatedCharacter
         InitializeReturnToCenter();
     }
 
+    public void LoseLegEvent(){
+        if(m_animationState == ANIMATION.SPIDER_BOSS_LOSE_LEFT_LEG){
+            m_leftDrill.gameObject.SetActive(false);
+            for(int i = 0; i < m_leftArmParts.Length; i++){
+                m_leftArmParts[i].SetActive(false);
+            }
+        }
+        else{
+            m_rightDrill.gameObject.SetActive(false);
+            for(int i = 0; i < m_rightArmParts.Length; i++){
+                m_rightArmParts[i].SetActive(false);
+            }
+        }
+        InitializeReturnToCenter();
+    }
+
     public void ActivateBossHUD(){
         if(m_spiderHUD.activeInHierarchy){ return ;}
         m_spiderHUD.SetActive(true);
@@ -566,15 +613,11 @@ public class SpiderBoss : AnimatedCharacter
         m_spiderHUD.SetActive(false);
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = m_eyeMaxHealth * NUMBER_OF_EYES;
         m_headRenderer.sprite = m_eyesSprite[0];
-        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_eyeMaxHealth * m_drillMaxHealth;
-        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = m_eyeMaxHealth * m_drillMaxHealth;
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_drillMaxHealth;
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = m_drillMaxHealth;
 
-        float health = 0;
-        for(int i = 0; i < (int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE;i++){
-            health += m_partsHealth[i];
 
-        }
-        m_healthBar.fillAmount = health / m_maxHealth;
+        m_healthBar.fillAmount = 1;
         
         m_currentNumberOfAcidAttacks = 0;
         m_eventTimer.Stop();
@@ -607,6 +650,18 @@ public class SpiderBoss : AnimatedCharacter
         m_rightDrill.Reset();
         m_headScript.gameObject.SetActive(true);
         m_headScript.Reset();
+        m_rightArmNormal.SetActive(true);
+        m_leftArmDestroyed.SetActive(false);
+
+        m_leftArmNormal.SetActive(true);
+        m_leftArmDestroyed.SetActive(false);
+
+        for(int i = 0; i < m_leftArmParts.Length; i++){
+            m_leftArmParts[i].SetActive(true);
+        }
+        for(int i = 0; i < m_rightArmParts.Length; i++){
+            m_rightArmParts[i].SetActive(true);
+        }
 
     }
 

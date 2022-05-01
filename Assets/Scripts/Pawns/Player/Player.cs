@@ -436,7 +436,7 @@ public class Player : AnimatedCharacter
     //!NOT IN USE!
     void Die()
     {
-        Physics2D.IgnoreLayerCollision(6, 7, true);
+        Physics2D.IgnoreLayerCollision(6, 7, false);
         CheckpointsManager.Instance.MovePlayerToGlobalCheckPoint();
         GameManager.Instance.RestorePlayerToFullHealth();
         CameraManager.Instance.SetCameraToPlayerPosition();

@@ -52,7 +52,7 @@ public class CheckpointsManager : MonoBehaviour
         {
             m_player.transform.position = new Vector3(m_globalCheckPoint.position.x, m_globalCheckPoint.position.y, m_player.transform.position.z);
         }
-        else 
+        else if(m_localCheckPoint != null)
         {
             m_player.transform.position = new Vector3(m_defaultCheckpoint.position.x, m_defaultCheckpoint.position.y, m_player.transform.position.z);
         }

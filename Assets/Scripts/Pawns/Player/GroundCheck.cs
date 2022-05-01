@@ -15,12 +15,13 @@ public class GroundCheck : MonoBehaviour
         if(Player.Instance.State == PLAYER_STATE.DEATH && colliderTag == "floor"){
             Player.Instance.StopPlayerMovement();
         }
+
         bool canPlayerTransitionFromCurrentStateToGrounded = m_playerScript.State != PLAYER_STATE.BOOST && m_playerScript.State != PLAYER_STATE.JUMP && m_playerScript.State != PLAYER_STATE.DASH && m_playerScript.State != PLAYER_STATE.DEATH && m_playerScript.State != PLAYER_STATE.TALKING && m_playerScript.State != PLAYER_STATE.HURT;
         bool isObjectASurface = colliderTag == "floor" || colliderTag == "platform" || colliderTag == "vine";
 
         if(isObjectASurface && canPlayerTransitionFromCurrentStateToGrounded){
 
-            if(m_playerScript.State == PLAYER_STATE.FALL && m_playerScript.State == PLAYER_STATE.ATTACK) {
+            if(m_playerScript.State == PLAYER_STATE.FALL && m_playerScript.State != PLAYER_STATE.ATTACK) {
                 m_playerScript.State = PLAYER_STATE.LAND;
                 AnimationManager.Instance.PlayAnimation(m_playerScript, ANIMATION.PLAYER_LAND, false);
             }

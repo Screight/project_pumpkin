@@ -89,6 +89,7 @@ public class Enemy : AnimatedCharacter
 
     public virtual void Reset()
     {
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
         transform.position = new Vector3(m_spawnPos.x, m_spawnPos.y, CameraManager.Instance.MainSceneDepth);
         m_health = MAX_HEALTH;
         m_animationTimer.Stop();

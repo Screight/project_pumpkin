@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class destroy_anim : MonoBehaviour
+public class Destroy_anim : AnimatedCharacter
 {
     public GameObject leg2;
     public GameObject leg1;
@@ -12,7 +13,8 @@ public class destroy_anim : MonoBehaviour
     private Rigidbody2D drill_rg;
     private float vel = 2000;
     
-    
+    UnityEvent m_loseLeg;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +25,21 @@ public class destroy_anim : MonoBehaviour
 
         leg2_rg.AddForce(new Vector2(vel, vel*5f));
         leg1_rg.AddForce(new Vector2(vel, vel*5f));
+
+        m_loseLeg = new UnityEvent();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void AddListenerLoseLeg(UnityAction p_function){
+        m_loseLeg.AddListener(p_function);
     }
+
+    public void RemoveListenerLoseLeg(UnityAction p_function){
+        m_loseLeg.RemoveListener(p_function);
+    }
+
+    public void EndDestroyLeg(){
+        m_loseLeg.Invoke();
+        Debug.Log("LEG DESTROYED EVENT TRIGGERED");
+    }
+
 }
