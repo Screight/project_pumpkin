@@ -1714,7 +1714,6 @@ MonoBehaviour:
   m_acidBall: {fileID: 5638392379590327468, guid: 1f93cd033112dae6e9ac9457a9a31091, type: 3}
   m_biteRange: 16
   m_speed: 20
-  m_speedVertical: 30
   m_spawnEggPosition: {fileID: 0}
   m_leftDrill: {fileID: 2094426611}
   m_rightDrill: {fileID: 1604532371}

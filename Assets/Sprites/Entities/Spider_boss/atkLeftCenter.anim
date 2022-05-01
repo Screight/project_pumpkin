@@ -1212,10 +1212,8 @@ AnimationClip:
       value: {fileID: -5274909979659664872, guid: 763632fbe228305f0aebf972444be54b, type: 3}
     - time: 2.7333333
       value: {fileID: -3622175116997012335, guid: 763632fbe228305f0aebf972444be54b, type: 3}
-    - time: 2.8
-      value: {fileID: 3745948677857002848, guid: 763632fbe228305f0aebf972444be54b, type: 3}
     - time: 2.85
-      value: {fileID: 0}
+      value: {fileID: 3745948677857002848, guid: 763632fbe228305f0aebf972444be54b, type: 3}
     attribute: m_Sprite
     path: body/Right leg/legs2/legs1/drill
     classID: 212
@@ -1459,7 +1457,6 @@ AnimationClip:
     - {fileID: -5274909979659664872, guid: 763632fbe228305f0aebf972444be54b, type: 3}
     - {fileID: -3622175116997012335, guid: 763632fbe228305f0aebf972444be54b, type: 3}
     - {fileID: 3745948677857002848, guid: 763632fbe228305f0aebf972444be54b, type: 3}
-    - {fileID: 0}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
