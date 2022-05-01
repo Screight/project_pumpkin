@@ -121,7 +121,7 @@ MonoBehaviour:
   m_pushAwayVelocity: {x: 0, y: 0}
   m_noControlDuration: 0.4
   m_invulnerableDuration: 0.2
-  m_damage: 0
+  m_damage: 1
 --- !u!58 &5638392379590327467
 CircleCollider2D:
   m_ObjectHideFlags: 0

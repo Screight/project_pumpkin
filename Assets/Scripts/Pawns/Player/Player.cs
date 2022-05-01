@@ -106,8 +106,15 @@ public class Player : AnimatedCharacter
     private void Update()
     {
         if(GameManager.Instance.IsGamePaused){ return ;}
-        if (m_isBeingScripted) { return; }
         CheckIfFalling();
+
+        if(m_isBeingScripted){
+            if(m_eventTimer.IsFinished){
+                m_isBeingScripted = false;
+                InitializeIdleState();
+            }
+            return;
+        }
 
         if (m_invulnerableTimer.IsRunning)
         {
@@ -328,7 +335,7 @@ public class Player : AnimatedCharacter
     {
         if (m_state == PLAYER_STATE.BOOST) { m_state = PLAYER_STATE.JUMP; }
     }
-    public void ScriptWalk(int p_direction)
+    public void ScriptWalk(int p_direction, float m_walkDuration)
     {
         if (p_direction > 0) { m_direction = 1; }
         else { m_direction = -1; }
@@ -338,6 +345,8 @@ public class Player : AnimatedCharacter
         m_state = PLAYER_STATE.MOVE;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_RUN, false);
         m_rb2D.velocity = new Vector2(p_direction * m_normalMovementSpeed, 0);
+        m_eventTimer.Duration = m_walkDuration;
+        m_eventTimer.Restart();
     }
 
     public void ScriptTopSuction(float p_suctionVelocity)
@@ -505,6 +514,8 @@ public class Player : AnimatedCharacter
 
     public bool HasUsedDash { set { m_hasUsedDash = value; } }
 
+    public bool IsBeginScripted { get { return m_isBeingScripted; }}
+
     public Collider2D GetCollider(){ return m_collider;}
     #endregion
 
@@ -513,6 +524,15 @@ public class Player : AnimatedCharacter
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         m_state = PLAYER_STATE.TALKING;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
+    }
+
+    public void SetGravityScaleTo0(){
+        m_rb2D.gravityScale = 0;
+        m_rb2D.velocity = Vector2.zero;
+    }
+
+    public void SetGravityScaleToFall(){
+        m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
     }
 
     private void OnDrawGizmos()

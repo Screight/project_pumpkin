@@ -16,8 +16,19 @@ public class SpiderBossTrigger : InteractiveItem
         base.HandleInteraction();
         for(int i = 0; i < m_doors.Length; i++){
             m_doors[i].CloseDoor();
-            m_spiderBoss.StartBossFight();
         }
+        GameManager.Instance.IsPlayerInSpiderBossFight = true;
+        m_spiderBoss.StartBossFight();
+    }
+
+    public void HandlePlayerDeath(){
+        m_spiderBoss.Reset();
+        for(int i = 0; i < m_doors.Length; i++){
+            m_doors[i].OpenDoor();
+        }
+        GameManager.Instance.IsPlayerInSpiderBossFight = false;
+        ResetState();
+        // TP PLAYER TO LAST SAVE POINT
     }
 
 }

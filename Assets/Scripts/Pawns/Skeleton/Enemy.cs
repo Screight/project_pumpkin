@@ -97,7 +97,6 @@ public class Enemy : AnimatedCharacter
 
     void Die(){
         this.gameObject.SetActive(false);
-        
     }
 
     public ROOMS Room { get { return m_room;}}

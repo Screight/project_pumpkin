@@ -53,6 +53,7 @@ public class Spider : Enemy
                 HandleEclosion();
             }
             break;
+            default: break;
         }
 
     }
@@ -82,6 +83,11 @@ public class Spider : Enemy
         m_collider.enabled = true;
         m_rb2d.gravityScale = 1;
         InitializePatrol();
+    }
+
+    public void InitializeEggState(){
+        m_state = ENEMY_STATE.REST;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_EGG, false);
     }
 
     void InitializePatrol(){
@@ -116,6 +122,14 @@ public class Spider : Enemy
 
     void FlipX(){
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        InitializeEggState();
+        m_collider.enabled = false;
+        m_rb2d.gravityScale = 0;
     }
 
 }

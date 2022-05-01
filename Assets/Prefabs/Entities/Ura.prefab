@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &540352105
 Transform:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8100820308285545279
 Transform:
   m_ObjectHideFlags: 0
@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 16768589374183515}
   - component: {fileID: 1302782152}
   - component: {fileID: 31577716}
+  - component: {fileID: 1251411069}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -710,7 +711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1060.1, y: 162.4, z: 0}
+  m_LocalPosition: {x: 1326, y: -915, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5559658922750157610}
@@ -826,7 +827,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1, y: 8}
+  m_Offset: {x: 1, y: 8.125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.625, y: 0}
@@ -837,7 +838,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8, y: 14}
+  m_Size: {x: 8, y: 13.75}
   m_EdgeRadius: 0
 --- !u!114 &2957575151965144097
 MonoBehaviour:
@@ -846,7 +847,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cffe7a2d974c3a4eb5ac944b18fdea4, type: 3}
   m_Name: 
@@ -864,7 +865,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78d998c20232c3a4990d61c046894672, type: 3}
   m_Name: 
@@ -880,7 +881,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63bfbe2633dc5514682f7d0cbe966c97, type: 3}
   m_Name: 
@@ -894,7 +895,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8149aef0961ee024587181433b5bd215, type: 3}
   m_Name: 
@@ -915,7 +916,7 @@ MonoBehaviour:
   m_attackScript: {fileID: 2589283986949262958}
   m_normalMovementSpeed: 60
   m_reducedMovementSpeed: 30
-  m_maxHeight: 50
+  m_maxHeight: 55
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
   m_moveTowardsOneWayPlatform: 40
@@ -924,6 +925,22 @@ MonoBehaviour:
   m_dashDustScript: {fileID: 514142220}
   m_pushAwayOnProjectileHitVelocity: {x: -50, y: 100}
   m_transicionScrDamageipt: {fileID: 0}
+--- !u!70 &1251411069
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328283339782624065}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1, y: 1.25}
+  m_Size: {x: 8, y: 0.5}
+  m_Direction: 1
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0

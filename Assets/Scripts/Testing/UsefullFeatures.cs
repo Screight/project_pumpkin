@@ -10,6 +10,9 @@ public class UsefullFeatures : MonoBehaviour
     [SerializeField] Toggle m_skills;
     [SerializeField] Toggle m_invincible;
 
+    [SerializeField] Transform m_spiderBossEntrance;
+    [SerializeField] Transform m_spiderBossCheckPoint;
+
     private void Awake()
     {
         m_skills.onValueChanged.AddListener(SetAreSkillsUnlocked);
@@ -33,6 +36,14 @@ public class UsefullFeatures : MonoBehaviour
             GameManager.Instance.ModifyPlayerHealth(-10000);
             Debug.Log("Developer commited su1c1de");
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1)){
+            CheckpointsManager.Instance.SetGlobalCheckPoint(m_spiderBossCheckPoint);
+            Player.Instance.transform.position = new Vector3(m_spiderBossEntrance.position.x, m_spiderBossEntrance.position.y, Player.Instance.transform.position.z);
+            CameraManager.Instance.ClampCameraToTarget();
+            GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true);
+        }
+
     }
 
     void SetAreSkillsUnlocked(bool p_value)
