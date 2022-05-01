@@ -138,12 +138,13 @@ public class CameraBound : MonoBehaviour
         if(m_isCameraRestrictedInY){
             BoundsManager.Instance.AddHeightLimit(m_heighLimit);
         }
-        BoundsManager.Instance.UpdateBounds();
+        BoundsManager.Instance.UpdateBoundsSimple();
         CameraManager.Instance.ClampCameraToTarget();
     }
 
     private void OnTriggerExit2D(Collider2D p_collider)
     {
+        return ;
         if (p_collider.tag != "transitionTrigger") { return; }
         BoundsManager.Instance.DeleteLimits(m_ID);
         BoundsManager.Instance.UpdateBounds();

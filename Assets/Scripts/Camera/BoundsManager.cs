@@ -7,8 +7,8 @@ public class BoundsManager : MonoBehaviour
     static BoundsManager m_instance;
 
     CameraMovement m_cameraMovementScript;
-    [SerializeField] GameObject m_mainBounds;
-    CameraBound m_mainBoundsScript;
+    //[SerializeField] GameObject m_mainBounds;
+    //CameraBound m_mainBoundsScript;
 
     List<Limit>[] m_limitsList;
     List<HeightLimit> m_heightLimitList;
@@ -23,7 +23,7 @@ public class BoundsManager : MonoBehaviour
         else { Destroy(this.gameObject); }
 
         m_cameraMovementScript = Camera.main.GetComponent<CameraMovement>();
-        m_mainBoundsScript = m_mainBounds.GetComponent<CameraBound>();
+        //m_mainBoundsScript = m_mainBounds.GetComponent<CameraBound>();
 
         m_limitsList = new List<Limit>[(int)DIRECTION.LAST_NO_USE];
 
@@ -44,17 +44,34 @@ public class BoundsManager : MonoBehaviour
         
     }
 
-    void SetLimitsToMainBounds()
+    /*void SetLimitsToMainBounds()
     {
         m_currentLimits[(int)DIRECTION.TOP] = m_mainBoundsScript.TopLimit;
         m_currentLimits[(int)DIRECTION.BOTTOM] = m_mainBoundsScript.BottomLimit;
         m_currentLimits[(int)DIRECTION.LEFT] = m_mainBoundsScript.LeftLimit;
         m_currentLimits[(int)DIRECTION.RIGHT] = m_mainBoundsScript.RightLimit;
+    }*/
+
+    public void UpdateBoundsSimple(){
+
+        m_currentLimits[(int)DIRECTION.TOP] = m_limitsList[(int)DIRECTION.TOP][0];
+        m_currentLimits[(int)DIRECTION.BOTTOM] = m_limitsList[(int)DIRECTION.BOTTOM][0];
+        m_currentLimits[(int)DIRECTION.RIGHT] = m_limitsList[(int)DIRECTION.RIGHT][0];
+        m_currentLimits[(int)DIRECTION.LEFT] = m_limitsList[(int)DIRECTION.LEFT][0];
+
+        m_currentHeightLimit = m_heightLimitList[0];
+
+        m_cameraMovementScript.TopLimit = m_currentLimits[(int)DIRECTION.TOP].position;
+        m_cameraMovementScript.BottomLimit = m_currentLimits[(int)DIRECTION.BOTTOM].position;
+        m_cameraMovementScript.LeftLimit = m_currentLimits[(int)DIRECTION.LEFT].position;
+        m_cameraMovementScript.RightLimit = m_currentLimits[(int)DIRECTION.RIGHT].position;
+
+        m_cameraMovementScript.MinimumheightForCameraMovement = m_currentHeightLimit.height;
     }
 
     public void UpdateBounds() {
 
-        SetLimitsToMainBounds();
+        //SetLimitsToMainBounds();
 
         for (int i = 0; i < (int)DIRECTION.LAST_NO_USE; i++)
         {
