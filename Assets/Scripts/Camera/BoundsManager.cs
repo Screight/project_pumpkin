@@ -59,7 +59,9 @@ public class BoundsManager : MonoBehaviour
         m_currentLimits[(int)DIRECTION.RIGHT] = m_limitsList[(int)DIRECTION.RIGHT][0];
         m_currentLimits[(int)DIRECTION.LEFT] = m_limitsList[(int)DIRECTION.LEFT][0];
 
-        m_currentHeightLimit = m_heightLimitList[0];
+        if(m_heightLimitList.Count > 0){
+            m_currentHeightLimit = m_heightLimitList[0];
+        }
 
         m_cameraMovementScript.TopLimit = m_currentLimits[(int)DIRECTION.TOP].position;
         m_cameraMovementScript.BottomLimit = m_currentLimits[(int)DIRECTION.BOTTOM].position;

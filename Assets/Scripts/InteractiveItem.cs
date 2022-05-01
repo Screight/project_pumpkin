@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class InteractiveItem : MonoBehaviour
 {
+    [SerializeField] string m_pawnActivationTag = "Player";
     [SerializeField] GameObject m_icon;
     protected bool m_canPlayerInteract = true;
     protected bool m_isPlayerInside = false;
@@ -35,7 +36,7 @@ public abstract class InteractiveItem : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D p_collider)
     {
-        if (!p_collider.CompareTag("Player") || !m_canPlayerInteract) { return; }
+        if (!p_collider.CompareTag(m_pawnActivationTag) || !m_canPlayerInteract) { return; }
         m_isPlayerInside = true;
         if (!m_isAutomatic)
         {
@@ -46,7 +47,7 @@ public abstract class InteractiveItem : MonoBehaviour
 
     protected virtual void OnTriggerExit2D(Collider2D p_collider)
     {
-        if (!p_collider.CompareTag("Player") || !m_canPlayerInteract) { return; }
+        if (!p_collider.CompareTag(m_pawnActivationTag)) { return; }
         if (!m_isAutomatic) { m_icon.SetActive(false); }
 
         m_isPlayerInside = false;
@@ -70,5 +71,10 @@ public abstract class InteractiveItem : MonoBehaviour
             m_icon.SetActive(p_state);
         }
         else { Debug.LogWarning("THERE IS NO ICON ATTACHED."); }
+    }
+
+    protected void ResetState(){
+        m_hasBeenUsed = false;
+        m_canPlayerInteract = true;
     }
 }

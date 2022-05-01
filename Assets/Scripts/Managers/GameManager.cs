@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     bool m_isPlayerInvincible = false;
     bool m_isGamePaused = false;
 
+    // SPIDER BOSS ------------------
+    SpiderBossTrigger m_spiderBossTrigger;
+    bool m_isPlayerInSpiderBossFight = false;
     private void Awake()
     {
         if (m_instance == null)
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_isSkillAvailable.Length; i++) { m_isSkillAvailable[i] = false; }
         m_spellCooldown = GameObject.FindObjectOfType<SpellCooldown>();
         m_panel.SetActive(false);
+        m_spiderBossTrigger = GameObject.FindObjectOfType<SpiderBossTrigger>();
     }
 
     static public GameManager Instance
@@ -49,6 +53,9 @@ public class GameManager : MonoBehaviour
         {
             m_playerHealth = 0;
             Player.Instance.HandleDeath();
+            if(m_isPlayerInSpiderBossFight){
+                HandlePlayerDeathInSpiderBossBattle();
+            }
         }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
 
@@ -103,6 +110,14 @@ public class GameManager : MonoBehaviour
             }
             m_panel.SetActive(m_isGamePaused);
         }
+    }
+
+    public void HandlePlayerDeathInSpiderBossBattle(){
+        m_spiderBossTrigger.HandlePlayerDeath();
+    }
+
+    public bool IsPlayerInSpiderBossFight{
+        set { m_isPlayerInSpiderBossFight = value; }
     }
 
 }

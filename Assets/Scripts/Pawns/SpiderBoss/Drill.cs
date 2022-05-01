@@ -55,4 +55,9 @@ public class Drill : MonoBehaviour
         Debug.Log("INITIALIZING EXPLOSION");
     }
 
+    public void Reset(){
+        m_canBeDamaged = false;
+        m_canDamagePlayer = false;
+    }
+
 }

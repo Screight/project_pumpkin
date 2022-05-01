@@ -36,6 +36,7 @@ public struct HeightLimit
 public class CameraBound : MonoBehaviour
 {
     [SerializeField] Room m_room;
+    GameObject m_activableObjects;
     public static uint m_nextAvailableID = 0;
     [SerializeField] uint m_layerIndex = 0;
     [SerializeField] bool m_isTopLimitActive    = false;
@@ -128,6 +129,10 @@ public class CameraBound : MonoBehaviour
         }
     }
 
+    private void Start() {
+        m_activableObjects = m_room.gameObject;
+    }
+
     private void OnTriggerEnter2D(Collider2D p_collider)
     {
         if (p_collider.tag != "transitionTrigger") { return; }
@@ -139,13 +144,16 @@ public class CameraBound : MonoBehaviour
             BoundsManager.Instance.AddHeightLimit(m_heighLimit);
         }
         BoundsManager.Instance.UpdateBoundsSimple();
+        m_activableObjects.SetActive(true);
+        m_room.Reset();
         CameraManager.Instance.ClampCameraToTarget();
     }
 
     private void OnTriggerExit2D(Collider2D p_collider)
     {
-        return ;
         if (p_collider.tag != "transitionTrigger") { return; }
+        m_activableObjects.SetActive(false);
+        return ;
         BoundsManager.Instance.DeleteLimits(m_ID);
         BoundsManager.Instance.UpdateBounds();
     }

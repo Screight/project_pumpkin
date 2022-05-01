@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public enum TRANSITION_ANIMATION { FADE_IN, FADE_OUT, EMPTY_SCREEN, LAST_NO_USE }
 
@@ -18,10 +19,15 @@ public class Transicion : MonoBehaviour
     Animator m_animator;
     int m_currentState;
 
+    UnityEvent m_endOfTransitionEvent;
+    UnityEvent m_endOfFadeInEvent;
+
     private void Awake()
     {
         m_animator = GetComponent<Animator>();
         m_scriptPlayerTimer = gameObject.AddComponent<Timer>();
+        m_endOfFadeInEvent = new UnityEvent();
+        m_endOfTransitionEvent = new UnityEvent();
     }
 
     private void Start()
@@ -33,11 +39,11 @@ public class Transicion : MonoBehaviour
 
     private void Update()
     {
-        if (m_isBeingScripted && m_scriptPlayerTimer.IsFinished)
+        /*if (m_isBeingScripted && m_scriptPlayerTimer.IsFinished)
         {
             Player.Instance.StopScripting();
             m_isBeingScripted = false;
-        }
+        }*/
     }
 
     void ChangeAnimationState(TRANSITION_ANIMATION p_newState)
@@ -55,8 +61,7 @@ public class Transicion : MonoBehaviour
 
     private void ClampCamera()
     {
-        RoomManager.Instance.ChangeRoom();
-        CameraManager.Instance.ClampCameraToTarget();
+        m_endOfFadeInEvent.Invoke();
     }
 
     private void EndTransicion()
@@ -64,5 +69,23 @@ public class Transicion : MonoBehaviour
         m_currentState = m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN];
         RoomManager.Instance.StartPlayerScripting();
         CameraManager.Instance.SetCameraToNormal();
+        m_endOfTransitionEvent.Invoke();
     }
+
+    public void AddListenerToEndOfTransition(UnityAction p_function){
+        m_endOfTransitionEvent.AddListener(p_function);
+    }
+
+    public void RemoveListenerToEndOfTransition(UnityAction p_function){
+        m_endOfTransitionEvent.RemoveListener(p_function);
+    }
+
+    public void AddListenerToEndOfFadeIn(UnityAction p_function){
+        m_endOfFadeInEvent.AddListener(p_function);
+    }
+
+    public void RemoveListenerToEndOfFadeIn(UnityAction p_function){
+        m_endOfFadeInEvent.RemoveListener(p_function);
+    }
+
 }

@@ -60,6 +60,9 @@ public class SpiderBoss : AnimatedCharacter
     float[] m_partsHealth = new float[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE];
     bool[] m_isPartDestroyed = new bool[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE];
 
+    Vector3 m_initialPosition;
+    [SerializeField] GameObject m_body;
+
     protected override void Awake() {
         base.Awake();
         m_eventTimer = gameObject.AddComponent<Timer>();
@@ -89,6 +92,7 @@ public class SpiderBoss : AnimatedCharacter
             m_spiderEggsScript[i] = m_spiderEggs[i].GetComponentInChildren<Spider>();
         }
         m_spiderHUD.SetActive(false);
+        m_initialPosition = transform.position;
     }
 
     private void Update() {
@@ -187,7 +191,7 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     void HandleChaseState(){
-        if(m_numberOfAttacks >= m_numberOfDrillAttacks || m_hasEyeBeenDestroyed){
+         if(m_numberOfAttacks >= m_numberOfDrillAttacks || m_hasEyeBeenDestroyed){
             InitializeAcidAttack();
             m_numberOfAttacks = 0;
             m_hasEyeBeenDestroyed = false;
@@ -528,6 +532,7 @@ public class SpiderBoss : AnimatedCharacter
                         m_doors[i].OpenDoor();
                     }
                     Debug.Log("END OF COMBAT");
+                    GameManager.Instance.IsPlayerInSpiderBossFight = false;
                 break;
             }
         }
@@ -554,6 +559,55 @@ public class SpiderBoss : AnimatedCharacter
     public void ActivateBossHUD(){
         if(m_spiderHUD.activeInHierarchy){ return ;}
         m_spiderHUD.SetActive(true);
+    }
+
+    public void Reset(){
+        m_isBossInactive = true;
+        m_spiderHUD.SetActive(false);
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = m_eyeMaxHealth * NUMBER_OF_EYES;
+        m_headRenderer.sprite = m_eyesSprite[0];
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_eyeMaxHealth * m_drillMaxHealth;
+        m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = m_eyeMaxHealth * m_drillMaxHealth;
+
+        float health = 0;
+        for(int i = 0; i < (int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE;i++){
+            health += m_partsHealth[i];
+
+        }
+        m_healthBar.fillAmount = health / m_maxHealth;
+        
+        m_currentNumberOfAcidAttacks = 0;
+        m_eventTimer.Stop();
+        m_hasDrillBeenDestroyed = false;
+        m_hasEclosionedEggs = false;
+        m_hasEnteredScene = false;
+        m_hasEyeBeenDestroyed = false;
+        m_hasHitPlayer = false;
+        m_hasReachedSpawnEggPosition = false;
+        m_hasRoared = false;
+        m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = false;
+        m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = false;
+        m_isPartDestroyed[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = false;
+        m_numberOfAttacks = 0;
+        m_numberOfEyesLeft = 6;
+        m_numberOfEggActivation = 0;
+        transform.position = m_initialPosition;
+        transform.rotation = Quaternion.identity;
+        m_body.transform.rotation = Quaternion.identity;
+        m_head.transform.rotation = Quaternion.identity;
+        InitializeIdleState();
+
+        for(int i = 0; i < m_spiderEggsScript.Length; i++){
+            m_spiderEggsScript[i].gameObject.SetActive(true);
+            m_spiderEggsScript[i].Reset();
+        }
+        m_leftDrill.gameObject.SetActive(true);
+        m_leftDrill.Reset();
+        m_rightDrill.gameObject.SetActive(true);
+        m_rightDrill.Reset();
+        m_headScript.gameObject.SetActive(true);
+        m_headScript.Reset();
+
     }
 
 }

@@ -73,10 +73,10 @@ public class RoomManager : MonoBehaviour
     }
 
     private void Update() {
-        if(m_isBeingScripted && m_scriptPlayerTimer.IsFinished) {
+        /*if(m_isBeingScripted && m_scriptPlayerTimer.IsFinished) {
             Player.Instance.StopScripting();
             m_isBeingScripted = false;
-        }
+        }*/
     }
 
     public void AddRoom(Room p_room){
@@ -104,7 +104,7 @@ public class RoomManager : MonoBehaviour
 
     public void StartPlayerScripting(){
         if(m_isCurrentTransitionHorizontal){
-             Player.Instance.ScriptWalk(Player.Instance.FacingDirection()); 
+             Player.Instance.ScriptWalk(Player.Instance.FacingDirection(), 0.2f); 
         }
         else{
             if(m_isGoingUpwards){
