@@ -42,7 +42,10 @@ public class RoomManager : MonoBehaviour
 
         foreach(GameObject room in  roomsInWorld ){
             Room script = room.GetComponentInChildren<Room>();
-            AddRoom(script);
+            if(script != null){
+                AddRoom(script);
+            }
+            
         }
 
         GameObject[] enemiesInWorld = GameObject.FindGameObjectsWithTag("enemy");
