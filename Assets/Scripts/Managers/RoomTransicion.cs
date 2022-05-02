@@ -25,7 +25,7 @@ public class RoomTransicion : MonoBehaviour
         if (p_collider.CompareTag("enemyProjectile")) { Destroy(p_collider.gameObject); }
         if (!p_collider.CompareTag("Player")) { return; }
 
-        if (m_roomManager.CurrentRoom == m_rightTopRoom)
+        /*if (m_roomManager.CurrentRoom == m_rightTopRoom)
         {
             RoomManager.Instance.HandleRoomTransition(m_leftBottomRoom);
             if (m_isHorizontalTransition)
@@ -52,6 +52,7 @@ public class RoomTransicion : MonoBehaviour
                 Player.Instance.FacePlayerToRight();
             }
         }
+        */
         bool m_isGoingUpwards = false;
         if(Player.Instance.Speed.y > 0){ m_isGoingUpwards = true;}
         RoomManager.Instance.StartRoomTransicion(m_isHorizontalTransition, m_playerScriptingDuration, m_isGoingUpwards);

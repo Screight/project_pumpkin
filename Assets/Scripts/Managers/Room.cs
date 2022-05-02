@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField ]ROOMS m_ID;
+    static int g_ID;
+    int m_ID;
     [SerializeField] ROOMS[] m_adjacentRooms;
 
     List<Enemy> m_enemies = new List<Enemy>();
@@ -27,7 +28,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    public ROOMS ID { get { return m_ID;}}
+    public int ID { get { return m_ID;}}
     public ROOMS[] AdjacentRooms{ get { return m_adjacentRooms; }}
     public void AddEnemy(Enemy p_enemy){
         m_enemies.Add(p_enemy);

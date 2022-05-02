@@ -7,7 +7,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] 
     static RoomManager m_instance;
 
-    Room[] m_rooms;
+    List<Room> m_rooms;
 
     ROOMS m_lastRoom;
     ROOMS m_currentRoom;
@@ -29,11 +29,10 @@ public class RoomManager : MonoBehaviour
         if(m_instance == null){ m_instance = this; }
         else { Destroy(this.gameObject);}
 
-        m_rooms = new Room[(int)ROOMS.LAST_NO_USE];
         m_currentRoom = m_initialRoom;
         m_lastRoom = m_initialRoom;
         m_scriptPlayerTimer = gameObject.AddComponent<Timer>();
-
+        m_rooms = new List<Room>();
     }
 
     private void Start() {
@@ -64,10 +63,14 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < (int)ROOMS.LAST_NO_USE; i++){
+        /*for(int i = 0; i < Room.; i++){
             if( m_rooms[i] != null && m_rooms[i].ID != m_currentRoom){
                 m_rooms[i].gameObject.SetActive(false);
             }
+        }*/
+
+        foreach(Room room in m_rooms){
+            room.gameObject.SetActive(false);
         }
 
     }
@@ -80,7 +83,7 @@ public class RoomManager : MonoBehaviour
     }
 
     public void AddRoom(Room p_room){
-         m_rooms[(int)p_room.ID] = p_room;
+         m_rooms.Add(p_room);
     }
 
     public void ChangeRoom(){
@@ -124,10 +127,15 @@ public class RoomManager : MonoBehaviour
 
     }
 
-    public Room GetCurrentRoom(){
-        return m_rooms[(int)m_currentRoom];
+    public Room GetRoom(int p_ID){
+        foreach(Room currentRoom in m_rooms){
+            if(currentRoom.ID == p_ID){
+                return currentRoom;
+            }
+        }
+        return null;
     }
 
-    public ROOMS CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }}
+    public int CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }}
 
 }

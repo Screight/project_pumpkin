@@ -303,9 +303,11 @@ public class SpiderBoss : AnimatedCharacter
         m_eventTimer.Restart();
         if(m_animationState == ANIMATION.SPIDER_BOSS_ATTACK_LEFT){
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_LEFT, false);
+            m_leftDrill.CanBeDamaged = false;
         }
         else{
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_RECOVER_NORMAL_RIGHT, false);
+            m_rightDrill.CanBeDamaged = false;
         }
     }
 

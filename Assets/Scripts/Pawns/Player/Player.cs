@@ -18,7 +18,7 @@ public class Player : AnimatedCharacter
     /// MOVEMENT
     Rigidbody2D m_rb2D;
     float m_direction = 0;
-    Collider2D m_collider;
+    [SerializeField] Collider2D m_collider;
     bool m_isFacingRight = true;
     [SerializeField] float m_normalMovementSpeed = 60;
     [SerializeField] float m_reducedMovementSpeed = 30;
@@ -91,8 +91,6 @@ public class Player : AnimatedCharacter
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_spriteRenderer = GetComponent<SpriteRenderer>();
-
-        m_collider = GetComponent<Collider2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
     }
 
