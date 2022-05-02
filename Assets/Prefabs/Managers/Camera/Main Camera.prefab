@@ -136,7 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf831a69b9217a3559d7fb71d82681b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mainBounds: {fileID: 0}
 --- !u!114 &5035587074416154099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +145,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5035587074416154061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 856fd88bede40014488b78b3eff8b439, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dfc5bbb5d73d873eb79577d0762933e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_dampSpeedUp: 0.3
