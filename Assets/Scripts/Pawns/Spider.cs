@@ -9,6 +9,7 @@ public class Spider : Enemy
     [SerializeField] float m_speed;
     [SerializeField] Transform m_leftPatrolPoint;
     [SerializeField] Transform m_rightPatrolPoint;
+    [SerializeField] ParticleSystem m_hatchParticles;
 
     [SerializeField] float m_minimumDistanceToEclosion = 50.0f;
     [SerializeField] bool m_isEclosionAutomatic = false;
@@ -17,6 +18,7 @@ public class Spider : Enemy
 
     protected override void Awake() {
         base.Awake();
+        m_hatchParticles = GetComponentInChildren<ParticleSystem>();
         m_rb2d = GetComponent<Rigidbody2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
         m_collider = GetComponent<Collider2D>();
@@ -79,7 +81,7 @@ public class Spider : Enemy
     }
 
     public void Hatch(){
-        // INSTANTIATE PARTICLES
+        m_hatchParticles.Play();
         m_collider.enabled = true;
         m_rb2d.gravityScale = 1;
         InitializePatrol();
