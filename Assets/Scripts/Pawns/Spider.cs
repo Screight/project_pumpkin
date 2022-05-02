@@ -18,7 +18,6 @@ public class Spider : Enemy
 
     protected override void Awake() {
         base.Awake();
-        m_hatchParticles = GetComponentInChildren<ParticleSystem>();
         m_rb2d = GetComponent<Rigidbody2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
         m_collider = GetComponent<Collider2D>();
