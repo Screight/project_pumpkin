@@ -4,7 +4,9 @@ Shader "Custom/NewSurfaceShader"
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _Intensity("Wave Speed", Range(0,1)) = 0.5
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _NoiseTex("Extra Wave Noise", 2D) = "white" {}
         _Metallic ("Metallic", Range(0,1)) = 0.0
     }
    
@@ -31,12 +33,14 @@ Shader "Custom/NewSurfaceShader"
             float4 pos : SV_POSITION;
         };
 
-        sampler2D _BackgroundTexture;
+
+        float _Intensity;
 
         struct Input
         {
             float2 _BackgroundTexture;
         };
+        sampler2D _BackgroundTexture, _NoiseTex;
 
         half _Glossiness;
         half _Metallic;
@@ -45,7 +49,9 @@ Shader "Custom/NewSurfaceShader"
         
         half4 frag(v2f i) : SV_Target
         {
-        half4 bgcolor = tex2Dproj(_BackgroundTexture, i.grabPos);
+        half4 d = tex2D(_NoiseTex, i.grabPos);
+        float4 p = i.grabPos +(d* _Intensity);
+        half4 bgcolor = tex2Dproj(_BackgroundTexture, p);
         return bgcolor;
         }
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
