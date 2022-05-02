@@ -104,6 +104,7 @@ MonoBehaviour:
   m_isOneUseOnly: 0
   m_isAutomatic: 0
   m_respawnPoint: {fileID: 6495221374160368342}
+  m_sparkles: {fileID: 0}
 --- !u!58 &6495221373673128291
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6495221374160368341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -9, z: 0}
+  m_LocalPosition: {x: 23.6, y: -1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6495221373673128288}
@@ -285,6 +286,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6710954728819590584, guid: c4695dfd49621064f9899893c88a6105, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739737184062494251, guid: c4695dfd49621064f9899893c88a6105, type: 3}
+      propertyPath: stopAction
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
