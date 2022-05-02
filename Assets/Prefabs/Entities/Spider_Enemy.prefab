@@ -204,6 +204,7 @@ MonoBehaviour:
   m_speed: 0
   m_leftPatrolPoint: {fileID: 2331971606948251092}
   m_rightPatrolPoint: {fileID: 5098824844858482048}
+  m_hatchParticles: {fileID: 8781402129940240523}
   m_minimumDistanceToEclosion: -1
   m_isEclosionAutomatic: 0
   m_eclosionDuration: 2
@@ -395,5 +396,10 @@ PrefabInstance:
 --- !u!4 &5734989451463625496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4265807465702865938, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
+  m_PrefabInstance: {fileID: 8405396737861596938}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8781402129940240523 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 970588919010029441, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
   m_PrefabInstance: {fileID: 8405396737861596938}
   m_PrefabAsset: {fileID: 0}
