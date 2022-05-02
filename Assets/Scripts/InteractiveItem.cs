@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class InteractiveItem : MonoBehaviour
 {
     [SerializeField] string m_pawnActivationTag = "Player";
-    [SerializeField] GameObject m_icon;
+    [SerializeField] protected GameObject m_icon;
     protected bool m_canPlayerInteract = true;
     protected bool m_isPlayerInside = false;
 
