@@ -13,7 +13,6 @@ public class Skeleton : Enemy
 
     [SerializeField] GameObject prefabBone;
     GameObject Bone;
-    BoneScript m_boneScript;
     private float boneCooldown = 2000.0f;
 
     [SerializeField] GameObject player;
@@ -45,8 +44,6 @@ public class Skeleton : Enemy
 
         m_hasReturned = true;
 
-        Bone = Instantiate(prefabBone, new Vector3(0, 0, 0), Quaternion.identity);
-
         Physics2D.IgnoreLayerCollision(7, 7, true);
     }
 
@@ -59,9 +56,7 @@ public class Skeleton : Enemy
         player = GameObject.FindGameObjectWithTag("Player");
         m_isFacingRight = false;
 
-        m_boneScript = Bone.GetComponent<BoneScript>();
         boneTimer = gameObject.AddComponent<Timer>();
-        Bone.SetActive(false);
         boneTimer.Duration = 2;
     }
 
@@ -205,7 +200,6 @@ public class Skeleton : Enemy
         {
             m_skeletonState = SKELETON_STATE.DIE;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_DIE, false);
-            Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
         m_isAttacking = false;
     }
@@ -217,7 +211,6 @@ public class Skeleton : Enemy
         base.EndHit();
         m_skeletonState = SKELETON_STATE.MOVE;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
-        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
     public override void Reset()
@@ -225,7 +218,6 @@ public class Skeleton : Enemy
         base.Reset();
         m_rb2D.gravityScale = 40;
         EndHit();
-        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
     #region Accessors

@@ -217,6 +217,53 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &556268118052706308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5304695136914559546}
+  - component: {fileID: 6504446220883785272}
+  m_Layer: 7
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5304695136914559546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556268118052706308}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2483708738412794923}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &6504446220883785272
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556268118052706308}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1, y: 1.25}
+  m_Size: {x: 8, y: 0.5}
+  m_Direction: 1
 --- !u!1 &1636297835735910063
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +742,6 @@ GameObject:
   - component: {fileID: 16768589374183515}
   - component: {fileID: 1302782152}
   - component: {fileID: 31577716}
-  - component: {fileID: 1251411069}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -720,6 +766,7 @@ Transform:
   - {fileID: 540352105}
   - {fileID: 589468387329552510}
   - {fileID: 8347023987580299525}
+  - {fileID: 5304695136914559546}
   m_Father: {fileID: 6054658956129048168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -914,6 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attackScript: {fileID: 2589283986949262958}
+  m_collider: {fileID: 7814695433631215369}
   m_normalMovementSpeed: 60
   m_reducedMovementSpeed: 30
   m_maxHeight: 55
@@ -925,22 +973,6 @@ MonoBehaviour:
   m_dashDustScript: {fileID: 514142220}
   m_pushAwayOnProjectileHitVelocity: {x: -50, y: 100}
   m_transicionScrDamageipt: {fileID: 0}
---- !u!70 &1251411069
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328283339782624065}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1, y: 1.25}
-  m_Size: {x: 8, y: 0.5}
-  m_Direction: 1
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0

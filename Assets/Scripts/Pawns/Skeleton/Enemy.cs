@@ -97,6 +97,7 @@ public class Enemy : AnimatedCharacter
     }
 
     void Die(){
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
         this.gameObject.SetActive(false);
     }
 
