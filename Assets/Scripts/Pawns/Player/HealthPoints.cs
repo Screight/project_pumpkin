@@ -20,6 +20,7 @@ public class HealthPoints : MonoBehaviour
         for(int i = 0; i < m_numberofHearts; i++){
             GameObject gameobject = Instantiate(m_life);
             gameobject.transform.SetParent(this.gameObject.transform);
+            gameobject.transform.localScale = new Vector3(1,1,1);
             gameobject.transform.position = transform.position;
             gameobject.transform.position += new Vector3(m_separationBetweenHearts * i, 0, 0);
             m_hearts.Add(gameobject);
@@ -44,6 +45,7 @@ public class HealthPoints : MonoBehaviour
         GameObject gameobject = Instantiate(m_life);
             gameobject.transform.SetParent(this.gameObject.transform);
             gameobject.transform.position = transform.position;
+            gameobject.transform.localScale = new Vector3(1,1,1);
             m_hearts.Add(gameobject);
             gameobject.transform.position += new Vector3(m_separationBetweenHearts * (m_hearts.Count - 1), 0, 0);
             GameManager.Instance.RestorePlayerToFullHealth();
