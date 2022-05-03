@@ -303,7 +303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6296672092179184479}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.3, y: 0, z: 0}
+  m_LocalPosition: {x: 12.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7395076013811728850}
@@ -395,6 +395,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4323304191256001009, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323304191256001009, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 307840783
+      objectReference: {fileID: 0}
     - target: {fileID: 6778268412666488754, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
       propertyPath: m_Name
       value: SpiderDeathParticles
@@ -461,6 +469,14 @@ PrefabInstance:
     - target: {fileID: 970588919010029441, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752744782394851744, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752744782394851744, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 307840783
       objectReference: {fileID: 0}
     - target: {fileID: 4265807465702865938, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
       propertyPath: m_RootOrder
