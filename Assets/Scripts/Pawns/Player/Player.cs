@@ -446,7 +446,13 @@ public class Player : AnimatedCharacter
 
     public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage)
     {
+        if(m_state == PLAYER_STATE.HURT || m_state == PLAYER_STATE.DEATH ||m_state == PLAYER_STATE.GROUNDBREAKER || m_state == PLAYER_STATE.DASH){
+            return;
+        }
         m_rb2D.velocity = new Vector2(p_direction.x * p_pushAwayVelocity.x, p_direction.y * p_pushAwayVelocity.y);
+
+        int random = Random.Range(0,4);
+        SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.URA_HIT_1 + random));
 
         m_isInvulnerable = true;
         m_invulnerableTimer.Duration = p_invulnerableDuration;
