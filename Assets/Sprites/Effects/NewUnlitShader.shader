@@ -2,7 +2,7 @@ Shader "GrabPassInvert"
 {
     Properties
     {
-        [PerRendererData]
+        
         _MainTex("Main Texture", 2D) = "white" {}
         _Color("Color" , Color) = (1,1,1,1)
     }
@@ -10,7 +10,7 @@ Shader "GrabPassInvert"
         {
             Tags
             {
-                "RenderType" = "Transparent""Queue" = "Transparent"
+                "Queue" = "Transparent"
             }
             Pass
             {
