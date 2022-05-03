@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour
     Timer m_attackTimer;
     float[] m_attackDuration;
 
-    const float M_ATTACK_RANGE = 8;
+    const float M_ATTACK_RANGE = 8.5f;
     [SerializeField] LayerMask m_enemyLayer;
     bool m_keepAttacking;
     bool m_isAttacking;
