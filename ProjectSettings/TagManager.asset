@@ -56,11 +56,11 @@ TagManager:
   - name: BG
     uniqueID: 1885138371
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: blocks
     uniqueID: 538339855
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Enemies
     uniqueID: 307840783
