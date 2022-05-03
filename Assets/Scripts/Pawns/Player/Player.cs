@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Player : AnimatedCharacter
 {
+    [SerializeField] Transicion m_transicion;
     [SerializeField] Attack m_attackScript;
 
     static Player m_instance;
@@ -57,7 +58,6 @@ public class Player : AnimatedCharacter
     /// TODO: ORGANIZE THIS VARIABLES
     string m_objectGroundedTo;
     SpriteRenderer m_spriteRenderer;
-    [SerializeField] Transicion m_transicionScrDamageipt;
     bool m_isUsingGroundBreaker = false;
     bool m_isInsideActiveInteractiveZone = false;
 
@@ -419,8 +419,9 @@ public class Player : AnimatedCharacter
 
     void HandleDeathState(){
         if(m_eventTimer.IsFinished){
-            Die();
-            // START TRANSITION
+            m_transicion.AddListenerToEndOfFadeIn(Die);
+            m_transicion.FadeIn();
+            m_state = PLAYER_STATE.LAST_NO_USE;
         }
     }
 
@@ -433,7 +434,7 @@ public class Player : AnimatedCharacter
     }
 
     //!NOT IN USE!
-    void Die()
+    public void Die()
     {
         Physics2D.IgnoreLayerCollision(6, 7, false);
         CheckpointsManager.Instance.MovePlayerToGlobalCheckPoint();
@@ -441,7 +442,7 @@ public class Player : AnimatedCharacter
         CameraManager.Instance.SetCameraToPlayerPosition();
         CameraManager.Instance.ClampCameraToTarget();
         SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.BACKGROUND_1);
-        // SCREEN TRANSITION
+        m_transicion.RemoveListenerToEndOfFadeIn(Die);
     }
 
     public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage)
