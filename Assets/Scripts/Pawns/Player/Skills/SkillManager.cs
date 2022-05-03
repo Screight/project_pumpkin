@@ -39,12 +39,12 @@ public class SkillManager : MonoBehaviour
             case PLAYER_STATE.MOVE: 
                 {
                     m_skillFireball.Fireball();
-                    m_skillPilar.Pilar();
+                    //m_skillPilar.Pilar();
                 } break;
             case PLAYER_STATE.IDLE: 
                 {
                     m_skillFireball.Fireball();
-                    m_skillPilar.Pilar();
+                    //m_skillPilar.Pilar();
                     m_groundbreaker.Groundbreaker();
                 } break;
             case PLAYER_STATE.JUMP: 
@@ -66,12 +66,12 @@ public class SkillManager : MonoBehaviour
             case PLAYER_STATE.LAND:
                 {
                     m_skillFireball.Fireball();
-                    m_skillPilar.Pilar();
+                    //m_skillPilar.Pilar();
                 }
                 break;
             case PLAYER_STATE.CAST: 
                 {
-                    m_skillPilar.Pilar(); 
+                    //m_skillPilar.Pilar(); 
                 }
                 break;
             case PLAYER_STATE.GROUNDBREAKER:
