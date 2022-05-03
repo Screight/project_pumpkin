@@ -19,7 +19,7 @@ public class HealthPoints : MonoBehaviour
         m_hearts = new List<GameObject>(m_numberofHearts);
         for(int i = 0; i < m_numberofHearts; i++){
             GameObject gameobject = Instantiate(m_life);
-            gameobject.transform.parent = this.gameObject.transform;
+            gameobject.transform.SetParent(this.gameObject.transform);
             gameobject.transform.position = transform.position;
             gameobject.transform.position += new Vector3(m_separationBetweenHearts * i, 0, 0);
             m_hearts.Add(gameobject);
@@ -42,7 +42,7 @@ public class HealthPoints : MonoBehaviour
 
     public void GainExtraHeart(){
         GameObject gameobject = Instantiate(m_life);
-            gameobject.transform.parent = this.gameObject.transform;
+            gameobject.transform.SetParent(this.gameObject.transform);
             gameobject.transform.position = transform.position;
             m_hearts.Add(gameobject);
             gameobject.transform.position += new Vector3(m_separationBetweenHearts * (m_hearts.Count - 1), 0, 0);

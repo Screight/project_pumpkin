@@ -21,10 +21,19 @@ public class CheckpointsManager : MonoBehaviour
         if (m_instance == null)
         {
             m_instance = this;
-            m_localCheckPoint = m_defaultCheckpoint;
+            
             m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         } else { Destroy(this.gameObject); }
 
+    }
+
+    private void Start() {
+        if(m_defaultCheckpoint != null){
+                SetGlobalCheckPoint(m_defaultCheckpoint);
+            }
+            else{
+                SetGlobalCheckPoint(Player.Instance.transform);
+            }
     }
 
     public void SetLocalCheckPoint(Transform m_checkpoint)
@@ -54,7 +63,7 @@ public class CheckpointsManager : MonoBehaviour
         }
         else if(m_localCheckPoint != null)
         {
-            m_player.transform.position = new Vector3(m_defaultCheckpoint.position.x, m_defaultCheckpoint.position.y, m_player.transform.position.z);
+            m_player.transform.position = new Vector3(m_localCheckPoint.position.x, m_localCheckPoint.position.y, m_player.transform.position.z);
         }
     }
 

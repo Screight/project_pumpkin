@@ -174,6 +174,7 @@ public class SpiderBoss : AnimatedCharacter
             m_hasReachedSpawnEggPosition = true;
             transform.position = new Vector3(transform.position.x, m_spawnEggPosition.position.y, transform.position.z);
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ROAR, false);
+            SoundManager.Instance.PlayOnce(AudioClipName.SPIDER_BOSS_CRY_LITE);
             m_eventTimer.Duration = m_roarDuration;
             m_eventTimer.Restart();
         }
@@ -534,8 +535,7 @@ public class SpiderBoss : AnimatedCharacter
 
         if(p_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
             int random = Random.Range(0,2);
-            if(random == 0){ SoundManager.Instance.PlayOnce(AudioClipName.DRILL_HIT_1);}
-            else { SoundManager.Instance.PlayOnce(AudioClipName.DRILL_HIT_2);}
+            SoundManager.Instance.PlayOnce((AudioClipName)((int)AudioClipName.DRILL_HIT_1 + random));
         }
 
         if(p_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD && m_hasEyeBeenDestroyed){
