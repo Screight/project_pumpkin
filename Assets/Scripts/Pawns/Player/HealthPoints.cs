@@ -5,54 +5,47 @@ using UnityEngine.UI;
 
 public class HealthPoints : MonoBehaviour
 {
-    [SerializeField] Image m_firstHeart;
-    [SerializeField] Image m_secondHeart;
-    [SerializeField] Image m_thirdHeart;
-    [SerializeField] Image m_forthHeart;
-
     [SerializeField] Sprite m_fullHeart;
     [SerializeField] Sprite m_emptyHeart;
+    [SerializeField] GameObject m_life;
+    List<GameObject> m_hearts;
 
-    Image[] p_hearts;
-
-    int m_currentNumberOfHearts = 4;
+    [SerializeField] int m_numberofHearts = 4;
+    [SerializeField] float m_separationBetweenHearts = 40.0f;
 
     private void Start()
     {
-        p_hearts = new Image[]{ m_firstHeart, m_secondHeart, m_thirdHeart, m_forthHeart};
-        p_hearts[0].sprite = m_fullHeart;
-        p_hearts[1].sprite = m_fullHeart;
-        p_hearts[2].sprite = m_fullHeart;
-        p_hearts[3].sprite = m_fullHeart;
+        m_hearts = new List<GameObject>(m_numberofHearts);
+        for(int i = 0; i < m_numberofHearts; i++){
+            GameObject gameobject = Instantiate(m_life);
+            gameobject.transform.parent = this.gameObject.transform;
+            gameobject.transform.position = transform.position;
+            gameobject.transform.position += new Vector3(m_separationBetweenHearts * i, 0, 0);
+            m_hearts.Add(gameobject);
+
+        }
         SetHealth(GameManager.Instance.PlayerHealth);
     }
 
     public void SetHealth(int p_value)
     {
         Sprite sprite;
-        m_currentNumberOfHearts = p_value;
-        for( int i = 0; i < p_hearts.Length; i++)
+        m_numberofHearts = p_value;
+        for( int i = 0; i < m_hearts.Count; i++)
         {
-            if (i < m_currentNumberOfHearts) { sprite = m_fullHeart; }
+            if (i < m_numberofHearts) { sprite = m_fullHeart; }
             else { sprite = m_emptyHeart; }
-            p_hearts[i].sprite = sprite;
+            m_hearts[i].GetComponent<Image>().sprite = sprite;
         }
     }
 
-    public void GainHealth()
-    {
-        if (m_currentNumberOfHearts < 8)
-        {
-            p_hearts[m_currentNumberOfHearts].sprite = m_fullHeart;
-            m_currentNumberOfHearts++;
-        }
+    public void GainExtraHeart(){
+        GameObject gameobject = Instantiate(m_life);
+            gameobject.transform.parent = this.gameObject.transform;
+            gameobject.transform.position = transform.position;
+            m_hearts.Add(gameobject);
+            gameobject.transform.position += new Vector3(m_separationBetweenHearts * (m_hearts.Count - 1), 0, 0);
+            GameManager.Instance.RestorePlayerToFullHealth();
     }
-    public void LoseHearth()
-    {
-        if(m_currentNumberOfHearts > 0)
-        {
-            p_hearts[m_currentNumberOfHearts - 1].sprite = m_emptyHeart;
-            m_currentNumberOfHearts--;
-        }
-    }
+
 }

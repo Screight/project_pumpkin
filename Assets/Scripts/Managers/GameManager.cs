@@ -62,6 +62,10 @@ public class GameManager : MonoBehaviour
         m_healthUI.SetHealth(m_playerHealth);
     }
 
+    public void GainExtraHeart(){
+        PLAYER_MAX_HEALTH++;
+        m_healthUI.GainExtraHeart();
+    }
 
     public void RestorePlayerToFullHealth()
     {
