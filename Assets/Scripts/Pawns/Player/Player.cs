@@ -440,11 +440,8 @@ public class Player : AnimatedCharacter
         GameManager.Instance.RestorePlayerToFullHealth();
         CameraManager.Instance.SetCameraToPlayerPosition();
         CameraManager.Instance.ClampCameraToTarget();
-        // RESET PLAYER
+        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.BACKGROUND_1);
         // SCREEN TRANSITION
-        // TP TO LAST CHECKPOINT (add room variable to checkpoint)
-        // MOVE CAMERA
-        // SET CHECKPOINT ROOM TO CURRENT ROOM
     }
 
     public void HandleHostileCollision(Vector2 p_pushAwayVelocity, Vector2 p_direction, float p_noControlDuration, float p_invulnerableDuration, int p_damage)

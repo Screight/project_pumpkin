@@ -37,7 +37,7 @@ public class SpiderBoss : AnimatedCharacter
     float m_biteDuration;
     [SerializeField] float m_acidAttackCooldown;
     bool m_hasRoared = false;
-    //bool m_hasFiredAcidAttack = false;
+    bool m_hasRoaredFirstTime = false;
     float m_roarDuration;
     float m_normalRecoverDuration;
     float m_acidAttackDuration;
@@ -71,10 +71,12 @@ public class SpiderBoss : AnimatedCharacter
 
     Vector3 m_initialPosition;
     [SerializeField] GameObject m_body;
+    [SerializeField] GameObject m_splashScreen;
 
     protected override void Awake() {
         base.Awake();
         m_eventTimer = gameObject.AddComponent<Timer>();
+        m_splashScreen.SetActive(false);
     }
 
     private void Start() {
@@ -188,13 +190,13 @@ public class SpiderBoss : AnimatedCharacter
 
         if(m_numberOfEggActivation == 0){
            for(int i = 0; i < 3; i++){
-            m_spiderEggsScript[i].Hatch();
+            m_spiderEggsScript[i].InitializeEclosion();
             }
             m_numberOfEggActivation++;
         }
         else if(m_numberOfEggActivation == 1){
             for(int i = 3; i < m_spiderEggs.Length; i++){
-            m_spiderEggsScript[i].Hatch();
+            m_spiderEggsScript[i].InitializeEclosion();
             m_numberOfEggActivation++;
             }
         }
@@ -341,7 +343,7 @@ public class SpiderBoss : AnimatedCharacter
             if(m_hasDrillBeenDestroyed){
 
                 m_hasDrillBeenDestroyed = false;
-
+                SoundManager.Instance.PlayOnce(AudioClipName.SPIDER_BOSS_LOSE_LEG);
                 if(m_animationState == ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT){
                     m_leftDrill.CanDamagePlayer = false;
                     m_rightArmNormal.SetActive(false);
@@ -380,6 +382,12 @@ public class SpiderBoss : AnimatedCharacter
     void InitializeAcidAttack(){
         m_state = SPIDER_BOSS_STATE.ATTACK_ACID;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ROAR, false);
+
+        if(!m_hasRoaredFirstTime){
+            SoundManager.Instance.PlayOnce(AudioClipName.SPIDER_BOSS_CRY);
+            m_splashScreen.SetActive(true);
+        }
+
         m_eventTimer.Duration = m_roarDuration;
         m_eventTimer.Restart();
         m_numberOfAttacks = 0;
@@ -403,6 +411,11 @@ public class SpiderBoss : AnimatedCharacter
         }
 
         if(!m_hasRoared && m_eventTimer.IsFinished){
+            if(!m_hasRoaredFirstTime){
+                m_hasRoaredFirstTime = true;
+                SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.SPIDER_BOSS);
+                m_splashScreen.SetActive(false);
+            }
             m_hasRoared = true;
             m_eventTimer.Duration = m_acidAttackCooldown;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_SPIT, false);
@@ -519,6 +532,12 @@ public class SpiderBoss : AnimatedCharacter
 
     public void Damage(float p_amount, SPIDER_BOSS_DAMAGEABLE_PARTS p_part){
 
+        if(p_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
+            int random = Random.Range(0,2);
+            if(random == 0){ SoundManager.Instance.PlayOnce(AudioClipName.DRILL_HIT_1);}
+            else { SoundManager.Instance.PlayOnce(AudioClipName.DRILL_HIT_2);}
+        }
+
         if(p_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD && m_hasEyeBeenDestroyed){
             return ;
         }
@@ -557,9 +576,10 @@ public class SpiderBoss : AnimatedCharacter
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD:
                     InitializeIdleState();
                     m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES];
-                    for(int i = 0; i < m_doors.Length; i++){
+                    /*for(int i = 0; i < m_doors.Length; i++){
                         m_doors[i].OpenDoor();
-                    }
+                    }*/
+                    SoundManager.Instance.StopBackground();
                     Debug.Log("END OF COMBAT");
                     GameManager.Instance.IsPlayerInSpiderBossFight = false;
                     m_bodyDestroyed.SetActive(true);
@@ -623,6 +643,7 @@ public class SpiderBoss : AnimatedCharacter
         
         m_currentNumberOfAcidAttacks = 0;
         m_eventTimer.Stop();
+        m_hasRoaredFirstTime = false;
         m_hasDrillBeenDestroyed = false;
         m_hasEclosionedEggs = false;
         m_hasEnteredScene = false;

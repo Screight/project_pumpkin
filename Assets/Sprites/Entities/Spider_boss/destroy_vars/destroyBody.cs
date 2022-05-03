@@ -7,7 +7,7 @@ public class destroyBody : MonoBehaviour
     public GameObject[] bodyparts;
     private Rigidbody2D[] bodyparts_rb;
     public GameObject explosion;
-        
+    [SerializeField] Door[] m_doors;
     
     // Start is called before the first frame update
     void Start()
@@ -35,5 +35,9 @@ public class destroyBody : MonoBehaviour
     }
     void Explode2() { 
         explosion.SetActive(true);
+        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.BACKGROUND_1);
+        for(int i  = 0; i < m_doors.Length; i++){
+            m_doors[i].OpenDoor();
+        }
     }
 }
