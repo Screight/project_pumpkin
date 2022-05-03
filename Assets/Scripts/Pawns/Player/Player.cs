@@ -71,6 +71,8 @@ public class Player : AnimatedCharacter
 
         base.Awake();
 
+        Physics2D.IgnoreLayerCollision(6,1,true);
+
         if (m_instance == null) { m_instance = this; }
         else { Destroy(gameObject); }
 
