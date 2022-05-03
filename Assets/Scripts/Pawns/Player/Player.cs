@@ -524,6 +524,10 @@ public class Player : AnimatedCharacter
     public Collider2D GetCollider(){ return m_collider;}
     #endregion
 
+    public void AddImpulse(Vector2 p_impulse){
+        m_rb2D.AddForce(p_impulse, ForceMode2D.Impulse);
+    }
+
     public void StartTalking()
     {
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);

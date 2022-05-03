@@ -4,16 +4,33 @@ using UnityEngine;
 
 public class DescendPlatform : MonoBehaviour
 {
-    private Rigidbody2D m_rb2D;
+    private PlatformEffector2D m_effector;
+    bool m_isPlayerInPlatform = false;
 
-    void Start() { m_rb2D = GetComponent<Rigidbody2D>(); }
+    void Start() { m_effector = GetComponent<PlatformEffector2D>();
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow)) { 
-            Physics.IgnoreLayerCollision(7,9,true);
+        if (Input.GetKeyDown(KeyCode.DownArrow) && m_isPlayerInPlatform) { 
+            m_effector.rotationalOffset = 180;
+            Player.Instance.AddImpulse(new Vector2(0, -30));
         }
-        else if (Input.GetKeyUp(KeyCode.DownArrow)) { 
-            Physics.IgnoreLayerCollision(7,9,false); }
+        else if (!m_isPlayerInPlatform) { 
+            m_effector.rotationalOffset = 0;
+        }
     }
+
+    private void OnCollisionEnter2D(Collision2D p_collider) {
+        if(p_collider.gameObject.tag == "Player"){
+            m_isPlayerInPlatform = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D p_collider) {
+        if(p_collider.gameObject.tag == "Player"){
+            m_isPlayerInPlatform = false;
+        }
+    }
+
 }
