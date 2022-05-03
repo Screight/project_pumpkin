@@ -11,11 +11,15 @@ public class HealthPoints : MonoBehaviour
     List<GameObject> m_hearts;
 
     int m_numberofHearts;
-    [SerializeField] float m_separationBetweenHearts = 40.0f;
+    [SerializeField] float m_cameraSeparation = 1;
+    float m_separationBetweenHearts;
 
     private void Start()
     {
-        float hola = 10*m_fullHeart.bounds.size.x;
+        float cameraSize = Camera.main.scaledPixelWidth;
+
+        m_separationBetweenHearts = cameraSize * (m_cameraSeparation/100)
+        ;
         m_numberofHearts = GameManager.Instance.PlayerMaxHealth;
         m_hearts = new List<GameObject>(m_numberofHearts);
         for(int i = 0; i < m_numberofHearts; i++){
@@ -23,7 +27,7 @@ public class HealthPoints : MonoBehaviour
             gameobject.transform.SetParent(this.gameObject.transform);
             gameobject.transform.localScale = new Vector3(1,1,1);
             gameobject.transform.position = transform.position;
-            gameobject.transform.position += new Vector3(hola * i, 0, 0);
+            gameobject.transform.position += new Vector3(m_separationBetweenHearts * i, 0, 0);
             m_hearts.Add(gameobject);
 
         }
@@ -32,6 +36,7 @@ public class HealthPoints : MonoBehaviour
 
     public void SetHealth(int p_value)
     {
+        
         Sprite sprite;
         m_numberofHearts = p_value;
         for( int i = 0; i < m_hearts.Count; i++)
