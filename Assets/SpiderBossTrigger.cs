@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpiderBossTrigger : InteractiveItem
 {
+    [SerializeField] Transform m_respawnPosition;
     [SerializeField] Door[] m_doors = new Door[2];
     SpiderBoss m_spiderBoss;
 
@@ -20,6 +21,7 @@ public class SpiderBossTrigger : InteractiveItem
         GameManager.Instance.IsPlayerInSpiderBossFight = true;
         m_spiderBoss.StartBossFight();
         SoundManager.Instance.StopBackground();
+        CheckpointsManager.Instance.SetGlobalCheckPoint(m_respawnPosition);
     }
 
     public void HandlePlayerDeath(){
