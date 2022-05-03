@@ -46,6 +46,10 @@ public class GameManager : MonoBehaviour
         private set { }
     }
 
+    public int PlayerMaxHealth{
+        get { return PLAYER_MAX_HEALTH; }
+    }
+
     public void ModifyPlayerHealth(int p_amount)
     {
         m_playerHealth += p_amount;
