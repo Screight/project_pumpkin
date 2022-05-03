@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: +MaxHealth
   m_EditorClassIdentifier: 
   m_icon:
-  - {fileID: 21300000, guid: ae70f9e521b15964ca6469197a5f3bcf, type: 3}
+  - {fileID: 21300000, guid: b9197937f1749094e88c4218658cf481, type: 3}
   m_name:
-  - Help
+  - Ghosty the ghost
   m_sentences:
   - '+1 Max Health!! '
   m_characterTalkingSentence: 00000000
