@@ -8,12 +8,12 @@ public class roarScript: MonoBehaviour
 
     void Update()
     {
-        a.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+        a.localScale += new Vector3(0.01f, 0.01f, 0.01f);
         if (a.localScale.x > 10f)
         {
-            a.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+            a.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         } 
-        b.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+        b.localScale += new Vector3(0.01f, 0.01f, 0.01f);
         if (b.localScale.x > 5f)
         {
             b.localScale = new Vector3(0.01f, 0.01f, 0.01f);
