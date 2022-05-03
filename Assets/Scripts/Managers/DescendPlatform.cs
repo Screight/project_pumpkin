@@ -10,7 +10,10 @@ public class DescendPlatform : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.DownArrow)) { m_rb2D.simulated = false; }
-        else { m_rb2D.simulated = true; }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { 
+            Physics.IgnoreLayerCollision(7,9,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.DownArrow)) { 
+            Physics.IgnoreLayerCollision(7,9,false); }
     }
 }

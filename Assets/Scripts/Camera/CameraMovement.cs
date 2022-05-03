@@ -53,12 +53,6 @@ public class CameraMovement : MonoBehaviour
     {
         if(m_isCameraStatic) { return; }
 
-        if(Input.GetKeyDown("down") && m_playerScript.State == PLAYER_STATE.IDLE)    { m_offsetY += -m_offsetAddUpY;}
-        else if(Input.GetKeyUp("down")) {m_offsetY += m_offsetAddUpY;}
-
-        if(Input.GetKeyDown("up") && m_playerScript.State == PLAYER_STATE.IDLE)      { m_offsetY += m_offsetAddUpY;}
-        else if(Input.GetKeyUp("up"))   {m_offsetY += -m_offsetAddUpY;}
-
         m_targetPosition = new Vector3();
         
         m_dampSpeedX = m_dampSpeedMovement;

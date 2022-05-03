@@ -5,7 +5,8 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] bool m_isOpen = true;
-    [SerializeField] float m_speed = 1.0f;
+    float m_speed;
+    [SerializeField] float m_time = 1.0f;
     [SerializeField] BoxCollider2D m_collider;
     float m_heigth;
     Vector3 m_openPosition;
@@ -17,6 +18,7 @@ public class Door : MonoBehaviour
 
     private void Start() {
         m_heigth = m_collider.size.y;
+        m_speed = m_heigth / m_time;
         m_closePosition = transform.position;
         m_openPosition = new Vector3(transform.position.x, transform.position.y + m_heigth, transform.position.z);
 
@@ -62,8 +64,9 @@ public class Door : MonoBehaviour
 
     void ChangeDoorState(){
         if(m_event){ return ;}
+        SoundManager.Instance.PlayOnce(AudioClipName.PILAR);
         m_isOpen = !m_isOpen;
-            m_event = true;
+        m_event = true;
             if(!m_isOpen){
                 m_collider.transform.position = m_closePosition;
             }
