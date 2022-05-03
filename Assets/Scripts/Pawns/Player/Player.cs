@@ -131,12 +131,14 @@ public class Player : AnimatedCharacter
 
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
-            if (m_state != PLAYER_STATE.DEATH) { m_state = PLAYER_STATE.IDLE; }
+            if (m_state != PLAYER_STATE.DEATH) { m_state = PLAYER_STATE.IDLE; 
+            Physics2D.IgnoreLayerCollision(6, 7, false);
+            }
 
             m_direction = 0;
             m_isInvulnerable = false;
             m_spriteRenderer.color = new Color(255, 255, 255, 255);
-            Physics2D.IgnoreLayerCollision(6, 7, false);
+            
             m_invulnerableTimer.Stop();
             m_blinkTimer.Stop();
             m_hasBlinked = false;
@@ -230,6 +232,7 @@ public class Player : AnimatedCharacter
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
+        SoundManager.Instance.PlayOnce(AudioClipName.JUMP_2);
         m_isGrounded = false;
         m_state = PLAYER_STATE.BOOST;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST, false);
@@ -421,8 +424,6 @@ public class Player : AnimatedCharacter
 
     void HandleDeathState(){
         if(m_eventTimer.IsFinished){
-            m_transicion.AddListenerToEndOfFadeIn(Die);
-            m_transicion.FadeIn();
             m_state = PLAYER_STATE.LAST_NO_USE;
         }
     }
@@ -433,6 +434,8 @@ public class Player : AnimatedCharacter
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH, false);
         m_eventTimer.Duration = m_deathDuration;
         m_eventTimer.Run();
+        m_transicion.AddListenerToEndOfFadeIn(Die);
+        m_transicion.FadeIn();
     }
 
     //!NOT IN USE!

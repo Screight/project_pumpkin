@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         {
             m_playerHealth = 0;
             Player.Instance.HandleDeath();
+            SoundManager.Instance.PlayOnce(AudioClipName.RESPAWN);
             if(m_isPlayerInSpiderBossFight){
                 HandlePlayerDeathInSpiderBossBattle();
             }

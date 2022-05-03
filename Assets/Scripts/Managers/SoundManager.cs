@@ -45,6 +45,8 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.URA_HIT_1] = Resources.Load<AudioClip>("Sound/UraCrunch1");
         m_audioClips[(int)AudioClipName.URA_HIT_2] = Resources.Load<AudioClip>("Sound/UraCrunch2");m_audioClips[(int)AudioClipName.URA_HIT_3] = Resources.Load<AudioClip>("Sound/UraCrunch3");
         m_audioClips[(int)AudioClipName.URA_HIT_4] = Resources.Load<AudioClip>("Sound/UraCrunch4");
+        m_audioClips[(int)AudioClipName.JUMP_1] = Resources.Load<AudioClip>("Sound/jump1");
+        m_audioClips[(int)AudioClipName.JUMP_2] = Resources.Load<AudioClip>("Sound/jump2");
 
 
         m_audioClips[(int)AudioClipName.ITEM_PICK_UP] = Resources.Load<AudioClip>("Sound/ItemPickUpSFX");
@@ -59,6 +61,8 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.SPIDER_BOSS_CRY_LITE] = Resources.Load<AudioClip>("Sound/AracneRoarLite");
         m_audioClips[(int)AudioClipName.DRILL_HIT_1] = Resources.Load<AudioClip>("Sound/DrillHitted1");
         m_audioClips[(int)AudioClipName.DRILL_HIT_2] = Resources.Load<AudioClip>("Sound/DrillHitted2");
+
+        m_audioClips[(int)AudioClipName.RESPAWN] = Resources.Load<AudioClip>("Sound/RespawnSFX");
 
         m_backgroundClips[(int)BACKGROUND_CLIP.BACKGROUND_1] = Resources.Load<AudioClip>("Sound/haunted");
         m_backgroundClips[(int)BACKGROUND_CLIP.SPIDER_BOSS] = Resources.Load<AudioClip>("Sound/BattleBGM2");
