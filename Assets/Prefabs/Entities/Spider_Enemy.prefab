@@ -225,7 +225,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 2ce20ee907b2955408321eff6fea7b38, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &351930647417588648
 BoxCollider2D:
@@ -276,6 +276,7 @@ MonoBehaviour:
   m_leftPatrolPoint: {fileID: 2331971606948251092}
   m_rightPatrolPoint: {fileID: 5098824844858482048}
   m_hatchParticles: {fileID: 8781402129940240523}
+  m_deathParticles: {fileID: 6053480065924687142}
   canPlayerActivateEggs: 1
   m_eggDuration: -1
 --- !u!1 &6296672092179184479
@@ -338,10 +339,78 @@ Transform:
   - {fileID: 793417994651138399}
   - {fileID: 2331971606948251092}
   - {fileID: 5098824844858482048}
+  - {fileID: 7082262529781610165}
   - {fileID: 5734989451463625496}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4951340537655161590
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7395076013811728850}
+    m_Modifications:
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.000024795532
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778268412666488754, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+      propertyPath: m_Name
+      value: SpiderDeathParticles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+--- !u!4 &7082262529781610165 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2810230512346219587, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+  m_PrefabInstance: {fileID: 4951340537655161590}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6053480065924687142 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1203861810889103312, guid: b442f80ec23becc4baf46c9839626b23, type: 3}
+  m_PrefabInstance: {fileID: 4951340537655161590}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8405396737861596938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -395,7 +464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4265807465702865938, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4265807465702865938, guid: 80e5d1d40130f6243873b5d7b873fdf9, type: 3}
       propertyPath: m_LocalPosition.x

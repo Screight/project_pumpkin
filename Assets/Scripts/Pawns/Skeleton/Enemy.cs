@@ -33,12 +33,15 @@ public class Enemy : AnimatedCharacter
         m_health = MAX_HEALTH;
     }
 
-    protected virtual void Update() {
-        if(m_isDying && m_animationTimer.IsFinished){
+    protected virtual void Update()
+    {
+        if (m_isDying && m_animationTimer.IsFinished)
+        {
             Die();
             m_isDying = false;
         }
-        else if(m_isBeingHit && m_animationTimer.IsFinished){
+        else if (m_isBeingHit && m_animationTimer.IsFinished)
+        {
             EndHit();
             m_isBeingHit = false;
         }
@@ -96,9 +99,10 @@ public class Enemy : AnimatedCharacter
         m_isDying = false;
     }
 
-    void Die(){
+    protected virtual void Die()
+    {
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public ROOMS Room { get { return m_room;}}
