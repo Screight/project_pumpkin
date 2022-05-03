@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isOpen: 1
-  m_speed: 20
+  m_time: 1.5
   m_collider: {fileID: 5817150656933669122}
 --- !u!212 &5817150657820860047
 SpriteRenderer:

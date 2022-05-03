@@ -10,11 +10,12 @@ public class HealthPoints : MonoBehaviour
     [SerializeField] GameObject m_life;
     List<GameObject> m_hearts;
 
-    [SerializeField] int m_numberofHearts = 4;
+    int m_numberofHearts;
     [SerializeField] float m_separationBetweenHearts = 40.0f;
 
     private void Start()
     {
+        m_numberofHearts = GameManager.Instance.PlayerMaxHealth;
         m_hearts = new List<GameObject>(m_numberofHearts);
         for(int i = 0; i < m_numberofHearts; i++){
             GameObject gameobject = Instantiate(m_life);
