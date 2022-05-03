@@ -19,6 +19,7 @@ public class SpiderBossTrigger : InteractiveItem
         }
         GameManager.Instance.IsPlayerInSpiderBossFight = true;
         m_spiderBoss.StartBossFight();
+        SoundManager.Instance.StopBackground();
     }
 
     public void HandlePlayerDeath(){

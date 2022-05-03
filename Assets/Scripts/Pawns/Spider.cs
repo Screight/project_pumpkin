@@ -10,17 +10,18 @@ public class Spider : Enemy
     [SerializeField] Transform m_leftPatrolPoint;
     [SerializeField] Transform m_rightPatrolPoint;
     [SerializeField] ParticleSystem m_hatchParticles;
+    [SerializeField] bool canPlayerActivateEggs = true;
 
-    [SerializeField] float m_minimumDistanceToEclosion = 50.0f;
-    [SerializeField] bool m_isEclosionAutomatic = false;
-    [SerializeField] float m_eclosionDuration = 2.0f;
+    [SerializeField] float m_eggDuration = 2.0f;
     Timer m_eventTimer;
+    float m_eclosionDuration;
+    bool m_hasHatched = false;
 
     protected override void Awake() {
         base.Awake();
         m_rb2d = GetComponent<Rigidbody2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
-        m_collider = GetComponent<Collider2D>();
+
     }
 
     protected override void Start() {
@@ -31,9 +32,10 @@ public class Spider : Enemy
             m_leftPatrolPoint = m_rightPatrolPoint;
             m_rightPatrolPoint = provitional;
         }
-        InitializeEclosion();
+        InitializeEggState();
         m_collider.enabled = false;
         m_rb2d.gravityScale = 0;
+        m_eclosionDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_ECLOSION);
     }
 
     protected override void Update() {
@@ -51,6 +53,11 @@ public class Spider : Enemy
             break;
             case ENEMY_STATE.EGG:
             {
+                HandleEgg();
+            }
+            break;
+            case ENEMY_STATE.ECLOSION:
+            {
                 HandleEclosion();
             }
             break;
@@ -59,36 +66,42 @@ public class Spider : Enemy
 
     }
 
-    public void InitializeEclosion(){
+    public void InitializeEggState(){
         m_state = ENEMY_STATE.EGG;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_EGG, false);
-        if(m_isEclosionAutomatic){
-            m_eventTimer.Duration = m_eclosionDuration;
+        if(!canPlayerActivateEggs && m_eggDuration > 0){
+            m_eventTimer.Duration = m_eggDuration;
             m_eventTimer.Run();
         }
     }
 
-    void HandleEclosion(){
-        if(m_isEclosionAutomatic && m_eventTimer.IsFinished){
-            Hatch();
+    void HandleEgg(){
+        if(!canPlayerActivateEggs && m_eggDuration > 0 && m_eventTimer.IsFinished){
+            InitializeEclosion();
         }
-        else if(!m_isEclosionAutomatic){
-            if(Mathf.Abs(Player.Instance.transform.position.x - transform.position.x) < m_minimumDistanceToEclosion){
-                Hatch();
-            }
+    }
+
+    public void InitializeEclosion(){
+        m_state = ENEMY_STATE.ECLOSION;
+        m_hasHatched = true;
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_ECLOSION, false);
+        m_eventTimer.Duration = m_eclosionDuration;
+        m_eventTimer.Restart();
+        SoundManager.Instance.PlayOnce(AudioClipName.EGG_CRACK_1);
+    }
+
+    public void HandleEclosion(){
+        if(m_eventTimer.IsFinished){
+            Hatch();
         }
     }
 
     public void Hatch(){
         m_hatchParticles.Play();
+        transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         m_collider.enabled = true;
         m_rb2d.gravityScale = 1;
         InitializePatrol();
-    }
-
-    public void InitializeEggState(){
-        m_state = ENEMY_STATE.REST;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_EGG, false);
     }
 
     void InitializePatrol(){
@@ -131,6 +144,12 @@ public class Spider : Enemy
         InitializeEggState();
         m_collider.enabled = false;
         m_rb2d.gravityScale = 0;
+        m_hasHatched = false;
+        m_rb2d.velocity = Vector2.zero;
+    }
+
+    public bool CanHatch(){
+        return !m_hasHatched && canPlayerActivateEggs;
     }
 
 }

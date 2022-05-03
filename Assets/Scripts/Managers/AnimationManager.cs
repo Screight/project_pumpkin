@@ -84,6 +84,7 @@ public class AnimationManager : MonoBehaviour
         // SPIDER -------------------------
         m_animationClipName[(int)ANIMATION.SPIDER_WALK] = "spider_Walk";
         m_animationClipName[(int)ANIMATION.SPIDER_EGG] = "spiderEgg";
+        m_animationClipName[(int)ANIMATION.SPIDER_ECLOSION] = "eggEclosion";
 
         // EFFECTS -------------------------
             // ACID BALL
@@ -156,6 +157,7 @@ public class AnimationManager : MonoBehaviour
         // SPIDER ---------------------------
         m_animationHash[(int)ANIMATION.SPIDER_WALK] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_WALK]);
         m_animationHash[(int)ANIMATION.SPIDER_EGG] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_EGG]);
+        m_animationHash[(int)ANIMATION.SPIDER_ECLOSION] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_ECLOSION]);
 
         // EFFECTS ---------------------------
             // ACID BALL

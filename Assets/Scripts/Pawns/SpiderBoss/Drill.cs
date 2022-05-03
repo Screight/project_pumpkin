@@ -15,9 +15,25 @@ public class Drill : MonoBehaviour
     bool m_canDamagePlayer = false;
     bool m_canBeDamaged = false;
 
+    SpriteRenderer m_sprite;
+    float m_damageDuration = 0.2f;
+    Timer m_event;
+
     private void Awake() {
         m_collider = GetComponent<Collider2D>();
         m_spiderBoss = GameObject.FindObjectOfType<SpiderBoss>();
+        m_sprite = GetComponent<SpriteRenderer>();
+        m_event = gameObject.AddComponent<Timer>();
+        m_event.Duration = m_damageDuration;
+    }
+
+    private void Update() {
+        if(!m_event.IsFinished){
+            m_sprite.material.color = Color.Lerp(Color.red, Color.white, m_event.CurrentTime);
+        }
+        else{
+            m_sprite.material.color = Color.white;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D p_collider) {
@@ -40,6 +56,8 @@ public class Drill : MonoBehaviour
         if(!m_canBeDamaged){ return ;}
         m_spiderBoss.Damage(p_damage, m_part);
         Debug.Log(m_part + "DAMAGED");
+        m_sprite.material.color  = Color.red;
+        m_event.Restart();
     }
 
     public bool CanDamagePlayer {
