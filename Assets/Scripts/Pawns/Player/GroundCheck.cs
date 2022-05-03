@@ -31,10 +31,5 @@ public class GroundCheck : MonoBehaviour
             m_playerScript.SetToGrounded(colliderTag);
         }
         bool isPlayerJumping = m_playerScript.State == PLAYER_STATE.JUMP || m_playerScript.State == PLAYER_STATE.BOOST;
-
-        if(colliderTag == "platform" && isPlayerJumping){
-            m_playerScript.HandleOneWayPlatforms();
-        }
     }
-
 }

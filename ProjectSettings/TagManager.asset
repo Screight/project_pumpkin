@@ -29,8 +29,8 @@ TagManager:
   - enemy
   - player
   - obstacle
-  - platform
-  - 
+  - platformPlayer
+  - platformEnemy
   - 
   - 
   - 

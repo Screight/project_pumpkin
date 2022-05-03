@@ -489,7 +489,13 @@ public class Player : AnimatedCharacter
     }
     public bool IsGrounded
     {
-        set { m_isGrounded = value; }
+        set {
+            m_isGrounded = value; 
+            if(m_isGrounded == false){
+                m_objectGroundedTo = "none";
+            }
+        
+        }
         get { return m_isGrounded; }
     }
 
