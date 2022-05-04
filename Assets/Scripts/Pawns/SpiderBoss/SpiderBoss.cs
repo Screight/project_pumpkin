@@ -673,8 +673,9 @@ public class SpiderBoss : AnimatedCharacter
         m_rightDrill.Reset();
         m_headScript.gameObject.SetActive(true);
         m_headScript.Reset();
+
         m_rightArmNormal.SetActive(true);
-        m_leftArmDestroyed.SetActive(false);
+        m_rightArmDestroyed.SetActive(false);
 
         m_leftArmNormal.SetActive(true);
         m_leftArmDestroyed.SetActive(false);
