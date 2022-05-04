@@ -15,7 +15,13 @@ public class Destroy_anim : AnimatedCharacter
     
     UnityEvent m_loseLeg;
 
-    // Start is called before the first frame update
+    
+    
+    protected override void Awake() {
+        base.Awake();
+        m_loseLeg = new UnityEvent();
+    }
+
     void Start()
     {
         leg2_rg = leg2.GetComponent<Rigidbody2D>();
@@ -25,8 +31,6 @@ public class Destroy_anim : AnimatedCharacter
 
         leg2_rg.AddForce(new Vector2(vel, vel*5f));
         leg1_rg.AddForce(new Vector2(vel, vel*5f));
-
-        m_loseLeg = new UnityEvent();
     }
 
     public void AddListenerLoseLeg(UnityAction p_function){
