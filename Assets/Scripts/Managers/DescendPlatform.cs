@@ -9,6 +9,7 @@ public class DescendPlatform : MonoBehaviour
 
     void Start() { m_effector = GetComponent<PlatformEffector2D>();
     Physics2D.IgnoreLayerCollision(7,10, true);
+    Physics2D.IgnoreLayerCollision(1,10, true);
     }
 
     void Update()
@@ -16,7 +17,7 @@ public class DescendPlatform : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow) && Player.Instance.ObjectGroundedTo == "platform") { 
             m_effector.rotationalOffset = 180;
             if(!m_isPlayerInPlatform){
-                Player.Instance.AddImpulse(new Vector2(0, -1));
+                Player.Instance.AddImpulse(new Vector2(0, -0.5f));
                 m_isPlayerInPlatform = true;
             }
             
