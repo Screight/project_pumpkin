@@ -115,7 +115,7 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     private void Update() {
-
+        if (GameManager.Instance.IsGamePaused) { return; }
         if(m_isBossInactive){ return ;}
 
         switch(m_state){

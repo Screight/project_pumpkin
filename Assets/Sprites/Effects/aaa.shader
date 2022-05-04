@@ -4,7 +4,7 @@ Shader "Unlit/aaa"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _NoiseTex ("Noise Texture", 2D) = "white" {}
-        _Intensity("Intensity", Range(0,100)) = 40
+        _Intensity("Intensity", Range(0,1)) = 0.5
         
     }
     SubShader
@@ -40,7 +40,7 @@ Shader "Unlit/aaa"
 
             sampler2D _MainTex, _BackgroundTex, _NoiseTex;
             float4 _MainTex_ST, _BackgroundTex_ST;
-
+            float _Intensity;
 
             v2f vert (appdata v)
             {
@@ -55,9 +55,9 @@ Shader "Unlit/aaa"
                 // sample the texture
                 half4 d = tex2D(_NoiseTex, i.uv);
                 float4 p = i.uv + (d * _Intensity);
-                fixed4 col = tex2Dproj(_BackgroundTex, i.uv);
+                fixed4 col = tex2Dproj(_BackgroundTex, p);
                 fixed4 alpha = tex2D(_MainTex, i.uv);
-                alpha.rgb = 1 - col.rgb;
+                alpha.rgb = col.rgb;
 
                 return alpha;
             }
