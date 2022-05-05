@@ -26,6 +26,7 @@ public class SavePoint : InteractiveItem
             m_sparkles.Play();
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_respawnPoint);
             Debug.Log("<color=red>Saved!</color>");
+            GameManager.Instance.RestorePlayerToFullHealth();
             m_saveCooldown.Run();
         }
     }

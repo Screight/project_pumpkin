@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3d38fd93a8226df8decb07db126943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_room: {fileID: 0}
   m_layerIndex: 0
   m_isTopLimitActive: 1
   m_isBottomLimitActive: 1

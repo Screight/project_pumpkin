@@ -581,6 +581,9 @@ public class SpiderBoss : AnimatedCharacter
                     }*/
                     SoundManager.Instance.StopBackground();
                     Debug.Log("END OF COMBAT");
+                    m_leftDrill.CanDamagePlayer = false;
+                    m_rightDrill.CanDamagePlayer = false;
+                    m_headScript.CanDamagePlayer = false;
                     GameManager.Instance.IsPlayerInSpiderBossFight = false;
                     m_bodyDestroyed.SetActive(true);
                     m_bodyDestroyed.transform.position = transform.position;

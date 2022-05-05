@@ -15,6 +15,7 @@ public class SpiderBossTrigger : InteractiveItem
 
     protected override void HandleInteraction(){
         base.HandleInteraction();
+        if(GameManager.Instance.PlayerHealth <= 0) { return ;}
         for(int i = 0; i < m_doors.Length; i++){
             m_doors[i].CloseDoor();
         }

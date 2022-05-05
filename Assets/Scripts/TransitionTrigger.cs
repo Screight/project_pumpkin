@@ -8,6 +8,7 @@ public class TransitionTrigger : InteractiveItem
     [SerializeField] bool m_isPositive = true;
     [SerializeField] Transform m_finalPosition;
     [SerializeField] Transicion m_transicionScript;
+    [SerializeField] bool m_changeCheckpointToFinalPosition = false;
     protected override void HandleInteraction()
     {
         base.HandleInteraction();
@@ -17,6 +18,9 @@ public class TransitionTrigger : InteractiveItem
         Player.Instance.SetGravityScaleTo0();
         m_transicionScript.FadeIn();
         m_transicionScript.AddListenerToEndOfFadeIn(TransportPlayerToPosition);
+        if(m_changeCheckpointToFinalPosition){
+            CheckpointsManager.Instance.SetGlobalCheckPoint(m_finalPosition);
+        }
     }
 
     void ReturnPlayerToNormal(){

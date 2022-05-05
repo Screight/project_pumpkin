@@ -47,22 +47,6 @@ public class RoomManager : MonoBehaviour
             
         }
 
-        GameObject[] enemiesInWorld = GameObject.FindGameObjectsWithTag("enemy");
-
-        foreach(GameObject enemy in  enemiesInWorld ){
-            Enemy script = enemy.GetComponent<Enemy>();
-            m_rooms[(int)script.Room].AddEnemy(script);
-        }
-
-        GameObject[] vinesInWorld = GameObject.FindGameObjectsWithTag("vine");
-
-        foreach(GameObject vine in  vinesInWorld ){
-            VineDestroyer script = vine.GetComponent<VineDestroyer>();
-            if(script != null && script.RespawnOnRoomCHange){
-                m_rooms[(int)script.Room].AddVine(script);
-            }
-        }
-
         /*for(int i = 0; i < Room.; i++){
             if( m_rooms[i] != null && m_rooms[i].ID != m_currentRoom){
                 m_rooms[i].gameObject.SetActive(false);

@@ -11,6 +11,20 @@ public class Room : MonoBehaviour
     List<Enemy> m_enemies = new List<Enemy>();
     List<VineDestroyer> m_vines = new List<VineDestroyer>();
 
+    private void Awake() {
+        Enemy[] enemies = GetComponentsInChildren<Enemy>();
+
+        foreach(Enemy enemy in enemies){
+            m_enemies.Add(enemy);
+        }
+
+        VineDestroyer[] vines = GetComponentsInChildren<VineDestroyer>();
+
+        foreach(VineDestroyer vine in vines){
+            m_vines.Add(vine);
+        }
+    }
+
     private void OnEnable() {
         //RoomManager.Instance.AddRoom(this);
     }
