@@ -30,6 +30,7 @@ public class Player : AnimatedCharacter
     [SerializeField] float m_maxHeight = 10.0f;
     [SerializeField] float m_timeToPeak1 = 1.0f;
     [SerializeField] float m_timeToPeak2 = 1.0f;
+    [SerializeField] float m_blinkDuration;
     float m_gravity1;
     float m_gravity2;
     float m_initialVelocityY;
@@ -102,6 +103,7 @@ public class Player : AnimatedCharacter
         m_currentSpeedX = m_normalMovementSpeed;
         m_deathDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PLAYER_DEATH);
         m_hurtDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PLAYER_HIT);
+        m_blinkTimer.Duration = m_blinkDuration;
     }
 
     private void Update()
@@ -122,8 +124,8 @@ public class Player : AnimatedCharacter
         {
             if (m_blinkTimer.IsFinished)
             {
-                if (!m_hasBlinked) { m_spriteRenderer.color = new Color(1, 1, 1, 0.5f); }
-                else { m_spriteRenderer.color = new Color(1, 1, 1, 1); }
+                if (!m_hasBlinked) { m_spriteRenderer.color = new Color(255, 255, 255, 1f); }
+                else { m_spriteRenderer.color = new Color(0, 0, 0, 1); }
                 m_hasBlinked = !m_hasBlinked;
                 m_blinkTimer.Run();
             }
@@ -446,6 +448,7 @@ public class Player : AnimatedCharacter
         GameManager.Instance.RestorePlayerToFullHealth();
         CameraManager.Instance.SetCameraToPlayerPosition();
         CameraManager.Instance.ClampCameraToTarget();
+        InitializeIdleState();
         SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.BACKGROUND_1);
         m_transicion.RemoveListenerToEndOfFadeIn(Die);
     }
@@ -462,7 +465,6 @@ public class Player : AnimatedCharacter
 
         m_isInvulnerable = true;
         m_invulnerableTimer.Duration = p_invulnerableDuration;
-        m_blinkTimer.Duration = p_invulnerableDuration;
         m_invulnerableTimer.Run();
         m_noControlTimer.Duration = p_noControlDuration;
         m_noControlTimer.Run();

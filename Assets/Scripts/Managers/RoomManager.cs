@@ -98,7 +98,7 @@ public class RoomManager : MonoBehaviour
                 Player.Instance.ScriptTopImpulse(new Vector2(50,150));
             }
             else{
-                Player.Instance.ScriptFall();
+                //Player.Instance.ScriptFall();
             }
         }
         m_isBeingScripted = true;
