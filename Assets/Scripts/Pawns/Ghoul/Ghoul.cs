@@ -343,8 +343,7 @@ public class Ghoul : Enemy
         base.Reset();
         m_rb2D.gravityScale = 40;
         //m_ghoulState = GHOUL_STATE.IDLE;
-        m_state = ENEMY_STATE.IDLE;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_IDLE, false);
+        InitializePatrol();
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
 
