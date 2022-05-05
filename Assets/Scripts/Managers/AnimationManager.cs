@@ -13,7 +13,7 @@ public class AnimationManager : MonoBehaviour
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
-        else { Destroy(gameObject); }
+        else { Destroy(this); }
     }
 
     int[] m_animationHash = new int[(int)ANIMATION.LAST_NO_USE];

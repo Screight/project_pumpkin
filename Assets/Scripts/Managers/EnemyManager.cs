@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         if(m_instance == null) { m_instance = this; }
-        else { Destroy(this.gameObject); }
+        else { Destroy(this); }
     }
 
     void Start()

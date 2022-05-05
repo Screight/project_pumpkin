@@ -59,7 +59,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
-        else { Destroy(gameObject); }
+        else { Destroy(this); }
 
         for (int i = 0; i < (int)ACTIONS.NUMBER_OF_ACTIONS; i++)
         {

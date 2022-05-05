@@ -23,7 +23,7 @@ public class CheckpointsManager : MonoBehaviour
             m_instance = this;
             
             m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        } else { Destroy(this.gameObject); }
+        } else { Destroy(this); }
 
     }
 

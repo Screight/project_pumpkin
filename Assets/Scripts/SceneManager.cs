@@ -28,7 +28,7 @@ namespace Game{
             DontDestroyOnLoad(this.gameObject);
         }
         else{
-            Destroy(this.gameObject);
+            Destroy(this);
         }
         
     }

@@ -27,7 +27,7 @@ public class RoomManager : MonoBehaviour
 
     private void Awake() {
         if(m_instance == null){ m_instance = this; }
-        else { Destroy(this.gameObject);}
+        else { Destroy(this);}
 
         m_currentRoom = m_initialRoom;
         m_lastRoom = m_initialRoom;

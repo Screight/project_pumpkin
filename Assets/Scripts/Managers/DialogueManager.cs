@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
             m_instance = this;
             Initialize();
         }
-        else { Destroy(gameObject); }
+        else { Destroy(this); }
     }
 
     private void Update()

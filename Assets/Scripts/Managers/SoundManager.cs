@@ -5,16 +5,18 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     static SoundManager m_instance;
-    [SerializeField] AudioSource m_effectsSource;
-    [SerializeField] AudioSource m_backgroundSource;
+    AudioSource m_effectsSource;
+    AudioSource m_backgroundSource;
     AudioClip[] m_audioClips;
     AudioClip[] m_backgroundClips;
+    [SerializeField] float m_startBackgroundVolume = 0.5f;
+    [SerializeField] float m_startEffectsVolume = 0.5f;
 
     // Start is called before the first frame update
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; Initiate(); }
-        else { Destroy(this.gameObject); }
+        else { Destroy(this); }
     }
 
     private void Start()
@@ -26,6 +28,12 @@ public class SoundManager : MonoBehaviour
 
     void Initiate()
     {
+        m_backgroundSource = gameObject.AddComponent<AudioSource>();
+        m_effectsSource = gameObject.AddComponent<AudioSource>();
+
+        m_backgroundSource.volume = m_startBackgroundVolume;
+        m_effectsSource.volume = m_startEffectsVolume;
+
         m_backgroundSource.loop = true;
         m_effectsSource.loop = false;
 
