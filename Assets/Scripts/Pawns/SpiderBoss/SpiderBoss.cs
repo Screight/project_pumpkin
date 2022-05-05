@@ -269,12 +269,12 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     void ActivateLeftDrill(){
-        if(!m_leftDrill.gameObject.activeInHierarchy){ return ;}
+        if(!m_leftDrill.gameObject.activeInHierarchy || m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] <= 0 ){ return ;}
         m_leftDrill.CanDamagePlayer = true;
         m_leftDrill.CanBeDamaged = false;
     }
     void ActivateRightDrill(){
-        if(!m_rightDrill.gameObject.activeInHierarchy){ return ;}
+        if(!m_rightDrill.gameObject.activeInHierarchy || m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] <= 0 ){ return ;}
         m_rightDrill.CanDamagePlayer = true;
         m_rightDrill.CanBeDamaged = false;
     }
@@ -576,9 +576,6 @@ public class SpiderBoss : AnimatedCharacter
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD:
                     InitializeIdleState();
                     m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES];
-                    /*for(int i = 0; i < m_doors.Length; i++){
-                        m_doors[i].OpenDoor();
-                    }*/
                     SoundManager.Instance.StopBackground();
                     Debug.Log("END OF COMBAT");
                     m_leftDrill.CanDamagePlayer = false;
@@ -590,6 +587,12 @@ public class SpiderBoss : AnimatedCharacter
                     m_bodyDestroyed.transform.rotation = transform.rotation;
                     this.gameObject.SetActive(false);
                 break;
+                case SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL:
+                    m_leftDrill.DestroyDrill();
+                    break;
+                case SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL:
+                    m_rightDrill.DestroyDrill();
+                    break;
             }
         }
 

@@ -52,6 +52,14 @@ public class Drill : MonoBehaviour
 
     }
 
+    public void DestroyDrill(){
+        m_canBeDamaged = false;
+        m_canDamagePlayer = false;
+        if(m_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
+            m_sprite.color = Color.grey;
+        }
+    }
+
     public void Damage(float p_damage){
         if(!m_canBeDamaged){ return ;}
         m_spiderBoss.Damage(p_damage, m_part);
@@ -76,6 +84,7 @@ public class Drill : MonoBehaviour
     public void Reset(){
         m_canBeDamaged = false;
         m_canDamagePlayer = false;
+        m_sprite.color = new Color(255, 255, 255);
     }
 
 }
