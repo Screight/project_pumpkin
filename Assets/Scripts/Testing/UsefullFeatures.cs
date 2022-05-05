@@ -10,8 +10,11 @@ public class UsefullFeatures : MonoBehaviour
     [SerializeField] Toggle m_skills;
     [SerializeField] Toggle m_invincible;
 
-    [SerializeField] Transform m_spiderBossEntrance;
-    [SerializeField] Transform m_spiderBossCheckPoint;
+    [SerializeField] Transform m_beginningGame;
+    [SerializeField] Transform m_mine;
+    [SerializeField] Transform m_spiderBossSavePoint;
+    [SerializeField] Transform m_postSpiderBossRoom;
+    [SerializeField] Transform m_fireChamberEntrance;
 
     private void Awake()
     {
@@ -38,12 +41,27 @@ public class UsefullFeatures : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1)){
-            CheckpointsManager.Instance.SetGlobalCheckPoint(m_spiderBossCheckPoint);
-            Player.Instance.transform.position = new Vector3(m_spiderBossEntrance.position.x, m_spiderBossEntrance.position.y, Player.Instance.transform.position.z);
-            CameraManager.Instance.ClampCameraToTarget();
-            GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true);
+            TransportTo(m_beginningGame);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2)){
+            TransportTo(m_mine);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha3)){
+            TransportTo(m_spiderBossSavePoint);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha4)){
+            TransportTo(m_postSpiderBossRoom);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha5)){
+            TransportTo(m_fireChamberEntrance);
         }
 
+    }
+
+    void TransportTo(Transform p_position){
+        Player.Instance.transform.position = new Vector3(p_position.position.x, p_position.position.y, Player.Instance.transform.position.z);
+        CameraManager.Instance.ClampCameraToTarget();
+        GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true);
     }
 
     void SetAreSkillsUnlocked(bool p_value)

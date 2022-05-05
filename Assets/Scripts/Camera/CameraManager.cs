@@ -12,7 +12,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] int m_pixelsPerUnit;
 
     [SerializeField] GameObject m_mainScene;
-    [SerializeField] CameraMovement m_cameraMovementScript;
+    CameraMovement m_cameraMovementScript;
 
     int m_screenWidth;
     int m_screenHeight;
@@ -28,6 +28,7 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         m_camera = Camera.main;
+        m_cameraMovementScript = GetComponent<CameraMovement>();
         m_referenceResolution = new Vector2Int(320, 180);
         m_pixelsPerUnit = 1;
 
