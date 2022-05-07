@@ -10,6 +10,7 @@ public class Drill : MonoBehaviour
     [SerializeField] float m_noControlDuration = 0.4f;
     [SerializeField] float m_invulnerableDuration = 0.2f;
     [SerializeField] int m_damage;
+    [SerializeField] Color m_damageColor;
 
     Collider2D m_collider;
     bool m_canDamagePlayer = false;
@@ -56,7 +57,7 @@ public class Drill : MonoBehaviour
         m_canBeDamaged = false;
         m_canDamagePlayer = false;
         if(m_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD){
-            m_sprite.color = Color.grey;
+            m_sprite.color = m_damageColor;  
         }
     }
 
