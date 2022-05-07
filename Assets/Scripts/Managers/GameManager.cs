@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] Transicion m_transicion;
     [SerializeField] GameObject m_panel;
     // Player stats
     [SerializeField] int PLAYER_MAX_HEALTH;
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
             Player.Instance.HandleDeath();
             SoundManager.Instance.PlayOnce(AudioClipName.RESPAWN);
             if(m_isPlayerInSpiderBossFight){
-                HandlePlayerDeathInSpiderBossBattle();
+                m_transicion.AddListenerToEndOfFadeIn(HandlePlayerDeathInSpiderBossBattle);
             }
         }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void HandlePlayerDeathInSpiderBossBattle(){
         m_spiderBossTrigger.HandlePlayerDeath();
+        m_transicion.RemoveListenerToEndOfTransition(HandlePlayerDeathInSpiderBossBattle);
     }
 
     public bool IsPlayerInSpiderBossFight{

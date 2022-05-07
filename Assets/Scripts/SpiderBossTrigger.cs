@@ -32,7 +32,6 @@ public class SpiderBossTrigger : InteractiveItem
         }
         GameManager.Instance.IsPlayerInSpiderBossFight = false;
         ResetState();
-        // TP PLAYER TO LAST SAVE POINT
     }
 
 }

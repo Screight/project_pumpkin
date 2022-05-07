@@ -637,6 +637,7 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     public void Reset(){
+
         m_isBossInactive = true;
         m_spiderHUD.SetActive(false);
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = m_eyeMaxHealth * NUMBER_OF_EYES;
