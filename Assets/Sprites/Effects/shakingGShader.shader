@@ -3,7 +3,7 @@ Shader "Unlit/shakingGShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Displace ("Displacement Texture", 2D) = "white" {}
+        _Displace ("Displacement Texture", 2D) = "bump" {}
         _strenght("Intensity", Range(0, 1)) = 0.5
         
     }
@@ -34,7 +34,10 @@ Shader "Unlit/shakingGShader"
             };
 
             sampler2D _MainTex, _Displace;
-            float4 _strenght;
+            float4 _Displace_ST, _MainTex_ST;
+            float _strenght;
+            
+
 
             v2f vert (appdata v)
             {
@@ -46,9 +49,10 @@ Shader "Unlit/shakingGShader"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                half4 d = tex2D(_Displace, i.uv);
-                
-                fixed4 col = tex2D(_MainTex, d);
+                _MainTex_ST.x +=  unity_DeltaTime;
+                half4 d = tex2D(_Displace, _MainTex_ST);
+                float4 p = i.uv + (d * _strenght);
+                fixed4 col = tex2D(_MainTex, p);
                 return col;
             }
             ENDCG
