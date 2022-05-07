@@ -73,6 +73,9 @@ public class SpiderBoss : AnimatedCharacter
     [SerializeField] GameObject m_body;
     [SerializeField] GameObject m_splashScreen;
 
+    [SerializeField] float m_splashScreenInitialTime = 0.5f;
+    bool m_hasBattleStarted;
+
     protected override void Awake() {
         base.Awake();
         m_eventTimer = gameObject.AddComponent<Timer>();
@@ -112,11 +115,19 @@ public class SpiderBoss : AnimatedCharacter
         m_leftArmDestroyed.SetActive(false);
         m_rightArmDestroyed.SetActive(false);
         m_bodyDestroyed.SetActive(false);
+
+        m_eventTimer.Duration = m_splashScreenInitialTime;
+        m_eventTimer.Run();
     }
 
     private void Update() {
         if (GameManager.Instance.IsGamePaused) { return; }
         if(m_isBossInactive){ return ;}
+
+        if(!m_hasBattleStarted && m_eventTimer.IsFinished){
+            m_hasBattleStarted = true;
+            m_splashScreen.SetActive(true);
+        }
 
         switch(m_state){
             default: break;
@@ -386,7 +397,7 @@ public class SpiderBoss : AnimatedCharacter
 
         if(!m_hasRoaredFirstTime){
             SoundManager.Instance.PlayOnce(AudioClipName.SPIDER_BOSS_CRY);
-            m_splashScreen.SetActive(true);
+            //m_splashScreen.SetActive(true);
         }
 
         m_eventTimer.Duration = m_roarDuration;
