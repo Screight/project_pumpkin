@@ -593,6 +593,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8676160491615753845, guid: e999d958674dbaa42a92304c93376124, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6491835015273223467, guid: d08e3d6e93a2ddc32829dca4b2d862c9, type: 3}
     - target: {fileID: 8676160491615753847, guid: e999d958674dbaa42a92304c93376124, type: 3}
       propertyPath: m_Name
       value: Samu5
