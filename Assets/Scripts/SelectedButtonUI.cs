@@ -12,11 +12,11 @@ public class SelectedButtonUI : MonoBehaviour, ISelectHandler, IPointerEnterHand
         m_flames.transform.position = transform.position;
     }
 
-         public void OnPointerEnter(PointerEventData eventData)
-     {
-         m_flames.transform.position = transform.position;
-         EventSystem.current.SetSelectedGameObject(null);
-         EventSystem.current.SetSelectedGameObject(this.gameObject);
-     }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        m_flames.transform.position = transform.position;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(this.gameObject);
+    }
 
 }

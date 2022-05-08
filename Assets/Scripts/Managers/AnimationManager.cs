@@ -91,6 +91,11 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.EFFECT_ACID_LOOP] = "acid_ball_loop";
         m_animationClipName[(int)ANIMATION.EFFECT_ACID_EXPLOSION] = "acid_ball_explosion";
 
+            // PORTAL
+        m_animationClipName[(int)ANIMATION.PORTAL_OPEN] = "open";
+        m_animationClipName[(int)ANIMATION.PORTAL_CLOSE] = "close";
+        m_animationClipName[(int)ANIMATION.PORTAL_IDLE] = "idle";
+
     }
 
     private void Start()
@@ -163,6 +168,10 @@ public class AnimationManager : MonoBehaviour
             // ACID BALL
         m_animationHash[(int)ANIMATION.EFFECT_ACID_LOOP] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.EFFECT_ACID_LOOP]);
         m_animationHash[(int)ANIMATION.EFFECT_ACID_EXPLOSION] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.EFFECT_ACID_EXPLOSION]);
+            // PORTAL
+        m_animationHash[(int)ANIMATION.PORTAL_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_IDLE]);
+        m_animationHash[(int)ANIMATION.PORTAL_CLOSE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_CLOSE]);
+        m_animationHash[(int)ANIMATION.PORTAL_OPEN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_OPEN]);
     }    
 
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation, bool p_startAgainIfSameAnimation){
@@ -192,4 +201,17 @@ public class AnimationManager : MonoBehaviour
         }
         return -1;
     }
+
+    public float GetClipDuration(Animator p_animator, ANIMATION p_animation)
+    {
+        foreach (AnimationClip animationClip in p_animator.runtimeAnimatorController.animationClips)
+        {
+            if (animationClip.name == m_animationClipName[(int)p_animation])
+            {
+                return animationClip.length;
+            }
+        }
+        return -1;
+    }
+
 }

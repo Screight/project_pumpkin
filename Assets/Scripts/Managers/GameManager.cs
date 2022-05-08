@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsGamePaused {
         get { return m_isGamePaused; }
+        set { m_isGamePaused = value;}
     }
 
     public void HandlePlayerDeathInSpiderBossBattle(){

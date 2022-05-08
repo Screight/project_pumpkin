@@ -41,7 +41,7 @@ public abstract class InteractiveItem : MonoBehaviour
         m_isPlayerInside = true;
         if (!m_isAutomatic)
         {
-            m_icon.SetActive(true);
+            if(m_icon != null) {m_icon.SetActive(true); }
             Player.Instance.IsInsideActiveInteractiveZone = true;
         }
     }
@@ -49,7 +49,7 @@ public abstract class InteractiveItem : MonoBehaviour
     protected virtual void OnTriggerExit2D(Collider2D p_collider)
     {
         if (!p_collider.CompareTag(m_pawnActivationTag)) { return; }
-        if (!m_isAutomatic) { m_icon.SetActive(false); }
+        if (!m_isAutomatic && m_icon != null) { m_icon.SetActive(false); }
 
         m_isPlayerInside = false;
         if (m_isAutomatic && !m_isOneUseOnly) { m_hasBeenUsed = false; }
