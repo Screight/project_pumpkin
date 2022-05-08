@@ -32,7 +32,6 @@ public class DialogueTrigger : InteractiveItem
         {
             base.HandleInteraction();
             m_dialogue.StartDialogueEvent();
-            gameObject.SetActive(false);
         }
     }
 }

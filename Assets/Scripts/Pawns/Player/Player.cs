@@ -328,8 +328,7 @@ public class Player : AnimatedCharacter
 
     public void ResetPlayer(PLAYER_STATE p_state, ANIMATION p_animationState)
     {
-        m_state = p_state;
-        AnimationManager.Instance.PlayAnimation(this, p_animationState, false);
+        InitializeIdleState();
         m_isGrounded = false;
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_rb2D.velocity = Vector2.zero;
@@ -386,7 +385,7 @@ public class Player : AnimatedCharacter
     {
         ResetPlayer(PLAYER_STATE.IDLE, ANIMATION.PLAYER_IDLE);
         m_isBeingScripted = true;
-        Physics2D.IgnoreLayerCollision(6, 7, true);
+        Physics2D.IgnoreLayerCollision(6, 7, false);
     }
     public void FacePlayerToRight()
     {

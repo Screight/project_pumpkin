@@ -9,6 +9,16 @@ public class TransitionTrigger : InteractiveItem
     [SerializeField] Transform m_finalPosition;
     [SerializeField] Transicion m_transicionScript;
     [SerializeField] bool m_changeCheckpointToFinalPosition = false;
+    [SerializeField] ZONE m_destinationZone = ZONE.MINE;
+    MiniMap m_miniMap;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        m_transicionScript = GameObject.FindObjectOfType<Transicion>();
+        m_miniMap = GameObject.FindObjectOfType<MiniMap>();
+    }
+
     protected override void HandleInteraction()
     {
         base.HandleInteraction();
@@ -21,6 +31,7 @@ public class TransitionTrigger : InteractiveItem
         if(m_changeCheckpointToFinalPosition){
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_finalPosition);
         }
+        GameManager.Instance.CurrentZone = m_destinationZone;
     }
 
     void ReturnPlayerToNormal(){

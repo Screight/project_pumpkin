@@ -67,7 +67,6 @@ public class Transicion : MonoBehaviour
     private void EndTransicion()
     {
         m_currentState = m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN];
-        RoomManager.Instance.StartPlayerScripting();
         CameraManager.Instance.SetCameraToNormal();
         m_endOfTransitionEvent.Invoke();
     }

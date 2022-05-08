@@ -24,7 +24,7 @@ public class GroundCheck : MonoBehaviour
             if(m_playerScript.State == PLAYER_STATE.FALL && m_playerScript.State != PLAYER_STATE.ATTACK) {
                 m_playerScript.State = PLAYER_STATE.LAND;
                 AnimationManager.Instance.PlayAnimation(m_playerScript, ANIMATION.PLAYER_LAND, false);
-            }else if (m_playerScript.State != PLAYER_STATE.LAND){
+            }else if (m_playerScript.State != PLAYER_STATE.LAND && m_playerScript.State != PLAYER_STATE.MOVE){
                 AnimationManager.Instance.PlayAnimation(m_playerScript, ANIMATION.PLAYER_IDLE, false);
             }
             if(m_playerScript.State == PLAYER_STATE.GROUNDBREAKER){

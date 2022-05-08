@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     // SPIDER BOSS ------------------
     SpiderBossTrigger m_spiderBossTrigger;
     bool m_isPlayerInSpiderBossFight = false;
+
+    ZONE m_currentZone = ZONE.FOREST;
+
     private void Awake()
     {
         if (m_instance == null)
@@ -79,7 +82,10 @@ public class GameManager : MonoBehaviour
         m_healthUI.SetHealth(m_playerHealth);
     }
 
-    public float PlayerAttackDamage { get { return m_playerAttackDamage; } }
+    public float PlayerAttackDamage {
+        get { return m_playerAttackDamage; } 
+        set { m_playerAttackDamage = value; }
+    }
     public int PlayerHealth { get { return m_playerHealth;}}
 
     public bool GetIsSkillAvailable(SKILLS p_skill)
@@ -111,15 +117,21 @@ public class GameManager : MonoBehaviour
         set { m_isPlayerInvincible = value; }
     }
 
-    public bool IsGamePaused {
-        get { return m_isGamePaused; }
-        set {
-            m_isGamePaused = value;
-            if(m_isGamePaused == false){
+    public void SetGameToPaused(bool p_isPaused, bool p_activatePanel){
+        m_isGamePaused = p_isPaused;
+        if(m_isGamePaused == false){
                 InputManager.Instance.PauseInputFor1Frame();
             }
-            m_panel.SetActive(m_isGamePaused);
+        if(p_activatePanel && p_isPaused){
+            m_panel.SetActive(true);
+        }else{
+            m_panel.SetActive(false);
         }
+        
+    }
+
+    public bool IsGamePaused {
+        get { return m_isGamePaused; }
     }
 
     public void HandlePlayerDeathInSpiderBossBattle(){
@@ -129,6 +141,11 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlayerInSpiderBossFight{
         set { m_isPlayerInSpiderBossFight = value; }
+    }
+
+    public ZONE CurrentZone {
+        get{ return m_currentZone; }
+        set { m_currentZone = value;}
     }
 
 }

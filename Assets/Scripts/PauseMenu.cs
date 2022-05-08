@@ -14,8 +14,11 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.Instance.PauseButtonPressed && !m_isGamePaused && !m_isGameInCutscene) { Pause(); }
-        else if (InputManager.Instance.PauseButtonPressed && m_isGamePaused) { UnPause(); }
+        if (InputManager.Instance.PauseButtonPressed && !GameManager.Instance.IsGamePaused && !m_isGameInCutscene) { 
+            Pause(); 
+            }
+        else if (InputManager.Instance.PauseButtonPressed && m_isGamePaused) { 
+            UnPause(); }
     }
 
     public void Pause()
@@ -23,7 +26,7 @@ public class PauseMenu : MonoBehaviour
         MenuManager.Instance.GoTo(1);
         Time.timeScale = 0;
         m_isGamePaused = true;
-        GameManager.Instance.IsGamePaused = true;
+        GameManager.Instance.SetGameToPaused(true, true);
         m_interface.SetActive(false);
     }
 
@@ -32,7 +35,8 @@ public class PauseMenu : MonoBehaviour
         MenuManager.Instance.GoTo(0);
         Time.timeScale = 1;
         m_isGamePaused = false;
-        GameManager.Instance.IsGamePaused = false; m_interface.SetActive(true);
+        GameManager.Instance.SetGameToPaused(false, false);
+        m_interface.SetActive(true);
     }
 
     public bool IsCutScenePlaying { set { m_isGameInCutscene = value; } }
