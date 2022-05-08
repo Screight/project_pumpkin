@@ -50,7 +50,7 @@ public class DialogueEvent : MonoBehaviour
 
         if ((m_cutscene != null && m_cutscene.state != PlayState.Playing) || (m_cutscene != null && m_cutSceneStart != null && m_cutSceneStart.PlayerCanMove) || m_cutscene == null) { Player.Instance.StopScripting(); }
         else { Player.Instance.SetPlayerToScripted(); }
-        Player.Instance.State = PLAYER_STATE.IDLE;        
+        Player.Instance.StopScripting();      
     }
 
     public Dialogue Dialogue{ get { return m_dialogue;} }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class InteractiveItem : MonoBehaviour
 {
+    [SerializeField] bool m_showIconAlways = false;
     [SerializeField] string m_pawnActivationTag = "Player";
     [SerializeField] protected GameObject m_icon;
     protected bool m_canPlayerInteract = true;
@@ -31,7 +32,7 @@ public abstract class InteractiveItem : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (m_icon != null) { m_icon.SetActive(false); }
+        if (m_icon != null && !m_showIconAlways) { m_icon.SetActive(false); }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D p_collider)

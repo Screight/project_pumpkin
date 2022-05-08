@@ -19,6 +19,9 @@ TagManager:
   - HUD
   - spiderBoss
   - transitionTrigger
+  - Mine
+  - Forest
+  - Tutorial
   layers:
   - Default
   - TransparentFX

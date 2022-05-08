@@ -39,7 +39,7 @@ public class Parallax : MonoBehaviour
             newOffSetY = m_offSetY[i] * mainSceneDepth / mainSceneDepth;
 
             
-                m_parallaxLayers[i].transform.localScale = new Vector3(newScale, newScale, m_parallaxLayers[i].transform.localScale.z);
+            m_parallaxLayers[i].transform.localScale = new Vector3(newScale, newScale, m_parallaxLayers[i].transform.localScale.z);
             m_parallaxLayers[i].transform.position = new Vector3(m_parallaxLayers[i].transform.position.x, newOffSetY + m_parallaxLayers[i].transform.position.y, m_layerDepth[i] + mainSceneDepth);
             
 
