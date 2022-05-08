@@ -74,7 +74,11 @@ public class DialogueManager : MonoBehaviour
             {
                 if (m_currentNumberOfCharactersPrinted <= m_currentSentece.Length)
                 {
+                    //Write letter
                     m_textUI.text = m_currentSentece.Substring(0, m_currentNumberOfCharactersPrinted);
+                    if (Random.Range(1, 3) == 1) { SoundManager.Instance.PlayOnce(AudioClipName.DIALOGUECLIC1); }
+                    else { SoundManager.Instance.PlayOnce(AudioClipName.DIALOGUECLIC2); }
+
                     for (int i = m_currentNumberOfCharactersPrinted; i < m_currentSentece.Length; i++)
                     {
                         m_textUI.text += " ";
