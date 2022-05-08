@@ -51,7 +51,8 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.LOW_HP] = Resources.Load<AudioClip>("Sound/Ura1HearthLeftSFX");
         m_audioClips[(int)AudioClipName.GROUNDBREAKER] = Resources.Load<AudioClip>("Sound/UraGroundbreakerSFX");
         m_audioClips[(int)AudioClipName.URA_HIT_1] = Resources.Load<AudioClip>("Sound/UraCrunch1");
-        m_audioClips[(int)AudioClipName.URA_HIT_2] = Resources.Load<AudioClip>("Sound/UraCrunch2");m_audioClips[(int)AudioClipName.URA_HIT_3] = Resources.Load<AudioClip>("Sound/UraCrunch3");
+        m_audioClips[(int)AudioClipName.URA_HIT_2] = Resources.Load<AudioClip>("Sound/UraCrunch2");
+        m_audioClips[(int)AudioClipName.URA_HIT_3] = Resources.Load<AudioClip>("Sound/UraCrunch3");
         m_audioClips[(int)AudioClipName.URA_HIT_4] = Resources.Load<AudioClip>("Sound/UraCrunch4");
         m_audioClips[(int)AudioClipName.JUMP_1] = Resources.Load<AudioClip>("Sound/jump1");
         m_audioClips[(int)AudioClipName.JUMP_2] = Resources.Load<AudioClip>("Sound/jump2");
@@ -75,6 +76,8 @@ public class SoundManager : MonoBehaviour
         m_backgroundClips[(int)BACKGROUND_CLIP.BACKGROUND_1] = Resources.Load<AudioClip>("Sound/haunted");
         m_backgroundClips[(int)BACKGROUND_CLIP.SPIDER_BOSS] = Resources.Load<AudioClip>("Sound/BattleBGM2");
 
+        m_audioClips[(int)AudioClipName.DIALOGUECLIC1] = Resources.Load<AudioClip>("Sound/DialogueClic1");
+        m_audioClips[(int)AudioClipName.DIALOGUECLIC2] = Resources.Load<AudioClip>("Sound/DialogueClic2");
     }
 
     public void PlayOnce(AudioClipName p_name)
@@ -88,19 +91,12 @@ public class SoundManager : MonoBehaviour
         m_backgroundSource.Play();
     }
 
-    public void StopBackground(){
-        m_backgroundSource.Stop();
-    }
+    public void StopBackground() { m_backgroundSource.Stop(); }
 
-    public void SetBackgroundVolume(float p_volume){
-        m_backgroundSource.volume = p_volume; 
-    }
+    public void SetBackgroundVolume(float p_volume) { m_backgroundSource.volume = p_volume; }
 
-    public void SetEffectsVolume(float p_volume){
-        m_effectsSource.volume = p_volume;
-    }
+    public void SetEffectsVolume(float p_volume) { m_effectsSource.volume = p_volume; }
 
     public float EffectVolume { get { return m_effectsSource.volume; }}
     public float BackgroundVolume { get { return m_backgroundSource.volume; }}
-
 }
