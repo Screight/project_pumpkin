@@ -31,7 +31,7 @@ Transform:
   - {fileID: 3822405867502990105}
   - {fileID: 7688277654962404853}
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &610222118142234688
 MonoBehaviour:
@@ -1880,40 +1880,32 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3832654671427721866}
     m_ColliderPaths:
-    - - X: 1600000100
-        Y: -960000041
-      - X: 1600000100
-        Y: 960000041
-      - X: 1600000041
-        Y: 960000100
-      - X: -1600000041
-        Y: 960000100
-      - X: -1600000100
-        Y: 960000041
-      - X: -1600000100
-        Y: -960000041
-      - X: -1600000041
-        Y: -960000100
-      - X: 1600000041
-        Y: -960000100
-    - - X: -1439999900
-        Y: -479999900
-      - X: -1439999900
-        Y: 639999900
-      - X: 1439999900
-        Y: 639999900
-      - X: 1439999900
-        Y: -479999900
+    - - X: 1600000000
+        Y: 960000000
+      - X: -1600000000
+        Y: 960000000
+      - X: -1600000000
+        Y: -960000000
+      - X: 1600000000
+        Y: -960000000
+    - - X: -1440000000
+        Y: -480000000
+      - X: -1440000000
+        Y: 640000000
+      - X: 1440000000
+        Y: 640000000
+      - X: 1440000000
+        Y: -480000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 159.99997, y: -96.000015}
-      - {x: 159.99997, y: 96.000015}
-      - {x: -160.00002, y: 95.99998}
-      - {x: -159.99997, y: -96.000015}
-    - - {x: 143.99998, y: -47.99996}
-      - {x: -143.99998, y: -47.99996}
-      - {x: -143.99997, y: 63.99999}
-      - {x: 143.99998, y: 63.99996}
+    - - {x: 159.99997, y: -96}
+      - {x: 159.99997, y: 96}
+      - {x: -160, y: 95.99997}
+      - {x: -159.99997, y: -96}
+    - - {x: 144, y: -47.999973}
+      - {x: -144, y: -47.999973}
+      - {x: -143.99997, y: 64}
+      - {x: 144, y: 63.99997}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!1 &1459036385952568861
@@ -1946,7 +1938,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &4553398951334054877
 BoxCollider2D:
@@ -2029,7 +2021,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &4782978982497014803
 Tilemap:
@@ -2150,7 +2142,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &3378475856672047047
 Tilemap:
@@ -2929,7 +2921,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5078897197622274080
 GameObject:
@@ -2992,7 +2984,7 @@ Transform:
   m_Children:
   - {fileID: 4231451057480981749}
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &9067765900536204304
 Tilemap:
@@ -3914,7 +3906,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &5965290344553011214
 Tilemap:
@@ -4296,23 +4288,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  m_TileSpriteArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  m_TileSpriteArray: []
   m_TileMatrixArray:
   - m_RefCount: 17
     m_Data:
@@ -4498,7 +4474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &7429462530457834977
 Tilemap:
@@ -4616,7 +4592,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 11
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &5264285086990403216
 Tilemap:
@@ -4733,6 +4709,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6108566126423172438}
+  - {fileID: 8063927968977172675}
   - {fileID: 940559828513925285}
   - {fileID: 8154787401172874799}
   - {fileID: 8272125535124603358}
@@ -4743,7 +4720,6 @@ Transform:
   - {fileID: 4439063353464760146}
   - {fileID: 5668219548252335305}
   - {fileID: 5405660493070857230}
-  - {fileID: 8063927968977172675}
   - {fileID: 1553887136467108758}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -4790,7 +4766,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &9045386395721051383
 Tilemap:
@@ -4808,7 +4784,7 @@ Tilemap:
   m_TileColorArray: []
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.34901962, g: 0.34901962, b: 0.34901962, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
   m_Size: {x: 0, y: 0, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -4908,7 +4884,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6838679535322873139}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &2513199274012571588
 Tilemap:
