@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
 
 public class weakPlatformDestroyer : MonoBehaviour
 {
@@ -12,12 +9,12 @@ public class weakPlatformDestroyer : MonoBehaviour
     private GameObject player;
     private Player playerScript;
     [SerializeField] Material shake_mat;
-    [SerializeField] Material def_mat;
-    
+    [SerializeField] Material def_mat;    
 
     private void Awake() 
     {
         platformSprite = GetComponent<TilemapRenderer>();
+        platform_render = GetComponent<Tilemap>();
     }
     private void Start()
     {
@@ -30,23 +27,20 @@ public class weakPlatformDestroyer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "groundCheck" )  
+        if (collision.gameObject.CompareTag("groundCheck"))
         {
             platformSprite.material = shake_mat;
 
-            if (playerScript.State == PLAYER_STATE.GROUNDBREAKER) {
-
-                platform_render.color = Color.Lerp(Color.white, Color.red, 10.0f);
-                Destroy(gameObject, 0.1f); }
+            if (playerScript.State == PLAYER_STATE.GROUNDBREAKER || collision.name == "Samu5")
+            {
+                platform_render.color = Color.Lerp(Color.white, Color.red, 0.1f);
+                Destroy(gameObject, 0.2f);
+            }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-       
+    private void OnTriggerExit2D(Collider2D collision)
+    {      
             platformSprite.material = def_mat;
-        
-
     }
 }
-
