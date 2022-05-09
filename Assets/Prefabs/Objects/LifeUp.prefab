@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_showIconAlways: 1
   m_pawnActivationTag: Player
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 1781185314}
   m_isOneUseOnly: 1
   m_isAutomatic: 1
 --- !u!58 &4201788219846972934
