@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6122273917770918791}
   - component: {fileID: 4936022523227576325}
   - component: {fileID: 3358700523362442930}
+  - component: {fileID: 1405403384}
   m_Layer: 0
   m_Name: GroundBreakerRune
   m_TagString: Untagged
@@ -83,6 +84,23 @@ MonoBehaviour:
   m_isOneUseOnly: 1
   m_isAutomatic: 1
   m_CutSceneStart: {fileID: 0}
+--- !u!114 &1405403384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122273917770918843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169b8486e9c469f28b1a7a92b81f3d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_showIconAlways: 0
+  m_pawnActivationTag: Player
+  m_icon: {fileID: 7978531013163943587}
+  m_isOneUseOnly: 1
+  m_isAutomatic: 1
 --- !u!1 &7978531013163943587
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +172,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 98d19e95235cab44c85de5523bc66337, type: 3}
+  m_Sprite: {fileID: 3221727244973381097, guid: 8eac4237185718f40a99a0d4cf9f8a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
