@@ -10,7 +10,7 @@ public class AttackUp : InteractiveItem
     {
         if(m_hasBeenPicked){ return; }
         base.HandleInteraction();
-        GameManager.Instance.PlayerAttackDamage++;
+        GameManager.Instance.AddAttackDamage();
         SoundManager.Instance.PlayOnce(AudioClipName.ITEM_PICK_UP);
         m_hasBeenPicked = true;
     }

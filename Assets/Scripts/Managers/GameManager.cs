@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] Transicion m_transicion;
+    Transicion m_transicion;
+    MiniMapInterface m_miniMapInterface;
     [SerializeField] GameObject m_panel;
     // Player stats
     [SerializeField] int PLAYER_MAX_HEALTH;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         m_panel.SetActive(false);
         m_spiderBossTrigger = FindObjectOfType<SpiderBossTrigger>();
         m_transicion= FindObjectOfType<Transicion>();
+        m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
     }
 
     static public GameManager Instance
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
 
     public void GainExtraHeart(){
         PLAYER_MAX_HEALTH++;
+        m_miniMapInterface.AddHeart();
         m_healthUI.GainExtraHeart();
     }
 
@@ -85,8 +88,13 @@ public class GameManager : MonoBehaviour
 
     public float PlayerAttackDamage {
         get { return m_playerAttackDamage; } 
-        set { m_playerAttackDamage = value; }
     }
+
+    public void AddAttackDamage(){
+        m_playerAttackDamage += 0.5f;
+        m_miniMapInterface.AddAttack();
+    }
+
     public int PlayerHealth { get { return m_playerHealth;}}
 
     public bool GetIsSkillAvailable(SKILLS p_skill)
@@ -101,7 +109,7 @@ public class GameManager : MonoBehaviour
         {
             default: break;
             case SKILLS.FIRE_BALL:
-                { m_spellCooldown.SetFireballUI(p_value); }
+                { m_spellCooldown.SetFireballUI(p_value);}
                 break;
             case SKILLS.GROUNDBREAKER:
                 { m_spellCooldown.SetGroundbreakerUI(p_value); }
@@ -110,6 +118,7 @@ public class GameManager : MonoBehaviour
                 { m_spellCooldown.SetPilarUI(p_value); }
                 break;
         }
+        m_miniMapInterface.UpdateSpirits();
     }
 
     public bool PlayerInvincible
