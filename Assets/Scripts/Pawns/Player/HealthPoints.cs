@@ -48,6 +48,12 @@ public class HealthPoints : MonoBehaviour
     }
 
     public void GainExtraHeart(){
+
+        float cameraSize = Camera.main.scaledPixelWidth;
+
+        m_separationBetweenHearts = cameraSize * (m_cameraSeparation/100)
+        ;
+
         GameObject gameobject = Instantiate(m_life);
         gameobject.transform.SetParent(this.gameObject.transform);
         gameobject.transform.position = transform.position;

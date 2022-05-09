@@ -93,9 +93,13 @@ public class SoundManager : MonoBehaviour
 
     public void StopBackground() { m_backgroundSource.Stop(); }
 
-    public void SetBackgroundVolume(float p_volume) { m_backgroundSource.volume = p_volume; }
+    public void SetBackgroundVolume(float p_volume) {
+        if(m_backgroundSource == null) { return ;}
+        m_backgroundSource.volume = p_volume; }
 
-    public void SetEffectsVolume(float p_volume) { m_effectsSource.volume = p_volume; }
+    public void SetEffectsVolume(float p_volume) {
+        if(m_effectsSource == null) { return;}
+        m_effectsSource.volume = p_volume; }
 
     public float EffectVolume { get { return m_effectsSource.volume; }}
     public float BackgroundVolume { get { return m_backgroundSource.volume; }}

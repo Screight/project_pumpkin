@@ -25,6 +25,7 @@ public class TransitionTrigger : InteractiveItem
         
         Player.Instance.SetPlayerToScripted();
         m_transicionScript.AddListenerToEndOfTransition(ReturnPlayerToNormal);
+        GameManager.Instance.IsGamePaused = true;
         Player.Instance.SetGravityScaleTo0();
         m_transicionScript.FadeIn();
         m_transicionScript.AddListenerToEndOfFadeIn(TransportPlayerToPosition);
@@ -44,6 +45,7 @@ public class TransitionTrigger : InteractiveItem
             Player.Instance.StopScripting();
         }
         m_transicionScript.RemoveListenerToEndOfTransition(ReturnPlayerToNormal);
+        GameManager.Instance.IsGamePaused = false;
     }
 
     void TransportPlayerToPosition(){
