@@ -39,9 +39,10 @@ public class GameManager : MonoBehaviour
         m_playerHealth = PLAYER_MAX_HEALTH;
         m_isSkillAvailable = new bool[(int)SKILLS.LAST_NO_USE];
         for (int i = 0; i < m_isSkillAvailable.Length; i++) { m_isSkillAvailable[i] = false; }
-        m_spellCooldown = GameObject.FindObjectOfType<SpellCooldown>();
+        m_spellCooldown = FindObjectOfType<SpellCooldown>();
         m_panel.SetActive(false);
-        m_spiderBossTrigger = GameObject.FindObjectOfType<SpiderBossTrigger>();
+        m_spiderBossTrigger = FindObjectOfType<SpiderBossTrigger>();
+        m_transicion= FindObjectOfType<Transicion>();
     }
 
     static public GameManager Instance
