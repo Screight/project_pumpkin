@@ -13,14 +13,16 @@ public class MiniMap : MonoBehaviour
 
     [SerializeField] Image m_playerIcon;
     [SerializeField] GameObject m_background;
-    [SerializeField] Vector2 m_distanceFromCenter = Vector2.zero;
+    [SerializeField]  Vector2 m_desiredDistanceFromCenter = Vector2.zero;
+    Vector2 m_distanceFromCenter = Vector2.zero;
 
     int m_currentActiveRoom = -1;
 
     Dictionary<int,int> m_roomsDictionary;
     Image[] m_rooms;
     Room[] m_roomsScript;
-    [SerializeField] float m_scale = 10;
+    [SerializeField] float m_desiredScale = 10;
+    float m_scale = 10;
     Vector2[] m_initialPositionTransformToTopLeftCorner = new Vector2[(int)ZONE.LAST_NO_USE];
 
     float[] m_topLimit = new float[(int)ZONE.LAST_NO_USE];
@@ -31,6 +33,11 @@ public class MiniMap : MonoBehaviour
     bool m_isMapActive = false;
 
     private void Start() {
+
+        // 320 es la anchura de referencia
+        m_scale = m_desiredScale / Screen.width * 320;
+        m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
+        m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
 
         Room[] rooms = GameObject.FindObjectsOfType<Room>();
 
@@ -51,6 +58,7 @@ public class MiniMap : MonoBehaviour
         HideMap();
         m_background.SetActive(false);
         m_title.transform.position += new Vector3(m_distanceFromCenter.x, m_distanceFromCenter.y, 0);
+        
     }
 
     void CreateMapForEachZone(Room[] p_room, ZONE p_zone){
@@ -104,6 +112,11 @@ public class MiniMap : MonoBehaviour
     }
 
     private void Update() {
+
+        m_scale = m_desiredScale / Screen.width * 320;
+        m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
+        m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
+
         if(Input.GetKeyDown(KeyCode.M) && !m_isMapActive && !GameManager.Instance.IsGamePaused){
             SetActiveZone(GameManager.Instance.CurrentZone);
             m_background.SetActive(true);

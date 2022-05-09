@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     SpiderBossTrigger m_spiderBossTrigger;
     bool m_isPlayerInSpiderBossFight = false;
 
-    ZONE m_currentZone = ZONE.FOREST;
+    ZONE m_currentZone = ZONE.MINE;
 
     private void Awake()
     {
