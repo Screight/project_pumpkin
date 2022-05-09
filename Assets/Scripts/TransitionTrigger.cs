@@ -15,8 +15,8 @@ public class TransitionTrigger : InteractiveItem
     protected override void Awake()
     {
         base.Awake();
-        m_transicionScript = GameObject.FindObjectOfType<Transicion>();
-        m_miniMap = GameObject.FindObjectOfType<MiniMap>();
+        m_transicionScript = FindObjectOfType<Transicion>();
+        m_miniMap = FindObjectOfType<MiniMap>();
     }
 
     protected override void HandleInteraction()
