@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Skill_Groundbreaker : MonoBehaviour
 {
+    [SerializeField] Transform m_groundBreakerPosition;
     [SerializeField] SpellCooldown m_spellCooldownScript;
     float m_cooldown = 3.0f;
     [SerializeField] float m_maxSpeed;
@@ -74,6 +75,7 @@ public class Skill_Groundbreaker : MonoBehaviour
                 }
             }
             SoundManager.Instance.PlayOnce(AudioClipName.GROUNDBREAKER);
+            m_impactAnimator.gameObject.transform.position = new Vector3(m_groundBreakerPosition.position.x, m_groundBreakerPosition.position.y, transform.position.z);
             m_impactAnimator.Play(m_animationHash);
             m_isUsingGroundBreaker = false;
             m_player.IsUsingGroundBreaker = false;
