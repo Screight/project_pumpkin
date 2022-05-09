@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 5011528157432656284}
   - component: {fileID: 9195413931672185363}
   - component: {fileID: 9106534996935188437}
+  - component: {fileID: 1207271738}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -177,6 +178,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1207271738
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677773521151491302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3500fafd775c5fb9398ec7f6b0b759af, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2780162854289956514
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +767,7 @@ GameObject:
   - component: {fileID: 4742479233601358866}
   - component: {fileID: 5318750767842075560}
   - component: {fileID: 8275913647070881928}
+  - component: {fileID: 456761451}
   m_Layer: 0
   m_Name: Groundbreaker
   m_TagString: Untagged
@@ -811,6 +832,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &456761451
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5505192662684997968}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 99fa1731d404367d9ac352c9dc7150c8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5597708747600233352
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.39607844}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.79607844}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1062,6 +1102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4946535812782690840}
+  - component: {fileID: 1849220697}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1087,6 +1128,23 @@ Transform:
   m_Father: {fileID: 8260706694395842063}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1849220697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085016204046844386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4de8177c9c8f3bb428cae1620bea06d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hearts: {fileID: 5639365300490920345}
+  m_attack: {fileID: 2471518311245357758}
+  m_fireSpirit: {fileID: 677773521151491302}
+  m_darkSpirit: {fileID: 7230606183741708584}
+  m_groundbreakerRune: {fileID: 5505192662684997968}
 --- !u!1 &7122548713199670994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,8 +1196,8 @@ MonoBehaviour:
   m_activeRoom: {r: 0.66564363, g: 0.8867924, b: 0.50614095, a: 1}
   m_playerIcon: {fileID: 2555741549865154154}
   m_background: {fileID: 7085016204046844386}
-  m_desiredDistanceFromCenter: {x: 0, y: 0}
-  m_desiredScale: 10
+  m_desiredDistanceFromCenter: {x: 32, y: -16}
+  m_desiredScale: 30
 --- !u!1 &7230606183741708584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,6 +1209,7 @@ GameObject:
   - component: {fileID: 7816935859630632224}
   - component: {fileID: 6367823373032459351}
   - component: {fileID: 2947575742864768596}
+  - component: {fileID: 1299930137}
   m_Layer: 0
   m_Name: Dark
   m_TagString: Untagged
@@ -1215,3 +1274,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1299930137
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7230606183741708584}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a5ed5368ddcde5fcb918336c721de3c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
