@@ -71,7 +71,7 @@ public class Player : AnimatedCharacter
     protected override void Awake() {
 
         base.Awake();
-
+        m_transicion = GameObject.FindObjectOfType<Transicion>();
         Physics2D.IgnoreLayerCollision(6,1,true);
 
         if (m_instance == null) { m_instance = this; }

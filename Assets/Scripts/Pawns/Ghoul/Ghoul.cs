@@ -29,6 +29,10 @@ public class Ghoul : Enemy
     [SerializeField] float m_chargeDistance = 50.0f;
     float m_attackDuration;
 
+    private void OnEnable() {
+        InitializePatrol();
+    }
+
     protected override void Awake()
     {
         base.Awake();
