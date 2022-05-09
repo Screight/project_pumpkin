@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc693580b38e962eae609310e4935cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dialogue: {fileID: 11400000, guid: 3d9ddf45e2e8be44d9642b78de63af81, type: 2}
+  m_dialogue: {fileID: 11400000, guid: d45b03cb813e56847973d8420790d037, type: 2}
   m_cutscene: {fileID: 0}
   m_cutSceneStart: {fileID: 0}
 --- !u!114 &3358700523362442930
@@ -78,9 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acbb0652b08ee547bd5596a361c28ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_showIconAlways: 0
+  m_showIconAlways: 1
   m_pawnActivationTag: Player
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 7978531013163943587}
   m_isOneUseOnly: 1
   m_isAutomatic: 1
   m_CutSceneStart: {fileID: 0}
@@ -96,11 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169b8486e9c469f28b1a7a92b81f3d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_showIconAlways: 0
+  m_showIconAlways: 1
   m_pawnActivationTag: Player
   m_icon: {fileID: 7978531013163943587}
   m_isOneUseOnly: 1
   m_isAutomatic: 1
+  m_dialogue: {fileID: 4936022523227576325}
 --- !u!1 &7978531013163943587
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7978531013163943586}
   - component: {fileID: 7978531013163943589}
+  - component: {fileID: 1300679659}
   m_Layer: 0
   m_Name: icon
   m_TagString: Untagged
@@ -169,8 +171,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1767787731
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 3221727244973381097, guid: 8eac4237185718f40a99a0d4cf9f8a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -183,3 +185,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1300679659
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978531013163943587}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b446e1deb03db0945b305d44b48f5c46, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

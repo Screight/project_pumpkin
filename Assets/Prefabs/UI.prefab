@@ -1622,11 +1622,12 @@ MonoBehaviour:
   m_isPlayerInvincible: 0
   m_skills: {fileID: 5351944887183287238}
   m_invincible: {fileID: 8060844643721294786}
-  m_beginningGame: {fileID: 0}
+  m_darkForestTP: {fileID: 0}
   m_mine: {fileID: 0}
-  m_spiderBossSavePoint: {fileID: 0}
-  m_postSpiderBossRoom: {fileID: 0}
+  m_AracneSavePoint: {fileID: 0}
+  m_postAracneRoom: {fileID: 0}
   m_fireChamberEntrance: {fileID: 0}
+  m_groundBreakerTP: {fileID: 0}
 --- !u!1 &6704418547876232978
 GameObject:
   m_ObjectHideFlags: 0

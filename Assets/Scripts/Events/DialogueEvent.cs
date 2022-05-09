@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Events;
 
 public class DialogueEvent : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class DialogueEvent : MonoBehaviour
     protected int m_dialogueCount = 0;
     protected int m_eventCount = 0;
     protected bool m_isEventActive = false;
+    UnityEvent m_dialogueFinish;
 
     [SerializeField] protected Dialogue m_dialogue;
     [SerializeField] protected PlayableDirector m_cutscene;
@@ -18,6 +18,8 @@ public class DialogueEvent : MonoBehaviour
 
     protected virtual void Awake()
     {
+        m_dialogueFinish= new UnityEvent();
+
         m_cutscene = GetComponentInParent<PlayableDirector>();
         m_eventTriggered = new bool[m_dialogue.GetNumberOfSentences()];
         for (int i = 0; i < m_eventTriggered.Length; i++) { m_eventTriggered[i] = false; }
@@ -50,8 +52,11 @@ public class DialogueEvent : MonoBehaviour
 
         if ((m_cutscene != null && m_cutscene.state != PlayState.Playing) || (m_cutscene != null && m_cutSceneStart != null && m_cutSceneStart.PlayerCanMove) || m_cutscene == null) { Player.Instance.StopScripting(); }
         else { Player.Instance.SetPlayerToScripted(); }
-        Player.Instance.StopScripting();      
+        Player.Instance.StopScripting();
+        m_dialogueFinish.Invoke();
     }
+    public void addListenerToDialogueFinish(UnityAction function) { m_dialogueFinish.AddListener(function); }
+    public void removeListenerToDialogueFinish(UnityAction function) { m_dialogueFinish.RemoveListener(function); }
 
     public Dialogue Dialogue{ get { return m_dialogue;} }
 }
