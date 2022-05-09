@@ -141,11 +141,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 540352104}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 1326, y: -914, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2483708738412794923}
-  m_RootOrder: 3
+  m_Father: {fileID: 6054658956129048168}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &540352107
 SpriteRenderer:
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 538339855
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -246,7 +246,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2483708738412794923}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &6504446220883785272
 CapsuleCollider2D:
@@ -264,6 +264,36 @@ CapsuleCollider2D:
   m_Offset: {x: 1, y: 1.25}
   m_Size: {x: 8, y: 0.5}
   m_Direction: 1
+--- !u!1 &1481022274570083630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7303557891537376539}
+  m_Layer: 7
+  m_Name: groundBreakerDustPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7303557891537376539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481022274570083630}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.64, y: 0.26, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2483708738412794923}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1636297835735910063
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +356,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2483708738412794923}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &320940415025695442
 CircleCollider2D:
@@ -382,7 +412,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 538339855
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -459,7 +489,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2483708738412794923}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5648406238162979362
 BoxCollider2D:
@@ -556,7 +586,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 538339855
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f95e9592d8fb9a04db0237b713b8d860, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -669,7 +699,7 @@ Transform:
   - {fileID: 4363923602384240776}
   - {fileID: 6054658956474028517}
   m_Father: {fileID: 6054658956129048168}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6054658956129048169
 GameObject:
@@ -701,6 +731,7 @@ Transform:
   m_Children:
   - {fileID: 2483708738412794923}
   - {fileID: 514142223}
+  - {fileID: 540352105}
   - {fileID: 6054658956108164524}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -763,10 +794,10 @@ Transform:
   - {fileID: 5559658922750157610}
   - {fileID: 6862410078162418334}
   - {fileID: 8100820308285545279}
-  - {fileID: 540352105}
   - {fileID: 589468387329552510}
   - {fileID: 8347023987580299525}
   - {fileID: 5304695136914559546}
+  - {fileID: 7303557891537376539}
   m_Father: {fileID: 6054658956129048168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -808,7 +839,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1767787731
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 1659573616651085283, guid: fe210f5e23ee6514ebbf2171d96da3bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -899,6 +930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cffe7a2d974c3a4eb5ac944b18fdea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_groundBreakerPosition: {fileID: 7303557891537376539}
   m_spellCooldownScript: {fileID: 0}
   m_maxSpeed: -260
   m_impactAnimator: {fileID: 540352106}
@@ -960,6 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43a03844a7810e259e6e1e0409d3eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_transicion: {fileID: 0}
   m_attackScript: {fileID: 2589283986949262958}
   m_collider: {fileID: 7814695433631215369}
   m_normalMovementSpeed: 60
@@ -967,12 +1000,12 @@ MonoBehaviour:
   m_maxHeight: 55
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
+  m_blinkDuration: 0
   m_moveTowardsOneWayPlatform: 40
   m_dashDuration: 0.5
   m_dashDistance: 75
   m_dashDustScript: {fileID: 514142220}
   m_pushAwayOnProjectileHitVelocity: {x: -50, y: 100}
-  m_transicionScrDamageipt: {fileID: 0}
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0
