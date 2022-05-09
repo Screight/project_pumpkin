@@ -10,7 +10,8 @@ public class MiniMap : MonoBehaviour
     [SerializeField] Color m_unVisitedRoom;
     [SerializeField] Color m_visitedRoom;
     [SerializeField] Color m_activeRoom;
-
+    [SerializeField] float m_desiredIconScale = 5.0f;
+    float m_iconScale;
     [SerializeField] Image m_playerIcon;
     [SerializeField] GameObject m_background;
     [SerializeField]  Vector2 m_desiredDistanceFromCenter = Vector2.zero;
@@ -23,6 +24,7 @@ public class MiniMap : MonoBehaviour
     Room[] m_roomsScript;
     [SerializeField] float m_desiredScale = 10;
     float m_scale = 10;
+    Vector2 m_iconInitialSize;
     Vector2[] m_initialPositionTransformToTopLeftCorner = new Vector2[(int)ZONE.LAST_NO_USE];
 
     float[] m_topLimit = new float[(int)ZONE.LAST_NO_USE];
@@ -38,6 +40,10 @@ public class MiniMap : MonoBehaviour
         m_scale = m_desiredScale / Screen.width * 320;
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
+
+        RectTransform rectTransform = m_playerIcon.GetComponent<RectTransform>();
+        m_iconInitialSize = rectTransform.sizeDelta;
+        m_iconScale = m_desiredIconScale / Screen.width * 320;
 
         Room[] rooms = GameObject.FindObjectsOfType<Room>();
 
@@ -141,7 +147,10 @@ public class MiniMap : MonoBehaviour
     }
 
     void PositionPlayerInMap(){
+        m_iconScale = m_desiredIconScale / Screen.width * 320;
         RectTransform rectTransform = m_playerIcon.GetComponent<RectTransform>();
+
+        rectTransform.sizeDelta = new Vector2(m_iconInitialSize.x/m_iconScale, m_iconInitialSize.y/m_iconScale);
 
         float leftToCenter = Screen.width/2 - (m_rightLimit[(int)GameManager.Instance.CurrentZone] - m_leftLimit[(int)GameManager.Instance.CurrentZone])/(2*m_scale);
         float topToCenter = Screen.height/2 - (m_topLimit[(int)GameManager.Instance.CurrentZone] - m_bottomLimit[(int)GameManager.Instance.CurrentZone])/(2*m_scale);
