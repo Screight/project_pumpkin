@@ -37,6 +37,7 @@ public class MiniMap : MonoBehaviour
     private void Start() {
 
         // 320 es la anchura de referencia
+        
         m_scale = m_desiredScale / Screen.width * 320;
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
@@ -50,14 +51,15 @@ public class MiniMap : MonoBehaviour
         m_roomsDictionary = new Dictionary<int,int>();
         m_rooms = new Image[rooms.Length];
         m_roomsScript = new Room[rooms.Length];
-
-        for(int i = 0; i < (int)ZONE.LAST_NO_USE; i++){
+        
+        for (int i = 0; i < (int)ZONE.LAST_NO_USE; i++){
             m_topLimit[i] = -100000;
             m_bottomLimit[i] = 100000;
             m_rightLimit[i] = -100000;
             m_leftLimit[i] = 100000;
             CreateMapForEachZone(rooms, (ZONE)i);
         }
+        
 
         m_playerIcon.transform.SetAsLastSibling();
 
@@ -106,6 +108,7 @@ public class MiniMap : MonoBehaviour
             
         m_rooms[p_indexInArray].sprite = m_sprite;
         m_rooms[p_indexInArray].color = m_unVisitedRoom;
+        m_rooms[p_indexInArray].type = Image.Type.Sliced;
 
         RectTransform rectTransform = m_rooms[p_indexInArray].gameObject.GetComponent<RectTransform>();
 
@@ -115,6 +118,7 @@ public class MiniMap : MonoBehaviour
         float topToCenter = Screen.height/2 - (m_topLimit[(int)p_zone] - m_bottomLimit[(int)p_zone])/(2*m_scale);
 
         rectTransform.position = new Vector2((p_room.transform.position.x + p_room.GetRoomOffSetX() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].x)/m_scale + leftToCenter + m_distanceFromCenter.x, (p_room.transform.position.y + p_room.GetRoomOffSetY() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].y)/m_scale  + Screen.height - topToCenter + m_distanceFromCenter.y);
+
     }
 
     private void Update() {
