@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efce5ef35059c54cb3c930fefbd5766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_transicion: {fileID: 0}
   m_panel: {fileID: 0}
   PLAYER_MAX_HEALTH: 3
   m_healthUI: {fileID: 0}
@@ -118,8 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c0503a41f662641928d4a48c40e02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_initialRoom: 0
-  m_transicionScript: {fileID: 0}
 --- !u!114 &7177820135721099047
 MonoBehaviour:
   m_ObjectHideFlags: 0

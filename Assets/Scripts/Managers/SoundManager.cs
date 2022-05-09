@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -12,16 +10,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] float m_startBackgroundVolume = 0.5f;
     [SerializeField] float m_startEffectsVolume = 0.5f;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; Initiate(); }
         else { Destroy(this); }
-    }
-
-    private void Start()
-    {
-        
     }
 
     public static SoundManager Instance { get { return m_instance; } private set { } }
@@ -74,7 +66,7 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.RESPAWN] = Resources.Load<AudioClip>("Sound/RespawnSFX");
 
         m_backgroundClips[(int)BACKGROUND_CLIP.BACKGROUND_1] = Resources.Load<AudioClip>("Sound/haunted");
-        m_backgroundClips[(int)BACKGROUND_CLIP.SPIDER_BOSS] = Resources.Load<AudioClip>("Sound/BattleBGM2");
+        m_backgroundClips[(int)BACKGROUND_CLIP.SPIDER_BOSS] = Resources.Load<AudioClip>("Sound/AracneTheme");
 
         m_audioClips[(int)AudioClipName.DIALOGUECLIC1] = Resources.Load<AudioClip>("Sound/DialogueClic1");
         m_audioClips[(int)AudioClipName.DIALOGUECLIC2] = Resources.Load<AudioClip>("Sound/DialogueClic2");
@@ -93,13 +85,17 @@ public class SoundManager : MonoBehaviour
 
     public void StopBackground() { m_backgroundSource.Stop(); }
 
-    public void SetBackgroundVolume(float p_volume) {
-        if(m_backgroundSource == null) { return ;}
-        m_backgroundSource.volume = p_volume; }
+    public void SetBackgroundVolume(float p_volume)
+    {
+        if (m_backgroundSource == null) { return; }
+        m_backgroundSource.volume = p_volume;
+    }
 
-    public void SetEffectsVolume(float p_volume) {
-        if(m_effectsSource == null) { return;}
-        m_effectsSource.volume = p_volume; }
+    public void SetEffectsVolume(float p_volume)
+    {
+        if (m_effectsSource == null) { return; }
+        m_effectsSource.volume = p_volume;
+    }
 
     public float EffectVolume { get { return m_effectsSource.volume; }}
     public float BackgroundVolume { get { return m_backgroundSource.volume; }}
