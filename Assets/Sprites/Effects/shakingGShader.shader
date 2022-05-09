@@ -6,16 +6,18 @@ Shader "Unlit/shakingGShader"
         _Displace ("Displacement Texture", 2D) = "bump" {}
         _strenght("Intensity", Range(0, 1)) = 0.5
 
-        _ScrollSpeeds("Scroll Speeds", vector) = (-5, 0, 0, 0)
+        _ScrollSpeeds("Scroll Speeds", vector) = (00, 0, 0, 0)
         
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque"
+        "Queue"="Transparent"}
         LOD 100
-
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
