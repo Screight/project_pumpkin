@@ -31,20 +31,25 @@ public class HealthPoints : MonoBehaviour
             m_hearts.Add(gameobject);
 
         }
-        SetHealth(GameManager.Instance.PlayerHealth);
+
+        for(int i = 0; i < GameManager.Instance.PlayerHealth; i++){
+            m_hearts[i].GetComponent<LifeUra>().GainHeart();
+        }
     }
 
-    public void SetHealth(int p_value)
-    {
-        
-        Sprite sprite;
-        m_numberofHearts = p_value;
-        for( int i = 0; i < m_hearts.Count; i++)
-        {
-            if (i < m_numberofHearts) { sprite = m_fullHeart; }
-            else { sprite = m_emptyHeart; }
-            m_hearts[i].GetComponent<Image>().sprite = sprite;
+    public void RestoreHeart(){
+        m_hearts[GameManager.Instance.PlayerHealth - 1].GetComponent<LifeUra>().GainHeart();
+    }
+
+    public void RestoreAllHearts(){
+        for(int i =0; i < GameManager.Instance.PlayerMaxHealth; i++){
+            m_hearts[i].GetComponent<LifeUra>().GainHeart();
         }
+    }
+
+    public void LoseHeart()
+    {
+        m_hearts[GameManager.Instance.PlayerHealth].GetComponent<LifeUra>().LoseHeart();
     }
 
     public void GainExtraHeart(){

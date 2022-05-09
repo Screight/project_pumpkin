@@ -96,6 +96,9 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.PORTAL_CLOSE] = "close";
         m_animationClipName[(int)ANIMATION.PORTAL_IDLE] = "idle";
 
+        m_animationClipName[(int)ANIMATION.LIFE_URA_UP] = "lifeUra";
+        m_animationClipName[(int)ANIMATION.LIFE_URA_DOWN] = "lifeUraDown";
+
     }
 
     private void Start()
@@ -172,6 +175,9 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.PORTAL_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_IDLE]);
         m_animationHash[(int)ANIMATION.PORTAL_CLOSE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_CLOSE]);
         m_animationHash[(int)ANIMATION.PORTAL_OPEN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_OPEN]);
+
+        m_animationHash[(int)ANIMATION.LIFE_URA_DOWN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.LIFE_URA_DOWN]);
+        m_animationHash[(int)ANIMATION.LIFE_URA_UP] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.LIFE_URA_UP]);
     }    
 
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation, bool p_startAgainIfSameAnimation){

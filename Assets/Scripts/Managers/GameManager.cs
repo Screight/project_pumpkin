@@ -71,7 +71,16 @@ public class GameManager : MonoBehaviour
         }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
 
-        m_healthUI.SetHealth(m_playerHealth);
+        if(p_amount > 0){
+            for(int i = 0; i <  m_playerHealth; i++){
+                m_healthUI.RestoreHeart();
+            }
+        }
+        else if(p_amount < 0){
+            for(int i = 0; i <=  m_playerHealth; i++){
+                m_healthUI.LoseHeart();
+            }
+        }
     }
 
     public void GainExtraHeart(){
@@ -83,7 +92,7 @@ public class GameManager : MonoBehaviour
     public void RestorePlayerToFullHealth()
     {
         m_playerHealth = PLAYER_MAX_HEALTH;
-        m_healthUI.SetHealth(m_playerHealth);
+        m_healthUI.RestoreAllHearts();
     }
 
     public float PlayerAttackDamage {
