@@ -17,11 +17,11 @@ public class HandleSettings : MonoBehaviour
 
     public void SetBackgroundVolume()
     {
-        SoundManager.Instance.SetBackgroundVolume(m_backgroundVolumeLevel.value);
+        if (m_backgroundVolumeLevel != null) { SoundManager.Instance.SetBackgroundVolume(m_backgroundVolumeLevel.value); }
     }
 
     public void SetEffectsVolume()
     {
-        SoundManager.Instance.SetEffectsVolume(m_effectsVolumeLevel.value);
+        if (m_effectsVolumeLevel != null) { SoundManager.Instance.SetEffectsVolume(m_effectsVolumeLevel.value); }
     }
 }
