@@ -385,7 +385,7 @@ public class Player : AnimatedCharacter
     {
         ResetPlayer(PLAYER_STATE.IDLE, ANIMATION.PLAYER_IDLE);
         m_isBeingScripted = true;
-        Physics2D.IgnoreLayerCollision(6, 7, false);
+        Physics2D.IgnoreLayerCollision(6, 7, true);
     }
     public void FacePlayerToRight()
     {
@@ -404,7 +404,7 @@ public class Player : AnimatedCharacter
         m_isBeingScripted = false;
         ResetPlayer(m_state, m_animationState);
         m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
-        Physics2D.IgnoreLayerCollision(6, 7, true);
+        Physics2D.IgnoreLayerCollision(6, 7, false);
     }
 
     public void SetPlayerToPosition(Vector3 p_position) { transform.position = p_position; }
