@@ -1866,40 +1866,32 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3832654671427721866}
     m_ColliderPaths:
-    - - X: 1600000100
-        Y: -960000041
-      - X: 1600000100
-        Y: 960000041
-      - X: 1600000041
-        Y: 960000100
-      - X: -1600000041
-        Y: 960000100
-      - X: -1600000100
-        Y: 960000041
-      - X: -1600000100
-        Y: -960000041
-      - X: -1600000041
-        Y: -960000100
-      - X: 1600000041
-        Y: -960000100
-    - - X: -1439999900
-        Y: -479999900
-      - X: -1439999900
-        Y: 639999900
-      - X: 1439999900
-        Y: 639999900
-      - X: 1439999900
-        Y: -479999900
+    - - X: 1600000000
+        Y: 960000000
+      - X: -1600000000
+        Y: 960000000
+      - X: -1600000000
+        Y: -960000000
+      - X: 1600000000
+        Y: -960000000
+    - - X: -1440000000
+        Y: -480000000
+      - X: -1440000000
+        Y: 640000000
+      - X: 1440000000
+        Y: 640000000
+      - X: 1440000000
+        Y: -480000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 159.99997, y: -96.000015}
-      - {x: 159.99997, y: 96.000015}
-      - {x: -160.00002, y: 95.99998}
-      - {x: -159.99997, y: -96.000015}
-    - - {x: 143.99998, y: -47.99996}
-      - {x: -143.99998, y: -47.99996}
-      - {x: -143.99997, y: 63.99999}
-      - {x: 143.99998, y: 63.99996}
+    - - {x: 159.99997, y: -96}
+      - {x: 159.99997, y: 96}
+      - {x: -160, y: 95.99997}
+      - {x: -159.99997, y: -96}
+    - - {x: 144, y: -47.999973}
+      - {x: -144, y: -47.999973}
+      - {x: -143.99997, y: 64}
+      - {x: 144, y: 63.99997}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!1 &1459036385952568861
@@ -4639,6 +4631,10 @@ GameObject:
   - component: {fileID: 8063927968977172675}
   - component: {fileID: 5264285086990403216}
   - component: {fileID: 3357823817007459816}
+  - component: {fileID: 2434884471145661206}
+  - component: {fileID: 2310715931263927208}
+  - component: {fileID: 7016721200039282535}
+  - component: {fileID: 1154005256695738978}
   m_Layer: 0
   m_Name: Breakable Ground
   m_TagString: Untagged
@@ -4746,6 +4742,79 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!19719996 &2434884471145661206
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6887508703190249693}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
+--- !u!50 &2310715931263927208
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6887508703190249693}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &7016721200039282535
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6887508703190249693}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths: []
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+--- !u!114 &1154005256695738978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6887508703190249693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a308dc4b96e5d4da0467beb0b989d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shake_mat: {fileID: 2100000, guid: a771e551c4e3e0d43a39ce2cf5a7e18b, type: 2}
+  def_mat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &6907476885852085848
 GameObject:
   m_ObjectHideFlags: 0
