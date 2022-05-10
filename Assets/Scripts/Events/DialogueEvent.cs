@@ -52,7 +52,6 @@ public class DialogueEvent : MonoBehaviour
 
         if ((m_cutscene != null && m_cutscene.state != PlayState.Playing) || (m_cutscene != null && m_cutSceneStart != null && m_cutSceneStart.PlayerCanMove) || m_cutscene == null) { Player.Instance.StopScripting(); }
         else { Player.Instance.SetPlayerToScripted(); }
-        Player.Instance.StopScripting();
         m_dialogueFinish.Invoke();
     }
     public void addListenerToDialogueFinish(UnityAction function) { m_dialogueFinish.AddListener(function); }
