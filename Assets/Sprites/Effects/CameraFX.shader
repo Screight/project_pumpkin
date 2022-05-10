@@ -5,7 +5,8 @@ Shader "Unlit/CameraFX"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color("CutOff color", Color) = (1,1,1,1)
+        _Color1("CutOff color1", Color) = (1,1,1,1)
+        _Color2("CutOff color2", Color) = (1,1,1,1)
         _Cutoff ("Cutoff value", Range(0,1)) = 0.5
         _Displacement ("Displacement Texture", 2D)=  "white"{}
     }
@@ -40,7 +41,7 @@ Shader "Unlit/CameraFX"
             };
 
             sampler2D _MainTex, _Displacement;
-            float4 _MainTex_ST, _Color;
+            float4 _MainTex_ST, _Color1, _Color2;
             float _Cutoff;
 
             v2f vert (appdata v)
@@ -54,12 +55,19 @@ Shader "Unlit/CameraFX"
             fixed4 frag(v2f i) : SV_Target
             {
                fixed4 transit = tex2D(_Displacement, i.uv);
-            fixed2 dir = normalize(float2((transit.r - 0.5) * 2, (transit.g - 0.5) * 2));
+            fixed2 dir = normalize(float2(0, (transit.g - 0.5) * 2));
             fixed4 col = tex2D(_MainTex, i.uv + _Cutoff * dir);
-                if (transit.b < _Cutoff)
-                return _Color;
-
-            return col;
+            if (transit.b < _Cutoff) {
+                if (transit.r > 0.2) {
+                    return _Color1;
+                }
+                else {
+                    return _Color2;
+                }
+            }
+            else{
+                return col;
+            }
             }
             ENDCG
         }
