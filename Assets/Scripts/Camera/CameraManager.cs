@@ -29,6 +29,11 @@ public class CameraManager : MonoBehaviour
     {
         m_camera = Camera.main;
         m_cameraMovementScript = GetComponent<CameraMovement>();
+        if (m_cameraMovementScript == null) 
+        { 
+            gameObject.AddComponent<CameraMovement>();
+            m_cameraMovementScript = GetComponent<CameraMovement>();
+        }
         m_referenceResolution = new Vector2Int(320, 180);
         m_pixelsPerUnit = 1;
 

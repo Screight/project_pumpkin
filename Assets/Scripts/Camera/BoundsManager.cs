@@ -20,9 +20,8 @@ public class BoundsManager : MonoBehaviour
     private void Awake() {
 
         if (m_instance == null) { m_instance = this; }
-        else { Destroy(this.gameObject); }
+        else { Destroy(gameObject); }
 
-        m_cameraMovementScript = Camera.main.GetComponent<CameraMovement>();
         //m_mainBoundsScript = m_mainBounds.GetComponent<CameraBound>();
 
         m_limitsList = new List<Limit>[(int)DIRECTION.LAST_NO_USE];
@@ -37,11 +36,9 @@ public class BoundsManager : MonoBehaviour
         m_defaultLimit = new HeightLimit(-1000000, 0, 0);
         m_currentHeightLimit = m_defaultLimit;
     }
-
-    // Start is called before the first frame update
     void Start()
     {
-        
+        m_cameraMovementScript = Camera.main.GetComponent<CameraMovement>();
     }
 
     /*void SetLimitsToMainBounds()
