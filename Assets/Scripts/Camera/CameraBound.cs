@@ -129,14 +129,12 @@ public class CameraBound : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D p_collider)
     {
-        if (p_collider.tag != "transitionTrigger") { return; }
+        if (!p_collider.CompareTag("transitionTrigger")) { return; }
         for (int i = 0; i < (int)DIRECTION.LAST_NO_USE; i++)
         {
             if (m_limitsActive[i]) { BoundsManager.Instance.AddLimit(m_limits[i]); }
         }
-        if(m_isCameraRestrictedInY){
-            BoundsManager.Instance.AddHeightLimit(m_heighLimit);
-        }
+        if (m_isCameraRestrictedInY) { BoundsManager.Instance.AddHeightLimit(m_heighLimit); }
         BoundsManager.Instance.UpdateBoundsSimple();
         CameraManager.Instance.ClampCameraToTarget();
     }
@@ -144,9 +142,8 @@ public class CameraBound : MonoBehaviour
     private void OnTriggerExit2D(Collider2D p_collider)
     {
         if (p_collider.tag != "transitionTrigger") { return; }
-        return ;
-        BoundsManager.Instance.DeleteLimits(m_ID);
-        BoundsManager.Instance.UpdateBounds();
+        //BoundsManager.Instance.DeleteLimits(m_ID);
+        //BoundsManager.Instance.UpdateBounds();
     }
 
     public Limit TopLimit { get { return m_limits[(int)DIRECTION.TOP]; } }
@@ -154,7 +151,8 @@ public class CameraBound : MonoBehaviour
     public Limit LeftLimit { get { return m_limits[(int)DIRECTION.LEFT]; } }
     public Limit RightLimit { get { return m_limits[(int)DIRECTION.RIGHT]; } }
 
-    public float GetMinimumPositionForCameraMovement(){
+    public float GetMinimumPositionForCameraMovement()
+    {
         return m_minimumHeightForCameraMovement + m_boundsCollider.bounds.min.y;
     }
 

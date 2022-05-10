@@ -14,7 +14,6 @@ public class Transicion : MonoBehaviour
     int[] m_animationHash = new int[(int)TRANSITION_ANIMATION.LAST_NO_USE];
 
     Timer m_scriptPlayerTimer;
-    bool m_isBeingScripted = false;
 
     Animator m_animator;
     int m_currentState;
@@ -37,15 +36,6 @@ public class Transicion : MonoBehaviour
         m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN] = Animator.StringToHash(m_emptyScreenAnimationName);
     }
 
-    private void Update()
-    {
-        /*if (m_isBeingScripted && m_scriptPlayerTimer.IsFinished)
-        {
-            Player.Instance.StopScripting();
-            m_isBeingScripted = false;
-        }*/
-    }
-
     void ChangeAnimationState(TRANSITION_ANIMATION p_newState)
     {
         if (m_currentState == m_animationHash[(int)p_newState]) { return; }   // stop the same animation from interrupting itself
@@ -59,10 +49,7 @@ public class Transicion : MonoBehaviour
         ChangeAnimationState(TRANSITION_ANIMATION.FADE_IN);
     }
 
-    private void ClampCamera()
-    {
-        m_endOfFadeInEvent.Invoke();
-    }
+    private void ClampCamera() { m_endOfFadeInEvent.Invoke(); }
 
     private void EndTransicion()
     {
@@ -71,20 +58,23 @@ public class Transicion : MonoBehaviour
         m_endOfTransitionEvent.Invoke();
     }
 
-    public void AddListenerToEndOfTransition(UnityAction p_function){
+    public void AddListenerToEndOfTransition(UnityAction p_function)
+    {
         m_endOfTransitionEvent.AddListener(p_function);
     }
 
-    public void RemoveListenerToEndOfTransition(UnityAction p_function){
+    public void RemoveListenerToEndOfTransition(UnityAction p_function)
+    {
         m_endOfTransitionEvent.RemoveListener(p_function);
     }
 
-    public void AddListenerToEndOfFadeIn(UnityAction p_function){
+    public void AddListenerToEndOfFadeIn(UnityAction p_function)
+    {
         m_endOfFadeInEvent.AddListener(p_function);
     }
 
-    public void RemoveListenerToEndOfFadeIn(UnityAction p_function){
+    public void RemoveListenerToEndOfFadeIn(UnityAction p_function)
+    {
         m_endOfFadeInEvent.RemoveListener(p_function);
     }
-
 }

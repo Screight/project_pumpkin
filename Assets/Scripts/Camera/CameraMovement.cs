@@ -4,43 +4,40 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    GameObject m_player;
-    Player m_playerScript;
-    Rigidbody2D m_rb2DPlayer;
+    private GameObject m_player;
+    private Player m_playerScript;
+    private Rigidbody2D m_rb2DPlayer;
 
     [SerializeField] float m_dampSpeedUp = 0.3f;
     [SerializeField] float m_dampSpeedDown = 0.1f;
     [SerializeField] float m_dampSpeedMovement = 0.3f;
     [SerializeField] float m_maxSpeedX = 150.0f;
     [SerializeField] float m_maxSpeedY = 50.0f;
-    float m_currentMaxSpeedY;
-    float m_dampSpeedX;
-    float m_dampSpeedY;
+    private float m_currentMaxSpeedY;
+    private float m_dampSpeedX;
+    private float m_dampSpeedY;
 
     [SerializeField] float m_offsetX = 20.0f;
     [SerializeField] float m_offsetY = 0.0f;
-    [SerializeField] float m_offsetAddUpY = 20.0f;
+    private Vector3 m_velocityX = Vector3.zero;
+    private Vector3 m_velocityY = Vector3.zero;
+    private Vector3 m_targetPosition;
 
-    Vector3 m_velocityX = Vector3.zero;
-    Vector3 m_velocityY = Vector3.zero;
+    private float m_topLimit    = float.MaxValue;
+    private float m_bottomLimit = float.MaxValue;
+    private float m_leftLimit   = float.MaxValue;
+    private float m_rightLimit  = float.MaxValue;
 
-    Vector3 m_targetPosition;
+    private float m_cameraWidth;
+    private float m_cameraHeight;
+    private bool m_isCameraStatic = false;
+    private bool m_clampCamera = false;
 
-    float m_topLimit    = float.MaxValue;
-    float m_bottomLimit = float.MaxValue;
-    float m_leftLimit   = float.MaxValue;
-    float m_rightLimit  = float.MaxValue;
-
-    float m_cameraWidth;
-    float m_cameraHeight;
-    bool m_isCameraStatic = false;
-    bool m_clampCamera = false;
-
-    float m_minimumHeightForCameraMovement = -10000000;
+    private float m_minimumHeightForCameraMovement = -10000000;
 
     private void Awake() { m_player = GameObject.FindGameObjectWithTag("Player"); }
 
-    void Start()
+    private void Start()
     {
         m_rb2DPlayer = m_player.GetComponent<Rigidbody2D>();
         m_playerScript = Player.Instance;
