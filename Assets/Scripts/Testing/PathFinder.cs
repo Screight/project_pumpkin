@@ -221,7 +221,7 @@ public class PathFinder : MonoBehaviour
     public Vector2 GetDirection() { return m_direction; }
     public bool IsFinished() { return m_currentNodeIndex == m_targetNode; }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         // DRAW CURRENT PATH
         if (!m_graphSearch.IsTargetFound) { return; }
@@ -247,5 +247,5 @@ public class PathFinder : MonoBehaviour
             }
         }
     }
-    */
+    
 }

@@ -20,6 +20,8 @@ public class FlyingPatrolMonster : Enemy
         m_rb2D = GetComponent<Rigidbody2D>();
         m_pathFinder = GetComponent<PathFinder>();
         m_collider = GetComponent<Collider2D>();
+        m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_DIE);
+        m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_HIT);
     }
 
     protected override void Start() {
@@ -44,8 +46,6 @@ public class FlyingPatrolMonster : Enemy
             m_isInitialized = true;
         }
 
-        FaceToDirection();
-
         switch(m_state){
             default: break;
             case ENEMY_STATE.PATROL:
@@ -53,6 +53,7 @@ public class FlyingPatrolMonster : Enemy
             break;
 
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, Player.Instance.transform.position.z);
     }
 
 
@@ -62,14 +63,18 @@ public class FlyingPatrolMonster : Enemy
         //m_pathFinder.SnapToClosestNode();
         m_pathFinder.SetTargetNode(m_patrolPoint_2.position);
         m_isGoingFrom1To2 = true;
+        FaceToDirection();
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_MOVE, false);
     }
 
     void Patrol()
     {
+        
         m_pathFinder.NavigateToTargetPosition();
         if (m_pathFinder.IsFinished()) {
-             SwapPatrolTarget(); }
+            SwapPatrolTarget();
+        }
+        FaceToDirection();
     }
 
         void SwapPatrolTarget()
@@ -90,9 +95,19 @@ public class FlyingPatrolMonster : Enemy
 
     public override void Damage(float p_damage)
     {
-        if(m_state == ENEMY_STATE.DEATH) { return ;}
-        m_state = ENEMY_STATE.HIT;
+        base.Damage(p_damage);
+        if(m_health <= 0) {
+            m_rb2D.velocity = Vector2.zero;
+            //m_rb2D.gravityScale = 20;
+            m_state = ENEMY_STATE.DEATH;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_DIE, true);
+            return ;
+        }
+        else{
+            m_state = ENEMY_STATE.HIT;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_HIT, true);
+        }
+        
         
     }
 
@@ -105,11 +120,11 @@ public class FlyingPatrolMonster : Enemy
             return;
         }
         m_rb2D.velocity = Vector2.zero;
-        m_state = ENEMY_STATE.PATROL;
+        InitializePatrol();
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_MOVE, false);
     }
 
-    void FaceToDirection(){
+    void FaceToDirectionRestrictedY(){
         if(m_pathFinder.GetDirection().y == 0){
             if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
                 FlipX();
@@ -117,6 +132,16 @@ public class FlyingPatrolMonster : Enemy
             else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
                 FlipX();
             }
+        }
+    }
+
+    void FaceToDirection(){
+        
+        if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
+            FlipX();
+        }
+        else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
+            FlipX();
         }
     }
 
@@ -141,8 +166,9 @@ public class FlyingPatrolMonster : Enemy
 
     public override void Reset(){
         base.Reset();
-        m_collider.enabled = true;
         InitializePatrol();
+        m_collider.enabled = true;
+        m_pathFinder.SetInitialNodeToNone();
     }
 
     private void OnDrawGizmos() {

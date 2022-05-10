@@ -55,7 +55,7 @@ public class Graph_SearchDijkstra
         while(!priorityQueue.IsEmpty()){
             // get the lowest cost node from the queue. Don't forget, the return value is a *node index*, not the node itself. This node is the node not already on the SPT that is the closes to the source node
             int currentNode = priorityQueue.TakeNextItem();
-
+            if(!m_graph.GetNode(currentNode).IsActive){ continue; }
             // move this edge from the search frontier to the shortest path tree
             //m_route[nextClosestNode] = m_searchFrontier[nextClosestNode];
 

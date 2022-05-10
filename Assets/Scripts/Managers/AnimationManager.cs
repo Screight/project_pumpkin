@@ -48,7 +48,7 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.CHARGE_BAT_ATTACK] = "attack";
         m_animationClipName[(int)ANIMATION.CHARGE_BAT_RECOVER_FROM_ATTACK] = "recover_from_attack";
         m_animationClipName[(int)ANIMATION.CHARGE_BAT_HIT] = "hit";
-        m_animationClipName[(int)ANIMATION.CHARGE_BAT_DIE] = "die";
+        m_animationClipName[(int)ANIMATION.CHARGE_BAT_DIE] = "Die";
 
         // SKELETON ------------------------
         m_animationClipName[(int)ANIMATION.SKELETON_ATTACK] = "attack";
@@ -59,7 +59,7 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.SKELETON_RELOAD] = "Reload";
 
          // PATROL BAT ------------------------
-        m_animationClipName[(int)ANIMATION.PATROL_BAT_DIE] = "die";
+        m_animationClipName[(int)ANIMATION.PATROL_BAT_DIE] = "Die";
         m_animationClipName[(int)ANIMATION.PATROL_BAT_HIT] = "hit";
         m_animationClipName[(int)ANIMATION.PATROL_BAT_MOVE] = "move";
 

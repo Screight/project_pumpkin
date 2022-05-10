@@ -50,6 +50,8 @@ public class FlyingMonster : Enemy
         m_memoryTimer = gameObject.AddComponent<Timer>();
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_collider = GetComponent<Collider2D>();
+        m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.CHARGE_BAT_DIE);
+        m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.CHARGE_BAT_HIT);
     }
 
     void InitializePatrol()
@@ -65,6 +67,7 @@ public class FlyingMonster : Enemy
     void Patrol()
     {
         m_pathFinder.NavigateToTargetPosition();
+        FaceToDirection();
         if (m_pathFinder.IsFinished()) { SwapPatrolTarget(); }
     }
 
@@ -192,6 +195,16 @@ public class FlyingMonster : Enemy
     }
 
     void FaceToDirection(){
+        
+        if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
+            FlipX();
+        }
+        else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
+            FlipX();
+        }
+    }
+
+    void FaceToDirectionRestricted(){
         if(m_rb2D.velocity.x > 0 && !m_isFacingRight){ FlipX(); return ;}
         else if (m_rb2D.velocity.x < 0 && m_isFacingRight) { FlipX(); return ;}
         if(m_state == ENEMY_STATE.ATTACK) { return ;}
@@ -213,22 +226,23 @@ public class FlyingMonster : Enemy
 
     public override void Damage(float p_damage)
     {
-        if(m_state == ENEMY_STATE.DEATH) { return ;}
-        m_state = ENEMY_STATE.HIT;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_HIT, true);
+        
         base.Damage(p_damage);
+        if(m_health <= 0) {
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_DIE, false);
+            m_state = ENEMY_STATE.DEATH;
+            return ;
+        }else{
+            m_state = ENEMY_STATE.HIT;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_HIT, true);
+        }
+        
         
     }
 
     protected override void EndHit(){
         base.EndHit();
-        if(m_health <= 0) { 
-            m_state = ENEMY_STATE.DEATH;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_DIE, false);
-            m_state = ENEMY_STATE.DEATH;
-            return;
-        }
-        m_state = ENEMY_STATE.PATROL;
+        InitializePatrol();
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);
         m_rb2D.velocity = Vector2.zero;
     }
@@ -242,7 +256,9 @@ public class FlyingMonster : Enemy
     public override void Reset(){
         m_collider.enabled = true;
         base.Reset();
+        m_isInitialized = false;
         ReturnToNormalState();
+        m_pathFinder.SetInitialNodeToNone();
     }
 
     int FacingDirection()
@@ -291,7 +307,7 @@ public class FlyingMonster : Enemy
             InitializePatrol(); 
             m_isInitialized = true;
         }
-        FaceToDirection();
+        FaceToDirectionRestricted();
         if(m_state != ENEMY_STATE.ATTACK){
             m_rb2D.velocity = Vector2.zero;
         }
