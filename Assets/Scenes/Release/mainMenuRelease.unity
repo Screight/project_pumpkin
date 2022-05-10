@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0081980d955d0e5459a7b5c8eb3b9048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startBackgroundVolume: 0.5
+  m_startBackgroundVolume: 0.3
   m_startEffectsVolume: 0.5
 --- !u!4 &813260292
 Transform:
