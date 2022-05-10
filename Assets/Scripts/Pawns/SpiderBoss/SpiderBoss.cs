@@ -122,7 +122,13 @@ public class SpiderBoss : AnimatedCharacter
 
     private void Update() {
         if (GameManager.Instance.IsGamePaused) { return; }
-        if(m_isBossInactive){ return ;}
+        if(m_isBossInactive){
+            Debug.Log(transform.position);
+            transform.position = m_initialPosition;
+        transform.rotation = Quaternion.identity;
+        m_body.transform.rotation = Quaternion.identity;
+        m_head.transform.rotation = Quaternion.identity;
+            return ;}
 
         if(!m_hasBattleStarted && m_eventTimer.IsFinished){
             m_hasBattleStarted = true;
@@ -649,13 +655,13 @@ public class SpiderBoss : AnimatedCharacter
 
     public void Reset(){
 
+        m_hasBattleStarted = false;
         m_isBossInactive = true;
         m_spiderHUD.SetActive(false);
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD] = m_eyeMaxHealth * NUMBER_OF_EYES;
         m_headRenderer.sprite = m_eyesSprite[0];
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_drillMaxHealth;
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL] = m_drillMaxHealth;
-
 
         m_healthBar.fillAmount = 1;
         
@@ -675,10 +681,7 @@ public class SpiderBoss : AnimatedCharacter
         m_numberOfAttacks = 0;
         m_numberOfEyesLeft = 6;
         m_numberOfEggActivation = 0;
-        transform.position = m_initialPosition;
-        transform.rotation = Quaternion.identity;
-        m_body.transform.rotation = Quaternion.identity;
-        m_head.transform.rotation = Quaternion.identity;
+
         InitializeIdleState();
 
         for(int i = 0; i < m_spiderEggsScript.Length; i++){
@@ -705,6 +708,11 @@ public class SpiderBoss : AnimatedCharacter
             m_rightArmParts[i].SetActive(true);
         }
 
+        transform.position = m_initialPosition;
+        transform.rotation = Quaternion.identity;
+        m_body.transform.rotation = Quaternion.identity;
+        m_head.transform.rotation = Quaternion.identity;
+        Debug.Log(transform.position);
     }
 
 }
