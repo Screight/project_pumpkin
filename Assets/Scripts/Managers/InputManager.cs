@@ -29,9 +29,9 @@ public class InputManager : MonoBehaviour
     KeyCode m_attackButton_j    = KeyCode.Joystick1Button2;
     KeyCode m_dashButton_j      = KeyCode.Joystick1Button4;
     KeyCode m_jumpButton_j      = KeyCode.Joystick1Button0;
-    KeyCode m_skill1Button_j    = KeyCode.Joystick1Button5;
-    KeyCode m_skill2Button_j    = KeyCode.Joystick1Button9;
-    KeyCode m_skill3Button_j    = KeyCode.Joystick1Button10;
+    KeyCode m_skill1Button_j    = KeyCode.Joystick1Button1;
+    KeyCode m_skill2Button_j    = KeyCode.Joystick1Button3;
+    KeyCode m_skill3Button_j    = KeyCode.Joystick1Button5;
     KeyCode m_interactButton_j  = KeyCode.Joystick1Button0;
     KeyCode m_cancelButton_j = KeyCode.Joystick1Button1;
     KeyCode m_pauseButton_j = KeyCode.Joystick1Button7;

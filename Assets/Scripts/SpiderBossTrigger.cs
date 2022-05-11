@@ -17,7 +17,7 @@ public class SpiderBossTrigger : InteractiveItem
         base.HandleInteraction();
         if(GameManager.Instance.PlayerHealth <= 0) { return ;}
         for(int i = 0; i < m_doors.Length; i++){
-            m_doors[i].CloseDoor();
+            m_doors[i].CloseDoor(true);
         }
         GameManager.Instance.IsPlayerInSpiderBossFight = true;
         m_spiderBoss.StartBossFight();
@@ -28,7 +28,7 @@ public class SpiderBossTrigger : InteractiveItem
     public void HandlePlayerDeath(){
         m_spiderBoss.Reset();
         for(int i = 0; i < m_doors.Length; i++){
-            m_doors[i].OpenDoor();
+            m_doors[i].OpenDoor(false);
         }
         GameManager.Instance.IsPlayerInSpiderBossFight = false;
         ResetState();

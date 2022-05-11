@@ -270,7 +270,7 @@ MonoBehaviour:
   m_damage: 1
   m_room: 0
   m_playerInvulnerableDuration: 1
-  m_playerNoControlDuration: 0.5
+  m_playerNoControlDuration: 0.2
   m_pushAwayPlayerVelocity: {x: 50, y: 100}
   m_speed: 50
   m_leftPatrolPoint: {fileID: 2331971606948251092}

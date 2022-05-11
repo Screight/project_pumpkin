@@ -50,26 +50,27 @@ public class Door : MonoBehaviour
         }
     }
 
-    public void OpenDoor(){
+    public void OpenDoor(bool p_activateSound){
         if(!m_isOpen){
-            ChangeDoorState();
+            ChangeDoorState(p_activateSound);
         }
     }
 
-    public void CloseDoor(){
+    public void CloseDoor(bool p_activateSound)
+    {
         if(m_isOpen){
-            ChangeDoorState();
+            ChangeDoorState(p_activateSound);
         }
     }
 
-    void ChangeDoorState(){
+    void ChangeDoorState(bool p_activateSound){
         if(m_event){ return ;}
-        SoundManager.Instance.PlayOnce(AudioClipName.PILAR);
+        if (p_activateSound) { SoundManager.Instance.PlayOnce(AudioClipName.PILAR); }
         m_isOpen = !m_isOpen;
         m_event = true;
-            if(!m_isOpen){
-                m_collider.transform.position = m_closePosition;
-            }
+        if(!m_isOpen){
+            m_collider.transform.position = m_closePosition;
+        }
     }
 
 }

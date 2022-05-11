@@ -11,6 +11,10 @@ public class Portal : InteractiveItem
     Animator m_animator;
     SpriteRenderer m_renderer;
     MiniMap m_map;
+
+    Timer m_eventTimer;
+    float m_closeDuration;
+    bool m_isPortalClosing;
     protected override void Awake()
     {
         base.Awake();
@@ -18,10 +22,23 @@ public class Portal : InteractiveItem
         m_renderer = GetComponent<SpriteRenderer>();
         m_transicion = GameObject.FindObjectOfType<Transicion>();
         m_map = GameObject.FindObjectOfType<MiniMap>();
+        m_eventTimer = gameObject.AddComponent<Timer>();
     }
 
     private void Start() {
         m_renderer.enabled = false;
+        m_closeDuration = AnimationManager.Instance.GetClipDuration(m_animator, ANIMATION.PORTAL_CLOSE);
+        m_eventTimer.Duration = m_closeDuration;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if(m_isPortalClosing && m_eventTimer.IsFinished)
+        {
+            m_isPortalClosing = false;
+            m_renderer.enabled = false;
+        }
     }
 
     protected override void HandleInteraction()
@@ -38,11 +55,13 @@ public class Portal : InteractiveItem
 
     public void OpenPortal(){
         m_renderer.enabled = true;
+        m_isPortalClosing = false;
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_OPEN);
     }
 
     public void ClosePortal(){
-        m_renderer.enabled = true;
+        m_isPortalClosing = true;
+        m_eventTimer.Restart();
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_CLOSE);
     }
 

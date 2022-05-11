@@ -37,7 +37,7 @@ public class destroyBody : MonoBehaviour
         explosion.SetActive(true);
         SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.BACKGROUND_1);
         for(int i  = 0; i < m_doors.Length; i++){
-            m_doors[i].OpenDoor();
+            m_doors[i].OpenDoor(true);
         }
     }
 }

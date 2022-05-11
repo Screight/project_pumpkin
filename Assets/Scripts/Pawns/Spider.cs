@@ -88,6 +88,7 @@ public class Spider : Enemy
     public void InitializeEclosion()
     {
         m_state = ENEMY_STATE.ECLOSION;
+        m_collider.enabled = true;
         m_hasHatched = true;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_ECLOSION, false);
         m_eventTimer.Duration = m_eclosionDuration;
@@ -104,7 +105,6 @@ public class Spider : Enemy
     {
         m_hatchParticles.Play();
         transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-        m_collider.enabled = true;
         m_rb2d.gravityScale = 1;
         InitializePatrol();
     }
