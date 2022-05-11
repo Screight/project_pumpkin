@@ -12,14 +12,17 @@ public class AnimationManager : MonoBehaviour
 
     private void Awake()
     {
-        if (m_instance == null) { m_instance = this; }
+        if (m_instance == null) {
+            m_instance = this;
+            Initialize();
+        }
         else { Destroy(this); }
     }
 
     int[] m_animationHash = new int[(int)ANIMATION.LAST_NO_USE];
     string[] m_animationClipName = new string[(int)ANIMATION.LAST_NO_USE];
 
-    private void OnEnable() {
+    private void Initialize() {
 
         // PLAYER ------------------------
         m_animationClipName[(int)ANIMATION.PLAYER_IDLE] = "idle";
@@ -99,10 +102,6 @@ public class AnimationManager : MonoBehaviour
         m_animationClipName[(int)ANIMATION.LIFE_URA_UP] = "lifeUra";
         m_animationClipName[(int)ANIMATION.LIFE_URA_DOWN] = "lifeUraDown";
 
-    }
-
-    private void Start()
-    {
         m_animationHash[(int)ANIMATION.PLAYER_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PLAYER_IDLE]);
         m_animationHash[(int)ANIMATION.PLAYER_RUN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PLAYER_RUN]);
         m_animationHash[(int)ANIMATION.PLAYER_DASH] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PLAYER_DASH]);
@@ -168,16 +167,22 @@ public class AnimationManager : MonoBehaviour
         m_animationHash[(int)ANIMATION.SPIDER_ECLOSION] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.SPIDER_ECLOSION]);
 
         // EFFECTS ---------------------------
-            // ACID BALL
+        // ACID BALL
         m_animationHash[(int)ANIMATION.EFFECT_ACID_LOOP] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.EFFECT_ACID_LOOP]);
         m_animationHash[(int)ANIMATION.EFFECT_ACID_EXPLOSION] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.EFFECT_ACID_EXPLOSION]);
-            // PORTAL
+        // PORTAL
         m_animationHash[(int)ANIMATION.PORTAL_IDLE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_IDLE]);
         m_animationHash[(int)ANIMATION.PORTAL_CLOSE] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_CLOSE]);
         m_animationHash[(int)ANIMATION.PORTAL_OPEN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.PORTAL_OPEN]);
 
         m_animationHash[(int)ANIMATION.LIFE_URA_DOWN] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.LIFE_URA_DOWN]);
         m_animationHash[(int)ANIMATION.LIFE_URA_UP] = Animator.StringToHash(m_animationClipName[(int)ANIMATION.LIFE_URA_UP]);
+
+    }
+
+    private void Start()
+    {
+        
     }    
 
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation, bool p_startAgainIfSameAnimation){

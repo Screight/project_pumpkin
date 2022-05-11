@@ -20,12 +20,18 @@ public class FlyingPatrolMonster : Enemy
         m_rb2D = GetComponent<Rigidbody2D>();
         m_pathFinder = GetComponent<PathFinder>();
         m_collider = GetComponent<Collider2D>();
-        m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_DIE);
-        m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_HIT);
+        
+    }
+
+    private void OnEnable()
+    {
+       
     }
 
     protected override void Start() {
         base.Start();
+        m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_DIE);
+        m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_HIT);
         m_isFacingRight = true;
         m_isGoingFrom1To2 = true;
         

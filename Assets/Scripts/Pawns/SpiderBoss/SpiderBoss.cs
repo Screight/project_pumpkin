@@ -123,8 +123,7 @@ public class SpiderBoss : AnimatedCharacter
     private void Update() {
         if (GameManager.Instance.IsGamePaused) { return; }
         if(m_isBossInactive){
-            Debug.Log(transform.position);
-            transform.position = m_initialPosition;
+        transform.position = m_initialPosition;
         transform.rotation = Quaternion.identity;
         m_body.transform.rotation = Quaternion.identity;
         m_head.transform.rotation = Quaternion.identity;

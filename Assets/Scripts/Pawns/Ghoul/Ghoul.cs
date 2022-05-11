@@ -30,7 +30,11 @@ public class Ghoul : Enemy
     float m_attackDuration;
 
     private void OnEnable() {
-        InitializePatrol();
+        if(AnimationManager.Instance != null)
+        {
+            InitializePatrol();
+        }
+        
     }
 
     protected override void Awake()
