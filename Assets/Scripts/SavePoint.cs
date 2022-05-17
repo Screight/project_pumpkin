@@ -15,8 +15,11 @@ public class SavePoint : InteractiveItem
     protected override void Update()
     {
         base.Update();
-        if (m_saveCooldown.IsFinished && !m_icon.activeInHierarchy) { m_icon.SetActive(true); }
-        else if (m_saveCooldown.IsRunning && m_icon.activeInHierarchy) { m_icon.SetActive(false); }
+        if (m_icon != null)
+        {
+            if (m_saveCooldown.IsFinished && !m_icon.activeInHierarchy) { m_icon.SetActive(true); }
+            else if (m_saveCooldown.IsRunning && m_icon.activeInHierarchy) { m_icon.SetActive(false); }
+        }
     }
     protected override void HandleInteraction()
     {
