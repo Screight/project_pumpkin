@@ -103,7 +103,7 @@ MonoBehaviour:
   m_pawnActivationTag: Player
   m_icon: {fileID: 0}
   m_isOneUseOnly: 0
-  m_isAutomatic: 0
+  m_isAutomatic: 1
   m_respawnPoint: {fileID: 6495221374160368342}
   m_sparkles: {fileID: 0}
 --- !u!58 &6495221373673128291
@@ -235,6 +235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SavePointSparkles
       objectReference: {fileID: 0}
+    - target: {fileID: 4621430197657024522, guid: c4695dfd49621064f9899893c88a6105, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 6710954728819590584, guid: c4695dfd49621064f9899893c88a6105, type: 3}
       propertyPath: m_RootOrder
       value: 0
