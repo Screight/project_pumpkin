@@ -63,11 +63,11 @@ public class Player : AnimatedCharacter
     bool m_eventStart = false;
 
     [Header("JUMP")]
-    [SerializeField] float m_gravity1;
-    [SerializeField] float m_minHeight = 10.0f;
+    [SerializeField] float m_gravity1 = -250f;
+    [SerializeField] float m_minHeight = 5.0f;
     [SerializeField] float m_maxHeight = 50.0f;
     [SerializeField] float m_timeToPeak1 = 1.0f;
-    [SerializeField] float m_timeToPeak2 = 1.0f;
+    [SerializeField] float m_timeToPeak2 = 0.5f;
     float m_minJumpSpeed;
     float m_maxJumpSpeed;
     float m_gravity2;
