@@ -95,6 +95,7 @@ public class Player : AnimatedCharacter
 
         m_isGrounded = false;
 
+        m_gravity2 = - 2 * m_maxHeight / (m_timeToPeak2 * m_timeToPeak2);
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_eventTimer = gameObject.AddComponent<Timer>();
