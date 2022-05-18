@@ -5,12 +5,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.IO;
 
-struct Menu{
+struct Menu
+{
     public GameObject gameObject;
     public int ID;
     public GameObject initialSelectecButton;
 
-    public Menu(GameObject p_gameObject, int p_menuID, GameObject p_initialSelectedButton){
+    public Menu(GameObject p_gameObject, int p_menuID, GameObject p_initialSelectedButton)
+    {
         gameObject = p_gameObject;
         ID = p_menuID;
         initialSelectecButton = p_initialSelectedButton;
@@ -36,72 +38,82 @@ public class MenuManager : MonoBehaviour
     bool[] m_isMenuInStack;
     bool m_isMenuActive = true;
 
-    private void Awake() {
-        if(m_instance == null){m_instance = this; }
-        else { Destroy(this.gameObject) ;}
+    private void Awake()
+    {
+        if (m_instance == null) { m_instance = this; }
+        else { Destroy(gameObject); }
         m_menuStack = new Stack<Menu>();
         m_menu = new Menu[m_menuReferences.Length];
         m_isMenuInStack = new bool[m_menu.Length];
         InitializeMenu();
-        
     }
-    
-    private void Update() {
-        if(m_isMenuActive){
-            if(InputManager.Instance.CancelButtonPressed){
-                if(Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1){
-                    GameObject.FindObjectOfType<PauseMenu>().UnPause();
-                }else{
-                    GoBack();
+
+    private void Update()
+    {
+        if (m_isMenuActive)
+        {
+            if (InputManager.Instance.CancelButtonPressed)
+            {
+                if (Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1)
+                {
+                    FindObjectOfType<PauseMenu>().UnPause();
                 }
+                else { GoBack(); }
             }
         }
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         EventSystem.current.SetSelectedGameObject(null);
-        if(m_menu[m_initialMenu].initialSelectecButton == null) { return ;}
+        if (m_menu[m_initialMenu].initialSelectecButton == null) { return; }
         EventSystem.current.SetSelectedGameObject(m_menu[m_initialMenu].initialSelectecButton);
         m_menu[m_initialMenu].initialSelectecButton.GetComponent<Button>().OnSelect(null);
     }
 
-    void InitializeMenu(){
+    void InitializeMenu()
+    {
         m_currentMenu = m_initialMenu;
 
-        for(int menuIndex = 0; menuIndex < m_menu.Length; menuIndex++){
+        for (int menuIndex = 0; menuIndex < m_menu.Length; menuIndex++)
+        {
             Menu menu = new Menu(m_menuReferences[menuIndex], menuIndex, m_initialSelectedButton[menuIndex]);
             m_menu[menuIndex] = menu;
             // DOUBLE CHECK TO AVOID PROBLEM WITH ACTIVE/INACTIVE GAMEOBJECTS AS LONG AS THE REFERENCES ARE SET PROPERLY
             bool isInitialMenu = false;
-            if(menuIndex != (int)m_currentMenu){
+            if (menuIndex != m_currentMenu)
+            {
                 isInitialMenu = false;
             }
-            else {
+            else
+            {
                 isInitialMenu = true;
                 m_menuStack.Push(menu);
             }
             // THE ONLY MENU IN THE STACK IS THE INITIAL MENU
             m_isMenuInStack[menuIndex] = isInitialMenu;
             m_menu[menuIndex].gameObject.SetActive(isInitialMenu);
-        } 
+        }
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menu[m_initialMenu].initialSelectecButton);
-
     }
 
-    public void GoTo(int p_menu){
+    public void GoTo(int p_menu)
+    {
         // SINCE THERE IS ONLY 1 INSTANCE OF EVERY MENU AVAILABLE, IF IT'S ALREADY IN THE STACK IT CANNOT BE CHARGED/TRANSITION TO AGAIN
         // THE ONLY WAY TO GO BACK TO THE MENU WOULD BE GOING BACK TILL WE REACH IT AGAIN
         // TODO - IF WE WANT TO MOVE BACKWARS TO AN ALREADY EXISTING MENU IN THE STACK WE WOULD NEED TO POP ALL THE MENUS 
-        if(m_isMenuInStack[(int)p_menu]) {
+        if (m_isMenuInStack[p_menu])
+        {
             int currentMenuID = m_menuStack.Peek().ID;
-             while(currentMenuID != p_menu){
-                 m_menuStack.Peek().gameObject.SetActive(false);
-                 m_menuStack.Pop();
-                 m_isMenuInStack[currentMenuID] = false;
-                 currentMenuID = m_menuStack.Peek().ID;
-                 m_menuStack.Peek().gameObject.SetActive(true);
-             }
+            while (currentMenuID != p_menu)
+            {
+                m_menuStack.Peek().gameObject.SetActive(false);
+                m_menuStack.Pop();
+                m_isMenuInStack[currentMenuID] = false;
+                currentMenuID = m_menuStack.Peek().ID;
+                m_menuStack.Peek().gameObject.SetActive(true);
+            }
         }
         else
         {
@@ -117,7 +129,8 @@ public class MenuManager : MonoBehaviour
         m_currentMenu = m_menuStack.Peek().ID;
     }
 
-    public void GoBack(){
+    public void GoBack()
+    {
         if(m_menuStack.Count == 1) { return ;}
         // SET CURRENT MENU TO INACTIVE
         m_menuStack.Peek().gameObject.SetActive(false);
@@ -130,10 +143,9 @@ public class MenuManager : MonoBehaviour
         m_currentMenu = m_menuStack.Peek().ID;
     }
     
-    public int GetCurrentMenuIndex(){
+    public int GetCurrentMenuIndex()
+    {
         if(m_menuStack.Count <= 0){ return -1;}
         return m_menuStack.Peek().ID;
     }
-
 }
-

@@ -71,6 +71,8 @@ public class SoundManager : MonoBehaviour
 
         m_audioClips[(int)AudioClipName.DIALOGUECLIC1] = Resources.Load<AudioClip>("Sound/DialogueClic1");
         m_audioClips[(int)AudioClipName.DIALOGUECLIC2] = Resources.Load<AudioClip>("Sound/DialogueClic2");
+        m_audioClips[(int)AudioClipName.BUTTONSWITCH] = Resources.Load<AudioClip>("Sound/ButtonSwitch");
+        m_audioClips[(int)AudioClipName.BUTTONCLICKED] = Resources.Load<AudioClip>("Sound/ButtonClicked");
     }
 
     public void PlayOnce(AudioClipName p_name)
