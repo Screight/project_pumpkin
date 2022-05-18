@@ -56,23 +56,41 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: BG
-    uniqueID: 1885138371
-    locked: 0
-  - name: blocks
-    uniqueID: 538339855
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Enemies
-    uniqueID: 307840783
+  - name: ParallaxBG
+    uniqueID: 2170909751
+    locked: 0
+  - name: BG
+    uniqueID: 1885138371
+    locked: 0
+  - name: EntitiesBackLayer
+    uniqueID: 418930371
+    locked: 0
+  - name: TIlemap
+    uniqueID: 538339855
+    locked: 0
+  - name: TilemapDeco
+    uniqueID: 1069410771
     locked: 0
   - name: Projectiles
     uniqueID: 1829688273
     locked: 0
+  - name: Items
+    uniqueID: 3134485439
+    locked: 0
   - name: Player
     uniqueID: 2527179565
+    locked: 0
+  - name: Enemies
+    uniqueID: 307840783
+    locked: 0
+  - name: ForegroundDeco
+    uniqueID: 548923781
+    locked: 0
+  - name: UnlitDecor
+    uniqueID: 1339337507
     locked: 0
   - name: UI
     uniqueID: 3744611799

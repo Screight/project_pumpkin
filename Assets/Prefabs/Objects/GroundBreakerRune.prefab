@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.823
+  m_FalloffIntensity: 0.209
   m_Color: {r: 0, g: 0.81646967, b: 1, a: 1}
   m_Intensity: 1.23
   m_LightVolumeOpacity: 0
@@ -58,8 +58,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 60.531746
-  m_PointLightOuterRadius: 60.932392
+  m_PointLightInnerRadius: 18.02
+  m_PointLightOuterRadius: 60.2
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -249,7 +249,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1767787731
-  m_SortingLayer: 3
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 3221727244973381097, guid: 8eac4237185718f40a99a0d4cf9f8a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -76,14 +76,15 @@ public class SpiderBoss : AnimatedCharacter
     [SerializeField] float m_splashScreenInitialTime = 0.5f;
     bool m_hasBattleStarted;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
         m_eventTimer = gameObject.AddComponent<Timer>();
         m_splashScreen.SetActive(false);
     }
 
-    private void Start() {
-
+    private void Start()
+    {
         m_drillDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ATTACK_RIGHT);
         m_recoverFromTerrainDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_RIGHT);
         m_biteDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_BOSS_ATTACK_BITE);
@@ -97,12 +98,14 @@ public class SpiderBoss : AnimatedCharacter
         m_partsHealth[(int)SPIDER_BOSS_DAMAGEABLE_PARTS.RIGHT_DRILL] = m_drillMaxHealth;
         m_healthBar.fillAmount = 1;
 
-        for(int i = 0; i  < (int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE; i++){
+        for (int i = 0; i < (int)SPIDER_BOSS_DAMAGEABLE_PARTS.LAT_NO_USE; i++)
+        {
             m_maxHealth += m_partsHealth[i];
         }
 
         m_spiderEggsScript = new Spider[m_spiderEggs.Length];
-        for(int i = 0; i < m_spiderEggs.Length; i++){
+        for (int i = 0; i < m_spiderEggs.Length; i++)
+        {
             m_spiderEggsScript[i] = m_spiderEggs[i].GetComponentInChildren<Spider>();
         }
         m_spiderHUD.SetActive(false);
@@ -120,16 +123,20 @@ public class SpiderBoss : AnimatedCharacter
         m_eventTimer.Run();
     }
 
-    private void Update() {
+    private void Update() 
+    {
         if (GameManager.Instance.IsGamePaused) { return; }
-        if(m_isBossInactive){
-        transform.position = m_initialPosition;
-        transform.rotation = Quaternion.identity;
-        m_body.transform.rotation = Quaternion.identity;
-        m_head.transform.rotation = Quaternion.identity;
-            return ;}
+        if (m_isBossInactive)
+        {
+            transform.position = m_initialPosition;
+            transform.rotation = Quaternion.identity;
+            m_body.transform.rotation = Quaternion.identity;
+            m_head.transform.rotation = Quaternion.identity;
+            return;
+        }
 
-        if(!m_hasBattleStarted && m_eventTimer.IsFinished){
+        if (!m_hasBattleStarted && m_eventTimer.IsFinished)
+        {
             m_hasBattleStarted = true;
             m_splashScreen.SetActive(true);
         }
@@ -175,18 +182,22 @@ public class SpiderBoss : AnimatedCharacter
 
     }
 
-    void InitializeEggSpawn(){
+    void InitializeEggSpawn()
+    {
         m_state = SPIDER_BOSS_STATE.EGG_SPAWN;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_MOVE, false);
         m_hasEclosionedEggs = true;
     }
 
-    void HandleEggSpawn(){
-        if(transform.position.y < m_spawnEggPosition.position.y && !m_hasReachedSpawnEggPosition){
+    void HandleEggSpawn()
+    {
+        if (transform.position.y < m_spawnEggPosition.position.y && !m_hasReachedSpawnEggPosition)
+        {
             transform.position += new Vector3(0, m_speed * Time.deltaTime, 0);
-            return ;
+            return;
         }
-        else if (!m_hasReachedSpawnEggPosition){
+        else if (!m_hasReachedSpawnEggPosition)
+        {
             m_hasReachedSpawnEggPosition = true;
             transform.position = new Vector3(transform.position.x, m_spawnEggPosition.position.y, transform.position.z);
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ROAR, false);
@@ -195,30 +206,32 @@ public class SpiderBoss : AnimatedCharacter
             m_eventTimer.Restart();
         }
 
-        if(m_eventTimer.IsFinished){
+        if (m_eventTimer.IsFinished)
+        {
             SpawnEggs();
             InitializeReturnToCenter();
             m_hasReachedSpawnEggPosition = false;
         }
-
     }
 
-    void SpawnEggs(){
-
-        if(m_numberOfEggActivation == 0){
-           for(int i = 0; i < 3; i++){
-            m_spiderEggsScript[i].InitializeEclosion();
+    void SpawnEggs()
+    {
+        if (m_numberOfEggActivation == 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                m_spiderEggsScript[i].InitializeEclosion();
             }
             m_numberOfEggActivation++;
         }
-        else if(m_numberOfEggActivation == 1){
-            for(int i = 3; i < m_spiderEggs.Length; i++){
-            m_spiderEggsScript[i].InitializeEclosion();
-            m_numberOfEggActivation++;
+        else if (m_numberOfEggActivation == 1)
+        {
+            for (int i = 3; i < m_spiderEggs.Length; i++)
+            {
+                m_spiderEggsScript[i].InitializeEclosion();
+                m_numberOfEggActivation++;
             }
-        }
-
-        
+        }        
     }
 
     void InitializeChaseState(){
@@ -347,7 +360,8 @@ public class SpiderBoss : AnimatedCharacter
         m_eventTimer.Duration = m_recoverFromTerrainDuration;
         m_eventTimer.Restart();
 
-        if(m_animationState == ANIMATION.SPIDER_BOSS_ATTACK_LEFT){
+
+        if (m_animationState == ANIMATION.SPIDER_BOSS_ATTACK_LEFT){
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_RECOVER_TERRAIN_LEFT, false);
         }
         else{
@@ -564,6 +578,7 @@ public class SpiderBoss : AnimatedCharacter
 
         if(p_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD  && !m_hasEyeBeenDestroyed && m_partsHealth[(int)p_part] < (m_numberOfEyesLeft - 1) * m_eyeMaxHealth){
             m_numberOfEyesLeft--;
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL);
             m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES - m_numberOfEyesLeft];
             Debug.Log(m_numberOfEyesLeft + "EYES LEFT");
 
@@ -714,4 +729,17 @@ public class SpiderBoss : AnimatedCharacter
         Debug.Log(transform.position);
     }
 
+    //SFX ANIMATION EVENTS
+    private void PlayDrillAttackSFX()
+    {
+        SoundManager.Instance.PlayOnce(AudioClipName.DRILL_ATTACK);
+    }
+    private void DrillImpactSFX()
+    {
+        SoundManager.Instance.PlayOnce(AudioClipName.GROUNDBREAKER);
+    }
+    private void DrillStuckedSFX()
+    {
+        SoundManager.Instance.PlayOnce(AudioClipName.DRILL_STUCKED);
+    }
 }

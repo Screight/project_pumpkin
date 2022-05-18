@@ -71,6 +71,10 @@ public class Drill : MonoBehaviour
         if (!m_canBeDamaged) { return; }
         m_spiderBoss.Damage(p_damage, m_part);
         Debug.Log(m_part + "DAMAGED");
+        if(m_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD)
+        {
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT);
+        }
         m_sprite.material.color = Color.red;
         m_event.Restart();
     }
