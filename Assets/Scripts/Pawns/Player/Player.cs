@@ -68,8 +68,8 @@ public class Player : AnimatedCharacter
     [SerializeField] float m_maxHeight = 50.0f;
     [SerializeField] float m_timeToPeak1 = 1.0f;
     [SerializeField] float m_timeToPeak2 = 1.0f;
-    [SerializeField] float m_minJumpSpeed;
-    [SerializeField] float m_maxJumpSpeed;
+    float m_minJumpSpeed;
+    float m_maxJumpSpeed;
     float m_gravity2;
 
     bool m_canJump = true;
