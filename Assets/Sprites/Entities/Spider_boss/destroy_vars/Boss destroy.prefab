@@ -855,6 +855,7 @@ MonoBehaviour:
   m_noControlDuration: 0.4
   m_invulnerableDuration: 0.2
   m_damage: 0
+  sparkles: []
 --- !u!50 &1366852089729677757
 Rigidbody2D:
   serializedVersion: 4
@@ -981,8 +982,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 307840783
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1017,6 +1018,7 @@ MonoBehaviour:
   - {fileID: 8472375824864206134}
   - {fileID: 5736497996692679044}
   explosion: {fileID: 587766184879072713}
+  m_doors: []
 --- !u!1 &7243518037303614234
 GameObject:
   m_ObjectHideFlags: 0
