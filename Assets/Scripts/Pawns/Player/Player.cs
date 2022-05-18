@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class Player : AnimatedCharacter
 {
-    [SerializeField] Transicion m_transicion;
-    [SerializeField] Attack m_attackScript;
-
     static Player m_instance;
     public static Player Instance
     {
@@ -12,46 +9,44 @@ public class Player : AnimatedCharacter
         private set { }
     }
 
-    bool m_isBeingScripted = false;
+    [Header("REFERENCES")]
+    [SerializeField] Attack m_attackScript;
+    [SerializeField] Collider2D m_collider;
+    [SerializeField] DashDust m_dashDustScript;
+    Transicion m_transicion;
 
+    bool m_isBeingScripted = false;
     PLAYER_STATE m_state = PLAYER_STATE.IDLE;
 
     /// MOVEMENT
-    Rigidbody2D m_rb2D;
-    float m_direction = 0;
-    [SerializeField] Collider2D m_collider;
-    bool m_isFacingRight = true;
+
+    [Header("MOVEMENT")]
     [SerializeField] float m_normalMovementSpeed = 60;
     [SerializeField] float m_reducedMovementSpeed = 30;
+    Rigidbody2D m_rb2D;
+    float m_direction = 0;
+    bool m_isFacingRight = true;
     float m_currentSpeedX;
-    bool m_canPerformAction = true;
-
-    /// JUMP
-    [SerializeField] float m_maxHeight = 10.0f;
-    [SerializeField] float m_timeToPeak1 = 1.0f;
-    [SerializeField] float m_timeToPeak2 = 1.0f;
-    [SerializeField] float m_blinkDuration;
-    float m_gravity1;
-    float m_gravity2;
-    float m_initialVelocityY;
+    bool m_canPerformAction = true;    
+    
     bool m_isGrounded;
     float m_maxFallingSpeed = 200;
+    [Header("OTHER")]
     [SerializeField] float m_moveTowardsOneWayPlatform = 40;
-
-    /// DASH
+    [SerializeField] float m_blinkDuration;
+    
     bool m_hasUsedDash = false;
     Timer m_dashTimer;
+    [Header("DASH")]
     [SerializeField] float m_dashDuration = 3/6f;
     [SerializeField] float m_dashDistance = 100.0f;
     float m_dashSpeed = 200.0f;
-    [SerializeField] DashDust m_dashDustScript;
 
     /// DAMAGE CONTROL AND REACTION
 
     bool m_isInvulnerable = false;
     Timer m_invulnerableTimer;
     Timer m_noControlTimer;
-
     Timer m_blinkTimer;
     bool m_hasBlinked = false;
     [SerializeField] Vector2 m_pushAwayOnProjectileHitVelocity = new Vector2(-50.0f, 100.0f);
@@ -66,6 +61,18 @@ public class Player : AnimatedCharacter
     float m_deathDuration;
     float m_hurtDuration;
     bool m_eventStart = false;
+
+    [Header("JUMP")]
+    [SerializeField] float m_gravity1;
+    [SerializeField] float m_minHeight = 10.0f;
+    [SerializeField] float m_maxHeight = 50.0f;
+    [SerializeField] float m_timeToPeak1 = 1.0f;
+    [SerializeField] float m_timeToPeak2 = 1.0f;
+    [SerializeField] float m_minJumpSpeed;
+    [SerializeField] float m_maxJumpSpeed;
+    float m_gravity2;
+
+    bool m_canJump = true;
 
     /// END OF VARIABLES
     protected override void Awake() {
@@ -86,17 +93,16 @@ public class Player : AnimatedCharacter
         m_noControlTimer = gameObject.AddComponent<Timer>();
         m_blinkTimer = gameObject.AddComponent<Timer>();
 
-        m_gravity1 = -2 * m_maxHeight / (m_timeToPeak1 * m_timeToPeak1);
-        m_gravity2 = -2 * m_maxHeight / (m_timeToPeak2 * m_timeToPeak2);
-        m_initialVelocityY = 2 * m_maxHeight / m_timeToPeak1;
-
         m_isGrounded = false;
 
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_eventTimer = gameObject.AddComponent<Timer>();
-    }
 
+        m_minJumpSpeed = Mathf.Sqrt( 2 * Mathf.Abs(m_gravity1) * m_minHeight);
+        m_maxJumpSpeed = (m_maxHeight - (m_gravity1 * m_timeToPeak1 * m_timeToPeak1 / 2)) / m_timeToPeak1;
+
+    }
     private void Start()
     {
         m_dashTimer.Duration = m_dashDuration;
@@ -231,8 +237,10 @@ public class Player : AnimatedCharacter
 
     void Jump()
     {
-        m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
-        m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
+        m_canJump = true;
+        Debug.Log("JUMP");
+        m_rb2D.gravityScale = m_gravity1 / (Physics2D.gravity.y);
+        m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_maxJumpSpeed);
 
         SoundManager.Instance.PlayOnce(AudioClipName.JUMP_2);
         m_isGrounded = false;
@@ -253,6 +261,12 @@ public class Player : AnimatedCharacter
     }
     void HandleJumpState()
     {
+        if(!InputManager.Instance.JumpButtonHold){
+            m_canJump = false;
+            if(m_rb2D.velocity.y > m_minJumpSpeed){
+                m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_minJumpSpeed);
+            }
+        }
         m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         m_attackScript.HandleAttack(m_isGrounded);
