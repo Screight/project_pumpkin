@@ -45,22 +45,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.209
+  m_FalloffIntensity: 1
   m_Color: {r: 0, g: 0.81646967, b: 1, a: 1}
-  m_Intensity: 1.23
-  m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: c3ed5c700f6a1620000000000f475912d1d30e6d2db3a196d73d32df
+  m_Intensity: 0.8
+  m_LightVolumeOpacity: 1
+  m_ApplyToSortingLayers: 0000000037746581c3ed5c70c35ef8180f6a1620d3e9bd3fd1d30e6dbf73d4ba2db3a1960f47591285e9b72023abd44fd73d32df
   m_LightCookieSprite: {fileID: 0}
-  m_UseNormalMap: 0
+  m_UseNormalMap: 1
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 1
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 1
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 18.02
-  m_PointLightOuterRadius: 60.2
-  m_PointLightDistance: 3
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 113.1
+  m_PointLightDistance: 26.39
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4936022523227576325}
   - component: {fileID: 3358700523362442930}
   - component: {fileID: 1405403384}
+  - component: {fileID: 523840719}
   m_Layer: 0
   m_Name: GroundBreakerRune
   m_TagString: Untagged
@@ -179,6 +180,120 @@ MonoBehaviour:
   m_isOneUseOnly: 1
   m_isAutomatic: 1
   m_dialogue: {fileID: 4936022523227576325}
+--- !u!82 &523840719
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122273917770918843}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 65b5944784eba8f48a38099194dfdea8, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 100
+  MaxDistance: 300
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.29001734
+      value: 0.99666005
+      inSlope: Infinity
+      outSlope: -1.1647027
+      tangentMode: 7
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7726264
+      value: 0.010112137
+      inSlope: -1.5861331
+      outSlope: Infinity
+      tangentMode: 97
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7978531013163943587
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,8 +363,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1767787731
-  m_SortingLayer: 8
+  m_SortingLayerID: -1160481857
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 3221727244973381097, guid: 8eac4237185718f40a99a0d4cf9f8a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -17,6 +17,7 @@ public class GroundbreakerRune : InteractiveItem
     }
     protected override void Update()
     {
+        base.Update();
         if (brightness_val > 1.2)
         {
             forward_anim = false;
@@ -35,15 +36,16 @@ public class GroundbreakerRune : InteractiveItem
 
     protected override void HandleInteraction()
     {
-        if(m_hasBeenPicked){ return; }
+        if (m_hasBeenPicked){ return; }
         base.HandleInteraction();
         SoundManager.Instance.PlayOnce(AudioClipName.ITEM_PICK_UP);
         m_hasBeenPicked = true;
-        m_dialogue.addListenerToDialogueFinish(unlockGroundBreaker);
+        m_dialogue.addListenerToDialogueFinish(UnlockGroundBreaker);
     }
 
-    private void unlockGroundBreaker() {
+    private void UnlockGroundBreaker() {
         GameManager.Instance.SetIsSkillAvailable(SKILLS.GROUNDBREAKER, true);
-        m_dialogue.removeListenerToDialogueFinish(unlockGroundBreaker);    
+        m_dialogue.removeListenerToDialogueFinish(UnlockGroundBreaker);
+        gameObject.SetActive(false);
     }
 }
