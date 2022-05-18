@@ -62,6 +62,8 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.SPIDER_BOSS_CRY_LITE] = Resources.Load<AudioClip>("Sound/AracneRoarLite");
         m_audioClips[(int)AudioClipName.DRILL_HIT_1] = Resources.Load<AudioClip>("Sound/DrillHitted1");
         m_audioClips[(int)AudioClipName.DRILL_HIT_2] = Resources.Load<AudioClip>("Sound/DrillHitted2");
+        m_audioClips[(int)AudioClipName.DRILL_ATTACK] = Resources.Load<AudioClip>("Sound/DrillAttack");
+        m_audioClips[(int)AudioClipName.DRILL_STUCKED] = Resources.Load<AudioClip>("Sound/DrillStucked");
 
         m_audioClips[(int)AudioClipName.RESPAWN] = Resources.Load<AudioClip>("Sound/RespawnSFX");
 
