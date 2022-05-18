@@ -564,6 +564,7 @@ public class SpiderBoss : AnimatedCharacter
 
         if(p_part == SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD  && !m_hasEyeBeenDestroyed && m_partsHealth[(int)p_part] < (m_numberOfEyesLeft - 1) * m_eyeMaxHealth){
             m_numberOfEyesLeft--;
+            SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL);
             m_headRenderer.sprite = m_eyesSprite[NUMBER_OF_EYES - m_numberOfEyesLeft];
             Debug.Log(m_numberOfEyesLeft + "EYES LEFT");
 
@@ -713,5 +714,4 @@ public class SpiderBoss : AnimatedCharacter
         m_head.transform.rotation = Quaternion.identity;
         Debug.Log(transform.position);
     }
-
 }
