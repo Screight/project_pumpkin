@@ -46,8 +46,7 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.URA_HIT_2] = Resources.Load<AudioClip>("Sound/UraCrunch2");
         m_audioClips[(int)AudioClipName.URA_HIT_3] = Resources.Load<AudioClip>("Sound/UraCrunch3");
         m_audioClips[(int)AudioClipName.URA_HIT_4] = Resources.Load<AudioClip>("Sound/UraCrunch4");
-        m_audioClips[(int)AudioClipName.JUMP_1] = Resources.Load<AudioClip>("Sound/jump1");
-        m_audioClips[(int)AudioClipName.JUMP_2] = Resources.Load<AudioClip>("Sound/jump2");
+        m_audioClips[(int)AudioClipName.JUMP] = Resources.Load<AudioClip>("Sound/jump");
 
 
         m_audioClips[(int)AudioClipName.ITEM_PICK_UP] = Resources.Load<AudioClip>("Sound/ItemPickUpSFX");

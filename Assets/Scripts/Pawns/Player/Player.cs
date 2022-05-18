@@ -234,7 +234,7 @@ public class Player : AnimatedCharacter
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_initialVelocityY);
 
-        SoundManager.Instance.PlayOnce(AudioClipName.JUMP_2);
+        SoundManager.Instance.PlayOnce(AudioClipName.JUMP);
         m_isGrounded = false;
         m_state = PLAYER_STATE.BOOST;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST, false);
