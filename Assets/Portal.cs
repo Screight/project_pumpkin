@@ -10,6 +10,7 @@ public class Portal : InteractiveItem
     [SerializeField] ZONE m_zone = ZONE.MINE;
     Animator m_animator;
     SpriteRenderer m_renderer;
+    AudioSource m_PortalLoopSFX;
     MiniMap m_map;
 
     Timer m_eventTimer;
@@ -20,8 +21,9 @@ public class Portal : InteractiveItem
         base.Awake();
         m_animator = GetComponent<Animator>();
         m_renderer = GetComponent<SpriteRenderer>();
-        m_transicion = GameObject.FindObjectOfType<Transicion>();
-        m_map = GameObject.FindObjectOfType<MiniMap>();
+        m_transicion = FindObjectOfType<Transicion>();
+        m_PortalLoopSFX = GetComponent<AudioSource>();
+        m_map = FindObjectOfType<MiniMap>();
         m_eventTimer = gameObject.AddComponent<Timer>();
     }
 
@@ -39,21 +41,26 @@ public class Portal : InteractiveItem
             m_isPortalClosing = false;
             m_renderer.enabled = false;
         }
+        //Loop SFX
+        if (m_renderer.enabled && !m_PortalLoopSFX.isPlaying && !m_isPortalClosing) { m_PortalLoopSFX.Play(); }
+        else if (!m_renderer.enabled || m_isPortalClosing) { m_PortalLoopSFX.Stop(); }
     }
 
     protected override void HandleInteraction()
     {
         base.HandleInteraction();
+
         Player.Instance.SetPlayerToScripted();
         m_transicion.AddListenerToEndOfFadeIn(TransportPlayer);
         m_transicion.AddListenerToEndOfTransition(EndTransportPlayer);
         m_transicion.FadeIn();
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_CLOSE);
         GameManager.Instance.IsGamePaused = true;
-        SoundManager.Instance.PlayOnce(AudioClipName.RESPAWN);
+        SoundManager.Instance.PlayOnce(AudioClipName.PORTALUSE);
     }
 
     public void OpenPortal(){
+        SoundManager.Instance.PlayOnce(AudioClipName.PORTALOPEN);
         m_renderer.enabled = true;
         m_isPortalClosing = false;
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_OPEN);
@@ -63,6 +70,7 @@ public class Portal : InteractiveItem
         m_isPortalClosing = true;
         m_eventTimer.Restart();
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_CLOSE);
+        SoundManager.Instance.PlayOnce(AudioClipName.PORTALCLOSE);
     }
 
     public void TransportPlayer(){
