@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Player : AnimatedCharacter
 {
+    bool m_insidePlatform;
+    public bool InsidePlatform{
+        set { m_insidePlatform = value;}
+    }
     static Player m_instance;
     public static Player Instance
     {
@@ -216,8 +220,14 @@ public class Player : AnimatedCharacter
         if (!m_canPerformAction) { return; }
         if (m_direction != 0)
         {
+            Debug.Log(IsGrounded);
+            if(!IsGrounded || m_insidePlatform){
+                m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, m_rb2D.velocity.y);
+            }
+            else {
+                m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, 0);
+            }
             
-            m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             FacePlayerToMovementDirection();
             if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
             {
@@ -295,9 +305,8 @@ public class Player : AnimatedCharacter
         if (m_state == PLAYER_STATE.DASH) { return; }
         if (m_state == PLAYER_STATE.DEATH) { return; }
         if (m_state == PLAYER_STATE.GROUNDBREAKER) { return; }
-        if (m_rb2D.velocity.y < 0)
+        if (!m_isGrounded && m_rb2D.velocity.y <= 0)
         {
-            m_isGrounded = false;
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
             if (m_state != PLAYER_STATE.ATTACK) { m_state = PLAYER_STATE.FALL; }
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_FALL, false);
@@ -336,7 +345,7 @@ public class Player : AnimatedCharacter
         m_isGrounded = true;
         m_objectGroundedTo = p_objectGroundedTo;
         m_rb2D.gravityScale = m_gravity1 / Physics2D.gravity.y;
-        m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, 0);
+        //m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, 0);
 
         m_hasUsedDash = false;
     }
@@ -521,7 +530,9 @@ public class Player : AnimatedCharacter
         get { return m_isGrounded; }
     }
 
-    public Vector2 Speed { get { return m_rb2D.velocity;}}
+    public Vector2 Speed { get { return m_rb2D.velocity;}
+        set { m_rb2D.velocity = value;}
+    }
 
     public bool IsUsingGroundBreaker { set { m_isUsingGroundBreaker = value; } }
 

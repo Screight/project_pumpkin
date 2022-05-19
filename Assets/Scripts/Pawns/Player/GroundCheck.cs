@@ -6,8 +6,9 @@ public class GroundCheck : MonoBehaviour
 {
     Player m_playerScript;
 
-    private void Awake() {
-        m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+    private void Start() {
+        m_playerScript = Player.Instance;
     }
 
     private void OnTriggerStay2D(Collider2D p_collider) {
@@ -33,5 +34,9 @@ public class GroundCheck : MonoBehaviour
             m_playerScript.SetToGrounded(colliderTag);
         }
         bool isPlayerJumping = m_playerScript.State == PLAYER_STATE.JUMP || m_playerScript.State == PLAYER_STATE.BOOST;
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        Player.Instance.IsGrounded = false;
     }
 }

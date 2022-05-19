@@ -35,10 +35,11 @@ public class CameraMovement : MonoBehaviour
 
     private float m_minimumHeightForCameraMovement = -10000000;
 
-    private void Awake() { m_player = GameObject.FindGameObjectWithTag("Player"); }
+    private void Awake() { }
 
     private void Start()
     {
+        m_player = Player.Instance.gameObject;
         m_rb2DPlayer = m_player.GetComponent<Rigidbody2D>();
         m_playerScript = Player.Instance;
         m_cameraWidth = CameraManager.Instance.Width;

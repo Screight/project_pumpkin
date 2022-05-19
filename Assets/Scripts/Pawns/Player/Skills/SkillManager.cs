@@ -28,8 +28,10 @@ public class SkillManager : MonoBehaviour
         m_skillPilar = GetComponent<Skill_Pilar>();
         m_skillFireball = GetComponent<Skill_Fireball>();
         m_groundbreaker = GetComponent<Skill_Groundbreaker>();
+    }
 
-        m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    private void Start() {
+        m_playerScript = Player.Instance;
     }
 
     private void Update()
