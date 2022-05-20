@@ -127,7 +127,7 @@ public class MiniMap : MonoBehaviour
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
 
-        if(Input.GetKeyDown(KeyCode.M) && !m_isMapActive && !GameManager.Instance.IsGamePaused){
+        if(InputManager.Instance.MapButtonPressed && !m_isMapActive && !GameManager.Instance.IsGamePaused){
             SetActiveZone(GameManager.Instance.CurrentZone);
             m_background.SetActive(true);
             m_title.enabled = true;
@@ -136,7 +136,7 @@ public class MiniMap : MonoBehaviour
             GameManager.Instance.SetGameToPaused(true, false);
             Time.timeScale = 0;
         }
-        else if(Input.GetKeyDown(KeyCode.M) && m_isMapActive){
+        else if((InputManager.Instance.MapButtonPressed || InputManager.Instance.CancelButtonPressed) && m_isMapActive){
             HideMap();
             m_background.SetActive(false);
             m_isMapActive = false;

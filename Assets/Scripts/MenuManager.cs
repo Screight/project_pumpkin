@@ -54,6 +54,7 @@ public class MenuManager : MonoBehaviour
         {
             if (InputManager.Instance.CancelButtonPressed)
             {
+                Debug.Log(m_currentMenu);
                 if (Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1)
                 {
                     FindObjectOfType<PauseMenu>().UnPause();
@@ -127,6 +128,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menuStack.Peek().initialSelectecButton);
         m_currentMenu = m_menuStack.Peek().ID;
+        SoundManager.Instance.PlayOnce(AudioClipName.BUTTONCLICKED);
     }
 
     public void GoBack()
@@ -141,6 +143,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menuStack.Peek().initialSelectecButton);
         m_currentMenu = m_menuStack.Peek().ID;
+        SoundManager.Instance.PlayOnce(AudioClipName.BUTTONCLICKED);
     }
     
     public int GetCurrentMenuIndex()

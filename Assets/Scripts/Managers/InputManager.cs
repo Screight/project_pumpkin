@@ -23,8 +23,10 @@ public class InputManager : MonoBehaviour
     KeyCode m_interactButton_k  = KeyCode.Space;
     KeyCode m_cancelButton_k = KeyCode.X;
     KeyCode m_downButton_k = KeyCode.DownArrow;
+    KeyCode m_downButton_j = KeyCode.DownArrow;
     KeyCode m_upButton_k = KeyCode.UpArrow;
     KeyCode m_pauseButton_k = KeyCode.Escape;
+    KeyCode m_mapButton_k = KeyCode.M;
 
     //-------------------JOYSTICK-------------------------
     KeyCode m_attackButton_j    = KeyCode.Joystick1Button2;
@@ -36,6 +38,7 @@ public class InputManager : MonoBehaviour
     KeyCode m_interactButton_j  = KeyCode.Joystick1Button0;
     KeyCode m_cancelButton_j = KeyCode.Joystick1Button1;
     KeyCode m_pauseButton_j = KeyCode.Joystick1Button7;
+    KeyCode m_mapButton_j = KeyCode.Joystick1Button6;
 
     bool[] m_buttonsPressed   = new bool[(int)ACTIONS.NUMBER_OF_ACTIONS];
     bool[] m_buttonsHold      = new bool[(int)ACTIONS.NUMBER_OF_ACTIONS];
@@ -128,6 +131,10 @@ public class InputManager : MonoBehaviour
         if (Input.GetKey(m_pauseButton_k) || Input.GetKey(m_pauseButton_j))           { m_buttonsHold[(int)ACTIONS.PAUSE]     = true; }
         if (Input.GetKeyUp(m_pauseButton_k) || Input.GetKeyUp(m_pauseButton_j))       { m_buttonsReleased[(int)ACTIONS.PAUSE] = true; }
         if (Input.GetKeyDown(m_pauseButton_k) || Input.GetKeyDown(m_pauseButton_j))   { m_buttonsPressed[(int)ACTIONS.PAUSE]  = true; }
+
+        if (Input.GetKey(m_mapButton_k) || Input.GetKey(m_mapButton_j))           { m_buttonsHold[(int)ACTIONS.MAP]     = true; }
+        if (Input.GetKeyUp(m_mapButton_k) || Input.GetKeyUp(m_mapButton_j))       { m_buttonsReleased[(int)ACTIONS.MAP] = true; }
+        if (Input.GetKeyDown(m_mapButton_k) || Input.GetKeyDown(m_mapButton_j))   { m_buttonsPressed[(int)ACTIONS.MAP]  = true; }
     }
 
     public void ClearAllInput(){
@@ -144,7 +151,7 @@ public class InputManager : MonoBehaviour
         m_horizontalAxis = Input.GetAxis("Horizontal");
         m_verticalAxis = Input.GetAxis("Vertical");
 
-        if(m_horizontalAxis == 1 && !m_axisXPositiveHold){
+        if(m_horizontalAxis == 1 && !m_axisXPositiveHold && !m_axisXPositivePressed){
             m_axisXPositivePressed = true;
         }
         else if (m_horizontalAxis == 1 && m_axisXPositivePressed){
@@ -159,7 +166,7 @@ public class InputManager : MonoBehaviour
             m_axisXPositiveReleased = false;
         }
 
-        if(m_horizontalAxis == -1 && !m_axisXNegativeHold){
+        if(m_horizontalAxis == -1 && !m_axisXNegativeHold && !m_axisXNegativePressed){
             m_axisXNegativePressed = true;
         }
         else if (m_horizontalAxis == -1 && m_axisXNegativePressed){
@@ -176,7 +183,7 @@ public class InputManager : MonoBehaviour
 
 
 
-        if(m_verticalAxis == 1 && !m_axisYPositiveHold){
+        if(m_verticalAxis == 1 && !m_axisYPositiveHold && !m_axisYPositivePressed){
             m_axisYPositivePressed = true;
         }
         else if (m_verticalAxis == 1 && m_axisYPositivePressed){
@@ -191,7 +198,7 @@ public class InputManager : MonoBehaviour
             m_axisYPositiveReleased = false;
         }
 
-        if(m_verticalAxis == -1 && !m_axisYNegativeHold){
+        if(m_verticalAxis == -1 && !m_axisYNegativeHold && !m_axisYNegativePressed){
             m_axisYNegativePressed = true;
         }
         else if (m_verticalAxis == -1 && m_axisYNegativePressed){
@@ -250,6 +257,10 @@ public class InputManager : MonoBehaviour
     public bool PauseButtonPressed   { get { return m_buttonsPressed[(int)ACTIONS.PAUSE]; } }
     public bool PauseButtonHold      { get { return m_buttonsHold[(int)ACTIONS.PAUSE]; } }
     public bool PauseButtonReleased  { get { return m_buttonsReleased[(int)ACTIONS.PAUSE]; } }
+
+    public bool MapButtonPressed   { get { return m_buttonsPressed[(int)ACTIONS.MAP]; } }
+    public bool MapButtonHold      { get { return m_buttonsHold[(int)ACTIONS.MAP]; } }
+    public bool MapButtonReleased  { get { return m_buttonsReleased[(int)ACTIONS.MAP]; } }
 
     public float HorizontalAxis { get { return m_horizontalAxis; } }
     public float VerticalAxis { get { return m_verticalAxis; } }
