@@ -19,7 +19,7 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] float m_offsetX = 20.0f;
     [SerializeField] float m_offsetY = 0.0f;
-    [SerializeField] float m_boxWidth = 10.0f;
+    float m_boxWidth = 0;
     [SerializeField] float m_boxHeight = 10.0f;
     private Vector3 m_velocityX = Vector3.zero;
     private Vector3 m_velocityY = Vector3.zero;
@@ -57,7 +57,7 @@ public class CameraMovement : MonoBehaviour
         
         m_dampSpeedX = m_dampSpeedMovement;
         
-        if(Player.Instance.transform.position.x + m_boxWidth/2 < transform.position.x && Player.Instance.transform.position.x - m_boxWidth/2 > transform.position.x ){
+        if(Player.Instance.transform.position.x < transform.position.x + m_boxWidth/2 && Player.Instance.transform.position.x  > transform.position.x - m_boxWidth/2){
             m_targetPosition.x = transform.position.x;
         }else{
             m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
