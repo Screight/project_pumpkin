@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -60,6 +61,8 @@ public class InputManager : MonoBehaviour
     bool m_axisYNegativeHold = false;
     bool m_axisYNegativeReleased = false;
 
+    private GameObject selectedObj;
+
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
@@ -72,12 +75,18 @@ public class InputManager : MonoBehaviour
             m_buttonsReleased[i]    = false;
         }
 
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
+
+        if (EventSystem.current.currentSelectedGameObject == null)
+             EventSystem.current.SetSelectedGameObject(selectedObj);
+     
+         selectedObj = EventSystem.current.currentSelectedGameObject;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
