@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3103937150430605896}
   - component: {fileID: 878315287160471319}
   - component: {fileID: 1436311050567185101}
+  - component: {fileID: 5418883971837144234}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -115,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.29
+      scalar: 2.51
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -284,7 +285,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.56
+      scalar: 3.12
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1371,7 +1372,7 @@ ParticleSystem:
   UVModule:
     serializedVersion: 2
     enabled: 0
-    mode: 0
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -1489,7 +1490,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 583aff1c3bdbb6346b11dcc686f3f4bc, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -4850,6 +4851,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &5418883971837144234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437508248306985120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5a44a80dc061544a85ed341d30eada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Prefab: {fileID: 4760386074063068045, guid: 5bd95395f4456fa4cbac65e15d23cb91, type: 3}
 --- !u!1 &2878200383984447375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4861,6 +4875,7 @@ GameObject:
   - component: {fileID: 292356379743456376}
   - component: {fileID: 4535040546781288028}
   - component: {fileID: 8169253592267442371}
+  - component: {fileID: 1224107438246365848}
   m_Layer: 0
   m_Name: Particle System (1)
   m_TagString: Untagged
@@ -4965,7 +4980,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.68
+      scalar: 2.98
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5134,7 +5149,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.56
+      scalar: 2.57
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -6221,7 +6236,7 @@ ParticleSystem:
   UVModule:
     serializedVersion: 2
     enabled: 0
-    mode: 0
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -6339,7 +6354,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 583aff1c3bdbb6346b11dcc686f3f4bc, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -8880,8 +8895,8 @@ ParticleSystem:
     textureMode: 0
     ribbonCount: 12
     shadowBias: 0.5
-    worldSpace: 0
-    dieWithParticles: 1
+    worldSpace: 1
+    dieWithParticles: 0
     sizeAffectsWidth: 1
     sizeAffectsLifetime: 1
     inheritParticleColor: 1
@@ -9700,6 +9715,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1224107438246365848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2878200383984447375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5a44a80dc061544a85ed341d30eada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Prefab: {fileID: 4760386074063068045, guid: 5bd95395f4456fa4cbac65e15d23cb91, type: 3}
 --- !u!1 &7290566441945400196
 GameObject:
   m_ObjectHideFlags: 0
@@ -9725,7 +9753,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7290566441945400196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8615789071266109738}
@@ -9745,22 +9773,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.701
+  m_FalloffIntensity: 1
   m_Color: {r: 0.41960788, g: 0.03529412, b: 0.8470589, a: 1}
-  m_Intensity: 2.57
-  m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: c3ed5c700f6a1620000000000f475912d1d30e6d2db3a196d73d32df
+  m_Intensity: 1.26
+  m_LightVolumeOpacity: 0.07
+  m_ApplyToSortingLayers: c3ed5c70c35ef8180f6a1620d3e9bd3fd1d30e6dbf73d4ba2db3a1960f47591285e9b72023abd44fd73d32df00000000
   m_LightCookieSprite: {fileID: 21300000, guid: 449d19bb94447cd4ebfa77876f11e85d, type: 3}
   m_UseNormalMap: 1
   m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
-  m_ShadowVolumeIntensity: 0
+  m_AlphaBlendOnOverlap: 1
+  m_ShadowIntensity: 1
+  m_ShadowVolumeIntensity: 0.74
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 9.2
-  m_PointLightOuterRadius: 59.23
-  m_PointLightDistance: 4.75
+  m_PointLightInnerRadius: 4.92
+  m_PointLightOuterRadius: 17.39
+  m_PointLightDistance: 0.34
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -9846,8 +9874,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1767787731
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_Sprite: {fileID: -4605999332671451386, guid: 4993e57a020ce8d4691e042478efe13f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
