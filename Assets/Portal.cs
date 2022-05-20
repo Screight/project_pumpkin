@@ -27,7 +27,8 @@ public class Portal : InteractiveItem
         m_eventTimer = gameObject.AddComponent<Timer>();
     }
 
-    private void Start() {
+    private void Start()
+    {
         m_renderer.enabled = false;
         m_closeDuration = AnimationManager.Instance.GetClipDuration(m_animator, ANIMATION.PORTAL_CLOSE);
         m_eventTimer.Duration = m_closeDuration;
@@ -41,9 +42,6 @@ public class Portal : InteractiveItem
             m_isPortalClosing = false;
             m_renderer.enabled = false;
         }
-        //Loop SFX
-        if (m_renderer.enabled && !m_PortalLoopSFX.isPlaying && !m_isPortalClosing) { m_PortalLoopSFX.Play(); }
-        else if (!m_renderer.enabled || m_isPortalClosing) { m_PortalLoopSFX.Stop(); }
     }
 
     protected override void HandleInteraction()
@@ -59,38 +57,46 @@ public class Portal : InteractiveItem
         SoundManager.Instance.PlayOnce(AudioClipName.PORTALUSE);
     }
 
-    public void OpenPortal(){
-        SoundManager.Instance.PlayOnce(AudioClipName.PORTALOPEN);
+    public void OpenPortal()
+    {
         m_renderer.enabled = true;
         m_isPortalClosing = false;
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_OPEN);
     }
 
-    public void ClosePortal(){
+    public void ClosePortal()
+    {
         m_isPortalClosing = true;
         m_eventTimer.Restart();
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_CLOSE);
-        SoundManager.Instance.PlayOnce(AudioClipName.PORTALCLOSE);
     }
 
-    public void TransportPlayer(){
+    public void TransportPlayer()
+    {
         Player.Instance.transform.position = new Vector3(m_destinyPortal.SpawnPosition.x, m_destinyPortal.SpawnPosition.y, Player.Instance.transform.position.z);
         m_transicion.RemoveListenerToEndOfFadeIn(TransportPlayer);
         GameManager.Instance.CurrentZone = m_destinyPortal.Zone;
     }
 
-    public void EndTransportPlayer(){
+    public void EndTransportPlayer()
+    {
         Player.Instance.StopScripting();
         GameManager.Instance.IsGamePaused = false;
         m_transicion.RemoveListenerToEndOfTransition(EndTransportPlayer);
     }
 
-    public Vector3 SpawnPosition{
+    public Vector3 SpawnPosition
+    {
         get { return m_playerPosition.position; }
     }
 
-    public ZONE Zone {
+    public ZONE Zone 
+    {
         get { return m_zone; }
     }
 
+    public void PlayOpeningSFX() { SoundManager.Instance.PlayOnce(AudioClipName.PORTALOPEN); }
+    public void PlayClosingSFX() { SoundManager.Instance.PlayOnce(AudioClipName.PORTALCLOSE); }
+    public void PlayLoopSFX() { m_PortalLoopSFX.Play(); }
+    public void StopLoopSFX() { m_PortalLoopSFX.Stop(); }
 }
