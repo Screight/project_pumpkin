@@ -23,6 +23,8 @@ public class InputManager : MonoBehaviour
     KeyCode m_interactButton_k  = KeyCode.Space;
     KeyCode m_cancelButton_k = KeyCode.X;
     KeyCode m_downButton_k = KeyCode.DownArrow;
+    KeyCode m_downButton_j = KeyCode.DownArrow;
+
     KeyCode m_upButton_k = KeyCode.UpArrow;
     KeyCode m_pauseButton_k = KeyCode.Escape;
 
@@ -144,7 +146,7 @@ public class InputManager : MonoBehaviour
         m_horizontalAxis = Input.GetAxis("Horizontal");
         m_verticalAxis = Input.GetAxis("Vertical");
 
-        if(m_horizontalAxis == 1 && !m_axisXPositiveHold){
+        if(m_horizontalAxis == 1 && !m_axisXPositiveHold && !m_axisXPositivePressed){
             m_axisXPositivePressed = true;
         }
         else if (m_horizontalAxis == 1 && m_axisXPositivePressed){
@@ -159,7 +161,7 @@ public class InputManager : MonoBehaviour
             m_axisXPositiveReleased = false;
         }
 
-        if(m_horizontalAxis == -1 && !m_axisXNegativeHold){
+        if(m_horizontalAxis == -1 && !m_axisXNegativeHold && !m_axisXNegativePressed){
             m_axisXNegativePressed = true;
         }
         else if (m_horizontalAxis == -1 && m_axisXNegativePressed){
@@ -176,7 +178,7 @@ public class InputManager : MonoBehaviour
 
 
 
-        if(m_verticalAxis == 1 && !m_axisYPositiveHold){
+        if(m_verticalAxis == 1 && !m_axisYPositiveHold && !m_axisYPositivePressed){
             m_axisYPositivePressed = true;
         }
         else if (m_verticalAxis == 1 && m_axisYPositivePressed){
@@ -191,7 +193,7 @@ public class InputManager : MonoBehaviour
             m_axisYPositiveReleased = false;
         }
 
-        if(m_verticalAxis == -1 && !m_axisYNegativeHold){
+        if(m_verticalAxis == -1 && !m_axisYNegativeHold && !m_axisYNegativePressed){
             m_axisYNegativePressed = true;
         }
         else if (m_verticalAxis == -1 && m_axisYNegativePressed){
