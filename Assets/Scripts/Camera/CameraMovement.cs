@@ -93,7 +93,7 @@ public class CameraMovement : MonoBehaviour
         {
            // m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
             //transform.position = new Vector3(transform.position.x, m_bottomLimit + m_cameraHeight / 2, transform.position.z);
-            /*if (m_player.transform.position.y > m_minimumHeightForCameraMovement)
+            if (m_player.transform.position.y > m_minimumHeightForCameraMovement)
             {
                 if (transform.position.y > m_targetPosition.y && m_rb2DPlayer.velocity.y < 0) { m_dampSpeedY = m_dampSpeedDown; }
                 else { m_dampSpeedY = m_dampSpeedUp; }
@@ -102,7 +102,7 @@ public class CameraMovement : MonoBehaviour
             {
                 if (m_targetPosition.y < transform.position.y) { m_dampSpeedY = m_dampSpeedDown; }
                 else { m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;  }
-            }*/
+            }
 
         }
 
