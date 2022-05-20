@@ -127,6 +127,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menuStack.Peek().initialSelectecButton);
         m_currentMenu = m_menuStack.Peek().ID;
+        SoundManager.Instance.PlayOnce(AudioClipName.BUTTONCLICKED);
     }
 
     public void GoBack()
@@ -141,6 +142,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_menuStack.Peek().initialSelectecButton);
         m_currentMenu = m_menuStack.Peek().ID;
+        SoundManager.Instance.PlayOnce(AudioClipName.BUTTONCLICKED);
     }
     
     public int GetCurrentMenuIndex()

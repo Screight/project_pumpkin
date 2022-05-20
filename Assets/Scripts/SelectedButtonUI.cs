@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectedButtonUI : MonoBehaviour, ISelectHandler, IPointerEnterHandler
+public class SelectedButtonUI : MonoBehaviour, ISelectHandler
 {
     [SerializeField] GameObject m_flames;
 
@@ -11,12 +11,5 @@ public class SelectedButtonUI : MonoBehaviour, ISelectHandler, IPointerEnterHand
     {
         SoundManager.Instance.PlayOnce(AudioClipName.BUTTONSWITCH);
         m_flames.transform.position = transform.position;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        m_flames.transform.position = transform.position;
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(gameObject);
     }
 }

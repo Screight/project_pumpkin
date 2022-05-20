@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SelectedButtonUIPauseMenu : MonoBehaviour, IPointerEnterHandler
+public class SelectedButtonUIPauseMenu : MonoBehaviour, ISelectHandler
 {
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnSelect(BaseEventData p_eventData)
     {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(this.gameObject);
+        SoundManager.Instance.PlayOnce(AudioClipName.BUTTONSWITCH);
     }
 
 }
