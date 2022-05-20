@@ -82,7 +82,7 @@ public class Player : AnimatedCharacter
     protected override void Awake() {
 
         base.Awake();
-        m_transicion = GameObject.FindObjectOfType<Transicion>();
+        m_transicion = FindObjectOfType<Transicion>();
         Physics2D.IgnoreLayerCollision(6,1,true);
 
         if (m_instance == null) { m_instance = this; }
@@ -119,11 +119,13 @@ public class Player : AnimatedCharacter
 
     private void Update()
     {
-        if(GameManager.Instance.IsGamePaused){ return ;}
+        if (GameManager.Instance.IsGamePaused) { return; }
         CheckIfFalling();
 
-        if(m_isBeingScripted){
-            if(m_eventTimer.IsFinished && m_eventStart){
+        if (m_isBeingScripted)
+        {
+            if (m_eventTimer.IsFinished && m_eventStart)
+            {
                 m_isBeingScripted = false;
                 InitializeIdleState();
                 m_eventStart = false;
@@ -144,14 +146,16 @@ public class Player : AnimatedCharacter
 
         if (m_invulnerableTimer.IsFinished && m_isInvulnerable && m_state != PLAYER_STATE.DASH)
         {
-            if (m_state != PLAYER_STATE.DEATH) { m_state = PLAYER_STATE.IDLE; 
-            Physics2D.IgnoreLayerCollision(6, 7, false);
+            if (m_state != PLAYER_STATE.DEATH)
+            {
+                m_state = PLAYER_STATE.IDLE;
+                Physics2D.IgnoreLayerCollision(6, 7, false);
             }
 
             m_direction = 0;
             m_isInvulnerable = false;
             m_spriteRenderer.color = new Color(255, 255, 255, 255);
-            
+
             m_invulnerableTimer.Stop();
             m_blinkTimer.Stop();
             m_hasBlinked = false;
@@ -170,8 +174,8 @@ public class Player : AnimatedCharacter
             case PLAYER_STATE.LAND:     { HandleLandState(); } break;
             case PLAYER_STATE.DASH:     { HandleDashState(); } break;
             case PLAYER_STATE.ATTACK:   { m_attackScript.HandleAttack(m_isGrounded); } break;
-            case PLAYER_STATE.HURT: { HandleHurtState(); } break;
-            case PLAYER_STATE.DEATH: { HandleDeathState(); } break;
+            case PLAYER_STATE.HURT:     { HandleHurtState(); } break;
+            case PLAYER_STATE.DEATH:    { HandleDeathState(); } break;
         }
     }
 
@@ -220,14 +224,12 @@ public class Player : AnimatedCharacter
         if (!m_canPerformAction) { return; }
         if (m_direction != 0)
         {
-            Debug.Log(IsGrounded);
-            if(!IsGrounded || m_insidePlatform){
+            if (!IsGrounded || m_insidePlatform)
+            {
                 m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, m_rb2D.velocity.y);
             }
-            else {
-                m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, 0);
-            }
-            
+            else { m_rb2D.velocity = new Vector2((int)m_direction * m_currentSpeedX, 0); }
+
             FacePlayerToMovementDirection();
             if (m_isGrounded && m_state != PLAYER_STATE.LAND && m_state != PLAYER_STATE.ATTACK)
             {
@@ -249,7 +251,6 @@ public class Player : AnimatedCharacter
     void Jump()
     {
         m_canJump = true;
-        Debug.Log("JUMP");
         m_rb2D.gravityScale = m_gravity1 / (Physics2D.gravity.y);
         m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_maxJumpSpeed);
 
@@ -259,7 +260,8 @@ public class Player : AnimatedCharacter
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_BOOST, false);
     }
 
-    void InitializeIdleState(){
+    void InitializeIdleState()
+    {
         m_state = PLAYER_STATE.IDLE;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
     }
@@ -272,9 +274,11 @@ public class Player : AnimatedCharacter
     }
     void HandleJumpState()
     {
-        if(!InputManager.Instance.JumpButtonHold){
+        if (!InputManager.Instance.JumpButtonHold)
+        {
             m_canJump = false;
-            if(m_rb2D.velocity.y > m_minJumpSpeed){
+            if (m_rb2D.velocity.y > m_minJumpSpeed)
+            {
                 m_rb2D.velocity = new Vector2(m_rb2D.velocity.x, m_minJumpSpeed);
             }
         }
@@ -286,25 +290,28 @@ public class Player : AnimatedCharacter
     void HandleFallState() { HandleJumpState(); }
     void HandleBoostState() { HandleJumpState(); }
 
-    void InitializeHurtState(){
+    void InitializeHurtState()
+    {
         m_state = PLAYER_STATE.HURT;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_HIT, true);
         m_eventTimer.Duration = m_hurtDuration;
         m_eventTimer.Restart();
     }
 
-    void HandleHurtState(){
-        if(m_eventTimer.IsFinished){
-            if(m_isGrounded){ InitializeIdleState();}
-            else { InitializeJumpState();}
+    void HandleHurtState()
+    {
+        if (m_eventTimer.IsFinished)
+        {
+            if (m_isGrounded) { InitializeIdleState(); }
+            else { InitializeJumpState(); }
         }
     }
 
     void CheckIfFalling()
     {
-        if (m_state == PLAYER_STATE.DASH) { return; }
-        if (m_state == PLAYER_STATE.DEATH) { return; }
-        if (m_state == PLAYER_STATE.GROUNDBREAKER) { return; }
+        if (m_state == PLAYER_STATE.DASH)           { return; }
+        if (m_state == PLAYER_STATE.DEATH)          { return; }
+        if (m_state == PLAYER_STATE.GROUNDBREAKER)  { return; }
         if (!m_isGrounded && m_rb2D.velocity.y <= 0)
         {
             m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
@@ -447,8 +454,10 @@ public class Player : AnimatedCharacter
         }
     }
 
-    void HandleDeathState(){
-        if(m_eventTimer.IsFinished){
+    void HandleDeathState()
+    {
+        if (m_eventTimer.IsFinished)
+        {
             m_state = PLAYER_STATE.LAST_NO_USE;
         }
     }
