@@ -54,7 +54,6 @@ public class MenuManager : MonoBehaviour
         {
             if (InputManager.Instance.CancelButtonPressed)
             {
-                Debug.Log(m_currentMenu);
                 if (Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1)
                 {
                     FindObjectOfType<PauseMenu>().UnPause();
