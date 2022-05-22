@@ -11,8 +11,8 @@ public class HandleSettings : MonoBehaviour
 
     private void Start()
     {
-        m_effectsVolumeLevel.value = SoundManager.Instance.EffectVolume;
-        m_backgroundVolumeLevel.value = SoundManager.Instance.BackgroundVolume;
+        if (m_effectsVolumeLevel != null) { m_effectsVolumeLevel.value = SoundManager.Instance.EffectVolume; }
+        if (m_backgroundVolumeLevel != null) { m_backgroundVolumeLevel.value = SoundManager.Instance.BackgroundVolume; }
     }
 
     public void SetBackgroundVolume()
