@@ -14,7 +14,9 @@ public class Projectile : MonoBehaviour
     [SerializeField] AudioClipName m_audioClip;
     private Rigidbody2D m_rb2D;
 
-    private void Awake() { m_rb2D = GetComponent<Rigidbody2D>(); }
+    private void Awake() {
+        m_rb2D = GetComponent<Rigidbody2D>();
+    }
 
     public void Shoot(int p_direction)
     {
@@ -36,4 +38,5 @@ public class Projectile : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }

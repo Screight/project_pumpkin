@@ -178,6 +178,7 @@ public class Skeleton : Enemy
         Projectile m_boneArrowScript = Instantiate(m_arrow, m_attackPosition.position, Quaternion.identity).GetComponent<Projectile>();
         m_boneArrowScript.Shoot(FacingDirection());
         m_isAttacking = false;
+        m_boneArrowScript.gameObject.transform.SetParent(gameObject.transform.parent.transform.parent.transform.parent);
     }
 
     void FlipX()

@@ -19,6 +19,8 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] float m_offsetX = 20.0f;
     [SerializeField] float m_offsetY = 0.0f;
+    float m_boxWidth = 0;
+    [SerializeField] float m_boxHeight = 10.0f;
     private Vector3 m_velocityX = Vector3.zero;
     private Vector3 m_velocityY = Vector3.zero;
     private Vector3 m_targetPosition;
@@ -55,9 +57,20 @@ public class CameraMovement : MonoBehaviour
         
         m_dampSpeedX = m_dampSpeedMovement;
         
-        m_targetPosition.y = m_player.transform.position.y + m_offsetY;
+        if(Player.Instance.transform.position.x < transform.position.x + m_boxWidth/2 && Player.Instance.transform.position.x  > transform.position.x - m_boxWidth/2){
+            m_targetPosition.x = transform.position.x;
+        }else{
+            m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
+        }
+
+        if(Player.Instance.transform.position.y < transform.position.y + m_boxHeight/2 && Player.Instance.transform.position.y > transform.position.y){
+            m_targetPosition.y = transform.position.y;
+        }else{
+            m_targetPosition.y = m_player.transform.position.y + m_offsetY;
+        }
+
         m_targetPosition.z = transform.position.z;
-        m_targetPosition.x = m_player.transform.position.x + m_playerScript.FacingDirection() * m_offsetX;
+        
 
         if (m_targetPosition.x - m_cameraWidth / 2 <= m_leftLimit)
         {
@@ -78,6 +91,8 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
+           // m_targetPosition.y = m_bottomLimit + m_cameraHeight / 2;
+            //transform.position = new Vector3(transform.position.x, m_bottomLimit + m_cameraHeight / 2, transform.position.z);
             if (m_player.transform.position.y > m_minimumHeightForCameraMovement)
             {
                 if (transform.position.y > m_targetPosition.y && m_rb2DPlayer.velocity.y < 0) { m_dampSpeedY = m_dampSpeedDown; }
