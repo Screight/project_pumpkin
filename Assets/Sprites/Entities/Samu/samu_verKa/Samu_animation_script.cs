@@ -23,9 +23,9 @@ public class Samu_animation_script : MonoBehaviour
         Debug.Log(sin);
         innerRing.transform.Rotate( new Vector3( 0,0,sin));
         outerRing.transform.Rotate(new Vector3(0, 0, - sin));
-        mainCircle.transform.Rotate(new Vector3(0, 0, 0.5f));
-        subCircle1.transform.Rotate(new Vector3(0, 0, -1f));
-        subCircle2.transform.Rotate(new Vector3(0, 0, -1f));
+        mainCircle.transform.Rotate(new Vector3(0, 0, 0.2f));
+        subCircle1.transform.Rotate(new Vector3(0, 0, -0.5f));
+        subCircle2.transform.Rotate(new Vector3(0, 0, -0.5f));
 
     }
 }

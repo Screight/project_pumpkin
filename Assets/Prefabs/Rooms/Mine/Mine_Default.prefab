@@ -6590,7 +6590,6 @@ Transform:
   - {fileID: 7405193383361136671}
   - {fileID: 3061815575167052957}
   - {fileID: 1742405399042670202}
-  - {fileID: 1256191618433139918}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6635,6 +6634,7 @@ Transform:
   m_Children:
   - {fileID: 4101182032799795240}
   - {fileID: 7445441380375463620}
+  - {fileID: 1256191618433139918}
   m_Father: {fileID: 8940975012564673242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7244,7 +7244,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 548923781
-  m_SortingLayer: 10
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -7377,15 +7377,27 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5982579638419473922}
+    m_TransformParent: {fileID: 6819869842437604119}
     m_Modifications:
     - target: {fileID: 1821151634642810502, guid: ab525103a897af44d8393078fff8962d, type: 3}
-      propertyPath: m_Intensity
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821151634642810502, guid: ab525103a897af44d8393078fff8962d, type: 3}
+      propertyPath: m_ShapeLightParametricSides
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821151634642810502, guid: ab525103a897af44d8393078fff8962d, type: 3}
+      propertyPath: m_ShapeLightParametricRadius
+      value: 11.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821151634642810502, guid: ab525103a897af44d8393078fff8962d, type: 3}
+      propertyPath: m_ShapeLightParametricAngleOffset
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896136802326253630, guid: ab525103a897af44d8393078fff8962d, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2896136802326253630, guid: ab525103a897af44d8393078fff8962d, type: 3}
       propertyPath: m_LocalPosition.x

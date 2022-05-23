@@ -81,14 +81,14 @@ TagManager:
   - name: Items
     uniqueID: 3134485439
     locked: 0
-  - name: Player
-    uniqueID: 2527179565
-    locked: 0
   - name: Enemies
     uniqueID: 307840783
     locked: 0
   - name: ForegroundDeco
     uniqueID: 548923781
+    locked: 0
+  - name: Player
+    uniqueID: 2527179565
     locked: 0
   - name: UnlitDecor
     uniqueID: 1339337507
