@@ -33,9 +33,10 @@ public class Drill : MonoBehaviour
     {
         if (!m_event.IsFinished)
         {
-            m_sprite.material.color = Color.Lerp(Color.red, Color.white, m_event.CurrentTime);
+           m_sprite.color = Color.Lerp(Color.red, Color.white, m_event.CurrentTime);
+            
         }
-        else { m_sprite.material.color = Color.white; }
+        else { m_sprite.color = Color.white; }
     }
 
     private void OnTriggerStay2D(Collider2D p_collider)
