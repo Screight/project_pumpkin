@@ -13703,7 +13703,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2.1666667
-    functionName: DrillStucked
+    functionName: DrillStuckedSFX
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -13717,7 +13717,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.7666667
-    functionName: DrillImpactcFX
+    functionName: DrillImpactSFX
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

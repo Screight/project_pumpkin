@@ -5895,7 +5895,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.1666667
-    functionName: DrillImpactcFX
+    functionName: DrillImpactSFX
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
