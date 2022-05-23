@@ -81,6 +81,7 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.PORTALLOOP] = Resources.Load<AudioClip>("Sound/PortalLoop");
         m_audioClips[(int)AudioClipName.PORTALCLOSE] = Resources.Load<AudioClip>("Sound/PortalClose");
         m_audioClips[(int)AudioClipName.RUNESFX] = Resources.Load<AudioClip>("Sound/RuneHum");
+        m_audioClips[(int)AudioClipName.SAVESFX] = Resources.Load<AudioClip>("Sound/GameSavedSFX");
     }
 
     public void PlayOnce(AudioClipName p_name)

@@ -27,6 +27,7 @@ public class SavePoint : InteractiveItem
         {
             base.HandleInteraction();
             m_sparkles.Play();
+            SoundManager.Instance.PlayOnce(AudioClipName.SAVESFX);
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_respawnPoint);
             Debug.Log("<color=red>Saved!</color>");
             GameManager.Instance.RestorePlayerToFullHealth();
