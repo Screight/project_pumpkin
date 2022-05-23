@@ -61,7 +61,6 @@ public class MiniMap : MonoBehaviour
             CreateMapForEachZone(rooms, (ZONE)i);
         }
 
-
         m_playerIcon.transform.SetAsLastSibling();
 
         HideMap();
@@ -85,8 +84,7 @@ public class MiniMap : MonoBehaviour
     // Compare the limits of a room to the actual ones and substitute them if they are broken
     void CheckForMapLimits(Room p_room, ZONE p_zone)
     {
-        if(!p_room.DrawInMap) { return; }
-        if(p_room.Zone != p_zone) { return ;}
+        if (!p_room.DrawInMap || p_room.Zone != p_zone) { return; }
 
         float roomTopLimit = p_room.transform.position.y + p_room.GetRoomHeight()/2 + p_room.GetRoomOffSetY();
         float roomBottomLimit = p_room.transform.position.y - p_room.GetRoomHeight()/2 + p_room.GetRoomOffSetY();
@@ -104,12 +102,14 @@ public class MiniMap : MonoBehaviour
         if (p_room.Zone != p_zone) { return; }
 
         GameObject empty = new GameObject();
-        empty.transform.parent = transform;
+        if (p_room.DrawInMap) { empty.transform.parent = transform; }
         empty.name = "room_" + p_room.ID;
 
         m_rooms[p_indexInArray] = empty.AddComponent<Image>();
         m_roomsScript[p_indexInArray] = p_room;
         m_roomsDictionary.Add(p_room.ID, p_indexInArray);
+
+        if (!p_room.DrawInMap || p_room.Zone != p_zone) { return; }
 
         m_rooms[p_indexInArray].sprite = m_sprite;
         m_rooms[p_indexInArray].color = m_unVisitedRoom;
@@ -127,7 +127,6 @@ public class MiniMap : MonoBehaviour
 
     private void Update()
     {
-
         m_scale = m_desiredScale / Screen.width * 320;
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
@@ -157,16 +156,17 @@ public class MiniMap : MonoBehaviour
         }
     }
 
-    void PositionPlayerInMap(){
+    void PositionPlayerInMap()
+    {
         m_iconScale = m_desiredIconScale / Screen.width * 320;
         RectTransform rectTransform = m_playerIcon.GetComponent<RectTransform>();
 
-        rectTransform.sizeDelta = new Vector2(m_iconInitialSize.x/m_iconScale, m_iconInitialSize.y/m_iconScale);
+        rectTransform.sizeDelta = new Vector2(m_iconInitialSize.x / m_iconScale, m_iconInitialSize.y / m_iconScale);
 
-        float leftToCenter = Screen.width/2 - (m_rightLimit[(int)GameManager.Instance.CurrentZone] - m_leftLimit[(int)GameManager.Instance.CurrentZone])/(2*m_scale);
-        float topToCenter = Screen.height/2 - (m_topLimit[(int)GameManager.Instance.CurrentZone] - m_bottomLimit[(int)GameManager.Instance.CurrentZone])/(2*m_scale);
+        float leftToCenter = Screen.width / 2 - (m_rightLimit[(int)GameManager.Instance.CurrentZone] - m_leftLimit[(int)GameManager.Instance.CurrentZone]) / (2 * m_scale);
+        float topToCenter = Screen.height / 2 - (m_topLimit[(int)GameManager.Instance.CurrentZone] - m_bottomLimit[(int)GameManager.Instance.CurrentZone]) / (2 * m_scale);
 
-        rectTransform.position = new Vector2((Player.Instance.transform.position.x + m_initialPositionTransformToTopLeftCorner[(int)GameManager.Instance.CurrentZone].x)/m_scale + leftToCenter + m_distanceFromCenter.x, (Player.Instance.transform.position.y + m_initialPositionTransformToTopLeftCorner[(int)GameManager.Instance.CurrentZone].y)/m_scale  + Screen.height - topToCenter + m_distanceFromCenter.y);
+        rectTransform.position = new Vector2((Player.Instance.transform.position.x + m_initialPositionTransformToTopLeftCorner[(int)GameManager.Instance.CurrentZone].x) / m_scale + leftToCenter + m_distanceFromCenter.x, (Player.Instance.transform.position.y + m_initialPositionTransformToTopLeftCorner[(int)GameManager.Instance.CurrentZone].y) / m_scale + Screen.height - topToCenter + m_distanceFromCenter.y);
     }
 
     public void SetActiveRoom(int p_activeRoom)
