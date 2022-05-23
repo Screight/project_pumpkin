@@ -44,8 +44,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Intensity: 2.09
+    - _Intensity: 2.01
     m_Colors:
-    - _Color_Eyes: {r: 0, g: 0.09411765, b: 2, a: 0}
-    - _Color_Tail: {r: 0.9098039, g: 0, b: 4, a: 0}
+    - _Color_Eyes: {r: 0, g: 0.35504806, b: 6.964404, a: 0}
+    - _Color_Tail: {r: 0.16558531, g: 0, b: 0.9883373, a: 0}
   m_BuildTextureStacks: []
