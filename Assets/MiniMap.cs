@@ -34,10 +34,10 @@ public class MiniMap : MonoBehaviour
 
     bool m_isMapActive = false;
 
-    private void Start() {
-
+    private void Start()
+    {
         // 320 es la anchura de referencia
-        
+
         m_scale = m_desiredScale / Screen.width * 320;
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
@@ -46,41 +46,45 @@ public class MiniMap : MonoBehaviour
         m_iconInitialSize = rectTransform.sizeDelta;
         m_iconScale = m_desiredIconScale / Screen.width * 320;
 
-        Room[] rooms = GameObject.FindObjectsOfType<Room>();
+        Room[] rooms = FindObjectsOfType<Room>();
 
-        m_roomsDictionary = new Dictionary<int,int>();
+        m_roomsDictionary = new Dictionary<int, int>();
         m_rooms = new Image[rooms.Length];
         m_roomsScript = new Room[rooms.Length];
-        
-        for (int i = 0; i < (int)ZONE.LAST_NO_USE; i++){
+
+        for (int i = 0; i < (int)ZONE.LAST_NO_USE; i++)
+        {
             m_topLimit[i] = -100000;
             m_bottomLimit[i] = 100000;
             m_rightLimit[i] = -100000;
             m_leftLimit[i] = 100000;
             CreateMapForEachZone(rooms, (ZONE)i);
         }
-        
+
 
         m_playerIcon.transform.SetAsLastSibling();
 
         HideMap();
         m_background.SetActive(false);
         m_title.transform.position += new Vector3(m_distanceFromCenter.x, m_distanceFromCenter.y, 0);
-        
     }
 
-    void CreateMapForEachZone(Room[] p_room, ZONE p_zone){
-        foreach(Room room in p_room){
-            CheckForMapLimits(room, p_zone); }
+    void CreateMapForEachZone(Room[] p_room, ZONE p_zone)
+    {
+        foreach (Room room in p_room)
+        {
+            CheckForMapLimits(room, p_zone);
+        }
 
         m_initialPositionTransformToTopLeftCorner[(int)p_zone].x = -m_leftLimit[(int)p_zone];
         m_initialPositionTransformToTopLeftCorner[(int)p_zone].y = -m_topLimit[(int)p_zone];
 
-        for(int i = 0; i < p_room.Length; i++){ CreateAndSetUpRoomInMap(p_room[i], i, p_zone);  }
+        for (int i = 0; i < p_room.Length; i++) { CreateAndSetUpRoomInMap(p_room[i], i, p_zone); }
     }
 
     // Compare the limits of a room to the actual ones and substitute them if they are broken
-    void CheckForMapLimits(Room p_room, ZONE p_zone){
+    void CheckForMapLimits(Room p_room, ZONE p_zone)
+    {
         if(!p_room.DrawInMap) { return; }
         if(p_room.Zone != p_zone) { return ;}
 
@@ -95,8 +99,9 @@ public class MiniMap : MonoBehaviour
         if(roomLeftLimit < m_leftLimit[(int)p_zone]) { m_leftLimit[(int)p_zone] = roomLeftLimit; }
     }
 
-    void CreateAndSetUpRoomInMap(Room p_room, int p_indexInArray, ZONE p_zone){
-        if(p_room.Zone != p_zone) { return ;}
+    void CreateAndSetUpRoomInMap(Room p_room, int p_indexInArray, ZONE p_zone)
+    {
+        if (p_room.Zone != p_zone) { return; }
 
         GameObject empty = new GameObject();
         empty.transform.parent = transform;
@@ -104,8 +109,8 @@ public class MiniMap : MonoBehaviour
 
         m_rooms[p_indexInArray] = empty.AddComponent<Image>();
         m_roomsScript[p_indexInArray] = p_room;
-        m_roomsDictionary.Add(p_room.ID,p_indexInArray);
-            
+        m_roomsDictionary.Add(p_room.ID, p_indexInArray);
+
         m_rooms[p_indexInArray].sprite = m_sprite;
         m_rooms[p_indexInArray].color = m_unVisitedRoom;
         m_rooms[p_indexInArray].type = Image.Type.Sliced;
@@ -114,20 +119,21 @@ public class MiniMap : MonoBehaviour
 
         rectTransform.sizeDelta = new Vector2(p_room.GetRoomWidth() / m_scale, p_room.GetRoomHeight() / m_scale);
 
-        float leftToCenter = Screen.width/2 - (m_rightLimit[(int)p_zone] - m_leftLimit[(int)p_zone])/(2*m_scale);
-        float topToCenter = Screen.height/2 - (m_topLimit[(int)p_zone] - m_bottomLimit[(int)p_zone])/(2*m_scale);
+        float leftToCenter = Screen.width / 2 - (m_rightLimit[(int)p_zone] - m_leftLimit[(int)p_zone]) / (2 * m_scale);
+        float topToCenter = Screen.height / 2 - (m_topLimit[(int)p_zone] - m_bottomLimit[(int)p_zone]) / (2 * m_scale);
 
-        rectTransform.position = new Vector2((p_room.transform.position.x + p_room.GetRoomOffSetX() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].x)/m_scale + leftToCenter + m_distanceFromCenter.x, (p_room.transform.position.y + p_room.GetRoomOffSetY() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].y)/m_scale  + Screen.height - topToCenter + m_distanceFromCenter.y);
-
+        rectTransform.position = new Vector2((p_room.transform.position.x + p_room.GetRoomOffSetX() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].x) / m_scale + leftToCenter + m_distanceFromCenter.x, (p_room.transform.position.y + p_room.GetRoomOffSetY() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].y) / m_scale + Screen.height - topToCenter + m_distanceFromCenter.y);
     }
 
-    private void Update() {
+    private void Update()
+    {
 
         m_scale = m_desiredScale / Screen.width * 320;
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
 
-        if(InputManager.Instance.MapButtonPressed && !m_isMapActive && !GameManager.Instance.IsGamePaused){
+        if (InputManager.Instance.MapButtonPressed && !m_isMapActive && !GameManager.Instance.IsGamePaused)
+        {
             SetActiveZone(GameManager.Instance.CurrentZone);
             m_background.SetActive(true);
             m_title.enabled = true;
@@ -136,7 +142,8 @@ public class MiniMap : MonoBehaviour
             GameManager.Instance.SetGameToPaused(true, false);
             Time.timeScale = 0;
         }
-        else if((InputManager.Instance.MapButtonPressed || InputManager.Instance.CancelButtonPressed) && m_isMapActive){
+        else if ((InputManager.Instance.MapButtonPressed || InputManager.Instance.CancelButtonPressed) && m_isMapActive)
+        {
             HideMap();
             m_background.SetActive(false);
             m_isMapActive = false;
@@ -144,10 +151,10 @@ public class MiniMap : MonoBehaviour
             Time.timeScale = 1;
         }
 
-        if(m_isMapActive){
+        if (m_isMapActive)
+        {
             PositionPlayerInMap();
         }
-        
     }
 
     void PositionPlayerInMap(){
@@ -162,46 +169,52 @@ public class MiniMap : MonoBehaviour
         rectTransform.position = new Vector2((Player.Instance.transform.position.x + m_initialPositionTransformToTopLeftCorner[(int)GameManager.Instance.CurrentZone].x)/m_scale + leftToCenter + m_distanceFromCenter.x, (Player.Instance.transform.position.y + m_initialPositionTransformToTopLeftCorner[(int)GameManager.Instance.CurrentZone].y)/m_scale  + Screen.height - topToCenter + m_distanceFromCenter.y);
     }
 
-    public void SetActiveRoom(int p_activeRoom){
-        if(m_currentActiveRoom != -1){
+    public void SetActiveRoom(int p_activeRoom)
+    {
+        if (m_currentActiveRoom != -1)
+        {
             m_rooms[m_roomsDictionary[m_currentActiveRoom]].color = m_visitedRoom;
         }
-       
+
         m_currentActiveRoom = p_activeRoom;
         m_rooms[m_roomsDictionary[p_activeRoom]].color = m_activeRoom;
     }
 
-    void HideMap(){
-        for(int i = 0; i < m_rooms.Length; i++){
+    void HideMap()
+    {
+        for (int i = 0; i < m_rooms.Length; i++)
+        {
             m_rooms[i].enabled = false;
         }
         m_playerIcon.enabled = false;
         m_title.enabled = false;
     }
 
-    public void SetActiveZone(ZONE p_zone){
-        if(m_currentActiveRoom != -1){
+    public void SetActiveZone(ZONE p_zone)
+    {
+        if (m_currentActiveRoom != -1)
+        {
             //m_rooms[m_roomsDictionary[m_currentActiveRoom]].color = m_visitedRoom;
         }
-        
-        for(int i = 0; i < m_roomsScript.Length; i++)
+
+        for (int i = 0; i < m_roomsScript.Length; i++)
         {
-            if(m_roomsScript[i] != null && m_roomsScript[i].Zone == p_zone){
+            if (m_roomsScript[i] != null && m_roomsScript[i].Zone == p_zone)
+            {
                 m_rooms[i].enabled = true;
             }
         }
-        switch(p_zone){
+        switch (p_zone)
+        {
             case ZONE.FOREST:
                 m_title.text = "Dark Forest";
-            break;
+                break;
             case ZONE.MINE:
                 m_title.text = "Abandoned Mine";
-            break;
+                break;
             default:
                 m_title.text = "Unknown place";
-            break;
+                break;
         }
-        
     }
-
 }

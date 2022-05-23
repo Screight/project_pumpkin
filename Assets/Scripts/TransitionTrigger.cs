@@ -9,47 +9,51 @@ public class TransitionTrigger : InteractiveItem
     [SerializeField] Transform m_finalPosition;
     [SerializeField] Transicion m_transicionScript;
     [SerializeField] bool m_changeCheckpointToFinalPosition = false;
-    [SerializeField] ZONE m_destinationZone = ZONE.MINE;
-    MiniMap m_miniMap;
+    [SerializeField] ZONE m_destinationZone = ZONE.FOREST;
 
     protected override void Awake()
     {
         base.Awake();
         m_transicionScript = FindObjectOfType<Transicion>();
-        m_miniMap = FindObjectOfType<MiniMap>();
     }
 
     protected override void HandleInteraction()
     {
         base.HandleInteraction();
-        
+
         Player.Instance.SetPlayerToScripted();
         m_transicionScript.AddListenerToEndOfTransition(ReturnPlayerToNormal);
         GameManager.Instance.IsGamePaused = true;
         Player.Instance.SetGravityScaleTo0();
         m_transicionScript.FadeIn();
         m_transicionScript.AddListenerToEndOfFadeIn(TransportPlayerToPosition);
-        if(m_changeCheckpointToFinalPosition){
+        if (m_changeCheckpointToFinalPosition)
+        {
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_finalPosition);
         }
+        
         GameManager.Instance.CurrentZone = m_destinationZone;
+        //CHANGE BGM
+        if (m_destinationZone==ZONE.FOREST) { SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.FORESTOFSOULS); }
+        else if (m_destinationZone==ZONE.MINE) { SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.ABANDONEDMINE); }
     }
 
-    void ReturnPlayerToNormal(){
+    void ReturnPlayerToNormal()
+    {
         Player.Instance.SetGravityScaleToFall();
-        if(m_isHorizontal){
+        if (m_isHorizontal)
+        {
             int direction = 1;
-            if(!m_isPositive){ direction = -1;}
-                Player.Instance.ScriptWalk(direction, 0.2f);
-        }else{
-            Player.Instance.StopScripting();
+            if (!m_isPositive) { direction = -1; }
+            Player.Instance.ScriptWalk(direction, 0.2f);
         }
+        else { Player.Instance.StopScripting(); }
         m_transicionScript.RemoveListenerToEndOfTransition(ReturnPlayerToNormal);
         GameManager.Instance.IsGamePaused = false;
     }
 
-    void TransportPlayerToPosition(){
+    void TransportPlayerToPosition()
+    {
         Player.Instance.transform.position = new Vector3(m_finalPosition.position.x, m_finalPosition.position.y, Player.Instance.transform.position.z);
-    }
-    
+    }   
 }

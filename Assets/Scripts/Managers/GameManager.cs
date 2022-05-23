@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     SpiderBossTrigger m_spiderBossTrigger;
     bool m_isPlayerInSpiderBossFight = false;
 
-    ZONE m_currentZone = ZONE.MINE;
+    ZONE m_currentZone = ZONE.FOREST;
 
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         m_spiderBossTrigger = FindObjectOfType<SpiderBossTrigger>();
         m_transicion= FindObjectOfType<Transicion>();
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
+        m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
     }
 
     static public GameManager Instance
@@ -65,27 +66,33 @@ public class GameManager : MonoBehaviour
             m_playerHealth = 0;
             Player.Instance.HandleDeath();
             SoundManager.Instance.PlayOnce(AudioClipName.RESPAWN);
-            if(m_isPlayerInSpiderBossFight){
+            if (m_isPlayerInSpiderBossFight)
+            {
                 m_transicion.AddListenerToEndOfFadeIn(HandlePlayerDeathInSpiderBossBattle);
             }
         }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
 
-        if(p_amount > 0){
-            for(int i = 0; i <  m_playerHealth; i++){
+        if (p_amount > 0)
+        {
+            for (int i = 0; i < m_playerHealth; i++)
+            {
                 m_healthUI.RestoreHeart();
             }
         }
-        else if(p_amount < 0){
-            for(int i = 0; i <=  m_playerHealth; i++){
+        else if (p_amount < 0)
+        {
+            for (int i = 0; i <= m_playerHealth; i++)
+            {
                 m_healthUI.LoseHeart();
             }
         }
     }
 
-    public void GainExtraHeart(){
+    public void GainExtraHeart()
+    {
         PLAYER_MAX_HEALTH++;
-        m_miniMapInterface.AddHeart();
+        if (m_miniMapInterface != null) { m_miniMapInterface.AddHeart(); }
         m_healthUI.GainExtraHeart();
     }
 
@@ -99,9 +106,10 @@ public class GameManager : MonoBehaviour
         get { return m_playerAttackDamage; } 
     }
 
-    public void AddAttackDamage(){
+    public void AddAttackDamage()
+    {
         m_playerAttackDamage += 0.5f;
-        m_miniMapInterface.AddAttack();
+        if (m_miniMapInterface != null) { m_miniMapInterface.AddAttack(); }
     }
 
     public int PlayerHealth { get { return m_playerHealth;}}
@@ -127,7 +135,7 @@ public class GameManager : MonoBehaviour
                 { m_spellCooldown.SetPilarUI(p_value); }
                 break;
         }
-        m_miniMapInterface.UpdateSpirits();
+        if (m_miniMapInterface != null) { m_miniMapInterface.UpdateSpirits(); }
     }
 
     public bool PlayerInvincible
@@ -136,17 +144,18 @@ public class GameManager : MonoBehaviour
         set { m_isPlayerInvincible = value; }
     }
 
-    public void SetGameToPaused(bool p_isPaused, bool p_activatePanel){
+    public void SetGameToPaused(bool p_isPaused, bool p_activatePanel)
+    {
         m_isGamePaused = p_isPaused;
-        if(m_isGamePaused == false){
-                InputManager.Instance.PauseInputFor1Frame();
-            }
-        if(p_activatePanel && p_isPaused){
-            m_panel.SetActive(true);
-        }else{
-            m_panel.SetActive(false);
+        if (m_isGamePaused == false)
+        {
+            InputManager.Instance.PauseInputFor1Frame();
         }
-        
+        if (p_activatePanel && p_isPaused)
+        {
+            m_panel.SetActive(true);
+        }
+        else { m_panel.SetActive(false); }
     }
 
     public bool IsGamePaused {
@@ -154,16 +163,19 @@ public class GameManager : MonoBehaviour
         set { m_isGamePaused = value;}
     }
 
-    public void HandlePlayerDeathInSpiderBossBattle(){
+    public void HandlePlayerDeathInSpiderBossBattle()
+    {
         m_spiderBossTrigger.HandlePlayerDeath();
         m_transicion.RemoveListenerToEndOfTransition(HandlePlayerDeathInSpiderBossBattle);
     }
 
-    public bool IsPlayerInSpiderBossFight{
+    public bool IsPlayerInSpiderBossFight
+    {
         set { m_isPlayerInSpiderBossFight = value; }
     }
 
-    public ZONE CurrentZone {
+    public ZONE CurrentZone 
+    {
         get{ return m_currentZone; }
         set { m_currentZone = value;}
     }

@@ -17,35 +17,34 @@ public class Room : MonoBehaviour
     List<Enemy> m_enemies = new List<Enemy>();
     List<VineDestroyer> m_vines = new List<VineDestroyer>();
 
-    private void Awake() {
+    private void Awake()
+    {
 
         m_ID = g_ID;
         g_ID++;
-        
-        if(gameObject.tag == "Mine"){
-            m_zone  = ZONE.MINE;
+
+        if (gameObject.CompareTag("Mine"))
+        {
+            m_zone = ZONE.MINE;
         }
-        else if(gameObject.tag == "Forest"){
+        else if (gameObject.CompareTag("Forest"))
+        {
             m_zone = ZONE.FOREST;
-        }
-        else if(gameObject.tag == "Tutorial"){
-            m_zone = ZONE.TUTORIAL;
-        }
-        else{
-            m_zone = ZONE.UNKOWN;
         }
 
         m_roomLimits = GetComponent<BoxCollider2D>();
-        m_miniMap = GameObject.FindObjectOfType<MiniMap>();
+        m_miniMap = FindObjectOfType<MiniMap>();
         Enemy[] enemies = GetComponentsInChildren<Enemy>();
 
-        foreach(Enemy enemy in enemies){
+        foreach (Enemy enemy in enemies)
+        {
             m_enemies.Add(enemy);
         }
 
         VineDestroyer[] vines = GetComponentsInChildren<VineDestroyer>();
 
-        foreach(VineDestroyer vine in vines){
+        foreach (VineDestroyer vine in vines)
+        {
             m_vines.Add(vine);
         }
         m_activableObjects.SetActive(false);
@@ -55,58 +54,53 @@ public class Room : MonoBehaviour
         //RoomManager.Instance.AddRoom(this);
     }
 
-    public void Reset(){
+    public void Reset()
+    {
         if (m_enemies == null) { return; }
-        for(int i = 0; i < m_enemies.Count; i++){
+        for (int i = 0; i < m_enemies.Count; i++)
+        {
             m_enemies[i].gameObject.SetActive(true);
             m_enemies[i].Reset();
         }
         if (m_vines == null) { return; }
-        for(int i = 0; i < m_vines.Count; i++){
+        for (int i = 0; i < m_vines.Count; i++)
+        {
             m_vines[i].gameObject.SetActive(true);
             m_vines[i].Reset();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player"){ return ;}
-        m_miniMap.SetActiveRoom(m_ID);
+    private void OnTriggerEnter2D(Collider2D p_collider) 
+    {
+        if (!p_collider.CompareTag("Player")) { return; }
+        if (m_miniMap != null) { m_miniMap.SetActiveRoom(m_ID); }
         m_activableObjects.SetActive(true);
     }
 
-    private void OnTriggerExit2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player"){ return ;}
+    private void OnTriggerExit2D(Collider2D p_collider) 
+    {
+        if(!p_collider.CompareTag("Player")) { return ;}
         m_activableObjects.SetActive(false);
         Reset();
     }
 
     public int ID { get { return m_ID;}}
-    public void AddEnemy(Enemy p_enemy){
+    public void AddEnemy(Enemy p_enemy)
+    {
         m_enemies.Add(p_enemy);
     }
 
-    public void AddVine(VineDestroyer p_vine){
+    public void AddVine(VineDestroyer p_vine)
+    {
         m_vines.Add(p_vine);
     }
 
-    public float GetRoomHeight(){
-        return m_roomLimits.size.y;
-    }
-
-    public float GetRoomWidth(){
-        return m_roomLimits.size.x;
-    }
-
-    public float GetRoomOffSetX(){
-        return m_roomLimits.offset.x;
-    }
-
-    public float GetRoomOffSetY(){
-        return m_roomLimits.offset.y;
-    }
+    public float GetRoomHeight() { return m_roomLimits.size.y; }
+    public float GetRoomWidth() { return m_roomLimits.size.x; }
+    public float GetRoomOffSetX() { return m_roomLimits.offset.x; }
+    public float GetRoomOffSetY() { return m_roomLimits.offset.y; }
 
     public bool DrawInMap { get { return m_drawInMap; }}
 
     public ZONE Zone { get { return m_zone; }}
-
 }
