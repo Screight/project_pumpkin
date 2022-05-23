@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09299572d7dc186fe9ed0a1d95e6ad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_backgroundMusic: 2
+  m_backgroundMusic: 0
 --- !u!1 &965010442
 GameObject:
   m_ObjectHideFlags: 0
