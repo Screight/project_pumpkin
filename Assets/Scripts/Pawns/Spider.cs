@@ -17,6 +17,7 @@ public class Spider : Enemy
     Timer m_eventTimer;
     float m_eclosionDuration;
     bool m_hasHatched = false;
+    bool m_canDamagePlayer = false;
 
     protected override void Awake()
     {
@@ -104,6 +105,7 @@ public class Spider : Enemy
     public void Hatch()
     {
         m_hatchParticles.Play();
+        m_canDamagePlayer = true;
         transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         m_rb2d.gravityScale = 1;
         InitializePatrol();
@@ -162,6 +164,7 @@ public class Spider : Enemy
         m_rb2d.gravityScale = 0;
         m_hasHatched = false;
         m_rb2d.velocity = Vector2.zero;
+        m_canDamagePlayer = false;
     }
 
     public bool CanHatch() { return !m_hasHatched && canPlayerActivateEggs; }
