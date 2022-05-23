@@ -2282,6 +2282,37 @@ Transform:
   m_Father: {fileID: 8992040671898504478}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3538888608084291412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7875052825622257193}
+  m_Layer: 0
+  m_Name: Lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7875052825622257193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3538888608084291412}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1256191618433139918}
+  m_Father: {fileID: 6819869842437604119}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3831196120568385788
 GameObject:
   m_ObjectHideFlags: 0
@@ -6634,7 +6665,7 @@ Transform:
   m_Children:
   - {fileID: 4101182032799795240}
   - {fileID: 7445441380375463620}
-  - {fileID: 1256191618433139918}
+  - {fileID: 7875052825622257193}
   m_Father: {fileID: 8940975012564673242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7377,7 +7408,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6819869842437604119}
+    m_TransformParent: {fileID: 7875052825622257193}
     m_Modifications:
     - target: {fileID: 1821151634642810502, guid: ab525103a897af44d8393078fff8962d, type: 3}
       propertyPath: m_LightType
@@ -7397,7 +7428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2896136802326253630, guid: ab525103a897af44d8393078fff8962d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896136802326253630, guid: ab525103a897af44d8393078fff8962d, type: 3}
       propertyPath: m_LocalPosition.x
