@@ -22,6 +22,7 @@ public class DescendPlatform : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(InputManager.Instance.VerticalNegativeAxisPressed);
         if ((Input.GetKey(KeyCode.DownArrow) ||  InputManager.Instance.VerticalNegativeAxisPressed) && Player.Instance.ObjectGroundedTo == "platform" && !m_isPlayerInPlatform && Player.Instance.IsGrounded && m_isInThisPlatform) { 
             m_effector.rotationalOffset = 180;
             m_collider.isTrigger = true;

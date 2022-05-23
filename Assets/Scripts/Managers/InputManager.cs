@@ -163,7 +163,7 @@ public class InputManager : MonoBehaviour
         if(m_horizontalAxis == 1 && !m_axisXPositiveHold && !m_axisXPositivePressed){
             m_axisXPositivePressed = true;
         }
-        else if (m_horizontalAxis == 1 && m_axisXPositivePressed){
+        else if (m_axisXPositivePressed){
             m_axisXPositivePressed = false;
             m_axisXPositiveHold = true;
         }
@@ -178,7 +178,7 @@ public class InputManager : MonoBehaviour
         if(m_horizontalAxis == -1 && !m_axisXNegativeHold && !m_axisXNegativePressed){
             m_axisXNegativePressed = true;
         }
-        else if (m_horizontalAxis == -1 && m_axisXNegativePressed){
+        else if (m_axisXNegativePressed){
             m_axisXNegativePressed = false;
             m_axisXNegativeHold = true;
         }
@@ -195,7 +195,7 @@ public class InputManager : MonoBehaviour
         if(m_verticalAxis == 1 && !m_axisYPositiveHold && !m_axisYPositivePressed){
             m_axisYPositivePressed = true;
         }
-        else if (m_verticalAxis == 1 && m_axisYPositivePressed){
+        else if (m_axisYPositivePressed){
             m_axisYPositivePressed = false;
             m_axisYPositiveHold = true;
         }
@@ -210,7 +210,7 @@ public class InputManager : MonoBehaviour
         if(m_verticalAxis == -1 && !m_axisYNegativeHold && !m_axisYNegativePressed){
             m_axisYNegativePressed = true;
         }
-        else if (m_verticalAxis == -1 && m_axisYNegativePressed){
+        else if (m_axisYNegativePressed){
             m_axisYNegativePressed = false;
             m_axisYNegativeHold = true;
         }
