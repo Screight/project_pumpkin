@@ -2153,18 +2153,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpaceBatButton
       objectReference: {fileID: 0}
-    - target: {fileID: 413705919, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 67
-      objectReference: {fileID: 0}
-    - target: {fileID: 413705919, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 413705920, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 5735543336457254910, guid: b6c05f90f7e0ee142a16802124feefff, type: 3}
     - target: {fileID: 2670534374794385020, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2498,6 +2486,10 @@ PrefabInstance:
     - target: {fileID: 896941963703136595, guid: e8b70f1678924f64eb7734363afd3146, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068201042575200597, guid: e8b70f1678924f64eb7734363afd3146, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2623185155507150812, guid: e8b70f1678924f64eb7734363afd3146, type: 3}
       propertyPath: m_LocalPosition.x

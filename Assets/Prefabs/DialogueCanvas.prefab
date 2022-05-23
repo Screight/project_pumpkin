@@ -140,8 +140,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 105, y: -70}
-  m_SizeDelta: {x: 18, y: 22}
+  m_AnchoredPosition: {x: 105, y: -68}
+  m_SizeDelta: {x: 18, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &413705921
 CanvasRenderer:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6901942625152976432, guid: b2a9421892c17ee4ab15080ffbcecb6d, type: 3}
+  m_Sprite: {fileID: -3333301269978034521, guid: 5fa1d218a95670723b302e4423260f60, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -191,7 +191,7 @@ Animator:
   m_GameObject: {fileID: 413705918}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 80f79a03056c409f59eb2fa2f2ee7660, type: 2}
+  m_Controller: {fileID: 9100000, guid: ac87bde503128004b960c1a090029fcc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
