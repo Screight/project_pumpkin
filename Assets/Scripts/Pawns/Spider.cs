@@ -17,13 +17,13 @@ public class Spider : Enemy
     Timer m_eventTimer;
     float m_eclosionDuration;
     bool m_hasHatched = false;
-    bool m_canDamagePlayer = false;
 
     protected override void Awake()
     {
         base.Awake();
         m_rb2d = GetComponent<Rigidbody2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
 
     }
 
@@ -91,7 +91,7 @@ public class Spider : Enemy
         m_state = ENEMY_STATE.ECLOSION;
         m_collider.enabled = true;
         m_hasHatched = true;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_ECLOSION, false);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_ECLOSION, false);Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         m_eventTimer.Duration = m_eclosionDuration;
         m_eventTimer.Restart();
         SoundManager.Instance.PlayOnce(AudioClipName.EGG_CRACK_1);
@@ -105,7 +105,7 @@ public class Spider : Enemy
     public void Hatch()
     {
         m_hatchParticles.Play();
-        m_canDamagePlayer = true;
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
         transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         m_rb2d.gravityScale = 1;
         InitializePatrol();
@@ -164,7 +164,7 @@ public class Spider : Enemy
         m_rb2d.gravityScale = 0;
         m_hasHatched = false;
         m_rb2d.velocity = Vector2.zero;
-        m_canDamagePlayer = false;
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
     }
 
     public bool CanHatch() { return !m_hasHatched && canPlayerActivateEggs; }
