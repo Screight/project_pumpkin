@@ -13,7 +13,7 @@ public class GroundbreakerRune : InteractiveItem
     protected override void Awake()
     {
         mat = GetComponentInChildren<SpriteRenderer>().material;
-        lig = GetComponentInChildren<Light2D>();
+        //lig = GetComponentInChildren<Light2D>();
     }
     protected override void Update()
     {
@@ -31,7 +31,7 @@ public class GroundbreakerRune : InteractiveItem
     private void AnimateShader()
     {
         mat.SetFloat("_Brightness", brightness_val);
-        lig.intensity = brightness_val;
+        //lig.intensity = brightness_val;
     }
 
     protected override void HandleInteraction()

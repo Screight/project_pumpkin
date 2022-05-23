@@ -86,11 +86,11 @@ TagManager:
   - name: ForegroundDeco
     uniqueID: 548923781
     locked: 0
-  - name: Player
-    uniqueID: 2527179565
-    locked: 0
   - name: UnlitDecor
     uniqueID: 1339337507
+    locked: 0
+  - name: Player
+    uniqueID: 2527179565
     locked: 0
   - name: UI
     uniqueID: 3744611799
