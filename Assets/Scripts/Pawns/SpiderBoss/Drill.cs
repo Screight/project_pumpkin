@@ -76,6 +76,8 @@ public class Drill : MonoBehaviour
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT);
         }
         m_sprite.material.color = Color.red;
+        Debug.Log(m_sprite.material.color);
+
         m_event.Restart();
     }
 
