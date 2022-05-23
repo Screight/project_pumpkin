@@ -5,6 +5,12 @@ public class SavePoint : InteractiveItem
     [SerializeField] Transform m_respawnPoint;
     [SerializeField] ParticleSystem m_sparkles;
     private Timer m_saveCooldown;
+    SavePointText m_savePointText;
+
+    protected override void Awake() {
+        base.Awake();
+        m_savePointText = FindObjectOfType<SavePointText>();
+    }
 
     private void Start()
     {
@@ -27,6 +33,7 @@ public class SavePoint : InteractiveItem
         {
             base.HandleInteraction();
             m_sparkles.Play();
+            m_savePointText.ActivateText();
             SoundManager.Instance.PlayOnce(AudioClipName.SAVESFX);
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_respawnPoint);
             Debug.Log("<color=red>Saved!</color>");
