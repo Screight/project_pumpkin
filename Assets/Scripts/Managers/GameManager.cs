@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     bool m_isPlayerInSpiderBossFight = false;
 
     ZONE m_currentZone = ZONE.FOREST;
+    bool m_isMapUnlocked;
 
     private void Awake()
     {
@@ -178,6 +179,12 @@ public class GameManager : MonoBehaviour
     {
         get{ return m_currentZone; }
         set { m_currentZone = value;}
+    }
+
+    public bool IsMapUnlocked { get { return m_isMapUnlocked; }}
+
+    public void UnlockMap(){
+        m_isMapUnlocked = true;
     }
 
 }

@@ -131,7 +131,7 @@ public class MiniMap : MonoBehaviour
         m_distanceFromCenter.x = m_desiredDistanceFromCenter.x * Screen.width / 320;
         m_distanceFromCenter.y = m_desiredDistanceFromCenter.y * Screen.width / 320;
 
-        if (InputManager.Instance.MapButtonPressed && !m_isMapActive && !GameManager.Instance.IsGamePaused)
+        if (InputManager.Instance.MapButtonPressed && !m_isMapActive && !GameManager.Instance.IsGamePaused && GameManager.Instance.IsMapUnlocked)
         {
             SetActiveZone(GameManager.Instance.CurrentZone);
             m_background.SetActive(true);

@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb6cff8232b0b908cb7f03eae114480b, type: 3}
-  m_Name: UnlockGroundbreaker
+  m_Name: unlockMap
   m_EditorClassIdentifier: 
   m_icon:
   - {fileID: 21300000, guid: b9197937f1749094e88c4218658cf481, type: 3}
   m_name:
   - Ghosty the ghost
   m_sentences:
-  - Wow you found a rune...
-  - It says... Ground...Breaker?
-  - I think you can use it pressing Y in mid air.
-  - Go ahead, give it a try!
-  m_characterTalkingSentence: 00000000000000000000000000000000
+  - You have found a map. Press start to use it.
+  m_characterTalkingSentence: 00000000
