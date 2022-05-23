@@ -23,14 +23,14 @@ public class Spider : Enemy
         base.Awake();
         m_rb2d = GetComponent<Rigidbody2D>();
         m_eventTimer = gameObject.AddComponent<Timer>();
-        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
+        
 
     }
 
     protected override void Start()
     {
         base.Start();
-
+        Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         if (m_leftPatrolPoint.position.x > m_rightPatrolPoint.transform.position.x)
         {
             Transform provitional = m_leftPatrolPoint;
