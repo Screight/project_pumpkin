@@ -14,6 +14,7 @@ public class CheckpointsManager : MonoBehaviour
 
     static CheckpointsManager m_instance;
     BACKGROUND_CLIP m_checkpointMusic;
+    ZONE m_zone;
 
     private CheckpointsManager() { }
 
@@ -23,6 +24,7 @@ public class CheckpointsManager : MonoBehaviour
         {
             m_instance = this;
             m_checkpointMusic = BACKGROUND_CLIP.FORESTOFSOULS;
+            m_zone = ZONE.FOREST;
             
             m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         } else { Destroy(this); }
@@ -72,6 +74,11 @@ public class CheckpointsManager : MonoBehaviour
     public BACKGROUND_CLIP Music {
         get { return m_checkpointMusic;}
         set { m_checkpointMusic = value;}
+    }
+
+    public ZONE Zone {
+        get { return m_zone;}
+        set { m_zone = value;}
     }
 
     static public CheckpointsManager Instance 
