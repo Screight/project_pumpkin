@@ -56,7 +56,6 @@ public class FlyingPatrolMonster : Enemy
             default: break;
             case ENEMY_STATE.PATROL:
                 Patrol();
-                Debug.Log("patata");
             break;
 
         }
