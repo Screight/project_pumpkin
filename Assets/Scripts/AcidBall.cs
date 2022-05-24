@@ -54,5 +54,6 @@ public class AcidBall : AnimatedCharacter
         m_hasExploded = true;
         m_eventTimer.Run();
         m_rb2D.velocity = Vector2.zero;
+        SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT);
     }
 }

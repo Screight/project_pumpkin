@@ -13,6 +13,7 @@ public class CheckpointsManager : MonoBehaviour
     Player m_player;
 
     static CheckpointsManager m_instance;
+    BACKGROUND_CLIP m_checkpointMusic;
 
     private CheckpointsManager() { }
 
@@ -21,6 +22,7 @@ public class CheckpointsManager : MonoBehaviour
         if (m_instance == null)
         {
             m_instance = this;
+            m_checkpointMusic = BACKGROUND_CLIP.FORESTOFSOULS;
             
             m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         } else { Destroy(this); }
@@ -65,6 +67,11 @@ public class CheckpointsManager : MonoBehaviour
         {
             m_player.transform.position = new Vector3(m_localCheckPoint.position.x, m_localCheckPoint.position.y, m_player.transform.position.z);
         }
+    }
+
+    public BACKGROUND_CLIP Music {
+        get { return m_checkpointMusic;}
+        set { m_checkpointMusic = value;}
     }
 
     static public CheckpointsManager Instance 

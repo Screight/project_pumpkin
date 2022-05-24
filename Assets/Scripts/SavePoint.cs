@@ -6,7 +6,7 @@ public class SavePoint : InteractiveItem
     [SerializeField] ParticleSystem m_sparkles;
     private Timer m_saveCooldown;
     [SerializeField] SavePointText m_savePointText;
-
+    [SerializeField] BACKGROUND_CLIP m_music;
     protected override void Awake() 
     {
         base.Awake();
@@ -39,6 +39,7 @@ public class SavePoint : InteractiveItem
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_respawnPoint);
             Debug.Log("<color=red>Saved!</color>");
             GameManager.Instance.RestorePlayerToFullHealth();
+            CheckpointsManager.Instance.Music = m_music;
             m_saveCooldown.Run();
         }
     }

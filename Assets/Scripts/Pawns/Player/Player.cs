@@ -481,7 +481,7 @@ public class Player : AnimatedCharacter
         CameraManager.Instance.SetCameraToPlayerPosition();
         CameraManager.Instance.ClampCameraToTarget();
         InitializeIdleState();
-        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.ABANDONEDMINE);
+        SoundManager.Instance.PlayBackground(CheckpointsManager.Instance.Music);
         m_transicion.RemoveListenerToEndOfFadeIn(Die);
     }
 

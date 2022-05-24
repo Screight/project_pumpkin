@@ -479,6 +479,7 @@ public class SpiderBoss : AnimatedCharacter
                 m_head.transform.eulerAngles = Vector3.zero;
             }
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SPIDER_BOSS_ATTACK_SPIT, false);
+            
             //m_hasFiredAcidAttack = false;
             m_eventTimer.Run();
         }

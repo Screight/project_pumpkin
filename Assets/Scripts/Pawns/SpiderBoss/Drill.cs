@@ -10,7 +10,7 @@ public class Drill : MonoBehaviour
     [SerializeField] float m_noControlDuration = 0.4f;
     [SerializeField] float m_invulnerableDuration = 0.2f;
     [SerializeField] int m_damage;
-    private Color m_damageColor = new Color(0.6415094f, 0.2929156f, 0.3313433f);
+    [SerializeField] Color m_damageColor = new Color(0.6415094f, 0.2929156f, 0.3313433f);
     [SerializeField] ParticleSystem[] sparkles;
 
     Collider2D m_collider;
@@ -19,6 +19,7 @@ public class Drill : MonoBehaviour
     private SpriteRenderer m_sprite;
     private float m_damageDuration = 0.2f;
     private Timer m_event;
+    bool isAlive = true;
 
     private void Awake()
     {
@@ -36,7 +37,8 @@ public class Drill : MonoBehaviour
            m_sprite.color = Color.Lerp(Color.red, Color.white, m_event.CurrentTime);
             
         }
-        else { m_sprite.color = Color.white; }
+        else if (isAlive) { m_sprite.color = Color.white; }
+        else { m_sprite.color = m_damageColor; }
     }
 
     private void OnTriggerStay2D(Collider2D p_collider)
@@ -58,11 +60,13 @@ public class Drill : MonoBehaviour
 
     public void DestroyDrill()
     {
+        
         m_canBeDamaged = false;
         m_canDamagePlayer = false;
         if (m_part != SPIDER_BOSS_DAMAGEABLE_PARTS.HEAD)
         {
             m_sprite.color = m_damageColor;
+            isAlive = false;
             for (int i = 0; i < sparkles.Length; i++) { sparkles[i].Play(); }
         }
     }
@@ -76,8 +80,6 @@ public class Drill : MonoBehaviour
         {
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT);
         }
-        m_sprite.material.color = Color.red;
-        Debug.Log(m_sprite.material.color);
 
         m_event.Restart();
     }
@@ -96,5 +98,6 @@ public class Drill : MonoBehaviour
         m_canBeDamaged = false;
         m_canDamagePlayer = false;
         m_sprite.color = new Color(255, 255, 255);
+        isAlive = true;
     }
 }
