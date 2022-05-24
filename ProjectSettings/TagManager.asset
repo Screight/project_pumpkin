@@ -22,6 +22,8 @@ TagManager:
   - Mine
   - Forest
   - platformController
+  - Tutorial
+  - obstacle
   layers:
   - Default
   - TransparentFX
