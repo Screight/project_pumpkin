@@ -5,11 +5,12 @@ public class SavePoint : InteractiveItem
     [SerializeField] Transform m_respawnPoint;
     [SerializeField] ParticleSystem m_sparkles;
     private Timer m_saveCooldown;
-    SavePointText m_savePointText;
+    [SerializeField] SavePointText m_savePointText;
 
-    protected override void Awake() {
+    protected override void Awake() 
+    {
         base.Awake();
-        m_savePointText = FindObjectOfType<SavePointText>();
+        if (m_savePointText == null) { Debug.Log("Save: Dame la refe del panel de Saved! >:("); }
     }
 
     private void Start()

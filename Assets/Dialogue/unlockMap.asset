@@ -15,7 +15,8 @@ MonoBehaviour:
   m_icon:
   - {fileID: 21300000, guid: b9197937f1749094e88c4218658cf481, type: 3}
   m_name:
-  - Ghosty the ghost
+  - Ghosty the Ghost
   m_sentences:
-  - You have found a map. Press start to use it.
-  m_characterTalkingSentence: 00000000
+  - You've found a map!
+  - Press select to see it
+  m_characterTalkingSentence: 0000000000000000
