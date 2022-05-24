@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5035587074416154097}
   - component: {fileID: 5035587074416154096}
   - component: {fileID: 4568517646631387606}
-  - component: {fileID: 7427172318405702587}
   - component: {fileID: 1306389448636519715}
   m_Layer: 0
   m_Name: Main Camera
@@ -146,26 +145,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7427172318405702587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035587074416154061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dfc5bbb5d73d873eb79577d0762933e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_dampSpeedUp: 0.3
-  m_dampSpeedDown: 0.1
-  m_dampSpeedMovement: 0.3
-  m_maxSpeedX: 150
-  m_maxSpeedY: 200
-  m_offsetX: 20
-  m_offsetY: 0
-  m_boxHeight: 10
 --- !u!114 &1306389448636519715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +167,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
