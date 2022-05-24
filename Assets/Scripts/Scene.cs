@@ -9,6 +9,7 @@ namespace Game
     {
         [SerializeField] BACKGROUND_CLIP m_backgroundMusic;
         BACKGROUND_CLIP m_currentBackgroundClip;
+        [SerializeField] SCENE m_scene;
 
         private void Start()
         {
@@ -23,6 +24,8 @@ namespace Game
 
         public BACKGROUND_CLIP BackgroundMusic { get { return m_backgroundMusic; } }
         public BACKGROUND_CLIP GetCurrentBackgroudClipName() { return m_currentBackgroundClip; }
+
+        public SCENE SCENE { get { return m_scene; } }
 
     }
 }

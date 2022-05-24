@@ -37,6 +37,7 @@ public class MenuManager : MonoBehaviour
     int m_currentMenu;
     bool[] m_isMenuInStack;
     bool m_isMenuActive = true;
+    PauseMenu m_pauseMenu;
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class MenuManager : MonoBehaviour
         m_menu = new Menu[m_menuReferences.Length];
         m_isMenuInStack = new bool[m_menu.Length];
         InitializeMenu();
+        m_pauseMenu = GetComponent<PauseMenu>();
     }
 
     private void Update()
@@ -56,7 +58,7 @@ public class MenuManager : MonoBehaviour
             {
                 if (Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1)
                 {
-                    FindObjectOfType<PauseMenu>().UnPause();
+                    m_pauseMenu.UnPause();
                 }
                 else { GoBack(); }
             }

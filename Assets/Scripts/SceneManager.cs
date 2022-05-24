@@ -39,6 +39,7 @@ namespace Game
         public void SetCurrentScene(Scene p_scene)
         {
             m_currentScene = p_scene;
+            m_currentSceneID = p_scene.SCENE;
             SoundManager.Instance.PlayBackground(m_currentScene.BackgroundMusic);
         }
 
