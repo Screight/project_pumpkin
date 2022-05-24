@@ -34,12 +34,12 @@ public class UsefullFeatures : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("k"))
+        /*if (Input.GetKeyDown("k"))
         {
             //RoomManager.Instance.GetCurrentRoom().Reset();
             GameManager.Instance.ModifyPlayerHealth(-10000);
             Debug.Log("Developer commited su1c1de");
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) { TransportTo(m_darkForestTP); }
         if (Input.GetKeyDown(KeyCode.Alpha2)) { TransportTo(m_mine); }
