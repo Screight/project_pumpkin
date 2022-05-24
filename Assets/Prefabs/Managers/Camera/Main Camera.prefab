@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5035587074416154101}
   - component: {fileID: 5035587074416154100}
-  - component: {fileID: 5035587074416154103}
   - component: {fileID: 5035587074416154102}
   - component: {fileID: 5035587074416154097}
   - component: {fileID: 5035587074416154096}
   - component: {fileID: 4568517646631387606}
   - component: {fileID: 7427172318405702587}
+  - component: {fileID: 1306389448636519715}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -80,14 +80,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5035587074416154103
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5035587074416154061}
-  m_Enabled: 1
 --- !u!114 &5035587074416154102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +115,6 @@ MonoBehaviour:
   m_referenceResolution: {x: 320, y: 180}
   m_pixelsPerUnit: 1
   m_mainScene: {fileID: 0}
-  m_cameraMovementScript: {fileID: 7427172318405702587}
 --- !u!114 &5035587074416154096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,14 +155,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 5035587074416154061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 856fd88bede40014488b78b3eff8b439, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dfc5bbb5d73d873eb79577d0762933e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_dampSpeedUp: 0.3
   m_dampSpeedDown: 0.1
   m_dampSpeedMovement: 0.3
   m_maxSpeedX: 150
-  m_maxSpeedY: 50
+  m_maxSpeedY: 200
   m_offsetX: 20
   m_offsetY: 0
-  m_offsetAddUpY: 20
+  m_boxHeight: 10
+--- !u!114 &1306389448636519715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035587074416154061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2

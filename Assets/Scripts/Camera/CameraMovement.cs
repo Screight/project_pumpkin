@@ -12,7 +12,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float m_dampSpeedDown = 0.1f;
     [SerializeField] float m_dampSpeedMovement = 0.3f;
     [SerializeField] float m_maxSpeedX = 150.0f;
-    [SerializeField] float m_maxSpeedY = 50.0f;
+    [SerializeField] float m_maxSpeedY = 200.0f;
     private float m_currentMaxSpeedY;
     private float m_dampSpeedX;
     private float m_dampSpeedY;
