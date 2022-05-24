@@ -37,6 +37,14 @@ public class Ghoul : Enemy
         
     }
 
+    private void OnDisable()
+    {
+        if (AnimationManager.Instance != null)
+        {
+            InitializePatrol();
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -70,6 +78,7 @@ public class Ghoul : Enemy
 
     protected override void Update()
     {
+
         base.Update();
         if (Time.timeScale == 0) { return; } //Game Paused
 
@@ -97,7 +106,7 @@ public class Ghoul : Enemy
     void InitializePatrol()
     {
         m_state = ENEMY_STATE.PATROL;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_MOVE, false);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_MOVE, true);
         float direction = (m_leftPatrolPosition.position.x - transform.position.x) / Mathf.Abs((m_leftPatrolPosition.position.x - transform.position.x));
         m_rb2D.velocity = new Vector2(direction * m_speed, m_rb2D.velocity.y);
         FaceToDirection(direction);
@@ -344,6 +353,11 @@ public class Ghoul : Enemy
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_DIE, false);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
         }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
     }
 
     public override void Reset()

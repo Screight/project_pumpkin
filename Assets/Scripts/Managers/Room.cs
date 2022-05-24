@@ -80,8 +80,9 @@ public class Room : MonoBehaviour
     private void OnTriggerExit2D(Collider2D p_collider) 
     {
         if(!p_collider.CompareTag("Player")) { return ;}
-        m_activableObjects.SetActive(false);
         Reset();
+        m_activableObjects.SetActive(false);
+        
     }
 
     public int ID { get { return m_ID;}}
