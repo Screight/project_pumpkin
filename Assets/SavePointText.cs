@@ -6,32 +6,33 @@ using UnityEngine.UI;
 public class SavePointText : MonoBehaviour
 {
     [SerializeField] float m_textDuration;
-    TMPro.TextMeshProUGUI m_text;
     Timer m_timer;
     bool m_isTextShowing;
 
-    private void Awake() {
-        m_text = GetComponent<TMPro.TextMeshProUGUI>();
+    private void Awake()
+    {
         m_timer = gameObject.AddComponent<Timer>();
         m_timer.Duration = m_textDuration;
-        m_text.enabled = false;
+        gameObject.SetActive(false);
     }
 
-    private void Update() {
-        if(m_timer.IsFinished && m_isTextShowing){
+    private void Update()
+    {
+        if (m_timer.IsFinished && m_isTextShowing)
+        {
             m_isTextShowing = false;
-            m_text.enabled = false;
+            gameObject.SetActive(false);
         }
     }
 
-    public void ActivateText(){
-        if(m_timer.IsFinished){
+    public void ActivateText()
+    {
+        if (m_timer.IsFinished)
+        {
             m_isTextShowing = true;
-            m_text.enabled = true;
+            gameObject.SetActive(true);
             m_timer.Run();
         }
-        else { m_timer.Restart();}
-        
+        else { m_timer.Restart(); }
     }
-
 }
