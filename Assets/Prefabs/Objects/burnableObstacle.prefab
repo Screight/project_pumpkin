@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 1749187392555987779}
   - component: {fileID: 1749187392555987780}
   - component: {fileID: -8817439363921602512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: burnableObstacle
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,7 +299,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069410771
-  m_SortingLayer: -7
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 7.5, y: 7.5, z: 0}

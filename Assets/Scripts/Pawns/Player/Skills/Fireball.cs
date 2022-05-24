@@ -39,7 +39,7 @@ public class Fireball : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") || collision.CompareTag("vine"))
+        if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") || collision.CompareTag("vine") || collision.CompareTag("obstacle"))
         {
             DesactivateFireBall();
         }
