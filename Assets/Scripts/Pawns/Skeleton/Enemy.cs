@@ -97,12 +97,15 @@ public class Enemy : AnimatedCharacter
         m_health = MAX_HEALTH;
         m_animationTimer.Stop();
         m_isDying = false;
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Collider2D>().enabled = true;
     }
 
     protected virtual void Die()
     {
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
-        gameObject.SetActive(false);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     public ROOMS Room { get { return m_room;}}
