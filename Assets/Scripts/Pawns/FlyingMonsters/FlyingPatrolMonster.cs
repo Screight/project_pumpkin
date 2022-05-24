@@ -56,6 +56,7 @@ public class FlyingPatrolMonster : Enemy
             default: break;
             case ENEMY_STATE.PATROL:
                 Patrol();
+                Debug.Log("patata");
             break;
 
         }
@@ -175,6 +176,8 @@ public class FlyingPatrolMonster : Enemy
         InitializePatrol();
         m_collider.enabled = true;
         m_pathFinder.SetInitialNodeToNone();
+        m_isInitialized = false;
+        m_state = ENEMY_STATE.PATROL;
     }
 
     private void OnDrawGizmos() {
