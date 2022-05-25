@@ -24,7 +24,6 @@ public class InputManager : MonoBehaviour
     KeyCode m_interactButton_k  = KeyCode.Space;
     KeyCode m_cancelButton_k = KeyCode.X;
     KeyCode m_downButton_k = KeyCode.DownArrow;
-    KeyCode m_downButton_j = KeyCode.DownArrow;
     KeyCode m_upButton_k = KeyCode.UpArrow;
     KeyCode m_pauseButton_k = KeyCode.Escape;
     KeyCode m_mapButton_k = KeyCode.M;
@@ -146,12 +145,13 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(m_mapButton_k) || Input.GetKeyDown(m_mapButton_j))   { m_buttonsPressed[(int)ACTIONS.MAP]  = true; }
     }
 
-    public void ClearAllInput(){
+    public void ClearAllInput()
+    {
         for (int i = 0; i < (int)ACTIONS.NUMBER_OF_ACTIONS; i++)
         {
-            m_buttonsPressed[i]     = false;
-            m_buttonsHold[i]        = false;
-            m_buttonsReleased[i]    = false;
+            m_buttonsPressed[i] = false;
+            m_buttonsHold[i] = false;
+            m_buttonsReleased[i] = false;
         }
 
         m_horizontalAxis = 0;
@@ -160,65 +160,81 @@ public class InputManager : MonoBehaviour
         m_horizontalAxis = Input.GetAxis("Horizontal");
         m_verticalAxis = Input.GetAxis("Vertical");
 
-        if(m_horizontalAxis == 1 && !m_axisXPositiveHold && !m_axisXPositivePressed){
+        if (m_horizontalAxis == 1 && !m_axisXPositiveHold && !m_axisXPositivePressed)
+        {
             m_axisXPositivePressed = true;
         }
-        else if (m_axisXPositivePressed){
+        else if (m_axisXPositivePressed)
+        {
             m_axisXPositivePressed = false;
             m_axisXPositiveHold = true;
         }
-        else if(m_horizontalAxis != 1 && m_axisXPositiveHold){
+        else if (m_horizontalAxis != 1 && m_axisXPositiveHold)
+        {
             m_axisXPositiveHold = false;
             m_axisXPositiveReleased = true;
         }
-        else if(m_axisXPositiveReleased){
+        else if (m_axisXPositiveReleased)
+        {
             m_axisXPositiveReleased = false;
         }
 
-        if(m_horizontalAxis == -1 && !m_axisXNegativeHold && !m_axisXNegativePressed){
+        if (m_horizontalAxis == -1 && !m_axisXNegativeHold && !m_axisXNegativePressed)
+        {
             m_axisXNegativePressed = true;
         }
-        else if (m_axisXNegativePressed){
+        else if (m_axisXNegativePressed)
+        {
             m_axisXNegativePressed = false;
             m_axisXNegativeHold = true;
         }
-        else if(m_horizontalAxis != -1 && m_axisXNegativeHold){
+        else if (m_horizontalAxis != -1 && m_axisXNegativeHold)
+        {
             m_axisXNegativeHold = false;
             m_axisXNegativeReleased = true;
         }
-        else if(m_axisXNegativeReleased){
+        else if (m_axisXNegativeReleased)
+        {
             m_axisXNegativeReleased = false;
         }
 
 
 
-        if(m_verticalAxis == 1 && !m_axisYPositiveHold && !m_axisYPositivePressed){
+        if (m_verticalAxis == 1 && !m_axisYPositiveHold && !m_axisYPositivePressed)
+        {
             m_axisYPositivePressed = true;
         }
-        else if (m_axisYPositivePressed){
+        else if (m_axisYPositivePressed)
+        {
             m_axisYPositivePressed = false;
             m_axisYPositiveHold = true;
         }
-        else if(m_verticalAxis != 1 && m_axisYPositiveHold){
+        else if (m_verticalAxis != 1 && m_axisYPositiveHold)
+        {
             m_axisYPositiveHold = false;
             m_axisYPositiveReleased = true;
         }
-        else if(m_axisYPositiveReleased){
+        else if (m_axisYPositiveReleased)
+        {
             m_axisYPositiveReleased = false;
         }
 
-        if(m_verticalAxis == -1 && !m_axisYNegativeHold && !m_axisYNegativePressed){
+        if (m_verticalAxis == -1 && !m_axisYNegativeHold && !m_axisYNegativePressed)
+        {
             m_axisYNegativePressed = true;
         }
-        else if (m_axisYNegativePressed){
+        else if (m_axisYNegativePressed)
+        {
             m_axisYNegativePressed = false;
             m_axisYNegativeHold = true;
         }
-        else if(m_verticalAxis != -1 && m_axisYNegativeHold){
+        else if (m_verticalAxis != -1 && m_axisYNegativeHold)
+        {
             m_axisYNegativeHold = false;
             m_axisYNegativeReleased = true;
         }
-        else if(m_axisYNegativeReleased){
+        else if (m_axisYNegativeReleased)
+        {
             m_axisYNegativeReleased = false;
         }
     }
@@ -327,8 +343,5 @@ public class InputManager : MonoBehaviour
     public bool VerticalNegativeAxisHold { get { return m_axisYNegativeHold; } }
     public bool VerticalNegativeAxisReleased { get { return m_axisYNegativeReleased; } }
 
-    public void PauseInputFor1Frame(){
-        m_hasBeenPausedLastFrame = true;
-    }
-
+    public void PauseInputFor1Frame() { m_hasBeenPausedLastFrame = true; }
 }

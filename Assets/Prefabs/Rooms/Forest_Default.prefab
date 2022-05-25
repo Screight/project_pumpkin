@@ -30,6 +30,7 @@ Transform:
   - {fileID: 3822405867502990105}
   - {fileID: 7688277654962404853}
   - {fileID: 4578218106838578364}
+  - {fileID: 1869322465183944715}
   m_Father: {fileID: 8874483344853304853}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1867,32 +1868,40 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3832654671427721866}
     m_ColliderPaths:
-    - - X: 1600000000
-        Y: 960000000
-      - X: -1600000000
-        Y: 960000000
-      - X: -1600000000
-        Y: -960000000
-      - X: 1600000000
-        Y: -960000000
-    - - X: -1440000000
-        Y: -480000000
-      - X: -1440000000
-        Y: 640000000
-      - X: 1440000000
-        Y: 640000000
-      - X: 1440000000
-        Y: -480000000
+    - - X: 1600000100
+        Y: -960000041
+      - X: 1600000100
+        Y: 960000041
+      - X: 1600000041
+        Y: 960000100
+      - X: -1600000041
+        Y: 960000100
+      - X: -1600000100
+        Y: 960000041
+      - X: -1600000100
+        Y: -960000041
+      - X: -1600000041
+        Y: -960000100
+      - X: 1600000041
+        Y: -960000100
+    - - X: -1439999900
+        Y: -479999900
+      - X: -1439999900
+        Y: 639999900
+      - X: 1439999900
+        Y: 639999900
+      - X: 1439999900
+        Y: -479999900
   m_CompositePaths:
     m_Paths:
-    - - {x: 159.99997, y: -96}
-      - {x: 159.99997, y: 96}
-      - {x: -160, y: 95.99997}
-      - {x: -159.99997, y: -96}
-    - - {x: 144, y: -47.999973}
-      - {x: -144, y: -47.999973}
-      - {x: -143.99997, y: 64}
-      - {x: 144, y: 63.99997}
+    - - {x: 159.99997, y: -96.000015}
+      - {x: 159.99997, y: 96.000015}
+      - {x: -160.00002, y: 95.99998}
+      - {x: -159.99997, y: -96.000015}
+    - - {x: 143.99998, y: -47.99996}
+      - {x: -143.99998, y: -47.99996}
+      - {x: -143.99997, y: 63.99999}
+      - {x: 143.99998, y: 63.99996}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!1 &1459036385952568861
@@ -2095,6 +2104,37 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &2097548958966775563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1869322465183944715}
+  m_Layer: 0
+  m_Name: Lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1869322465183944715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097548958966775563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8786923916215992448}
+  m_Father: {fileID: 8211473692003326443}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4009447218803768100
 GameObject:
   m_ObjectHideFlags: 0
@@ -4871,6 +4911,78 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!1 &6929179112233317449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8786923916215992448}
+  - component: {fileID: 1004182998809896341}
+  m_Layer: 0
+  m_Name: Parametric Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8786923916215992448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929179112233317449}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 7, y: 4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1869322465183944715}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1004182998809896341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929179112233317449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 0
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0.019
+  m_ApplyToSortingLayers: 37746581c3ed5c70c35ef8180f6a1620d3e9bd3fd1d30e6dbf73d4ba0f47591285e9b7202db3a196d73d32df
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 1
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 1
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_PointLightDistance: 181.45
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 4
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 16
+  m_ShapeLightFalloffSize: 20
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &7344387674515256602
 GameObject:
   m_ObjectHideFlags: 0
