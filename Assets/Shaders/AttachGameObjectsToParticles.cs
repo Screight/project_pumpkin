@@ -15,8 +15,10 @@ public class AttachGameObjectsToParticles : MonoBehaviour
 
 
 
-    [SerializeField] LightColorOptions colorOpt;
-    [SerializeField] private Color particleColorAvg;
+    [SerializeField] LightColorOptions colorOpt = LightColorOptions.ParticleColor;
+    private Color particleColorAvg;
+    [SerializeField] private Color customColor;
+    private Color colorApply;
 
 
     // Start is called before the first frame update
@@ -24,10 +26,25 @@ public class AttachGameObjectsToParticles : MonoBehaviour
     {
         m_ParticleSystem = GetComponent<ParticleSystem>();
         m_Particles = new ParticleSystem.Particle[m_ParticleSystem.main.maxParticles];
+        switch (colorOpt)
+        {
+            case LightColorOptions.ParticleColor:
+                particleColorAvg = (m_ParticleSystem.main.startColor.colorMin + m_ParticleSystem.main.startColor.colorMax) / 2;
+                colorApply = particleColorAvg;
+                break;
+            case LightColorOptions.CustomColor:
+                colorApply = customColor;
+                break;
+            case LightColorOptions.Default:
+                colorApply = m_Prefab.GetComponent<Light2D>().color;
+                break;
+            default:
+                break;
+        }
 
-        particleColorAvg = (m_ParticleSystem.main.startColor.colorMin + m_ParticleSystem.main.startColor.colorMax) / 2;
 
-        //m_Prefab.GetComponent<Light2D>().color = m_ParticleSystem.main.startColor;
+
+        m_Prefab.GetComponent<Light2D>().color = colorApply;
     }
 
     // Update is called once per frame
@@ -43,8 +60,10 @@ public class AttachGameObjectsToParticles : MonoBehaviour
         {
             if (i < count)
             {
+                m_Instances[i].GetComponent<Light2D>().color = colorApply;
                 if (worldSpace)
                     m_Instances[i].transform.position = m_Particles[i].position;
+
                 else
                     m_Instances[i].transform.localPosition = m_Particles[i].position;
                 m_Instances[i].SetActive(true);
