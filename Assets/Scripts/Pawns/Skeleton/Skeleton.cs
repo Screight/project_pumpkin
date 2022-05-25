@@ -174,7 +174,7 @@ public class Skeleton : Enemy
 
     void LaunchFireBall()
     {
-        if(GameManager.Instance.PlayerHealth <= 0){ return ;}
+        if (GameManager.Instance.PlayerHealth <= 0) { return; }
         Projectile m_boneArrowScript = Instantiate(m_arrow, m_attackPosition.position, Quaternion.identity).GetComponent<Projectile>();
         m_boneArrowScript.Shoot(FacingDirection());
         m_isAttacking = false;

@@ -19,6 +19,7 @@ public class Spider : Enemy
     private float m_eclosionDuration;
     private bool m_hasHatched = false;
     private bool m_firtsHiss = false;
+    private bool m_isDead = false;
     private AudioSource m_audioSrc;
 
     protected override void Awake()
@@ -44,7 +45,7 @@ public class Spider : Enemy
         m_collider.enabled = false;
         m_rb2d.gravityScale = 0;
         m_eclosionDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_ECLOSION);
-        m_hissTimer.Duration = Random.Range(1, 3);
+        m_hissTimer.Duration = Random.Range(0, 2);
     }
 
     protected override void Update()
@@ -72,12 +73,13 @@ public class Spider : Enemy
 
         //HISS SFX
         if (m_firtsHiss) { m_hissTimer.Run(); m_firtsHiss = false; }
-        if (m_hasHatched && m_hissTimer.IsFinished) 
+        if (m_hasHatched && m_hissTimer.IsFinished && !m_audioSrc.isPlaying && !m_isDead) 
         {
             int randNum = Random.Range(0, 2);
-            //if (randNum == 0) { m_audioSrc.PlayOneShot(AudioClip.Au.SPIDER_HISS_1); }
-            //else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SPIDER_HISS_2)); }
-            m_hissTimer.Duration = Random.Range(1, 3);
+            if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SPIDER_HISS_1)); }
+            else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SPIDER_HISS_2)); }
+
+            m_hissTimer.Duration = Random.Range(3, 5);
             m_hissTimer.Run();
         }
     }
@@ -163,6 +165,9 @@ public class Spider : Enemy
     {
         m_deathParticles.transform.position = transform.position;
         m_deathParticles.Play();
+        m_hissTimer.Stop();
+        m_audioSrc.Stop();
+        m_isDead = true;
         base.Die();
     }
 
@@ -178,6 +183,7 @@ public class Spider : Enemy
         m_collider.enabled = false;
         m_rb2d.gravityScale = 0;
         m_hasHatched = false;
+        m_isDead = false;
         m_rb2d.velocity = Vector2.zero;
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
     }
