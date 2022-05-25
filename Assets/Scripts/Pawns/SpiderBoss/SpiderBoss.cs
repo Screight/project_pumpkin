@@ -785,4 +785,10 @@ public class SpiderBoss : AnimatedCharacter
     {
         SoundManager.Instance.PlayOnce(AudioClipName.DRILL_STUCKED);
     }
+
+    public bool IsAlive(){
+        if(m_partsHealth[0] <= 0 && m_partsHealth[1] <= 0 && m_partsHealth[0] <= 0){ return true; }
+        else return false;
+    }
+
 }

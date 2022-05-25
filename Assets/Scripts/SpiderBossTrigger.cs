@@ -26,6 +26,7 @@ public class SpiderBossTrigger : InteractiveItem
     }
 
     public void HandlePlayerDeath(){
+        if(!m_spiderBoss.IsAlive()){ return; }
         m_spiderBoss.Reset();
         for(int i = 0; i < m_doors.Length; i++){
             m_doors[i].OpenDoor(false);

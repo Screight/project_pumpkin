@@ -1743,10 +1743,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 7062823793029494756}
+    m_SelectOnDown: {fileID: 7070292557892049784}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1889,10 +1889,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 7070292557892049784}
+    m_SelectOnDown: {fileID: 4483043690889805528}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -2151,11 +2151,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
---- !u!1 &2863654930725449708 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4182199993311314944, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
-  m_PrefabInstance: {fileID: 2141345353450515436}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2863654930725449707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4182199993311314951, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
@@ -2169,6 +2164,11 @@ GameObject:
 --- !u!1 &2863654930924484535 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4182199992570960987, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
+  m_PrefabInstance: {fileID: 2141345353450515436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2863654930725449708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4182199993311314944, guid: ca9e1a95067d205d8bafab604d1be6b4, type: 3}
   m_PrefabInstance: {fileID: 2141345353450515436}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2567111205559067073
@@ -2241,6 +2241,10 @@ PrefabInstance:
     - target: {fileID: 3513670171296691320, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
       propertyPath: m_Name
       value: DialogueCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3513670171296691320, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f8e9e63d91bea159869e59a2494ca7, type: 3}
