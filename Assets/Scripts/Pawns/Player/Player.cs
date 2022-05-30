@@ -481,8 +481,6 @@ public class Player : AnimatedCharacter
         CameraManager.Instance.SetCameraToPlayerPosition();
         CameraManager.Instance.ClampCameraToTarget();
         InitializeIdleState();
-        SoundManager.Instance.PlayBackground(CheckpointsManager.Instance.Music);
-        GameManager.Instance.CurrentZone = CheckpointsManager.Instance.Zone;
         m_transicion.RemoveListenerToEndOfFadeIn(Die);
     }
 

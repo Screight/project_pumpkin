@@ -7,7 +7,7 @@ public class Room : MonoBehaviour
     [SerializeField] GameObject m_activableObjects;
     [SerializeField] bool m_drawInMap = true;
     BoxCollider2D m_roomLimits;
-    static int g_ID;
+    static int g_ID = 0;
     int m_ID;
 
     ZONE m_zone = ZONE.LAST_NO_USE;
@@ -104,4 +104,5 @@ public class Room : MonoBehaviour
     public bool DrawInMap { get { return m_drawInMap; }}
 
     public ZONE Zone { get { return m_zone; }}
+    public static void ResetID(){ g_ID = 0;}
 }

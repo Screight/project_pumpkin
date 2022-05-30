@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CheckpointsManager : MonoBehaviour
@@ -69,6 +70,8 @@ public class CheckpointsManager : MonoBehaviour
         {
             m_player.transform.position = new Vector3(m_localCheckPoint.position.x, m_localCheckPoint.position.y, m_player.transform.position.z);
         }
+        SoundManager.Instance.PlayBackground(m_checkpointMusic);
+        GameManager.Instance.CurrentZone = m_zone;
     }
 
     public BACKGROUND_CLIP Music {
@@ -86,4 +89,26 @@ public class CheckpointsManager : MonoBehaviour
         get { return m_instance; }
         private set { }
     }
+
+    public void Save(BinaryWriter p_writer){
+        p_writer.Write((int)m_zone);
+        p_writer.Write((int)m_checkpointMusic);
+        // globalCheckpoint
+        p_writer.Write(m_globalCheckPoint.position.x);
+        p_writer.Write(m_globalCheckPoint.position.y);
+        p_writer.Write(m_globalCheckPoint.position.z);
+    }
+
+    public void Load(BinaryReader p_reader){
+        m_zone = (ZONE)p_reader.ReadInt32();
+        m_checkpointMusic = (BACKGROUND_CLIP)p_reader.ReadInt32();
+        Vector3 position = new Vector3();
+        position.x = p_reader.ReadSingle();
+        position.y = p_reader.ReadSingle();
+        position.z = p_reader.ReadSingle();
+        m_globalCheckPoint.transform.position = position;
+        m_localCheckPoint = m_globalCheckPoint;
+        MovePlayerToGlobalCheckPoint();
+    }
+
 }

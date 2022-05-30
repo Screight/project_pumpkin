@@ -38,6 +38,7 @@ public class MenuManager : MonoBehaviour
     bool[] m_isMenuInStack;
     bool m_isMenuActive = true;
     PauseMenu m_pauseMenu;
+    bool m_canGoBack = true;
 
     private void Awake()
     {
@@ -54,7 +55,7 @@ public class MenuManager : MonoBehaviour
     {
         if (m_isMenuActive)
         {
-            if (InputManager.Instance.CancelButtonPressed)
+            if (InputManager.Instance.CancelButtonPressed && m_canGoBack)
             {
                 if (Game.SceneManager.Instance.Scene == SCENE.GAME && m_currentMenu == 1)
                 {
@@ -152,4 +153,13 @@ public class MenuManager : MonoBehaviour
         if(m_menuStack.Count <= 0){ return -1;}
         return m_menuStack.Peek().ID;
     }
+
+    public bool CanGoBack{
+        set { m_canGoBack = value; }
+    }
+
+    public void FocusOnDefaultButton(){
+        EventSystem.current.SetSelectedGameObject(m_menu[m_currentMenu].initialSelectecButton);
+    }
+
 }

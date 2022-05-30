@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     ZONE m_currentZone = ZONE.FOREST;
     bool m_isMapUnlocked;
+    bool m_isSpiderBossDefeated = false;
 
     private void Awake()
     {
@@ -47,12 +49,19 @@ public class GameManager : MonoBehaviour
         m_transicion= FindObjectOfType<Transicion>();
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
+        Time.timeScale = 1;
     }
 
     static public GameManager Instance
     {
         get { return m_instance; }
         private set { }
+    }
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Z)){
+            m_isMapUnlocked = true;
+        }
     }
 
     public int PlayerMaxHealth{
@@ -129,7 +138,7 @@ public class GameManager : MonoBehaviour
             case SKILLS.FIRE_BALL:
                 { m_spellCooldown.SetFireballUI(p_value);}
                 break;
-            case SKILLS.GROUNDBREAKER:
+            case SKILLS .GROUNDBREAKER:
                 { m_spellCooldown.SetGroundbreakerUI(p_value); }
                 break;
             case SKILLS.PILAR:
@@ -185,6 +194,51 @@ public class GameManager : MonoBehaviour
 
     public void UnlockMap(){
         m_isMapUnlocked = true;
+    }
+
+    public void Save(BinaryWriter p_writer){
+        p_writer.Write(PLAYER_MAX_HEALTH);
+        p_writer.Write(m_playerHealth);
+        p_writer.Write(m_playerAttackDamage);
+        for(int i = 0; i < (int)SKILLS.LAST_NO_USE; i++){
+            p_writer.Write(m_isSkillAvailable[i]);
+        }
+        p_writer.Write(m_isMapUnlocked);
+        p_writer.Write(m_isSpiderBossDefeated);
+
+    }
+
+    public void Load(BinaryReader p_reader){
+        PLAYER_MAX_HEALTH = p_reader.ReadInt32();
+        m_playerHealth = p_reader.ReadInt32();
+
+        for(int i = 3; i <PLAYER_MAX_HEALTH; i++){
+            m_healthUI.GainExtraHeart();
+            m_miniMapInterface.AddHeart();
+        }
+
+        m_playerAttackDamage = p_reader.ReadSingle();
+
+        for(int i = 2; i < 2*m_playerAttackDamage; i++){
+            m_miniMapInterface.AddAttack();
+        }
+
+        for(int i = 0; i < (int)SKILLS.LAST_NO_USE; i++){
+            m_isSkillAvailable[i] = p_reader.ReadBoolean();
+            SetIsSkillAvailable((SKILLS)i, m_isSkillAvailable[i]);
+        }
+
+        m_miniMapInterface.UpdateSpirits();
+        m_isMapUnlocked = p_reader.ReadBoolean();
+        m_isSpiderBossDefeated = p_reader.ReadBoolean();
+        if(m_isSpiderBossDefeated){
+            m_spiderBossTrigger.DisableSpiderBoss();
+        }
+    }
+
+    public bool IsSpiderBossDefeated{
+        get { return m_isSpiderBossDefeated;}
+        set { m_isSpiderBossDefeated = value; }
     }
 
 }

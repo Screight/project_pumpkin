@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class SelectedButtonUI : MonoBehaviour, ISelectHandler
 {
     [SerializeField] GameObject m_flames;
+    [SerializeField] OptionBox m_options;
 
     public void OnSelect(BaseEventData p_eventData)
     {

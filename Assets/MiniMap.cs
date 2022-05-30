@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -217,4 +218,32 @@ public class MiniMap : MonoBehaviour
                 break;
         }
     }
+
+    public void Save(BinaryWriter p_writer){
+        for(int i = 0; i < m_roomsScript.Length; i++){
+            p_writer.Write(m_roomsScript[i].ID);
+            //p_writer.Write(m_roomsDictionary[m_roomsScript[i].ID]);
+            Debug.Log(m_rooms[m_roomsDictionary[m_roomsScript[i].ID]].color.r);
+            p_writer.Write(m_rooms[m_roomsDictionary[m_roomsScript[i].ID]].color.r);
+            p_writer.Write(m_rooms[m_roomsDictionary[m_roomsScript[i].ID]].color.g);
+            p_writer.Write(m_rooms[m_roomsDictionary[m_roomsScript[i].ID]].color.b);
+        }
+        //p_writer.Write(m_currentActiveRoom);
+    }
+
+    public void Load(BinaryReader p_reader){
+        for(int i = 0; i < m_roomsScript.Length; i++){
+            int id = p_reader.ReadInt32();
+            int index = m_roomsDictionary[id];
+            Color color2 = new Color();
+            color2.r  = p_reader.ReadSingle();
+            Debug.Log(id);
+            color2.g  = p_reader.ReadSingle();
+            color2.b  = p_reader.ReadSingle();
+            color2.a = 1;
+            m_rooms[index].color = color2;
+        }
+        //m_currentActiveRoom = p_reader.ReadInt32();
+    }
+
 }

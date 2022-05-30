@@ -20,6 +20,9 @@ namespace Game
         {
             SceneManager.Instance.SetCurrentScene(this);
             m_currentBackgroundClip = m_backgroundMusic;
+            if(m_scene == SCENE.MAIN_MENU){
+                Room.ResetID();
+            }
         }
 
         public BACKGROUND_CLIP BackgroundMusic { get { return m_backgroundMusic; } }

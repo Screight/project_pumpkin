@@ -650,6 +650,7 @@ public class SpiderBoss : AnimatedCharacter
                     m_bodyDestroyed.SetActive(true);
                     m_bodyDestroyed.transform.position = transform.position;
                     m_bodyDestroyed.transform.rotation = transform.rotation;
+                    GameManager.Instance.IsSpiderBossDefeated = true;
                     gameObject.SetActive(false);
                     break;
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL:
@@ -787,8 +788,14 @@ public class SpiderBoss : AnimatedCharacter
     }
 
     public bool IsAlive(){
-        if(m_partsHealth[0] <= 0 && m_partsHealth[1] <= 0 && m_partsHealth[0] <= 0){ return true; }
-        else return false;
+        if(m_partsHealth[0] <= 0 && m_partsHealth[1] <= 0 && m_partsHealth[2] <= 0){ return false; }
+        else return true;
+    }
+
+    public void DisableEggs(){
+        for(int i = 0; i < m_spiderEggs.Length; i++){
+            m_spiderEggs[i].SetActive(false);
+        }
     }
 
 }

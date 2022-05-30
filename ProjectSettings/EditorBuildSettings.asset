@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Release/mainMenuRelease.unity
     guid: 4276c2d6320458447968b1adbe730f84
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DemoDay/ReleaseDemoDay_NoLights.unity
     guid: 29f7a2e9f2d14fe42ab3cd95f1348f32
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Release/MainRelease.unity
     guid: 13bd89a1431ba9643a30a2eab79a6d82
   m_configObjects: {}

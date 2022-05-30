@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public abstract class InteractiveItem : MonoBehaviour
@@ -12,7 +13,7 @@ public abstract class InteractiveItem : MonoBehaviour
 
     [SerializeField] bool m_isOneUseOnly = false;
     [SerializeField] bool m_isAutomatic = false;
-    bool m_hasBeenUsed = false;
+    protected bool m_hasBeenUsed = false;
 
     protected virtual void Update()
     {
@@ -78,4 +79,16 @@ public abstract class InteractiveItem : MonoBehaviour
         m_hasBeenUsed = false;
         m_canPlayerInteract = true;
     }
+
+    public void Save(BinaryWriter p_writer){
+        p_writer.Write(m_canPlayerInteract);
+        p_writer.Write(m_hasBeenUsed);
+    }
+
+    public virtual void Load(BinaryReader p_reader){
+        m_canPlayerInteract = p_reader.ReadBoolean();
+        m_hasBeenUsed = p_reader.ReadBoolean();
+        if(m_hasBeenUsed && m_isOneUseOnly){ gameObject.SetActive(false); }
+    }
+
 }

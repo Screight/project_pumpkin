@@ -35,4 +35,9 @@ public class SpiderBossTrigger : InteractiveItem
         ResetState();
     }
 
+    public void DisableSpiderBoss(){
+        m_spiderBoss.DisableEggs();
+        m_spiderBoss.gameObject.SetActive(false);
+    }
+
 }

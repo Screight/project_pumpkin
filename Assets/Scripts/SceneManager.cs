@@ -10,7 +10,8 @@ namespace Game
         Scene m_currentScene = null;
         SCENE m_currentSceneID;
         int m_numberOfTotalScenes;
-
+        string m_savePath;
+        bool m_loadGame = false;
 
         static public SceneManager Instance
         {
@@ -62,5 +63,17 @@ namespace Game
         }
 
         public SCENE Scene { get { return m_currentSceneID; } }
+
+        public string SavePath { 
+            get { return m_savePath; }
+            set { m_savePath = value; }
+        }
+
+        public bool LoadGame{
+            get { return m_loadGame; }
+            set { m_loadGame = value; }
+        }
+
     }
+
 }

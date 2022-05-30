@@ -42,6 +42,7 @@ public class SavePoint : InteractiveItem
             GameManager.Instance.RestorePlayerToFullHealth();
             CheckpointsManager.Instance.Music = m_music;
             CheckpointsManager.Instance.Zone = m_zone;
+            SaveLoadGame.Instance.Save();
             m_saveCooldown.Run();
         }
     }
