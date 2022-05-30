@@ -39,8 +39,13 @@ public class weakPlatformDestroyer : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {      
-            platformSprite.material = def_mat;
+    private void OnTriggerExit2D(Collider2D p_collision)
+    {   if(p_collision.tag != "Player") { return;}
+        platformSprite.material = def_mat;
     }
+
+    private void OnDestroy() {
+        Player.Instance.IsGrounded = false;
+    }
+
 }
