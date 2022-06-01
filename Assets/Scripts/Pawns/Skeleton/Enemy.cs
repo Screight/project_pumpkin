@@ -43,6 +43,7 @@ public class Enemy : AnimatedCharacter
 
     protected virtual void Update()
     {
+        if(GameManager.Instance.IsGamePaused){ return; }
         if(m_isBeingPushed && m_pushedTimer.IsFinished){
             m_isBeingPushed = false;
             m_rb2d.velocity = new Vector2(0, m_rb2d.velocity.y);
