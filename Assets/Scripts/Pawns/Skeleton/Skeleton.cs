@@ -160,8 +160,9 @@ public class Skeleton : Enemy
         {
             if (m_playerIsAtRange && m_isGrounded)
             {
-                m_rb2D.velocity = Vector2.zero;
-                AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_ATTACK, false);
+                 m_rb2D.velocity = Vector2.zero;
+                Debug.Log("Initialize Attack");
+                AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_ATTACK, true);
                 m_isAttacking = true;
             }
             else
@@ -182,7 +183,7 @@ public class Skeleton : Enemy
 
         if(m_playerIsAtRange){
             m_skeletonState = SKELETON_STATE.ATTACK;
-            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_ATTACK, false);
         }
         else if(m_playerIsNear){
             m_skeletonState = SKELETON_STATE.CHASE;
@@ -227,7 +228,7 @@ public class Skeleton : Enemy
         base.EndHit();
         if(m_playerIsAtRange){
             m_skeletonState = SKELETON_STATE.ATTACK;
-            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_ATTACK, false);
         }
         else if(m_playerIsNear){
             m_skeletonState = SKELETON_STATE.CHASE;
