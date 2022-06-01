@@ -599,4 +599,16 @@ public class Player : AnimatedCharacter
         Gizmos.DrawLine(new Vector3(collider.bounds.min.x, collider.bounds.max.y, transform.position.z), new Vector3(collider.bounds.min.x, collider.bounds.min.y, transform.position.z));
         Gizmos.DrawLine(new Vector3(collider.bounds.max.x, collider.bounds.max.y, transform.position.z), new Vector3(collider.bounds.max.x, collider.bounds.min.y, transform.position.z));
     }
+
+    public void SetPlayerToInvisible(bool p_isInvisible){
+        m_spriteRenderer.enabled = !p_isInvisible;
+    }
+
+    public void SetScriptedFor(float p_seconds){
+        m_isBeingScripted = true;
+        m_eventTimer.Duration = p_seconds;
+        m_eventStart = true;
+        m_eventTimer.Run();
+    }
+
 }
