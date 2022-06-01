@@ -104,6 +104,8 @@ public class SoundManager : MonoBehaviour
         //Skelly
         m_audioClips[(int)AudioClipName.SKELLY_GROWL_1] = Resources.Load<AudioClip>("Sound/SkellyGrowl1");
         m_audioClips[(int)AudioClipName.SKELLY_GROWL_2] = Resources.Load<AudioClip>("Sound/SkellyGrowl2");
+        //Spirits
+        m_audioClips[(int)AudioClipName.SPIRIT_TRAIL] = Resources.Load<AudioClip>("Sound/SpiritTrailSFX");
     }
 
     public void PlayOnce(AudioClipName p_name)

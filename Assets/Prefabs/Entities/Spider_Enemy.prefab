@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 351930647417588648}
   - component: {fileID: 3330346875839255077}
   - component: {fileID: 7369039165989594406}
+  - component: {fileID: 3263731683756798393}
   m_Layer: 6
   m_Name: pawnSpider
   m_TagString: enemy
@@ -273,6 +274,8 @@ MonoBehaviour:
   m_playerInvulnerableDuration: 1
   m_playerNoControlDuration: 0.2
   m_pushAwayPlayerVelocity: {x: 50, y: 100}
+  m_pushedDuration: 0.1
+  m_pushedSpeed: 50
   m_speed: 50
   m_leftPatrolPoint: {fileID: 2331971606948251092}
   m_rightPatrolPoint: {fileID: 5098824844858482048}
@@ -403,6 +406,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3263731683756798393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2781853434993903793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8210a6b267303d04d94113d7699fe87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6296672092179184479
 GameObject:
   m_ObjectHideFlags: 0
