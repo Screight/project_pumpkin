@@ -179,6 +179,20 @@ public class Skeleton : Enemy
         m_boneArrowScript.Shoot(FacingDirection());
         m_isAttacking = false;
         m_boneArrowScript.gameObject.transform.SetParent(gameObject.transform.parent.transform.parent.transform.parent);
+
+        if(m_playerIsAtRange){
+            m_skeletonState = SKELETON_STATE.ATTACK;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        }
+        else if(m_playerIsNear){
+            m_skeletonState = SKELETON_STATE.CHASE;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        }
+        else{
+            m_skeletonState = SKELETON_STATE.MOVE;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        }
+
     }
 
     void FlipX()
