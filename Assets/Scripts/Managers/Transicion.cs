@@ -34,6 +34,7 @@ public class Transicion : MonoBehaviour
         m_animationHash[(int)TRANSITION_ANIMATION.FADE_IN] = Animator.StringToHash(m_fadeIn_AnimationName);
         m_animationHash[(int)TRANSITION_ANIMATION.FADE_OUT] = Animator.StringToHash(m_fadeOutAnimationName);
         m_animationHash[(int)TRANSITION_ANIMATION.EMPTY_SCREEN] = Animator.StringToHash(m_emptyScreenAnimationName);
+        ChangeAnimationState(TRANSITION_ANIMATION.FADE_OUT);
     }
 
     void ChangeAnimationState(TRANSITION_ANIMATION p_newState)
