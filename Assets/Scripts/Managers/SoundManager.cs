@@ -39,7 +39,7 @@ public class SoundManager : MonoBehaviour
         //Pilar --> Doors
         m_audioClips[(int)AudioClipName.PILAR] = Resources.Load<AudioClip>("Sound/PilarEmergeSFX");
         //Projectile
-        m_audioClips[(int)AudioClipName.ARCHER_ATTACK] = Resources.Load<AudioClip>("Sound/SkeletonReleaseSFX");
+        m_audioClips[(int)AudioClipName.SKELLY_SHOOT] = Resources.Load<AudioClip>("Sound/SkellyShootSFX");
         //Ura Attack
         m_audioClips[(int)AudioClipName.PLAYER_ATTACK_1] = Resources.Load<AudioClip>("Sound/Slash1SFX");
         m_audioClips[(int)AudioClipName.PLAYER_ATTACK_2] = Resources.Load<AudioClip>("Sound/Slash2SFX");
