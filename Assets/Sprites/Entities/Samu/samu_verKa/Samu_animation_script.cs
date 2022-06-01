@@ -42,6 +42,12 @@ public class Samu_animation_script : MonoBehaviour
     private bool fireballsSummoned = false;
     private bool fireballsThrown = false;
 
+    private float trackingTimer = 3;
+    private float trackingTimer_time = 0;
+    private bool canGoOffscreen = false;
+    Vector3 cameraOffscreenPoint;
+    Vector3 point;
+
 
     float softening_movement_mod = 0.3f;
 
@@ -102,19 +108,21 @@ public class Samu_animation_script : MonoBehaviour
 
         Atk1var_fireball_init_pos = list.ToArray();
         init_pos = gameObject.transform.localPosition;
-
+        Samu_bodies[1].SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Samu_bodies[1].gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - 10f, Screen.height - 50f,500));
         ///ROTATION 
         float sin = Mathf.Cos(Time.time / 2) * 1.5f;
         //Debug.Log(sin);
         innerRing.transform.Rotate(new Vector3(0, 0, sin));
         outerRing.transform.Rotate(new Vector3(0, 0, -sin));
+        eye_obj.transform.Rotate(new Vector3(0, 0, -sin));
         mainCircle.transform.Rotate(rot_speed);
+
+
         for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
         {
             Atk1_fireball_init_pos[i].transform.Rotate(rot_speed*4f);
@@ -144,7 +152,7 @@ public class Samu_animation_script : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ATK1VAR();
+            ATK2();
 
         } 
 
@@ -190,7 +198,7 @@ public class Samu_animation_script : MonoBehaviour
                     if (!(NumberInRange(x_pos, transform.localPosition.x, max_range) && NumberInRange(y_pos, transform.localPosition.y, max_range)))
                     {
                         Vector3 offset = transform.localPosition - (init_pos + new Vector3(x_pos , -y_pos , 0));
-                        Vector3 direction = Vector3.ClampMagnitude(offset, 5f);
+                        Vector3 direction = Vector3.ClampMagnitude(offset, 2.5f);
                         transform.localPosition += -direction;
                         canMove = false; }
 
@@ -213,10 +221,7 @@ public class Samu_animation_script : MonoBehaviour
                 case Anim_States.BACK2ORIGIN:
                 if (transform.localPosition != init_pos)
                 {
-                    Vector3 offset = transform.localPosition - init_pos;
-                    Vector3 direction = Vector3.ClampMagnitude(offset, 2.5f);
-                   transform.localPosition += -direction;
-                    changeState = false;
+                    Back2Origin_f();
                 }
                 break;
             case Anim_States.STOP:
@@ -228,6 +233,11 @@ public class Samu_animation_script : MonoBehaviour
                 if (!fireballsSummoned) { SummonFireballs(Atk1var_fireball_init_pos, Atk1var_fireballs); }
                 
                 break;
+            case Anim_States.ATK2:
+                GoOffscreen();
+
+                break;
+
             }
        
 
@@ -245,6 +255,86 @@ public class Samu_animation_script : MonoBehaviour
 
 
     }
+
+    private void MoveToPoint (Transform entity, Vector3 WhereTo, float Magnitude, int Mode = 0)
+    {
+        //Local Position
+        if (Mode == 0)
+        {
+
+            Vector3 offset = entity.localPosition - WhereTo;
+            Vector3 direction = Vector3.ClampMagnitude(offset, Magnitude);
+            entity.localPosition += -direction;
+        }
+        else {
+            Vector3 offset = entity.position - WhereTo;
+            Vector3 direction = Vector3.ClampMagnitude(offset, Magnitude);
+            entity.position += -direction;
+        }
+    }
+
+
+    private void Back2Origin_f() {
+
+        MoveToPoint(transform, init_pos, 2.5f);
+        
+        changeState = false;
+
+
+    }
+    private void GoOffscreen() {
+
+        if (transform.localPosition == init_pos)
+        {
+            canGoOffscreen = true;
+        }
+
+        if (transform.localPosition != init_pos && !canGoOffscreen )
+        {
+            Back2Origin_f();
+        }
+
+        if (canGoOffscreen)
+        {
+             
+            
+            MoveToPoint(transform, point, 2.5f, 1);
+
+        }
+
+        if (transform.position.y >= cameraOffscreenPoint.y-init_pos.y && !Samu_bodies[1].activeSelf)
+        {
+            TransferBody();
+        }
+        
+        if (Samu_bodies[1].activeSelf)
+        {
+            Vector3 cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
+            Vector3 init_wPos = transform.TransformPoint(init_pos);
+
+            MoveToPoint(Samu_bodies[1].transform, new Vector3(cam_bounds_.x+init_pos.x/2-15, player.transform.position.y, init_wPos.z - init_pos.z), 1f,1);
+            mainCircle.transform.position = Samu_bodies[1].transform.position;
+            eye_obj.transform.position = Samu_bodies[1].transform.position;
+            if(Samu_bodies[1].transform.position.x <= cam_bounds_.x + init_pos.x/2)
+            {
+                Debug.Log("AAA");
+            }
+        }
+
+    }
+
+
+    private void TransferBody()
+    {
+       
+        Vector3 cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
+        Vector3 init_wPos = transform.TransformPoint(init_pos);
+        Samu_bodies[1].transform.position = new Vector3(cam_bounds_.x + init_pos.x / 2 + 100, player.transform.position.y, init_wPos.z-init_pos.z) ;
+        mainCircle.transform.position = Samu_bodies[1].transform.position;
+        eye_obj.transform.position = Samu_bodies[1].transform.position;
+        Samu_bodies[1].SetActive(true);
+    }
+
     public Samu_BigFireball[] ATK1 () {
 
         prev_state = state;
@@ -272,6 +362,16 @@ public class Samu_animation_script : MonoBehaviour
         next_state = Anim_States.BACK2ORIGIN;
         changeState = true;
         
+
+    }
+    
+    public void ATK2 () {
+
+        prev_state = state;
+        next_state = Anim_States.ATK2;
+        changeState = true;
+        cameraOffscreenPoint =  Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        point = new Vector3(transform.TransformPoint(init_pos).x-init_pos.x , cameraOffscreenPoint.y - init_pos.y, 500);
 
     }
     public void Stop () {
