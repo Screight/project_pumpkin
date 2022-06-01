@@ -91,9 +91,19 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.RUNESFX] = Resources.Load<AudioClip>("Sound/RuneHum");
         //Save
         m_audioClips[(int)AudioClipName.SAVESFX] = Resources.Load<AudioClip>("Sound/GameSavedSFX");
-        //Spider
+        //Spiders
         m_audioClips[(int)AudioClipName.SPIDER_HISS_1] = Resources.Load<AudioClip>("Sound/SpiderHiss1SFX");
         m_audioClips[(int)AudioClipName.SPIDER_HISS_2] = Resources.Load<AudioClip>("Sound/SpiderHiss2SFX");
+        //Ghoul
+        m_audioClips[(int)AudioClipName.GHOUL_NOISE_1] = Resources.Load<AudioClip>("Sound/GhoulNoise1");
+        m_audioClips[(int)AudioClipName.GHOUL_NOISE_2] = Resources.Load<AudioClip>("Sound/GhoulNoise2");
+        m_audioClips[(int)AudioClipName.GHOUL_NOISE_3] = Resources.Load<AudioClip>("Sound/GhoulNoise3");
+        m_audioClips[(int)AudioClipName.GHOUL_ATK_1] = Resources.Load<AudioClip>("Sound/GhoulAttack1");
+        m_audioClips[(int)AudioClipName.GHOUL_ATK_2] = Resources.Load<AudioClip>("Sound/GhoulAttack2");
+        m_audioClips[(int)AudioClipName.GHOUL_ATK_3] = Resources.Load<AudioClip>("Sound/GhoulAttack3");
+        //Skelly
+        m_audioClips[(int)AudioClipName.SKELLY_GROWL_1] = Resources.Load<AudioClip>("Sound/SkellyGrowl1");
+        m_audioClips[(int)AudioClipName.SKELLY_GROWL_2] = Resources.Load<AudioClip>("Sound/SkellyGrowl2");
     }
 
     public void PlayOnce(AudioClipName p_name)
