@@ -4,37 +4,40 @@ public enum GHOUL_STATE { IDLE, CHASE, ATTACK, HIT, DIE}
 
 public class Ghoul : Enemy
 {
-    Rigidbody2D m_rb2D;
-    GHOUL_STATE m_ghoulState;
-    ENEMY_STATE m_state;
+    private Rigidbody2D m_rb2D;
+    private GHOUL_STATE m_ghoulState;
+    private ENEMY_STATE m_state;
 
-    GameObject player;
-    float m_playerPosX;
-    bool hasCharged;
-    Timer chargeTimer;
+    private GameObject player;
+    private float m_playerPosX;
+    private bool hasCharged;
+    private Timer chargeTimer;
 
     [SerializeField] float m_speed = 80.0f;
-    bool m_isFacingRight;
-    bool m_isGrounded;
-    bool m_isHittingWall = false;
-    bool m_playerIsNear;
-    bool m_playerIsAtRange;
+    private bool m_isFacingRight;
+    private bool m_isGrounded;
+    private bool m_isHittingWall = false;
+    private bool m_playerIsNear;
+    private bool m_playerIsAtRange;
+    private bool m_firtsGrowl = false;
+    private bool m_isDead = false;
+    private AudioSource m_audioSrc;
 
     [SerializeField] Transform m_leftPatrolPosition;
     [SerializeField] Transform m_rightPatrolPosition;
-    Timer m_eventTimer;
+    private Timer m_eventTimer;
+    private Timer m_growlTimer;
     [SerializeField] float m_chargeDuration = 0.5f;
     [SerializeField] float m_chargeSpeed;
     [SerializeField] float m_restDuration = 1.0f;
     [SerializeField] float m_chargeDistance = 50.0f;
-    float m_attackDuration;
+    private float m_attackDuration;
 
     private void OnEnable() {
         if(AnimationManager.Instance != null)
         {
             InitializePatrol();
-        }
-        
+        }      
     }
 
     private void OnDisable()
@@ -59,6 +62,10 @@ public class Ghoul : Enemy
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
         m_attackDuration = m_chargeDistance / m_chargeSpeed;
+        m_audioSrc = GetComponent<AudioSource>();
+        chargeTimer = gameObject.AddComponent<Timer>();
+        m_eventTimer = gameObject.AddComponent<Timer>();
+        m_growlTimer = gameObject.AddComponent<Timer>();
     }
 
     protected override void Start()
@@ -66,14 +73,13 @@ public class Ghoul : Enemy
         base.Start();
 
         m_isFacingRight = false;
-        chargeTimer = gameObject.AddComponent<Timer>();
         chargeTimer.Duration = 1;
-        m_eventTimer = gameObject.AddComponent<Timer>();
         player = Player.Instance.gameObject;
         InitializePatrol();
         m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.GHOUL_DIE);
         m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.GHOUL_HIT);
 
+        m_growlTimer.Duration = 1.0f;
     }
 
     protected override void Update()
@@ -100,6 +106,19 @@ public class Ghoul : Enemy
             case ENEMY_STATE.REST:
                 { HandleRest(); }
                 break;
+        }
+
+        //GROWL SFX
+        if (m_firtsGrowl) { m_growlTimer.Run(); m_firtsGrowl = false; }
+        if (m_growlTimer.IsFinished && !m_audioSrc.isPlaying && !m_isDead)
+        {
+            int randNum = Random.Range(0, 3);
+            if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_NOISE_1)); }
+            else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_NOISE_2)); }
+            else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_NOISE_3)); }
+
+            m_growlTimer.Duration = Random.Range(3, 5);
+            m_growlTimer.Run();
         }
     }
 
@@ -142,44 +161,51 @@ public class Ghoul : Enemy
         }
     }
 
-    void HandleChase(){
-        if(!m_playerIsNear){
+    void HandleChase()
+    {
+        if (!m_playerIsNear)
+        {
             InitializePatrol();
         }
-        else if(m_playerIsAtRange){
-            if(!m_isHittingWall){
+        else if (m_playerIsAtRange)
+        {
+            if (!m_isHittingWall)
+            {
                 InitializeCharge();
             }
-            else {InitializeRest();}
+            else { InitializeRest(); }
         }
-        else{
-            Chase();
-        }
+        else { Chase(); }
     }
 
-    void Chase(){
+    void Chase()
+    {
         float direction = (player.transform.position.x - transform.position.x) / Mathf.Abs(player.transform.position.x - transform.position.x);
         m_rb2D.velocity = new Vector2(direction * m_speed, m_rb2D.velocity.y);
         FaceToDirection(direction);
     }
-    void InitializeCharge(){
+    void InitializeCharge()
+    {
         FaceToDirection(player.transform.position.x - transform.position.x);
         m_state = ENEMY_STATE.CHARGE;
         m_rb2D.velocity = Vector2.zero;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_CHARGE, false);
         m_eventTimer.Duration = m_chargeDuration;
         m_eventTimer.Run();
-
     }
 
-    void HandleCharge(){
-        if(m_eventTimer.IsFinished){
+    void HandleCharge()
+    {
+        if (m_eventTimer.IsFinished)
+        {
             InitializeAttack();
         }
     }
 
-    void InitializeAttack(){
+    void InitializeAttack()
+    {
         m_state = ENEMY_STATE.ATTACK;
+        PlayAttackSFX(); // SFX
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_ATTACK, false);
         float direction = (player.transform.position.x - transform.position.x) / Mathf.Abs(player.transform.position.x - transform.position.x);
         FaceToDirection(direction);
@@ -341,14 +367,13 @@ public class Ghoul : Enemy
 
     public override void Damage(float p_damage)
     {
-        //m_ghoulState = GHOUL_STATE.HIT;
         m_state = ENEMY_STATE.HIT;
         m_rb2D.velocity = Vector2.zero;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_HIT, true);
+        m_audioSrc.Stop();
         base.Damage(p_damage);
         if (m_health <= 0)
         {
-            //m_ghoulState = GHOUL_STATE.DIE;
             m_state = ENEMY_STATE.DEATH;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.GHOUL_DIE, false);
             Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
@@ -357,12 +382,17 @@ public class Ghoul : Enemy
 
     protected override void Die()
     {
+        m_growlTimer.Stop();
+        m_audioSrc.Stop();
+        m_isDead = true;
+
         base.Die();
     }
 
     public override void Reset()
     {
         base.Reset();
+        m_isDead = false;
         m_rb2D.gravityScale = 40;
         //m_ghoulState = GHOUL_STATE.IDLE;
         InitializePatrol();
@@ -385,6 +415,16 @@ public class Ghoul : Enemy
             InitializeRest();
         }
         return true;
+    }
+
+    private void PlayAttackSFX()
+    {
+        m_growlTimer.Stop();
+        m_audioSrc.Stop();
+        int randNum = Random.Range(0, 3);
+        if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_ATK_1)); }
+        else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_ATK_2)); }
+        else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_ATK_3)); }
     }
 
     #region Accessors
