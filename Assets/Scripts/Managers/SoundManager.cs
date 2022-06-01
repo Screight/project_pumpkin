@@ -101,6 +101,9 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.GHOUL_ATK_1] = Resources.Load<AudioClip>("Sound/GhoulAttack1");
         m_audioClips[(int)AudioClipName.GHOUL_ATK_2] = Resources.Load<AudioClip>("Sound/GhoulAttack2");
         m_audioClips[(int)AudioClipName.GHOUL_ATK_3] = Resources.Load<AudioClip>("Sound/GhoulAttack3");
+        //Skelly
+        m_audioClips[(int)AudioClipName.SKELLY_GROWL_1] = Resources.Load<AudioClip>("Sound/SkellyGrowl1");
+        m_audioClips[(int)AudioClipName.SKELLY_GROWL_2] = Resources.Load<AudioClip>("Sound/SkellyGrowl2");
     }
 
     public void PlayOnce(AudioClipName p_name)

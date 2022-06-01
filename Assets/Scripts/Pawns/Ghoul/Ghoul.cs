@@ -19,7 +19,7 @@ public class Ghoul : Enemy
     private bool m_isHittingWall = false;
     private bool m_playerIsNear;
     private bool m_playerIsAtRange;
-    private bool m_firtsGrowl = false;
+
     private bool m_isDead = false;
     private AudioSource m_audioSrc;
 
@@ -33,7 +33,8 @@ public class Ghoul : Enemy
     [SerializeField] float m_chargeDistance = 50.0f;
     private float m_attackDuration;
 
-    private void OnEnable() {
+    private void OnEnable() 
+    {
         if(AnimationManager.Instance != null)
         {
             InitializePatrol();
@@ -109,7 +110,6 @@ public class Ghoul : Enemy
         }
 
         //GROWL SFX
-        if (m_firtsGrowl) { m_growlTimer.Run(); m_firtsGrowl = false; }
         if (m_growlTimer.IsFinished && !m_audioSrc.isPlaying && !m_isDead)
         {
             int randNum = Random.Range(0, 3);
@@ -394,7 +394,6 @@ public class Ghoul : Enemy
         base.Reset();
         m_isDead = false;
         m_rb2D.gravityScale = 40;
-        //m_ghoulState = GHOUL_STATE.IDLE;
         InitializePatrol();
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), false);
     }
