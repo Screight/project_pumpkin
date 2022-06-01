@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Z)){
             m_isMapUnlocked = true;
+            m_isSkillAvailable[(int)SKILLS.GROUNDBREAKER] = true;
         }
     }
 

@@ -197,7 +197,7 @@ public class Skeleton : Enemy
         m_skeletonState = SKELETON_STATE.HIT;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_HIT, false);
         base.Damage(p_damage);
-        m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
+        //m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         if (m_health <= 0)
         {
             m_skeletonState = SKELETON_STATE.DIE;
@@ -211,13 +211,25 @@ public class Skeleton : Enemy
     protected override void EndHit()
     {
         base.EndHit();
-        m_skeletonState = SKELETON_STATE.MOVE;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        if(m_playerIsAtRange){
+            m_skeletonState = SKELETON_STATE.ATTACK;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        }
+        else if(m_playerIsNear){
+            m_skeletonState = SKELETON_STATE.CHASE;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        }
+        else{
+            m_skeletonState = SKELETON_STATE.MOVE;
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
+        }
+        
     }
 
     public override void Reset()
     {
         base.Reset();
+        m_skeletonState = SKELETON_STATE.MOVE;
         m_rb2D.gravityScale = 40;
         EndHit();
     }
