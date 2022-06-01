@@ -80,7 +80,7 @@ public class Ghoul : Enemy
         m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.GHOUL_DIE);
         m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.GHOUL_HIT);
 
-        m_growlTimer.Duration = 1.0f;
+        m_growlTimer.Duration = 6.0f;
     }
 
     protected override void Update()
@@ -117,7 +117,7 @@ public class Ghoul : Enemy
             else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_NOISE_2)); }
             else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.GHOUL_NOISE_3)); }
 
-            m_growlTimer.Duration = Random.Range(3, 5);
+            m_growlTimer.Duration = Random.Range(6, 8);
             m_growlTimer.Run();
         }
     }
