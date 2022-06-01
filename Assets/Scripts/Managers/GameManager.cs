@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
         }
         else if (p_amount < 0)
         {
-            for (int i = 0; i <= m_playerHealth; i++)
+            for (int i = 0; i < -p_amount; i++)
             {
                 m_healthUI.LoseHeart();
             }
