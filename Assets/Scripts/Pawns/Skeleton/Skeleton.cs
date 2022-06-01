@@ -31,6 +31,11 @@ public class Skeleton : Enemy
     bool m_isAttacking = false;
     [SerializeField] Transform m_attackPosition;
 
+    private bool m_isDead = false;
+    [SerializeField] AudioSource m_flamesAudioSrc;
+    [SerializeField] AudioSource m_growlingAudioSrc;
+    private Timer m_growlTimer;
+
     protected override void Awake()
     {
         base.Awake();
@@ -45,6 +50,7 @@ public class Skeleton : Enemy
         m_hasReturned = true;
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
+        m_growlTimer = gameObject.AddComponent<Timer>();
     }
 
     protected override void Start()
@@ -58,6 +64,8 @@ public class Skeleton : Enemy
 
         boneTimer = gameObject.AddComponent<Timer>();
         boneTimer.Duration = 2;
+
+        m_growlTimer.Duration = 3.0f;
     }
 
     protected override void Update()
@@ -75,6 +83,17 @@ public class Skeleton : Enemy
 
         float delta = Time.fixedDeltaTime * 1000;
         boneCooldown += 1.0f * delta;
+
+        //GROWL SFX
+        if (m_growlTimer.IsFinished && !m_growlingAudioSrc.isPlaying && !m_isDead)
+        {
+            int randNum = Random.Range(0, 2);
+            if (randNum == 0) { m_growlingAudioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SKELLY_GROWL_1)); }
+            else { m_growlingAudioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SKELLY_GROWL_2)); }
+
+            m_growlTimer.Duration = Random.Range(5, 7);
+            m_growlTimer.Run();
+        }
     }
 
     void Move(SKELETON_STATE p_defaultState)
@@ -211,12 +230,18 @@ public class Skeleton : Enemy
     {
         m_skeletonState = SKELETON_STATE.HIT;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_HIT, false);
+        m_growlingAudioSrc.Stop();
         base.Damage(p_damage);
         //m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
         if (m_health <= 0)
         {
             m_skeletonState = SKELETON_STATE.DIE;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_DIE, false);
+            //Stop SFX
+            m_growlTimer.Stop();
+            m_flamesAudioSrc.Stop();
+            m_growlingAudioSrc.Stop();
+            m_isDead = true;
         }
         m_isAttacking = false;
     }
@@ -237,13 +262,14 @@ public class Skeleton : Enemy
         else{
             m_skeletonState = SKELETON_STATE.MOVE;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
-        }
-        
+        } 
     }
 
     public override void Reset()
     {
         base.Reset();
+        m_isDead = false;
+        m_flamesAudioSrc.Play();
         m_skeletonState = SKELETON_STATE.MOVE;
         m_rb2D.gravityScale = 40;
         EndHit();
