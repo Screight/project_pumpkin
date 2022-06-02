@@ -106,6 +106,10 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.SKELLY_GROWL_2] = Resources.Load<AudioClip>("Sound/SkellyGrowl2");
         //Spirits
         m_audioClips[(int)AudioClipName.SPIRIT_TRAIL] = Resources.Load<AudioClip>("Sound/SpiritTrailSFX");
+        //Little Bat
+        m_audioClips[(int)AudioClipName.LILBAT_SWING_1] = Resources.Load<AudioClip>("Sound/BatSwing1");
+        m_audioClips[(int)AudioClipName.LILBAT_SWING_2] = Resources.Load<AudioClip>("Sound/BatSwing2");
+        m_audioClips[(int)AudioClipName.LILBAT_SWING_3] = Resources.Load<AudioClip>("Sound/BatSwing3");
     }
 
     public void PlayOnce(AudioClipName p_name)
