@@ -88,8 +88,9 @@ GameObject:
   - component: {fileID: 6122273917770918791}
   - component: {fileID: 4936022523227576325}
   - component: {fileID: 3358700523362442930}
-  - component: {fileID: 1405403384}
   - component: {fileID: 523840719}
+  - component: {fileID: 1582660172}
+  - component: {fileID: 9198299217957424435}
   m_Layer: 0
   m_Name: GroundBreakerRune
   m_TagString: Untagged
@@ -162,24 +163,6 @@ MonoBehaviour:
   m_isOneUseOnly: 1
   m_isAutomatic: 1
   m_CutSceneStart: {fileID: 0}
---- !u!114 &1405403384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6122273917770918843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169b8486e9c469f28b1a7a92b81f3d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_showIconAlways: 1
-  m_pawnActivationTag: Player
-  m_icon: {fileID: 7978531013163943587}
-  m_isOneUseOnly: 1
-  m_isAutomatic: 1
-  m_dialogue: {fileID: 4936022523227576325}
 --- !u!82 &523840719
 AudioSource:
   m_ObjectHideFlags: 0
@@ -254,10 +237,19 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
+      outSlope: 1.0110497
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.989071
+      value: 1
+      inSlope: 1.0110497
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 5
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
@@ -294,6 +286,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1582660172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122273917770918843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169b8486e9c469f28b1a7a92b81f3d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_showIconAlways: 1
+  m_pawnActivationTag: Player
+  m_icon: {fileID: 7978531013163943587}
+  m_isOneUseOnly: 1
+  m_isAutomatic: 1
+  m_dialogue: {fileID: 4936022523227576325}
+--- !u!114 &9198299217957424435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6122273917770918843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8210a6b267303d04d94113d7699fe87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7978531013163943587
 GameObject:
   m_ObjectHideFlags: 0
