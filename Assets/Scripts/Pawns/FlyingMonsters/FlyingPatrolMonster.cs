@@ -6,29 +6,28 @@ public class FlyingPatrolMonster : Enemy
 {
     [SerializeField] LayerMask m_obstacleLayer;
     [SerializeField] float m_speed = 40;
-    Rigidbody2D m_rb2D;
+    private Rigidbody2D m_rb2D;
     [SerializeField] Transform m_patrolPoint_1;
     [SerializeField] Transform m_patrolPoint_2;
-    ENEMY_STATE m_state;
-    PathFinder m_pathFinder;
-    bool m_isFacingRight;
-    bool m_isGoingFrom1To2;
-    bool m_isInitialized = false;
+    private ENEMY_STATE m_state;
+    private PathFinder m_pathFinder;
+    private bool m_isFacingRight;
+    private bool m_isGoingFrom1To2;
+    private bool m_isInitialized = false;
 
-    protected override void Awake() {
+    private bool m_isDead = false;
+    private AudioSource m_audioSrc;
+
+    protected override void Awake() 
+    {
         base.Awake();
         m_rb2D = GetComponent<Rigidbody2D>();
         m_pathFinder = GetComponent<PathFinder>();
         m_collider = GetComponent<Collider2D>();
-        
+        m_audioSrc = GetComponent<AudioSource>();
     }
-
-    private void OnEnable()
+    protected override void Start() 
     {
-       
-    }
-
-    protected override void Start() {
         base.Start();
         m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_DIE);
         m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_HIT);
@@ -41,23 +40,23 @@ public class FlyingPatrolMonster : Enemy
         m_dieAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_DIE);
         m_hitAnimationDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.PATROL_BAT_HIT);
 
-
     }
 
     protected override void Update()
     {   
         base.Update();
-        if(!m_isInitialized) {
+        if(!m_isInitialized) 
+        {
             InitializePatrol(); 
             m_isInitialized = true;
         }
 
-        switch(m_state){
+        switch(m_state)
+        {
             default: break;
             case ENEMY_STATE.PATROL:
                 Patrol();
             break;
-
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, Player.Instance.transform.position.z);
     }
@@ -74,16 +73,16 @@ public class FlyingPatrolMonster : Enemy
     }
 
     void Patrol()
-    {
-        
+    {  
         m_pathFinder.NavigateToTargetPosition();
-        if (m_pathFinder.IsFinished()) {
+        if (m_pathFinder.IsFinished()) 
+        {
             SwapPatrolTarget();
         }
         FaceToDirection();
     }
 
-        void SwapPatrolTarget()
+    void SwapPatrolTarget()
     {
         if (m_isGoingFrom1To2)
         {
@@ -102,24 +101,26 @@ public class FlyingPatrolMonster : Enemy
     public override void Damage(float p_damage)
     {
         base.Damage(p_damage);
-        if(m_health <= 0) {
+        if(m_health <= 0) 
+        {
             m_rb2D.velocity = Vector2.zero;
             //m_rb2D.gravityScale = 20;
             m_state = ENEMY_STATE.DEATH;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_DIE, true);
             return ;
         }
-        else{
+        else
+        {
             m_state = ENEMY_STATE.HIT;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_HIT, true);
-        }
-        
-        
+            AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_HIT, true);
+        }       
     }
 
-    protected override void EndHit(){
+    protected override void EndHit()
+    {
         base.EndHit();
-        if(m_health <= 0) { 
+        if(m_health <= 0) 
+        { 
             m_state = ENEMY_STATE.DEATH;
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_DIE, false);
             m_state = ENEMY_STATE.DEATH;
@@ -130,12 +131,16 @@ public class FlyingPatrolMonster : Enemy
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PATROL_BAT_MOVE, false);
     }
 
-    void FaceToDirectionRestrictedY(){
-        if(m_pathFinder.GetDirection().y == 0){
-            if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
+    void FaceToDirectionRestrictedY()
+    {
+        if(m_pathFinder.GetDirection().y == 0)
+        {
+            if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight)
+            {
                 FlipX();
             }
-            else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
+            else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight)
+            {
                 FlipX();
             }
         }
@@ -143,10 +148,12 @@ public class FlyingPatrolMonster : Enemy
 
     void FaceToDirection(){
         
-        if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight){
+        if(m_pathFinder.GetDirection().x == 1 && !m_isFacingRight)
+        {
             FlipX();
         }
-        else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight){
+        else if(m_pathFinder.GetDirection().x == -1 && m_isFacingRight)
+        {
             FlipX();
         }
     }
@@ -164,25 +171,43 @@ public class FlyingPatrolMonster : Enemy
         if (direction != FacingDirection()) { FlipX(); }
     }
 
-        int FacingDirection()
+    int FacingDirection()
     {
         if (m_isFacingRight) { return 1; }
         else { return -1; }
     }
 
-    public override void Reset(){
+    protected override void Die()
+    {
+        m_audioSrc.Stop();
+        m_isDead = true;
+
+        base.Die();
+    }
+
+    public override void Reset()
+    {
         base.Reset();
         InitializePatrol();
+        m_isDead = false;
         m_collider.enabled = true;
         m_pathFinder.SetInitialNodeToNone();
         m_isInitialized = false;
         m_state = ENEMY_STATE.PATROL;
     }
 
-    private void OnDrawGizmos() {
+    public void PlaySwingSFX() 
+    {
+        int randNum = Random.Range(0, 3);
+        if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.LILBAT_SWING_1)); }
+        else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.LILBAT_SWING_2)); }
+        else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.LILBAT_SWING_3)); }
+    }
+
+    private void OnDrawGizmos() 
+    {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(new Vector3(m_patrolPoint_1.position.x, m_patrolPoint_1.position.y, transform.position.z),3);
         Gizmos.DrawSphere(new Vector3(m_patrolPoint_2.position.x, m_patrolPoint_2.position.y, transform.position.z),3);
     }
-
 }
