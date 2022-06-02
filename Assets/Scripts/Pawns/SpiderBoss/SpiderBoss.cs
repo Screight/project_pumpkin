@@ -9,9 +9,11 @@ public class SpiderBoss : AnimatedCharacter
     [SerializeField] GameObject[] m_leftArmParts;
     [SerializeField] GameObject[] m_rightArmParts;
 
-    [SerializeField] GameObject m_leftArmDestroyed;
+    [SerializeField] GameObject m_leftArmDestroyedPrefab;
+    GameObject m_leftArmDestroyed;
     [SerializeField] GameObject m_leftArmNormal;
-    [SerializeField] GameObject m_rightArmDestroyed;
+    [SerializeField] GameObject m_rightArmDestroyedPrefab;
+    GameObject m_rightArmDestroyed;
     [SerializeField] GameObject m_rightArmNormal;
 
     [SerializeField] Door[] m_doors = new Door[2];
@@ -111,16 +113,28 @@ public class SpiderBoss : AnimatedCharacter
         m_spiderHUD.SetActive(false);
         m_initialPosition = transform.position;
 
+        SetUpBrokenLegs();
+
+        m_bodyDestroyed.SetActive(false);
+
+        m_eventTimer.Duration = m_splashScreenInitialTime;
+        m_eventTimer.Run();
+    }
+
+    void SetUpBrokenLegs(){
+        m_rightArmDestroyed = Instantiate(m_leftArmDestroyedPrefab);
+        m_rightArmDestroyed.transform.SetParent(m_rightArmNormal.transform.parent);
+        m_rightArmDestroyed.transform.localPosition = new Vector3(5,5,0);
+        m_leftArmDestroyed = Instantiate(m_rightArmDestroyedPrefab);
+        m_leftArmDestroyed.transform.SetParent(m_rightArmNormal.transform.parent);
+        m_leftArmDestroyed.transform.localPosition = new Vector3(-5,5,0);
+
         m_leftArmDestroyed.GetComponent<Destroy_anim>().AddListenerLoseLeg(LoseLegEvent);
 
         m_rightArmDestroyed.GetComponent<Destroy_anim>().AddListenerLoseLeg(LoseLegEvent);
 
         m_leftArmDestroyed.SetActive(false);
         m_rightArmDestroyed.SetActive(false);
-        m_bodyDestroyed.SetActive(false);
-
-        m_eventTimer.Duration = m_splashScreenInitialTime;
-        m_eventTimer.Run();
     }
 
     private void Update() 
@@ -766,6 +780,8 @@ public class SpiderBoss : AnimatedCharacter
         {
             m_rightArmParts[i].SetActive(true);
         }
+
+        SetUpBrokenLegs();
 
         transform.position = m_initialPosition;
         transform.rotation = Quaternion.identity;

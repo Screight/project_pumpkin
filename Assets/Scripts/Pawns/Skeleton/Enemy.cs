@@ -20,11 +20,19 @@ public class Enemy : AnimatedCharacter
     [SerializeField] float m_playerInvulnerableDuration = 0.5f;
     [SerializeField] float m_playerNoControlDuration = 0.5f;
     [SerializeField] Vector2 m_pushAwayPlayerVelocity = new Vector2(50.0f, 100.0f);
+    Rigidbody2D m_rb2d;
+    bool m_isBeingPushed = false;
+    Timer m_pushedTimer;
+    [SerializeField] float m_pushedDuration = 0.1f;
+    [SerializeField] float m_pushedSpeed = 50.0f;
     protected override void Awake() { 
         base.Awake();
         m_spawnPos = transform.position; 
         m_animationTimer = gameObject.AddComponent<Timer>();
         m_collider = GetComponent<Collider2D>();
+        m_rb2d = GetComponent<Rigidbody2D>();
+        m_pushedTimer = gameObject.AddComponent<Timer>();
+        m_pushedTimer.Duration = m_pushedDuration;
     }
 
     protected virtual void Start()
@@ -35,6 +43,12 @@ public class Enemy : AnimatedCharacter
 
     protected virtual void Update()
     {
+        if(GameManager.Instance.IsGamePaused){ return; }
+        if(m_isBeingPushed && m_pushedTimer.IsFinished){
+            m_isBeingPushed = false;
+            m_rb2d.velocity = new Vector2(0, m_rb2d.velocity.y);
+        }
+
         if (m_isDying && m_animationTimer.IsFinished)
         {
             Die();
@@ -51,12 +65,14 @@ public class Enemy : AnimatedCharacter
     {
         m_health -= p_damage;
         Physics2D.IgnoreCollision(m_collider, Player.Instance.GetCollider(), true);
+
         if (m_health <= 0) {
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_KILL); 
             m_isDying = true;
             m_animationTimer.Duration = m_dieAnimationDuration;
             m_animationTimer.Stop();
             m_animationTimer.Run();
+            m_rb2d.velocity = new Vector2(0, m_rb2d.velocity.y);
             }
         else {
             SoundManager.Instance.PlayOnce(AudioClipName.ENEMY_HIT); 
@@ -64,6 +80,20 @@ public class Enemy : AnimatedCharacter
             m_animationTimer.Duration = m_hitAnimationDuration;
             m_animationTimer.Stop();
             m_animationTimer.Run();
+            m_isBeingPushed = true;
+            m_pushedTimer.Run();
+
+            Vector2 velocity = new Vector2();
+
+            if(Player.Instance.transform.position.x < transform.position.x){
+                velocity.x = m_pushedSpeed;
+            }
+            else{
+                velocity.x = -m_pushedSpeed;
+            }
+
+        m_rb2d.velocity = velocity;
+
         }
     }
 

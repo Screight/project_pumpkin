@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13311738223205044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.7, y: 0, z: 0}
+  m_LocalPosition: {x: -15.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7395076013811728850}
@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 351930647417588648}
   - component: {fileID: 3330346875839255077}
   - component: {fileID: 7369039165989594406}
+  - component: {fileID: 3263731683756798393}
   m_Layer: 6
   m_Name: pawnSpider
   m_TagString: enemy
@@ -273,6 +274,8 @@ MonoBehaviour:
   m_playerInvulnerableDuration: 1
   m_playerNoControlDuration: 0.2
   m_pushAwayPlayerVelocity: {x: 50, y: 100}
+  m_pushedDuration: 0.1
+  m_pushedSpeed: 50
   m_speed: 50
   m_leftPatrolPoint: {fileID: 2331971606948251092}
   m_rightPatrolPoint: {fileID: 5098824844858482048}
@@ -300,10 +303,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 20
-  MaxDistance: 200
+  MinDistance: 10
+  MaxDistance: 150
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -384,16 +387,37 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
+      outSlope: 1
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 5
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3263731683756798393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2781853434993903793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8210a6b267303d04d94113d7699fe87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6296672092179184479
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6296672092179184479}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.7, y: 0, z: 0}
+  m_LocalPosition: {x: 2.6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7395076013811728850}

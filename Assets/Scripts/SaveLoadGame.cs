@@ -51,6 +51,9 @@ public class SaveLoadGame : MonoBehaviour
         writer.Write(GameManager.Instance.GetIsSkillAvailable(SKILLS.DASH));
         writer.Write(GameManager.Instance.GetIsSkillAvailable(SKILLS.GROUNDBREAKER));
 
+        writer.Write(GameManager.Instance.PlayerMaxHealth);
+        writer.Write((int)GameManager.Instance.CurrentZone);
+
         CheckpointsManager.Instance.Save(writer);
         GameManager.Instance.Save(writer);
         for (int i = 0; i < m_interactiveItems.Length; i++)
@@ -99,6 +102,9 @@ public class SaveLoadGame : MonoBehaviour
             reader.ReadBoolean();
             reader.ReadBoolean();
             reader.ReadBoolean();
+
+            reader.ReadInt32();
+            reader.ReadInt32();
 
             CheckpointsManager.Instance.Load(reader);
             GameManager.Instance.Load(reader);
@@ -149,6 +155,10 @@ public class SaveLoadGame : MonoBehaviour
             value = reader.ReadBoolean();
             p_saveState.SetSpiritTo(value, SelectSaveButton.SPIRITS.GROUNDBREAKER);
 
+            p_saveState.SetUpHearts(reader.ReadInt32());
+            p_saveState.SetZoneTo((ZONE)reader.ReadInt32());
+
+
             p_saveState.LoadGame = true;
             Debug.Log(p_saveState.LoadGame);
             fileStream.Close();
@@ -156,6 +166,11 @@ public class SaveLoadGame : MonoBehaviour
         catch{
             Debug.LogError("File " + p_saveState.Path + " NOT found.");
             p_saveState.LoadGame = false;
+            p_saveState.SetSpiritTo(false, SelectSaveButton.SPIRITS.FIRE);
+            p_saveState.SetSpiritTo(false, SelectSaveButton.SPIRITS.DARK);
+            p_saveState.SetSpiritTo(false, SelectSaveButton.SPIRITS.GROUNDBREAKER);
+            p_saveState.SetUpHearts(3);
+            p_saveState.SetZoneTo(ZONE.LAST_NO_USE);
         }
     }
 

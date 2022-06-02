@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
     public void Shoot(int p_direction)
     {
         m_rb2D.velocity = new Vector2(p_direction * m_speed, m_rb2D.velocity.y);
-        SoundManager.Instance.PlayOnce(AudioClipName.ARCHER_ATTACK);
+        SoundManager.Instance.PlayOnce(AudioClipName.SKELLY_SHOOT);
         Destroy(gameObject,m_maxAliveTime);
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Portal : InteractiveItem
 {
+    [SerializeField] Vector2 m_portalImpulse = new Vector2(30, 100);
     [SerializeField] Portal m_destinyPortal;
     [SerializeField] Transform m_playerPosition;
     Transicion m_transicion;
@@ -55,6 +56,7 @@ public class Portal : InteractiveItem
         AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.PORTAL_CLOSE);
         GameManager.Instance.IsGamePaused = true;
         SoundManager.Instance.PlayOnce(AudioClipName.PORTALUSE);
+        Player.Instance.SetPlayerToInvisible(true);
     }
 
     public void OpenPortal()
@@ -83,6 +85,16 @@ public class Portal : InteractiveItem
         Player.Instance.StopScripting();
         GameManager.Instance.IsGamePaused = false;
         m_transicion.RemoveListenerToEndOfTransition(EndTransportPlayer);
+        Player.Instance.SetPlayerToInvisible(false);
+        Player.Instance.Speed = m_portalImpulse;
+        Player.Instance.transform.position = new Vector3(m_destinyPortal.SpawnPosition.x, m_destinyPortal.SpawnPosition.y, Player.Instance.transform.position.z);
+        Player.Instance.SetScriptedFor(0.3f);
+        if(Player.Instance.transform.position.x < m_destinyPortal.SpawnPosition.x){
+            Player.Instance.FacePlayerToLeft();
+        }
+        else{
+            Player.Instance.FacePlayerToRight();
+        }
     }
 
     public Vector3 SpawnPosition

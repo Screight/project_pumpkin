@@ -45,7 +45,7 @@ public class Spider : Enemy
         m_collider.enabled = false;
         m_rb2d.gravityScale = 0;
         m_eclosionDuration = AnimationManager.Instance.GetClipDuration(this, ANIMATION.SPIDER_ECLOSION);
-        m_hissTimer.Duration = Random.Range(0, 2);
+        m_hissTimer.Duration = 0.5f;
     }
 
     protected override void Update()

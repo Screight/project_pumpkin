@@ -27,7 +27,7 @@ public class ArrowSpawner : MonoBehaviour
             BoneScript boneScript = Instantiate(m_arrowPrefab, new Vector3(transform.position.x + 3, transform.position.y - 1, transform.position.z), Quaternion.identity).GetComponent<BoneScript>();
             int direction;
             if (m_isFacingRight) { direction = 1; }else { direction = -1; }
-            boneScript.Shoot(direction, AudioClipName.ARCHER_ATTACK);
+            boneScript.Shoot(direction, AudioClipName.SKELLY_SHOOT);
             m_shootCooldownTimer.Stop();
             m_shootCooldownTimer.Run();
         }

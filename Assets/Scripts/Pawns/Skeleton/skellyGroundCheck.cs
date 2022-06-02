@@ -21,7 +21,7 @@ public class skellyGroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "floor" && skeletonScript.State != SKELETON_STATE.DIE)
+        if ((collision.gameObject.tag == "floor" || collision.gameObject.tag == "platform") && skeletonScript.State != SKELETON_STATE.DIE)
         {
             skeletonScript.IsGrounded = true;
             skeletonRigidBody.velocity = Vector2.zero;
