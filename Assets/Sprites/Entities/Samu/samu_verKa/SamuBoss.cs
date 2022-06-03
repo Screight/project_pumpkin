@@ -37,7 +37,6 @@ public class SamuBoss : MonoBehaviour
     bool test = false;
     private void Update()
     {
-
         if (!test)
         {
             //InitializeSummonFireBalls();

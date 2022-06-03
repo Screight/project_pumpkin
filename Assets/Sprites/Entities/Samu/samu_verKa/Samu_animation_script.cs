@@ -752,8 +752,11 @@ public class Samu_animation_script : MonoBehaviour
                 if (spawnPoints[i].transform.localScale.x < 1)
                 {
                     spawnPoints[i].transform.localScale += new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
-                    //Circles SFX (no va)
-                    //spawnPoints[i].GetComponent<MagicCircle>().PlaySound(); Debug.Log("Circle SFX played");
+                    //Circles SFX
+                    if (!spawnPoints[i].GetComponent<MagicCircle>().GetComponent<AudioSource>().isPlaying)
+                    {
+                        spawnPoints[i].GetComponent<MagicCircle>().PlaySound(); Debug.Log("Circle SFX played");
+                    }
                     return;
                 }
                 if (FBs[i] == null)
