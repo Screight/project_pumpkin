@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Samu_animation_script : MonoBehaviour
 {
-    enum Anim_States { STOP,BACK2ORIGIN , IDLE, ATK1, ATK1VAR, ATK2};
-    enum BodyParts { CORE, INNER_RING , OUTER_RING}
-    enum Bodies { MAIN, BODY1}
+    enum Anim_States { STOP, BACK2ORIGIN, IDLE, ATK1, ATK1VAR, ATK2 };
+    enum BodyParts { CORE, INNER_RING, OUTER_RING }
+    enum Bodies { MAIN, BODY1 }
     Anim_States state = Anim_States.STOP;
     Anim_States next_state = Anim_States.STOP;
     Anim_States prev_state = Anim_States.STOP;
@@ -22,9 +22,13 @@ public class Samu_animation_script : MonoBehaviour
     [SerializeField] GameObject[] Samu_bodies;
     [SerializeField] GameObject[] MainBodyParts;
     [SerializeField] GameObject[] Body1Parts;
-    
-    
-        
+
+    [SerializeField] Material WhiteMaterial;
+    [SerializeField] Material ringMaterial;
+    [SerializeField] Material coreMaterial;
+
+
+
     [SerializeField] GameObject atk1_Fireball_pos_obj;
     [SerializeField] Samu_BigFireball fireball_pref;
     private GameObject[] Atk1_fireball_init_pos;
@@ -34,7 +38,7 @@ public class Samu_animation_script : MonoBehaviour
     private GameObject[] Atk1var_fireball_init_pos;
     public Samu_BigFireball[] Atk1var_fireballs;
 
-
+    [SerializeField] Transform floorLevelpos;
     private GameObject currentBody;
     private GameObject[] eyes;
     private GameObject[] eyes_init_pos;
@@ -61,10 +65,24 @@ public class Samu_animation_script : MonoBehaviour
     private bool canGoOffscreen = false;
     private bool Atk2Finished = false;
     private bool enraged = false;
+    private bool IsStuck = false;
+
+    private float tickingTimer = 1;
+    private float tickingTimer_time = 0;
+    
+    
+    private float base_intesity = 2;
+    private float max_intesity = 50;
+    private bool increaseIntensity= true;
+    
+    
+    private bool unstuck_cycle_counter = false;
+    private int tick_counter = 3;
+
 
 
     Vector3 cam_bounds_;
-    Vector3 init_wPos ;
+    Vector3 init_wPos;
 
     Vector3 cameraOffscreenPoint;
     Vector3 point;
@@ -77,7 +95,7 @@ public class Samu_animation_script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentBody = Samu_bodies[0]; 
+        currentBody = Samu_bodies[0];
 
 
         List<GameObject> list = new List<GameObject>();
@@ -97,13 +115,13 @@ public class Samu_animation_script : MonoBehaviour
         eyes_init_pos = list.ToArray();
 
         list.Clear();
-        
+
         foreach (GameObject eye in eyes_init_pos)
         {
 
-           
-                list.Add(eye.GetComponentInChildren<SpriteRenderer>().gameObject);
-            
+
+            list.Add(eye.GetComponentInChildren<SpriteRenderer>().gameObject);
+
 
         }
 
@@ -140,12 +158,12 @@ public class Samu_animation_script : MonoBehaviour
         ///ROTATION 
         float sin = Mathf.Cos(Time.time / 2) * 1.5f;
         //Debug.Log(sin);
-        if (currentBody == Samu_bodies[((int)(Bodies.MAIN))] )
+        if (currentBody == Samu_bodies[((int)(Bodies.MAIN))])
         {
             MainBodyParts[(int)(BodyParts.INNER_RING)].transform.Rotate(new Vector3(0, 0, sin));
             MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.Rotate(new Vector3(0, 0, -sin));
         }
-        
+
 
         if (!Samu_bodies[1].activeSelf)
         {
@@ -162,18 +180,18 @@ public class Samu_animation_script : MonoBehaviour
 
         for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
         {
-            Atk1_fireball_init_pos[i].transform.Rotate(rot_speed*4f);
+            Atk1_fireball_init_pos[i].transform.Rotate(rot_speed * 4f);
         }
 
         for (int i = 0; i < Atk1var_fireball_init_pos.Length; i++)
         {
-            Atk1var_fireball_init_pos[i].transform.Rotate(rot_speed*4f);
+            Atk1var_fireball_init_pos[i].transform.Rotate(rot_speed * 4f);
         }
         int eyes_alive = eyes.Length;
         ///EYETRACKING
         for (int i = 0; i < eyes.Length; i++)
         {
-            if (!eyes[i].activeSelf)
+            if (!eyes_init_pos[i].activeSelf)
             {
                 eyes_alive--;
             }
@@ -189,16 +207,26 @@ public class Samu_animation_script : MonoBehaviour
             if (!Samu_bodies[1].activeSelf)
             {
                 eyes_init_pos[i].transform.localRotation = new Quaternion(MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.x, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.y, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.z, -MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.w);
-            
-        }
+
+            }
             else
             {
                 eyes_init_pos[i].transform.localRotation = new Quaternion(Samu_bodies[1].transform.rotation.x, Samu_bodies[1].transform.rotation.y, Samu_bodies[1].transform.rotation.z, -Samu_bodies[1].transform.rotation.w);
             }
 
         }
-        if (eyes_alive == 0) { enraged = true; }
-        else { enraged =false; }
+        if (eyes_alive == 0) { enraged = true;
+            Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
+            MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
+        }
+        else { enraged = false;
+            MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+            Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+        }
+
+
+        magicCircleController(eyes_alive);
+
 
         cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         init_wPos = transform.TransformPoint(init_pos);
@@ -207,82 +235,82 @@ public class Samu_animation_script : MonoBehaviour
         {
             ATK2();
 
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.Y))
         {
             ATK1();
 
-        } 
-        
+        }
+
         if (Input.GetKeyDown(KeyCode.U))
         {
             ATK1VAR();
 
-        } 
+        }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Stop();
 
-        } 
+        }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
             MoveIdle();
 
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.R))
         {
             GoBackCenter();
 
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.T))
         {
             KillFB();
 
         }
-       
+
         AnimationInputController();
-        
-        
-            //MOVEMENT
-            switch (state)
-            {
-                case Anim_States.IDLE:
-                
+
+
+        //MOVEMENT
+        switch (state)
+        {
+            case Anim_States.IDLE:
+
                 time += Time.deltaTime;
-                    float x_pos = Mathf.Cos(time) * 200;
-                    float y_pos = Mathf.Sin(time * 2f) * 60;
+                float x_pos = Mathf.Cos(time) * 200;
+                float y_pos = Mathf.Sin(time * 2f) * 60;
                 int max_range = 2;
                 //Debug.Log(x_pos);
-               // Debug.Log(y_pos);
+                // Debug.Log(y_pos);
 
                 if (changeState)
                 {
                     if (!(NumberInRange(x_pos, currentBody.transform.localPosition.x, max_range) && NumberInRange(y_pos, currentBody.transform.localPosition.y, max_range)))
                     {
-                        Vector3 offset = currentBody.transform.localPosition - (init_pos + new Vector3(x_pos , -y_pos , 0));
+                        Vector3 offset = currentBody.transform.localPosition - (init_pos + new Vector3(x_pos, -y_pos, 0));
                         Vector3 direction = Vector3.ClampMagnitude(offset, 2.5f);
                         currentBody.transform.localPosition += -direction;
                         canMove = false; }
 
-                    else{
+                    else {
                         softening_movement_mod = 0.3f;
-                            changeState = false;
-                            canMove = true;
-                        }
+                        changeState = false;
+                        canMove = true;
+                    }
                 }
                 if (canMove)
-                { 
-                    if(softening_movement_mod < 1) { softening_movement_mod += Time.deltaTime;  }
+                {
+                    if (softening_movement_mod < 1) { softening_movement_mod += Time.deltaTime; }
 
-                    Vector3 motion = init_pos + new Vector3(x_pos* softening_movement_mod, -y_pos* softening_movement_mod, 0);
+                    Vector3 motion = init_pos + new Vector3(x_pos * softening_movement_mod, -y_pos * softening_movement_mod, 0);
 
                     currentBody.transform.localPosition = motion; }
-                  
-                    break;
 
-                case Anim_States.BACK2ORIGIN:
+                break;
+
+            case Anim_States.BACK2ORIGIN:
                 if (currentBody.transform.localPosition != init_pos)
                 {
                     Back2Origin_f();
@@ -295,28 +323,37 @@ public class Samu_animation_script : MonoBehaviour
                 break;
             case Anim_States.ATK1VAR:
                 if (!fireballsSummoned) { SummonFireballs(Atk1var_fireball_init_pos, Atk1var_fireballs); }
-                
+
                 break;
             case Anim_States.ATK2:
                 if (!Atk2Finished)
                 {
-                    GoOffscreen();
+                    if (!IsStuck)
+                    {
+                        GoOffscreen();
+                    }
+                    GetUnstuck();
                 }
                 else
                 {
-                    if (currentBody != Samu_bodies[(int)(Bodies.MAIN)]) { TransferBody(Samu_bodies[(int)(Bodies.MAIN)]); }
-                    Back2Origin_f();
+                    if (Samu_bodies[(int)(Bodies.BODY1)].transform.position.y != cam_bounds_.y - init_pos.y / 2 + 100 && enraged) { MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, currentBody.transform.position.z), 2.5f, 1); }
+                    else
+                    if (currentBody != Samu_bodies[(int)(Bodies.MAIN)]) { TransferBody(Samu_bodies[(int)(Bodies.MAIN)]); Debug.Log("Q"); }
+                    else
+                    {
+                        Back2Origin_f();
+                    }
                 }
                 if (currentBody.transform.localPosition == init_pos && Atk2Finished)
                 {
                     Atk2Finished = false;
                     canGoOffscreen = false;
-                    state = prev_state; 
+                    state = prev_state;
                 }
-                    break;
+                break;
 
-            }
-       
+        }
+
 
 
         if (fireballsSummoned && ((Atk1var_fireballs.Length == 0 || !Atk1var_fireballs[0].isActiveAndEnabled) && (Atk1_fireballs.Length == 0 || !Atk1_fireballs[0].isActiveAndEnabled)))
@@ -327,6 +364,20 @@ public class Samu_animation_script : MonoBehaviour
         eye_obj.transform.position = currentBody.transform.position;
         Debug.Log(state);
     }
+    private void magicCircleController(int eyes_alive)
+    {
+        
+        Vector3 circleScale =  new Vector3 ( (eyes_alive + 1f) / eyes.Length-0.25f,  (eyes_alive + 1f) / eyes.Length-0.25f,  0);
+
+        circleScale = new Vector3(Mathf.Clamp (circleScale.x,0.25f,1), Mathf.Clamp(circleScale.x, 0.25f, 1), 0); ;
+        if (circleScale.x > mainCircle.transform.localScale.x)
+        { mainCircle.transform.localScale += new Vector3(Time.deltaTime/2, Time.deltaTime/2,0); }
+        
+        if (circleScale.x < mainCircle.transform.localScale.x)
+        { mainCircle.transform.localScale -= new Vector3(Time.deltaTime/2, Time.deltaTime/2, 0); }
+    }
+
+
     private void ThrowFireballs(Samu_BigFireball[] FBs)
     {
 
@@ -334,7 +385,86 @@ public class Samu_animation_script : MonoBehaviour
 
     }
 
-    private void MoveToPoint (Transform entity, Vector3 WhereTo, float Magnitude, int Mode = 0)
+
+    private void GetUnstuck()
+    {
+
+        if (IsStuck)
+        {
+            if (tick_counter != 0)
+            {
+                if (tickingTimer_time < tickingTimer)
+                { tickingTimer_time += Time.deltaTime; }
+                else
+                {
+
+                    if (!unstuck_cycle_counter)
+                    {
+                        Body1Parts[0].GetComponent<SpriteRenderer>().material = WhiteMaterial;
+                        Body1Parts[1].GetComponent<SpriteRenderer>().material = WhiteMaterial;
+                        Body1Parts[2].GetComponent<SpriteRenderer>().material = WhiteMaterial;
+
+                    }
+                    else
+                    {
+                        Body1Parts[0].GetComponent<SpriteRenderer>().material = coreMaterial;
+                        Body1Parts[1].GetComponent<SpriteRenderer>().material = ringMaterial;
+                        Body1Parts[2].GetComponent<SpriteRenderer>().material = ringMaterial;
+                        tick_counter--;
+
+                    }
+
+                    unstuck_cycle_counter = !unstuck_cycle_counter;
+                    tickingTimer_time = 0;
+
+
+                }
+            }
+            else
+            {
+                if (increaseIntensity)
+                {
+                    base_intesity += Time.deltaTime * 20;
+                    Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                    Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                    mainCircle.GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                               
+                    if (base_intesity > max_intesity/5 ) {
+                        for (int i = 0; i < eyes.Length; i++)
+                        {
+                            eyes_init_pos[i].SetActive(true);
+                        }
+                    }
+                    
+                    
+                    if (base_intesity >= max_intesity) { increaseIntensity = false; }
+                    
+
+                }
+                else
+                {
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x,  init_wPos.y, currentBody.transform.position.z), 1.5f, 1);
+
+                    base_intesity -= Time.deltaTime * 15;
+                    if(base_intesity < 2) { base_intesity = 2f; }
+                    Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                    Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                    mainCircle.GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                    
+                }
+                if(currentBody.transform.position.y == init_wPos.y && base_intesity <= 2)
+                {
+                    Atk2Finished = true;
+                    increaseIntensity = true;
+                    IsStuck = false;
+                }
+
+            }
+        }
+
+
+    }
+    private void MoveToPoint(Transform entity, Vector3 WhereTo, float Magnitude, int Mode = 0)
     {
         //Local Position
         if (Mode == 0)
@@ -355,9 +485,9 @@ public class Samu_animation_script : MonoBehaviour
     private void Back2Origin_f() {
 
         MoveToPoint(currentBody.transform, init_pos, 2.5f);
-        
+
         changeState = false;
-       
+
     }
     private void GoOffscreen() {
 
@@ -366,30 +496,30 @@ public class Samu_animation_script : MonoBehaviour
             canGoOffscreen = true;
         }
 
-        if (currentBody.transform.localPosition != init_pos && !canGoOffscreen )
+        if (currentBody.transform.localPosition != init_pos && !canGoOffscreen)
         {
             Back2Origin_f();
         }
 
         if (canGoOffscreen && Samu_bodies[(int)(Bodies.MAIN)].activeSelf)
         {
-             
-            
+
+
             MoveToPoint(currentBody.transform, point, 2.5f, 1);
 
         }
 
-        if (currentBody.transform.position.y >= cameraOffscreenPoint.y-init_pos.y && !Samu_bodies[1].activeSelf)
+        if (currentBody.transform.position.y >= cameraOffscreenPoint.y - init_pos.y && !Samu_bodies[1].activeSelf)
         {
             TransferBody(Samu_bodies[1]);
         }
-        
+
         if (Samu_bodies[(int)(Bodies.BODY1)].activeSelf)
         {
             MoveOnScreen(dash_number);
         }
-        
-       
+
+
     }
 
 
@@ -474,12 +604,63 @@ public class Samu_animation_script : MonoBehaviour
                     trackingTimer_time = 0;
                     dash_number++;
                     tracking = false;
+                    if (enraged && dash_number >2)
+                    {
+                        currentBody.transform.position = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, init_wPos.z - init_pos.z);
+                    }
 
                 }
             }
         }
+
+        /// FROM TOP TO BOTTOM
         else
         {
+            if (!tracking)
+            {
+                if (currentBody.transform.position.y <= cam_bounds_.y - init_pos.y / 2 -15)
+                {
+                    tracking = true;
+
+                }
+                else
+                {
+                    Vector3 EndPos = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, init_wPos.z - init_pos.z);
+
+                    float damp_f = 1f;
+
+                    MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
+                }
+            }
+
+
+
+
+            if (tracking)
+            {
+                if (trackingTimer_time < trackingTimer)
+                {
+                    MoveToPoint(currentBody.transform, new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, init_wPos.z - init_pos.z), 1.5f, 1);
+                    currentBody.transform.position = new Vector3(player.transform.position.x, currentBody.transform.position.y, currentBody.transform.position.z);
+                    trackingTimer_time += Time.deltaTime;
+
+                }
+                else
+                {
+                    Vector3 EndPos = new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, currentBody.transform.position.z);
+                    float damp_f = 1;
+
+
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y+15, currentBody.transform.position.z), dash_velocity * damp_f, 1);
+                }
+                if (currentBody.transform.position.y == floorLevelpos.position.y + 15)
+                {
+                    IsStuck = true;
+
+                }
+            }
+
+
 
 
         }
@@ -523,7 +704,7 @@ public class Samu_animation_script : MonoBehaviour
 
         }
 
-        if (dash_number > max_dash_number) { Atk2Finished = true; }
+        if (dash_number > max_dash_number && !IsStuck) { Atk2Finished = true; }
         float cur_x = currentBody.transform.position.x;
 
 
@@ -581,6 +762,7 @@ public class Samu_animation_script : MonoBehaviour
         next_state = Anim_States.ATK2;
         max_dash_number = 2;
         if (enraged) { max_dash_number = 3; }
+        dash_number = 1;
         changeState = true;
         cameraOffscreenPoint =  Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         point = new Vector3(transform.TransformPoint(init_pos).x , cameraOffscreenPoint.y - init_pos.y, 500);
