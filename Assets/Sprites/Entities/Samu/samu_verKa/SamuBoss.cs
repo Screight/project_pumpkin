@@ -5,17 +5,17 @@ using UnityEngine;
 public class SamuBoss : MonoBehaviour
 {
     AudioSource m_source;
-    enum STATE { SUMMON_FIREBALLS,RETURN_TO_CENTER, MOVE_AROUND, FIRE_BALLS, BULLET_HELL, CHARGE_ATTACK, LAST_NO_USE }
 
-    [SerializeField] Samu_animation_script m_controller;
+    private enum STATE { SUMMON_FIREBALLS,RETURN_TO_CENTER, MOVE_AROUND, FIRE_BALLS, BULLET_HELL, CHARGE_ATTACK, LAST_NO_USE }
 
-    STATE m_state = STATE.LAST_NO_USE;
-    List<Samu_BigFireball> m_fireBalls;
-    Timer m_evenTimer;
-    float m_timeBetweenFireBalls = 0.5f;
-    float m_timeToMoveAround = 5.0f;
-    bool m_isInCenter = false;
-    bool m_isNextStateCharge = false;
+    private Samu_animation_script m_controller;
+    private STATE m_state = STATE.LAST_NO_USE;
+    private List<Samu_BigFireball> m_fireBalls;
+    private Timer m_evenTimer;
+    private float m_timeBetweenFireBalls = 0.5f;
+    private float m_timeToMoveAround = 5.0f;
+    private bool m_isInCenter = false;
+    private bool m_isNextStateCharge = false;
 
     [SerializeField] float m_fireBall_1Speed = 50.0f;
 
@@ -23,6 +23,7 @@ public class SamuBoss : MonoBehaviour
     {
         m_evenTimer = gameObject.AddComponent<Timer>();
         m_source = GetComponent<AudioSource>();
+        m_controller = GetComponent<Samu_animation_script>();
     }
 
     private void Start() 
@@ -34,7 +35,8 @@ public class SamuBoss : MonoBehaviour
         m_controller.EyesDeadEvent.AddListener(InitializeReturnToCenter);
         m_controller.EndNormalChargesEvent.AddListener(InitializeReturnToCenter);
     }
-    bool test = false;
+
+    private bool test = false;
     private void Update()
     {
         if (!test)

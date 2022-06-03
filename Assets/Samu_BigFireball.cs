@@ -42,7 +42,7 @@ public class Samu_BigFireball : MonoBehaviour
 
         m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_HIT));
         GetComponent<SpriteRenderer>().enabled = false;
-        Destroy(gameObject, 1.5f);
+        Destroy(gameObject, 1.0f);
     }
 
     public void PlaySound()
