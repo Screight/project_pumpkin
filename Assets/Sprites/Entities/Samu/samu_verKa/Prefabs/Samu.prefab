@@ -708,6 +708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5705703623487567816}
   - component: {fileID: 5705703623487567817}
+  - component: {fileID: 2121420929}
   m_Layer: 0
   m_Name: Samael_Entity
   m_TagString: Untagged
@@ -745,6 +746,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211abd43045b6744ba0560b64ac9a147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_unsummonCirclesEventAtk1:
+    m_PersistentCalls:
+      m_Calls: []
+  m_eyesDeadEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_endNormalChargesEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_endEnragedChargesEvent:
+    m_PersistentCalls:
+      m_Calls: []
   mainCircle: {fileID: 5705703623001249848}
   eye_obj: {fileID: 5705703622874483058}
   Samu_bodies:
@@ -767,6 +780,20 @@ MonoBehaviour:
   atk1var_Fireball_posObj: {fileID: 5705703623105876647}
   Atk1var_fireballs: []
   floorLevelpos: {fileID: 5705703624356940679}
+--- !u!114 &2121420929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705703623487567823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a7eb147d0394ad88a925abe70c992c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_controller: {fileID: 5705703623487567817}
+  m_fireBall_1Speed: 50
 --- !u!1 &5705703623577492802
 GameObject:
   m_ObjectHideFlags: 0

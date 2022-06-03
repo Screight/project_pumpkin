@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class Samu_BigFireball : MonoBehaviour
 {
-
-    AudioSource m_source;
-    [SerializeField] AudioClip[] m_spawnSound;
-    [SerializeField] AudioClip m_fireSound;
-    [SerializeField] AudioClip m_impactSound;
+    AudioSource m_audioSrc;
     Rigidbody2D m_rb2d;
-    private void Awake() {
+    private void Awake()
+    {
         m_rb2d = GetComponent<Rigidbody2D>();
-        m_source = GetComponent<AudioSource>();
-        
+        m_audioSrc = GetComponent<AudioSource>();
     }
 
-    public void FireToPlayer(float p_speed){
+    public void FireToPlayer(float p_speed)
+    {
         Vector2 direction = (Player.Instance.transform.position - transform.position).normalized;
         m_rb2d.velocity = p_speed * direction;
-        
+
         Vector2 spiderToPlayer = Player.Instance.transform.position - transform.position;
 
         float angle = 360 / (2 * Mathf.PI) * Mathf.Atan(spiderToPlayer.y / spiderToPlayer.x);
@@ -32,21 +29,26 @@ public class Samu_BigFireball : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, 0, angle);
 
-        m_source.PlayOneShot(m_fireSound);
+        m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_NOISE));
     }
 
-    private void OnTriggerEnter2D(Collider2D p_collider) {
-        if(p_collider.tag != "Player" && p_collider.tag != "floor"){ return;}
-        if(p_collider.tag == "Player"){
-            Player.Instance.HandleHostileCollision(Vector2.zero,Vector2.zero,0.5f,1,1);
+    private void OnTriggerEnter2D(Collider2D p_collider)
+    {
+        if (!p_collider.CompareTag("Player") && !p_collider.CompareTag("floor")) { return; }
+        if (p_collider.CompareTag("Player"))
+        {
+            Player.Instance.HandleHostileCollision(Vector2.zero, Vector2.zero, 0.5f, 1, 1);
         }
-        m_source.PlayOneShot(m_impactSound);
-        Destroy(gameObject);
+
+        m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_HIT));
+        GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(gameObject, 1.5f);
     }
 
-    public void PlaySound(){
-        int number = Random.Range(0,m_spawnSound.Length);
-        m_source.PlayOneShot(m_spawnSound[number]);
+    public void PlaySound()
+    {
+        int randNum = Random.Range(0, 2);
+        if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_SPAWN_1)); }
+        else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_SPAWN_2)); }
     }
-
 }

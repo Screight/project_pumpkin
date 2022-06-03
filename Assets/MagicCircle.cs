@@ -5,14 +5,16 @@ using UnityEngine;
 public class MagicCircle : MonoBehaviour
 {
     [SerializeField] AudioClip[] m_spawnSound;
-    AudioSource m_source;
-    private void Awake() {
-        m_source = GetComponent<AudioSource>();
+    AudioSource m_audioSrc;
+    private void Awake()
+    {
+        m_audioSrc = GetComponent<AudioSource>();
     }
 
-    public void PlaySound(){
-        int number = Random.Range(0,m_spawnSound.Length);
-        m_source.PlayOneShot(m_spawnSound[number]);
+    public void PlaySound()
+    {
+        int randNum = Random.Range(0, 2);
+        if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_CIRCLE_SPAWN_1)); }
+        else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_CIRCLE_SPAWN_2)); }
     }
-
 }

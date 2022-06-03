@@ -5,37 +5,24 @@ using UnityEngine.Events;
 
 public class Samu_animation_script : MonoBehaviour
 {
-
     UnityEvent m_endOfFireBallSummon;
-    public UnityEvent EndOfFireballSummonEvent{
-        get { return m_endOfFireBallSummon; }
-    }
+    public UnityEvent EndOfFireballSummonEvent { get { return m_endOfFireBallSummon; } }
     UnityEvent m_arriveToCenterEvent;
-    public UnityEvent ArriveToCenterEvent{
-        get { return m_arriveToCenterEvent; }
-    }
+    public UnityEvent ArriveToCenterEvent { get { return m_arriveToCenterEvent; } }
 
     public UnityEvent m_unsummonCirclesEventAtk1;
-    public UnityEvent UnsummonCirclesEventAtk1{
-        get { return m_unsummonCirclesEventAtk1; }
-    }
+    public UnityEvent UnsummonCirclesEventAtk1 { get { return m_unsummonCirclesEventAtk1; } }
 
     public UnityEvent m_eyesDeadEvent;
-    public UnityEvent EyesDeadEvent{
-        get { return m_eyesDeadEvent; }
-    }
+    public UnityEvent EyesDeadEvent { get { return m_eyesDeadEvent; } }
     bool m_areEyesAlive = true;
 
     public UnityEvent m_endNormalChargesEvent;
-    public UnityEvent EndNormalChargesEvent{
-        get { return m_endNormalChargesEvent; }
-    }
+    public UnityEvent EndNormalChargesEvent { get { return m_endNormalChargesEvent; } }
     public UnityEvent m_endEnragedChargesEvent;
-    public UnityEvent EndEnragedChargesEvent{
-        get { return m_endEnragedChargesEvent; }
-    }
+    public UnityEvent EndEnragedChargesEvent { get { return m_endEnragedChargesEvent; } }
 
-#region Variables   
+    #region Variables   
     enum Anim_States { STOP, BACK2ORIGIN, IDLE, ATK1, ATK1VAR, ATK2 };
     enum BodyParts { CORE, INNER_RING, OUTER_RING }
     enum Bodies { MAIN, BODY1 }
@@ -58,8 +45,6 @@ public class Samu_animation_script : MonoBehaviour
     [SerializeField] Material WhiteMaterial;
     [SerializeField] Material ringMaterial;
     [SerializeField] Material coreMaterial;
-
-
 
     [SerializeField] GameObject atk1_Fireball_pos_obj;
     [SerializeField] Samu_BigFireball fireball_pref;
@@ -101,13 +86,13 @@ public class Samu_animation_script : MonoBehaviour
 
     private float tickingTimer = 1;
     private float tickingTimer_time = 0;
-    
-    
+
+
     private float base_intesity = 2;
     private float max_intesity = 50;
-    private bool increaseIntensity= true;
-    
-    
+    private bool increaseIntensity = true;
+
+
     private bool unstuck_cycle_counter = false;
     private int tick_counter = 3;
 
@@ -124,7 +109,8 @@ public class Samu_animation_script : MonoBehaviour
 
     private Vector3 rot_speed = new Vector3(0, 0, 0.3f);
     #endregion
-    private void Awake() {
+    private void Awake()
+    {
         m_endOfFireBallSummon = new UnityEvent();
         m_arriveToCenterEvent = new UnityEvent();
         m_unsummonCirclesEventAtk1 = new UnityEvent();
@@ -132,50 +118,34 @@ public class Samu_animation_script : MonoBehaviour
         m_endNormalChargesEvent = new UnityEvent();
         m_endEnragedChargesEvent = new UnityEvent();
     }
-
     void Start()
     {
         currentBody = Samu_bodies[0];
 
-
         List<GameObject> list = new List<GameObject>();
-
         int eyes_obj_id = eye_obj.GetInstanceID();
 
         foreach (Collider2D eye in eye_obj.GetComponentsInChildren<Collider2D>())
         {
-            
-
             if (eye.gameObject.GetInstanceID() != eyes_obj_id)
             {
                 list.Add(eye.gameObject);
             }
-
         }
-
         eyes_init_pos = list.ToArray();
-
         list.Clear();
 
         foreach (GameObject eye in eyes_init_pos)
         {
-
-
             list.Add(eye.GetComponentInChildren<SpriteRenderer>().gameObject);
-
-
         }
-
         eyes = list.ToArray();
         list.Clear();
 
         foreach (SpriteRenderer fire in atk1_Fireball_pos_obj.GetComponentsInChildren<SpriteRenderer>())
         {
-
             fire.gameObject.transform.localScale = Vector3.zero;
             list.Add(fire.gameObject);
-
-
         }
         Atk1_fireball_init_pos = list.ToArray();
         list.Clear();
@@ -184,17 +154,13 @@ public class Samu_animation_script : MonoBehaviour
         {
             fire.gameObject.transform.localScale = Vector3.zero;
             list.Add(fire.gameObject);
-
-
         }
-
         Atk1var_fireball_init_pos = list.ToArray();
         init_pos = currentBody.transform.localPosition;
         Samu_bodies[1].SetActive(false);
         UnsummonCircles();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ///ROTATION 
@@ -206,7 +172,6 @@ public class Samu_animation_script : MonoBehaviour
             MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.Rotate(new Vector3(0, 0, -sin));
         }
 
-
         if (!Samu_bodies[1].activeSelf)
         {
             eye_obj.transform.rotation = new Quaternion(MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.x, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.y, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.z, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.w);
@@ -215,7 +180,6 @@ public class Samu_animation_script : MonoBehaviour
         {
             eye_obj.transform.rotation = new Quaternion(Samu_bodies[1].transform.rotation.x, Samu_bodies[1].transform.rotation.y, Samu_bodies[1].transform.rotation.z, -Samu_bodies[1].transform.rotation.w);
         }
-
         mainCircle.transform.Rotate(rot_speed);
 
         for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
@@ -240,40 +204,38 @@ public class Samu_animation_script : MonoBehaviour
                 Vector3 offset = player.transform.position - eyes_init_pos[i].transform.position;
                 Vector3 direction = Vector3.ClampMagnitude(offset, 1.5f);
 
-
                 eyes[i].transform.localPosition = (new Vector3(eyes_init_pos[i].transform.position.x, eyes_init_pos[i].transform.position.y, 0) + new Vector3(eyes_init_pos[i].transform.position.x - direction.x, eyes_init_pos[i].transform.position.y - direction.y, 0) * -1);
             }
             else { eyes[i].transform.position = eyes_init_pos[i].transform.position; }
             if (!Samu_bodies[1].activeSelf)
             {
                 eyes_init_pos[i].transform.localRotation = new Quaternion(MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.x, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.y, MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.z, -MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.rotation.w);
-
             }
             else
             {
                 eyes_init_pos[i].transform.localRotation = new Quaternion(Samu_bodies[1].transform.rotation.x, Samu_bodies[1].transform.rotation.y, Samu_bodies[1].transform.rotation.z, -Samu_bodies[1].transform.rotation.w);
             }
-
         }
-        if (eyes_alive == 0 && m_areEyesAlive) { 
+        if (eyes_alive == 0 && m_areEyesAlive)
+        {
             m_areEyesAlive = false;
             m_eyesDeadEvent.Invoke();
             enraged = true;
             Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
             MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
         }
-        else {
-            if(eyes_alive != 0 && !m_areEyesAlive){
-            m_areEyesAlive = true;
-            enraged = false;
-            MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
-            Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+        else
+        {
+            if (eyes_alive != 0 && !m_areEyesAlive)
+            {
+                m_areEyesAlive = true;
+                enraged = false;
+                MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+                Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
             }
         }
 
-
         magicCircleController(eyes_alive);
-
 
         cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         init_wPos = transform.TransformPoint(init_pos);
@@ -281,56 +243,44 @@ public class Samu_animation_script : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             ATK2();
-
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
             ATK1();
-
         }
 
         if (Input.GetKeyDown(KeyCode.U))
         {
             ATK1VAR();
-
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Stop();
-
         }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
             MoveIdle();
-
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             GoBackCenter();
-
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
             KillFB();
-
         }
-
         AnimationInputController();
-
 
         //MOVEMENT
         switch (state)
         {
             case Anim_States.IDLE:
-
                 time += Time.deltaTime;
                 float x_pos = Mathf.Cos(time) * 200;
                 float y_pos = Mathf.Sin(time * 2f) * 60;
                 int max_range = 2;
-                //Debug.Log(x_pos);
-                // Debug.Log(y_pos);
 
                 if (changeState)
                 {
@@ -339,9 +289,10 @@ public class Samu_animation_script : MonoBehaviour
                         Vector3 offset = currentBody.transform.localPosition - (init_pos + new Vector3(x_pos, -y_pos, 0));
                         Vector3 direction = Vector3.ClampMagnitude(offset, 2.5f);
                         currentBody.transform.localPosition += -direction;
-                        canMove = false; }
-
-                    else {
+                        canMove = false;
+                    }
+                    else
+                    {
                         softening_movement_mod = 0.3f;
                         changeState = false;
                         canMove = true;
@@ -353,15 +304,17 @@ public class Samu_animation_script : MonoBehaviour
 
                     Vector3 motion = init_pos + new Vector3(x_pos * softening_movement_mod, -y_pos * softening_movement_mod, 0);
 
-                    currentBody.transform.localPosition = motion; }
-
+                    currentBody.transform.localPosition = motion;
+                }
                 break;
 
             case Anim_States.BACK2ORIGIN:
                 if (currentBody.transform.localPosition != init_pos)
                 {
                     Back2Origin_f();
-                }else{
+                }
+                else
+                {
                     next_state = Anim_States.STOP;
                     m_arriveToCenterEvent.Invoke();
                 }
@@ -388,16 +341,19 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     if (Samu_bodies[(int)(Bodies.BODY1)].transform.position.y != cam_bounds_.y - init_pos.y / 2 + 100 && enraged) { MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, currentBody.transform.position.z), 2.5f, 1); }
                     else
-                    if (currentBody != Samu_bodies[(int)(Bodies.MAIN)]) {
-                        TransferBody(Samu_bodies[(int)(Bodies.MAIN)]); 
-                        Debug.Log("Q");
-                        if(m_areEyesAlive){
+                    if (currentBody != Samu_bodies[(int)(Bodies.MAIN)])
+                    {
+                        TransferBody(Samu_bodies[(int)(Bodies.MAIN)]);
+                        if (m_areEyesAlive)
+                        {
                             //Samu_bodies[(int)Bodies.MAIN].transform.position = Samu_bodies[(int)Bodies.BODY1].transform.position;
                             m_endNormalChargesEvent.Invoke();
                             Debug.Log("end of normal phase");
                             Atk2Finished = false;
                             canGoOffscreen = false;
-                        }else{
+                        }
+                        else
+                        {
                             m_endNormalChargesEvent.Invoke();
                             Debug.Log("end of enraged phase");
                         }
@@ -414,42 +370,31 @@ public class Samu_animation_script : MonoBehaviour
                     state = prev_state;
                 }
                 break;
-
         }
-
         /*if (fireballsSummoned && ((Atk1var_fireballs.Length == 0 || !Atk1var_fireballs[0].isActiveAndEnabled) && (Atk1_fireballs.Length == 0 || !Atk1_fireballs[0].isActiveAndEnabled)))
         {
             UnsummonCircles();
         }*/
         mainCircle.transform.position = currentBody.transform.position;
         eye_obj.transform.position = currentBody.transform.position;
-        Debug.Log(state);
     }
     private void magicCircleController(int eyes_alive)
     {
-        
-        Vector3 circleScale =  new Vector3 ( (eyes_alive + 1f) / eyes.Length-0.25f,  (eyes_alive + 1f) / eyes.Length-0.25f,  0);
+        Vector3 circleScale = new Vector3((eyes_alive + 1f) / eyes.Length - 0.25f, (eyes_alive + 1f) / eyes.Length - 0.25f, 0);
 
-        circleScale = new Vector3(Mathf.Clamp (circleScale.x,0.25f,1), Mathf.Clamp(circleScale.x, 0.25f, 1), 0); ;
+        circleScale = new Vector3(Mathf.Clamp(circleScale.x, 0.25f, 1), Mathf.Clamp(circleScale.x, 0.25f, 1), 0); ;
         if (circleScale.x > mainCircle.transform.localScale.x)
-        { mainCircle.transform.localScale += new Vector3(Time.deltaTime/2, Time.deltaTime/2,0); }
-        
+        { mainCircle.transform.localScale += new Vector3(Time.deltaTime / 2, Time.deltaTime / 2, 0); }
+
         if (circleScale.x < mainCircle.transform.localScale.x)
-        { mainCircle.transform.localScale -= new Vector3(Time.deltaTime/2, Time.deltaTime/2, 0); }
+        { mainCircle.transform.localScale -= new Vector3(Time.deltaTime / 2, Time.deltaTime / 2, 0); }
     }
-
-
     private void ThrowFireballs(Samu_BigFireball[] FBs)
     {
 
-
-
     }
-
-
     private void GetUnstuck()
     {
-
         if (IsStuck)
         {
             if (tick_counter != 0)
@@ -458,13 +403,11 @@ public class Samu_animation_script : MonoBehaviour
                 { tickingTimer_time += Time.deltaTime; }
                 else
                 {
-
                     if (!unstuck_cycle_counter)
                     {
                         Body1Parts[0].GetComponent<SpriteRenderer>().material = WhiteMaterial;
                         Body1Parts[1].GetComponent<SpriteRenderer>().material = WhiteMaterial;
                         Body1Parts[2].GetComponent<SpriteRenderer>().material = WhiteMaterial;
-
                     }
                     else
                     {
@@ -472,13 +415,9 @@ public class Samu_animation_script : MonoBehaviour
                         Body1Parts[1].GetComponent<SpriteRenderer>().material = ringMaterial;
                         Body1Parts[2].GetComponent<SpriteRenderer>().material = ringMaterial;
                         tick_counter--;
-
                     }
-
                     unstuck_cycle_counter = !unstuck_cycle_counter;
                     tickingTimer_time = 0;
-
-
                 }
             }
             else
@@ -489,72 +428,61 @@ public class Samu_animation_script : MonoBehaviour
                     Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
                     Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
                     mainCircle.GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
-                               
-                    if (base_intesity > max_intesity/5 ) {
+
+                    if (base_intesity > max_intesity / 5)
+                    {
                         for (int i = 0; i < eyes.Length; i++)
                         {
                             eyes_init_pos[i].SetActive(true);
                         }
                     }
-                    
-                    
-                    if (base_intesity >= max_intesity) { increaseIntensity = false; }
-                    
 
+                    if (base_intesity >= max_intesity) { increaseIntensity = false; }
                 }
                 else
                 {
-                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x,  init_wPos.y, currentBody.transform.position.z), 1.5f, 1);
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, init_wPos.y, currentBody.transform.position.z), 1.5f, 1);
 
                     base_intesity -= Time.deltaTime * 15;
-                    if(base_intesity < 2) { base_intesity = 2f; }
+                    if (base_intesity < 2) { base_intesity = 2f; }
                     Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
                     Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
                     mainCircle.GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
-                    
                 }
-                if(currentBody.transform.position.y == init_wPos.y && base_intesity <= 2)
+                if (currentBody.transform.position.y == init_wPos.y && base_intesity <= 2)
                 {
                     Atk2Finished = true;
                     increaseIntensity = true;
                     IsStuck = false;
                 }
-
             }
         }
-
-
     }
     private void MoveToPoint(Transform entity, Vector3 WhereTo, float Magnitude, int Mode = 0)
     {
         //Local Position
         if (Mode == 0)
         {
-
             Vector3 offset = entity.localPosition - WhereTo;
             Vector3 direction = Vector3.ClampMagnitude(offset, Magnitude);
             entity.localPosition += -direction;
         }
-        else {
+        else
+        {
             Vector3 offset = entity.position - WhereTo;
             Vector3 direction = Vector3.ClampMagnitude(offset, Magnitude);
             entity.position += -direction;
         }
     }
-
-
-    private void Back2Origin_f() {
-
+    private void Back2Origin_f()
+    {
         MoveToPoint(currentBody.transform, init_pos, 2.5f);
 
         changeState = false;
-
     }
 
-
-
-    private void GoOffscreen() {
-
+    private void GoOffscreen()
+    {
         if (currentBody.transform.localPosition == init_pos)
         {
             canGoOffscreen = true;
@@ -567,29 +495,19 @@ public class Samu_animation_script : MonoBehaviour
 
         if (canGoOffscreen && Samu_bodies[(int)(Bodies.MAIN)].activeSelf)
         {
-
-
             MoveToPoint(currentBody.transform, point, 2.5f, 1);
-
         }
-
         if (currentBody.transform.position.y >= cameraOffscreenPoint.y - init_pos.y && !Samu_bodies[1].activeSelf)
         {
             TransferBody(Samu_bodies[1]);
         }
-
         if (Samu_bodies[(int)(Bodies.BODY1)].activeSelf)
         {
             MoveOnScreen(dash_number);
         }
-
-
     }
-
-
     private void Move_track_dash(int direction)
     {
-
         float dir;
         float max_dir;
         if (direction != 2)
@@ -599,20 +517,17 @@ public class Samu_animation_script : MonoBehaviour
             {
                 dir = cam_bounds_.x + init_pos.x / 2 - 15;
                 max_dir = cam_bounds_.x - init_pos.x / 2 - 100;
-
                 if (!tracking)
                 {
                     if (currentBody.transform.position.x <= dir)
                     {
                         tracking = true;
-
                     }
                     else
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
                         float damp_f = 1f;
-
                         MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
                     }
                 }
@@ -622,29 +537,21 @@ public class Samu_animation_script : MonoBehaviour
             {
                 dir = cam_bounds_.x - init_pos.x / 2 + 15;
                 max_dir = cam_bounds_.x + init_pos.x / 2 + 100;
-
                 if (!tracking)
                 {
                     if (currentBody.transform.position.x >= dir)
                     {
                         tracking = true;
-
                     }
                     else
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
                         float damp_f = 1f;
-
                         MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
                     }
                 }
             }
-
-
-
-
-
 
             if (tracking)
             {
@@ -653,13 +560,11 @@ public class Samu_animation_script : MonoBehaviour
                     MoveToPoint(currentBody.transform, new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z), 1.5f, 1);
                     currentBody.transform.position = new Vector3(dir, currentBody.transform.position.y, currentBody.transform.position.z);
                     trackingTimer_time += Time.deltaTime;
-
                 }
                 else
                 {
                     Vector3 EndPos = new Vector3(max_dir, currentBody.transform.position.y, currentBody.transform.position.z);
                     float damp_f = 1;
-
 
                     MoveToPoint(currentBody.transform, new Vector3(max_dir, currentBody.transform.position.y, currentBody.transform.position.z), dash_velocity * damp_f, 1);
                 }
@@ -668,11 +573,10 @@ public class Samu_animation_script : MonoBehaviour
                     trackingTimer_time = 0;
                     dash_number++;
                     tracking = false;
-                    if (enraged && dash_number >2)
+                    if (enraged && dash_number > 2)
                     {
                         currentBody.transform.position = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, init_wPos.z - init_pos.z);
                     }
-
                 }
             }
         }
@@ -682,23 +586,18 @@ public class Samu_animation_script : MonoBehaviour
         {
             if (!tracking)
             {
-                if (currentBody.transform.position.y <= cam_bounds_.y - init_pos.y / 2 -15)
+                if (currentBody.transform.position.y <= cam_bounds_.y - init_pos.y / 2 - 15)
                 {
                     tracking = true;
-
                 }
                 else
                 {
                     Vector3 EndPos = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, init_wPos.z - init_pos.z);
 
                     float damp_f = 1f;
-
                     MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
                 }
             }
-
-
-
 
             if (tracking)
             {
@@ -707,58 +606,43 @@ public class Samu_animation_script : MonoBehaviour
                     MoveToPoint(currentBody.transform, new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, init_wPos.z - init_pos.z), 1.5f, 1);
                     currentBody.transform.position = new Vector3(player.transform.position.x, currentBody.transform.position.y, currentBody.transform.position.z);
                     trackingTimer_time += Time.deltaTime;
-
                 }
                 else
                 {
                     Vector3 EndPos = new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, currentBody.transform.position.z);
                     float damp_f = 1;
 
-
-                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y+15, currentBody.transform.position.z), dash_velocity * damp_f, 1);
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y + 15, currentBody.transform.position.z), dash_velocity * damp_f, 1);
                 }
                 if (currentBody.transform.position.y == floorLevelpos.position.y + 15)
                 {
                     IsStuck = true;
-
                 }
             }
-
-
-
-
         }
-
-
-
-
-
     }
-    private void MoveOnScreen(int dash_number) {
-
+    private void MoveOnScreen(int dash_number)
+    {
         MainBodyParts[(int)(BodyParts.INNER_RING)].SetActive(false);
         MainBodyParts[(int)(BodyParts.OUTER_RING)].SetActive(false);
         MainBodyParts[(int)(BodyParts.CORE)].SetActive(false);
-      
-        float prev_x = currentBody.transform.position.x;
 
-        Debug.Log(dash_number);
+        float prev_x = currentBody.transform.position.x;
 
         switch (dash_number)
         {
+            default:break;
             case 1:
-
                 Move_track_dash(0);
-                
+
                 break;
-               
             case 2:
                 Move_track_dash(1);
 
                 break;
-                
             case 3:
-                if (enraged) {
+                if (enraged)
+                {
                     Move_track_dash(2);
                 }
                 else
@@ -768,106 +652,94 @@ public class Samu_animation_script : MonoBehaviour
                 break;
             case 4:
                 break;
-
         }
 
-        if (dash_number > max_dash_number && !IsStuck) {
+        if (dash_number > max_dash_number && !IsStuck)
+        {
             Atk2Finished = true;
         }
         float cur_x = currentBody.transform.position.x;
     }
 
-     public void TransferBody(GameObject Body )
+    public void TransferBody(GameObject Body)
     {
         Vector3 cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         Vector3 init_wPos = transform.TransformPoint(init_pos);
         if (Body == Samu_bodies[1])
         {
-            Body.transform.position = new Vector3(cam_bounds_.x + init_pos.x / 2 + 100, player.transform.position.y+10, init_wPos.z - init_pos.z);
+            Body.transform.position = new Vector3(cam_bounds_.x + init_pos.x / 2 + 100, player.transform.position.y + 10, init_wPos.z - init_pos.z);
         }
         mainCircle.transform.position = Body.transform.position;
         eye_obj.transform.position = Body.transform.position;
         currentBody.SetActive(false);
         Body.SetActiveRecursively(true);
         currentBody = Body;
-
     }
 
-    public Samu_BigFireball[] ATK1 () {
-
+    public Samu_BigFireball[] ATK1()
+    {
         prev_state = state;
         next_state = Anim_States.ATK1;
         changeState = true;
-       Atk1_fireballs = new Samu_BigFireball[Atk1_fireball_init_pos.Length];
-        
+        Atk1_fireballs = new Samu_BigFireball[Atk1_fireball_init_pos.Length];
+
         return Atk1_fireballs;
-
     }
-    public Samu_BigFireball[] ATK1VAR () {
-
+    public Samu_BigFireball[] ATK1VAR()
+    {
         prev_state = state;
         next_state = Anim_States.ATK1VAR;
         changeState = true;
-       Atk1var_fireballs = new Samu_BigFireball[Atk1var_fireball_init_pos.Length];
-        
+        Atk1var_fireballs = new Samu_BigFireball[Atk1var_fireball_init_pos.Length];
+
         return Atk1var_fireballs;
-
     }
-    
-    public void GoBackCenter () {
 
+    public void GoBackCenter()
+    {
         prev_state = state;
         next_state = Anim_States.BACK2ORIGIN;
         changeState = true;
-
     }
-    
-    public void ATK2 () {
 
+    public void ATK2()
+    {
         prev_state = state;
         next_state = Anim_States.ATK2;
         max_dash_number = 2;
         if (enraged) { max_dash_number = 3; }
         dash_number = 1;
         changeState = true;
-        cameraOffscreenPoint =  Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        point = new Vector3(transform.TransformPoint(init_pos).x , cameraOffscreenPoint.y - init_pos.y, 500);
-
+        cameraOffscreenPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        point = new Vector3(transform.TransformPoint(init_pos).x, cameraOffscreenPoint.y - init_pos.y, 500);
     }
-    public void Stop () {
-
+    public void Stop()
+    {
         prev_state = state;
         next_state = Anim_States.STOP;
         changeState = true;
-        
-
     }
-    public void MoveIdle () {
-
+    public void MoveIdle()
+    {
         prev_state = state;
         next_state = Anim_States.IDLE;
         changeState = true;
-        
-
     }
 
-    private void KillFB() {
+    private void KillFB()
+    {
         if (Atk1_fireballs.Length > 0)
         {
             for (int i = 0; i < Atk1_fireballs.Length; i++)
             {
-               
-                    Atk1_fireballs[i].gameObject.SetActive(false);
-                
+                Atk1_fireballs[i].gameObject.SetActive(false);
             }
         }
         if (Atk1var_fireballs.Length > 0)
         {
             for (int i = 0; i < Atk1var_fireballs.Length; i++)
             {
-               
-                   Atk1var_fireballs[i].gameObject.SetActive(false);
-                
+                Atk1var_fireballs[i].gameObject.SetActive(false);
             }
         }
     }
@@ -879,36 +751,38 @@ public class Samu_animation_script : MonoBehaviour
             {
                 if (spawnPoints[i].transform.localScale.x < 1)
                 {
-                    spawnPoints[i].transform.localScale += new Vector3(Time.deltaTime*1.5f, Time.deltaTime*1.5f);
-                    spawnPoints[i].GetComponent<MagicCircle>().PlaySound();
-                    return;    
-
+                    spawnPoints[i].transform.localScale += new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
+                    //Circles SFX (no va)
+                    //spawnPoints[i].GetComponent<MagicCircle>().PlaySound(); Debug.Log("Circle SFX played");
+                    return;
                 }
                 if (FBs[i] == null)
                 {
                     FBs[i] = Instantiate(fireball_pref, spawnPoints[i].transform.position, Quaternion.identity, atk1var_Fireball_posObj.transform);
                     FBs[i].transform.localScale = Vector3.zero;
                     return;
-                }else
+                }
+                else
                 {
                     FBs[i].transform.position = spawnPoints[i].transform.position;
                     FBs[i].gameObject.SetActive(true);
 
                 }
-
             }
 
             for (int i = 0; i < FBs.Length; i++)
             {
                 if (FBs[i].transform.localScale.x < 1.5f)
                 {
-                    FBs[i].transform.localScale += new Vector3(Time.deltaTime*1.5f, Time.deltaTime*1.5f);
-                    FBs[i].GetComponent<Samu_BigFireball>().PlaySound();
+                    FBs[i].transform.localScale += new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
                 }
-
             }
             if (FBs[FBs.Length - 1].transform.localScale.x >= 1.5f)
             {
+                //Play FB Spawn SFX
+                FBs[FBs.Length - 1].GetComponent<Samu_BigFireball>().PlaySound();
+                Debug.Log("FB SFX played");
+
                 state = prev_state;
                 changeState = false;
                 fireballsSummoned = true;
@@ -916,84 +790,61 @@ public class Samu_animation_script : MonoBehaviour
                 m_endOfFireBallSummon.Invoke();
             }
         }
-       
     }
     public void UnsummonCircles()
     {
-            for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
+        for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
+        {
+            if (Atk1_fireball_init_pos[i].transform.localScale.x > 0)
             {
-                if (Atk1_fireball_init_pos[i].transform.localScale.x > 0)
-                {
-                    Atk1_fireball_init_pos[i].transform.localScale -= new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
-                    if (Atk1_fireball_init_pos[i].transform.localScale.x < 0) { Atk1_fireball_init_pos[i].transform.localScale = Vector3.zero; }
-                }
-                else{
-                    m_unsummonCirclesEventAtk1.Invoke();
-                }
-
+                Atk1_fireball_init_pos[i].transform.localScale -= new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
+                if (Atk1_fireball_init_pos[i].transform.localScale.x < 0) { Atk1_fireball_init_pos[i].transform.localScale = Vector3.zero; }
             }
+            else { m_unsummonCirclesEventAtk1.Invoke(); }
+        }
 
-            for (int i = 0; i < Atk1var_fireball_init_pos.Length; i++)
+        for (int i = 0; i < Atk1var_fireball_init_pos.Length; i++)
+        {
+            if (Atk1var_fireball_init_pos[i].transform.localScale.x > 0)
             {
-                if (Atk1var_fireball_init_pos[i].transform.localScale.x > 0)
-                {
-                    Atk1var_fireball_init_pos[i].transform.localScale -= new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
-                    if (Atk1var_fireball_init_pos[i].transform.localScale.x < 0) { Atk1var_fireball_init_pos[i].transform.localScale = Vector3.zero; }
+                Atk1var_fireball_init_pos[i].transform.localScale -= new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
+                if (Atk1var_fireball_init_pos[i].transform.localScale.x < 0) 
+                { 
+                    Atk1var_fireball_init_pos[i].transform.localScale = Vector3.zero; 
                 }
-
             }
+        }
         if (Atk1_fireball_init_pos[Atk1_fireball_init_pos.Length - 1].transform.localScale == Vector3.zero && Atk1var_fireball_init_pos[Atk1_fireball_init_pos.Length - 1].transform.localScale == Vector3.zero)
         {
             fireballsSummoned = false;
         }
-
     }
 
-
-    public void AnimationInputController() 
+    public void AnimationInputController()
     {
-
-       if (state != next_state && changeState) { state = next_state; }
-        
+        if (state != next_state && changeState) { state = next_state; }
     }
-
-
     private bool NumberInRange(float num, float Range)
     {
-        if (num < Range && num> -Range)
+        if (num < Range && num > -Range)
         { return true; }
         else { return false; }
     }
-     private bool NumberInRange(float num, float PivotNum,float Range)
+    private bool NumberInRange(float num, float PivotNum, float Range)
     {
-        if (num < PivotNum+Range && num> PivotNum-Range)
+        if (num < PivotNum + Range && num > PivotNum - Range)
         { return true; }
         else { return false; }
     }
-    
 
+    public bool playerInRange { set { playerOnSight = value; } }
+    public float dash_Speed { set { dash_velocity = value; } }
+    public GameObject player_ref { set { player = value; } }
+    public Samu_BigFireball[] GetFireBalls() { return Atk1_fireballs; }
 
-    public bool playerInRange
+    public bool AreEyesAlive
     {
-        set { playerOnSight = value; }
-    }
-    public float dash_Speed
-    {
-        set { dash_velocity = value; }
-    }
-
-    public GameObject player_ref
-    {
-        set { player = value; }
-    }
-
-    public Samu_BigFireball[] GetFireBalls(){
-        return Atk1_fireballs;
-    }
-
-    public bool AreEyesAlive{
-        set { m_areEyesAlive = value;  }
+        set { m_areEyesAlive = value; }
         get { return m_areEyesAlive; }
     }
-
 }

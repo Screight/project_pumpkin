@@ -110,6 +110,13 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.LILBAT_SWING_1] = Resources.Load<AudioClip>("Sound/BatSwing1");
         m_audioClips[(int)AudioClipName.LILBAT_SWING_2] = Resources.Load<AudioClip>("Sound/BatSwing2");
         m_audioClips[(int)AudioClipName.LILBAT_SWING_3] = Resources.Load<AudioClip>("Sound/BatSwing3");
+        //Samael
+        m_audioClips[(int)AudioClipName.SAMAEL_FB_NOISE] = Resources.Load<AudioClip>("Sound/SamaelFireballSFX");
+        m_audioClips[(int)AudioClipName.SAMAEL_FB_HIT] = Resources.Load<AudioClip>("Sound/SamaelFireballHitSFX");
+        m_audioClips[(int)AudioClipName.SAMAEL_FB_SPAWN_1] = Resources.Load<AudioClip>("Sound/SamaelFireSpawn1");
+        m_audioClips[(int)AudioClipName.SAMAEL_FB_SPAWN_2] = Resources.Load<AudioClip>("Sound/SamaelFireSpawn2");
+        m_audioClips[(int)AudioClipName.SAMAEL_CIRCLE_SPAWN_1] = Resources.Load<AudioClip>("Sound/SamaelCircle1");
+        m_audioClips[(int)AudioClipName.SAMAEL_CIRCLE_SPAWN_2] = Resources.Load<AudioClip>("Sound/SamaelCircle2");
     }
 
     public void PlayOnce(AudioClipName p_name)
