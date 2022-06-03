@@ -1,9 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Samu_animation_script : MonoBehaviour
 {
+
+    UnityEvent m_endOfFireBallSummon;
+    public UnityEvent EndOfFireballSummonEvent{
+        get { return m_endOfFireBallSummon; }
+    }
+    UnityEvent m_arriveToCenterEvent;
+    public UnityEvent ArriveToCenterEvent{
+        get { return m_arriveToCenterEvent; }
+    }
+
+    public UnityEvent m_unsummonCirclesEventAtk1;
+    public UnityEvent UnsummonCirclesEventAtk1{
+        get { return m_unsummonCirclesEventAtk1; }
+    }
+
+    public UnityEvent m_eyesDeadEvent;
+    public UnityEvent EyesDeadEvent{
+        get { return m_eyesDeadEvent; }
+    }
+    bool m_areEyesAlive = true;
+
+    public UnityEvent m_endNormalChargesEvent;
+    public UnityEvent EndNormalChargesEvent{
+        get { return m_endNormalChargesEvent; }
+    }
+
+#region Variables   
     enum Anim_States { STOP, BACK2ORIGIN, IDLE, ATK1, ATK1VAR, ATK2 };
     enum BodyParts { CORE, INNER_RING, OUTER_RING }
     enum Bodies { MAIN, BODY1 }
@@ -91,8 +119,15 @@ public class Samu_animation_script : MonoBehaviour
     float softening_movement_mod = 0.3f;
 
     private Vector3 rot_speed = new Vector3(0, 0, 0.3f);
+    #endregion
+    private void Awake() {
+        m_endOfFireBallSummon = new UnityEvent();
+        m_arriveToCenterEvent = new UnityEvent();
+        m_unsummonCirclesEventAtk1 = new UnityEvent();
+        m_eyesDeadEvent = new UnityEvent();
+        m_endNormalChargesEvent = new UnityEvent();
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
         currentBody = Samu_bodies[0];
@@ -104,6 +139,7 @@ public class Samu_animation_script : MonoBehaviour
 
         foreach (Collider2D eye in eye_obj.GetComponentsInChildren<Collider2D>())
         {
+            
 
             if (eye.gameObject.GetInstanceID() != eyes_obj_id)
             {
@@ -150,6 +186,7 @@ public class Samu_animation_script : MonoBehaviour
         Atk1var_fireball_init_pos = list.ToArray();
         init_pos = currentBody.transform.localPosition;
         Samu_bodies[1].SetActive(false);
+        UnsummonCircles();
     }
 
     // Update is called once per frame
@@ -174,9 +211,7 @@ public class Samu_animation_script : MonoBehaviour
             eye_obj.transform.rotation = new Quaternion(Samu_bodies[1].transform.rotation.x, Samu_bodies[1].transform.rotation.y, Samu_bodies[1].transform.rotation.z, -Samu_bodies[1].transform.rotation.w);
         }
 
-
         mainCircle.transform.Rotate(rot_speed);
-
 
         for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
         {
@@ -215,7 +250,10 @@ public class Samu_animation_script : MonoBehaviour
             }
 
         }
-        if (eyes_alive == 0) { enraged = true;
+        if (eyes_alive == 0 && m_areEyesAlive) { 
+            m_areEyesAlive = false;
+            m_eyesDeadEvent.Invoke();
+            enraged = true;
             Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
             MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
         }
@@ -314,6 +352,9 @@ public class Samu_animation_script : MonoBehaviour
                 if (currentBody.transform.localPosition != init_pos)
                 {
                     Back2Origin_f();
+                }else{
+                    next_state = Anim_States.STOP;
+                    m_arriveToCenterEvent.Invoke();
                 }
                 break;
             case Anim_States.STOP:
@@ -338,7 +379,16 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     if (Samu_bodies[(int)(Bodies.BODY1)].transform.position.y != cam_bounds_.y - init_pos.y / 2 + 100 && enraged) { MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, currentBody.transform.position.z), 2.5f, 1); }
                     else
-                    if (currentBody != Samu_bodies[(int)(Bodies.MAIN)]) { TransferBody(Samu_bodies[(int)(Bodies.MAIN)]); Debug.Log("Q"); }
+                    if (currentBody != Samu_bodies[(int)(Bodies.MAIN)]) {
+                        TransferBody(Samu_bodies[(int)(Bodies.MAIN)]); 
+                        Debug.Log("Q");
+                        if(m_areEyesAlive){
+                            //Samu_bodies[(int)Bodies.MAIN].transform.position = Samu_bodies[(int)Bodies.BODY1].transform.position;
+                            m_endNormalChargesEvent.Invoke();Debug.Log("endOfCharge");
+                            Atk2Finished = false;
+                            canGoOffscreen = false;
+                        }
+                    }
                     else
                     {
                         Back2Origin_f();
@@ -354,12 +404,10 @@ public class Samu_animation_script : MonoBehaviour
 
         }
 
-
-
-        if (fireballsSummoned && ((Atk1var_fireballs.Length == 0 || !Atk1var_fireballs[0].isActiveAndEnabled) && (Atk1_fireballs.Length == 0 || !Atk1_fireballs[0].isActiveAndEnabled)))
+        /*if (fireballsSummoned && ((Atk1var_fireballs.Length == 0 || !Atk1var_fireballs[0].isActiveAndEnabled) && (Atk1_fireballs.Length == 0 || !Atk1_fireballs[0].isActiveAndEnabled)))
         {
             UnsummonCircles();
-        }
+        }*/
         mainCircle.transform.position = currentBody.transform.position;
         eye_obj.transform.position = currentBody.transform.position;
         Debug.Log(state);
@@ -489,6 +537,9 @@ public class Samu_animation_script : MonoBehaviour
         changeState = false;
 
     }
+
+
+
     private void GoOffscreen() {
 
         if (currentBody.transform.localPosition == init_pos)
@@ -684,7 +735,7 @@ public class Samu_animation_script : MonoBehaviour
             case 1:
 
                 Move_track_dash(0);
-
+                
                 break;
                
             case 2:
@@ -704,13 +755,13 @@ public class Samu_animation_script : MonoBehaviour
 
         }
 
-        if (dash_number > max_dash_number && !IsStuck) { Atk2Finished = true; }
+        if (dash_number > max_dash_number && !IsStuck) {
+            Atk2Finished = true;
+        }
         float cur_x = currentBody.transform.position.x;
-
-
     }
 
-     private void TransferBody(GameObject Body )
+     public void TransferBody(GameObject Body )
     {
         Vector3 cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         Vector3 init_wPos = transform.TransformPoint(init_pos);
@@ -752,7 +803,6 @@ public class Samu_animation_script : MonoBehaviour
         prev_state = state;
         next_state = Anim_States.BACK2ORIGIN;
         changeState = true;
-        
 
     }
     
@@ -814,7 +864,7 @@ public class Samu_animation_script : MonoBehaviour
                 if (spawnPoints[i].transform.localScale.x < 1)
                 {
                     spawnPoints[i].transform.localScale += new Vector3(Time.deltaTime*1.5f, Time.deltaTime*1.5f);
-
+                    spawnPoints[i].GetComponent<MagicCircle>().PlaySound();
                     return;    
 
                 }
@@ -837,6 +887,7 @@ public class Samu_animation_script : MonoBehaviour
                 if (FBs[i].transform.localScale.x < 1.5f)
                 {
                     FBs[i].transform.localScale += new Vector3(Time.deltaTime*1.5f, Time.deltaTime*1.5f);
+                    FBs[i].GetComponent<Samu_BigFireball>().PlaySound();
                 }
 
             }
@@ -846,11 +897,12 @@ public class Samu_animation_script : MonoBehaviour
                 changeState = false;
                 fireballsSummoned = true;
                 ThrowFireballs(FBs);
+                m_endOfFireBallSummon.Invoke();
             }
         }
        
     }
-    private void UnsummonCircles()
+    public void UnsummonCircles()
     {
             for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
             {
@@ -858,6 +910,9 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     Atk1_fireball_init_pos[i].transform.localScale -= new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
                     if (Atk1_fireball_init_pos[i].transform.localScale.x < 0) { Atk1_fireball_init_pos[i].transform.localScale = Vector3.zero; }
+                }
+                else{
+                    m_unsummonCirclesEventAtk1.Invoke();
                 }
 
             }
@@ -915,4 +970,13 @@ public class Samu_animation_script : MonoBehaviour
     {
         set { player = value; }
     }
+
+    public Samu_BigFireball[] GetFireBalls(){
+        return Atk1_fireballs;
+    }
+
+    public bool AreEyesAlive{
+        set { m_areEyesAlive = value;  }
+    }
+
 }
