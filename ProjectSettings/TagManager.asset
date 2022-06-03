@@ -24,6 +24,7 @@ TagManager:
   - platformController
   - Tutorial
   - obstacle
+  - samuEye
   layers:
   - Default
   - TransparentFX

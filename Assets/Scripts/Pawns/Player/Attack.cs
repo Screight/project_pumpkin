@@ -140,6 +140,11 @@ public class Attack : MonoBehaviour
                 script.Damage(GameManager.Instance.PlayerAttackDamage);
             }
 
+            if (enemy.gameObject.tag == "samuEye") { 
+                   Samu_eye_script script = enemy.gameObject.GetComponent<Samu_eye_script>();
+                    script.Damage();
+            }
+
         }
 
         if(enemiesInAttackRange.Length == 0)

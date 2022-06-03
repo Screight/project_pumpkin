@@ -13,10 +13,13 @@ public class Samu_eye_script : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
+    public void Damage(){
         this.gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter2D(Collider2D p_collider) {
+        if(p_collider.tag != "fireball"){ return; }
+        Damage();
+    }
+
 }

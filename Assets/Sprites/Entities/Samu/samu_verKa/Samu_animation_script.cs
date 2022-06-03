@@ -30,6 +30,10 @@ public class Samu_animation_script : MonoBehaviour
     public UnityEvent EndNormalChargesEvent{
         get { return m_endNormalChargesEvent; }
     }
+    public UnityEvent m_endEnragedChargesEvent;
+    public UnityEvent EndEnragedChargesEvent{
+        get { return m_endEnragedChargesEvent; }
+    }
 
 #region Variables   
     enum Anim_States { STOP, BACK2ORIGIN, IDLE, ATK1, ATK1VAR, ATK2 };
@@ -126,6 +130,7 @@ public class Samu_animation_script : MonoBehaviour
         m_unsummonCirclesEventAtk1 = new UnityEvent();
         m_eyesDeadEvent = new UnityEvent();
         m_endNormalChargesEvent = new UnityEvent();
+        m_endEnragedChargesEvent = new UnityEvent();
     }
 
     void Start()
@@ -257,9 +262,13 @@ public class Samu_animation_script : MonoBehaviour
             Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
             MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
         }
-        else { enraged = false;
+        else {
+            if(eyes_alive != 0 && !m_areEyesAlive){
+            m_areEyesAlive = true;
+            enraged = false;
             MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
             Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+            }
         }
 
 
@@ -384,9 +393,13 @@ public class Samu_animation_script : MonoBehaviour
                         Debug.Log("Q");
                         if(m_areEyesAlive){
                             //Samu_bodies[(int)Bodies.MAIN].transform.position = Samu_bodies[(int)Bodies.BODY1].transform.position;
-                            m_endNormalChargesEvent.Invoke();Debug.Log("endOfCharge");
+                            m_endNormalChargesEvent.Invoke();
+                            Debug.Log("end of normal phase");
                             Atk2Finished = false;
                             canGoOffscreen = false;
+                        }else{
+                            m_endNormalChargesEvent.Invoke();
+                            Debug.Log("end of enraged phase");
                         }
                     }
                     else
@@ -729,6 +742,7 @@ public class Samu_animation_script : MonoBehaviour
       
         float prev_x = currentBody.transform.position.x;
 
+        Debug.Log(dash_number);
 
         switch (dash_number)
         {
@@ -744,7 +758,9 @@ public class Samu_animation_script : MonoBehaviour
                 break;
                 
             case 3:
-                if (enraged) { Move_track_dash(2); }
+                if (enraged) {
+                    Move_track_dash(2);
+                }
                 else
                 {
                     Move_track_dash(0);
@@ -977,6 +993,7 @@ public class Samu_animation_script : MonoBehaviour
 
     public bool AreEyesAlive{
         set { m_areEyesAlive = value;  }
+        get { return m_areEyesAlive; }
     }
 
 }

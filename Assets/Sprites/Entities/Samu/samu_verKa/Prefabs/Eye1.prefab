@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2000658404682739491}
   - component: {fileID: 5810386215200231182}
   - component: {fileID: 1136836739718581321}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye1
-  m_TagString: Untagged
+  m_TagString: samuEye
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +59,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000658404682739549}
   m_BodyType: 1
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1

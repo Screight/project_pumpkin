@@ -37,7 +37,7 @@ public class SamuBoss : MonoBehaviour
     private void Update() {
 
         if(!test){
-            InitializeSummonFireBalls();
+            //InitializeSummonFireBalls();
             test = true;
         }
 
@@ -106,7 +106,9 @@ public class SamuBoss : MonoBehaviour
     void HandleReturnToCenter(){
         if(m_evenTimer.IsFinished && m_isInCenter){
 
-            if(m_isNextStateCharge){
+            if(!m_controller.AreEyesAlive){
+                InitializeChargeAttack();
+            }else if(m_isNextStateCharge){
                 InitializeChargeAttack();
             }
             else{
