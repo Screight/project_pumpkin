@@ -46,4 +46,9 @@ public class SavePoint : InteractiveItem
             m_saveCooldown.Run();
         }
     }
+
+    public Transform GetSpawnPoint(){
+        return m_respawnPoint;
+    }
+
 }

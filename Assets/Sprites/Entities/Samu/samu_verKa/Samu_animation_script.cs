@@ -236,7 +236,8 @@ public class Samu_animation_script : MonoBehaviour
 
         cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         init_wPos = transform.TransformPoint(init_pos);
-        //INPUT PROVISIONAL
+        
+        /*//INPUT PROVISIONAL
         if (Input.GetKeyDown(KeyCode.E))
         {
             ATK2();
@@ -267,8 +268,9 @@ public class Samu_animation_script : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             KillFB();
-        }
+        }*/
         AnimationInputController();
+        
 
         //MOVEMENT
         switch (state)
@@ -882,6 +884,14 @@ public class Samu_animation_script : MonoBehaviour
 
     public bool Enraged{
         set { enraged = value;}
+    }
+
+    public void Reset(){
+        UnsummonCircles_1();
+        currentBody = Samu_bodies[(int)Bodies.MAIN];
+        currentBody.transform.localPosition = init_pos;
+        GoBackCenter();
+        //state = Anim_States.STOP;
     }
 
 }

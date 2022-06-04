@@ -13,8 +13,8 @@ public class SamuBoss : MonoBehaviour
     private STATE m_state = STATE.LAST_NO_USE;
     private List<Samu_BigFireball> m_fireBalls;
     private Timer m_evenTimer;
-    private float m_timeBetweenFireBalls = 0.5f;
-    private float m_timeToMoveAround = 5.0f;
+    [SerializeField] private float m_timeBetweenFireBalls = 0.5f;
+    [SerializeField] private float m_timeToMoveAround = 5.0f;
     private bool m_isInCenter = false;
     private bool m_isNextStateCharge = false;
     bool m_hasDoneBulletHell = false;
@@ -28,6 +28,23 @@ public class SamuBoss : MonoBehaviour
     float m_health;
     [SerializeField] Attack m_attack;
     [SerializeField] GameObject[] m_eyes;
+
+    void StartFight(){
+        m_healthBar.transform.parent.gameObject.SetActive(true);
+        InitializeReturnToCenter();
+        GameManager.Instance.IsPlayerInFinalBossFight = true;
+    }
+
+    public void Reset(){
+        m_controller.Reset();
+        m_state = STATE.LAST_NO_USE;
+        m_health = m_maxHealth;
+        m_healthBar.fillAmount = 1;
+        m_healthBar.transform.parent.gameObject.SetActive(false);
+        m_hasDoneBulletHell = false;
+        m_isNextStateCharge = false;
+        m_isInCenter = false;
+    }
 
     public void Damage(){
         if(m_state == STATE.DEAD){ return; }
@@ -46,6 +63,7 @@ public class SamuBoss : MonoBehaviour
         m_source = GetComponent<AudioSource>();
         m_controller = GetComponent<Samu_animation_script>();
         m_health = m_maxHealth;
+        m_healthBar.transform.parent.gameObject.SetActive(false);
     }
 
     private void Start() 
@@ -65,11 +83,8 @@ public class SamuBoss : MonoBehaviour
     private bool test = false;
     private void Update()
     {
-        if (!test)
-        {  
-            InitializeReturnToCenter();
-            //m_hasDoneBulletHell = true;
-            test = true;
+        if(Input.GetKeyDown(KeyCode.Y)){
+            StartFight();
         }
 
         switch (m_state)

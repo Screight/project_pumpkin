@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
     bool m_isMapUnlocked;
     bool m_isSpiderBossDefeated = false;
 
+    bool m_isPlayerInFinalBossFight = false;
+    [SerializeField] SavePoint m_finalBossSavePoint;
+    SamuBoss m_samuBoss;
+
     private void Awake()
     {
         if (m_instance == null)
@@ -50,6 +54,7 @@ public class GameManager : MonoBehaviour
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
         Time.timeScale = 1;
+        m_samuBoss = FindObjectOfType<SamuBoss>();
     }
 
     static public GameManager Instance
@@ -80,6 +85,9 @@ public class GameManager : MonoBehaviour
             if (m_isPlayerInSpiderBossFight)
             {
                 m_transicion.AddListenerToEndOfFadeIn(HandlePlayerDeathInSpiderBossBattle);
+            }else if(m_isPlayerInFinalBossFight){
+                m_transicion.AddListenerToEndOfFadeIn(HandlePlayerDeathInFinalBossBattle);
+                CheckpointsManager.Instance.SetGlobalCheckPoint(m_finalBossSavePoint.GetSpawnPoint());
             }
         }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }
@@ -176,8 +184,14 @@ public class GameManager : MonoBehaviour
 
     public void HandlePlayerDeathInSpiderBossBattle()
     {
+        m_isPlayerInFinalBossFight = false;
         m_spiderBossTrigger.HandlePlayerDeath();
         m_transicion.RemoveListenerToEndOfTransition(HandlePlayerDeathInSpiderBossBattle);
+    }
+
+    public void HandlePlayerDeathInFinalBossBattle(){
+        m_samuBoss.Reset();
+        m_transicion.RemoveListenerToEndOfTransition(HandlePlayerDeathInFinalBossBattle);
     }
 
     public bool IsPlayerInSpiderBossFight
@@ -240,6 +254,11 @@ public class GameManager : MonoBehaviour
     public bool IsSpiderBossDefeated{
         get { return m_isSpiderBossDefeated;}
         set { m_isSpiderBossDefeated = value; }
+    }
+
+    public bool IsPlayerInFinalBossFight{
+        get { return m_isPlayerInFinalBossFight; }
+        set { m_isPlayerInFinalBossFight = value;}
     }
 
 }
