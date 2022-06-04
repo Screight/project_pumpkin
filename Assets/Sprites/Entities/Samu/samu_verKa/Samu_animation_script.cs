@@ -5,22 +5,26 @@ using UnityEngine.Events;
 
 public class Samu_animation_script : MonoBehaviour
 {
+    UnityEvent m_endOfEnragedChargeEvent;
+    public UnityEvent EndOfEnragedChargeEvent { get { return m_endOfEnragedChargeEvent; } }
     UnityEvent m_endOfFireBallSummon;
     public UnityEvent EndOfFireballSummonEvent { get { return m_endOfFireBallSummon; } }
     UnityEvent m_arriveToCenterEvent;
     public UnityEvent ArriveToCenterEvent { get { return m_arriveToCenterEvent; } }
+    UnityEvent m_fullyRecoveredEvent;
+    public UnityEvent FullyRecoveredEvent { get { return m_fullyRecoveredEvent; } }
 
-    public UnityEvent m_unsummonCirclesEventAtk1;
+    UnityEvent m_unsummonCirclesEventAtk1;
     public UnityEvent UnsummonCirclesEventAtk1 { get { return m_unsummonCirclesEventAtk1; } }
+    UnityEvent m_unsummonCirclesEventAtk2;
+    public UnityEvent UnsummonCirclesEventAtk2 { get { return m_unsummonCirclesEventAtk2; } }
 
-    public UnityEvent m_eyesDeadEvent;
+    UnityEvent m_eyesDeadEvent;
     public UnityEvent EyesDeadEvent { get { return m_eyesDeadEvent; } }
     bool m_areEyesAlive = true;
 
-    public UnityEvent m_endNormalChargesEvent;
+    UnityEvent m_endNormalChargesEvent;
     public UnityEvent EndNormalChargesEvent { get { return m_endNormalChargesEvent; } }
-    public UnityEvent m_endEnragedChargesEvent;
-    public UnityEvent EndEnragedChargesEvent { get { return m_endEnragedChargesEvent; } }
 
     #region Variables   
     enum Anim_States { STOP, BACK2ORIGIN, IDLE, ATK1, ATK1VAR, ATK2 };
@@ -111,12 +115,14 @@ public class Samu_animation_script : MonoBehaviour
     #endregion
     private void Awake()
     {
+        m_endOfEnragedChargeEvent = new UnityEvent();
         m_endOfFireBallSummon = new UnityEvent();
         m_arriveToCenterEvent = new UnityEvent();
         m_unsummonCirclesEventAtk1 = new UnityEvent();
+        m_unsummonCirclesEventAtk2 = new UnityEvent();
         m_eyesDeadEvent = new UnityEvent();
         m_endNormalChargesEvent = new UnityEvent();
-        m_endEnragedChargesEvent = new UnityEvent();
+        m_fullyRecoveredEvent = new UnityEvent();
     }
     void Start()
     {
@@ -158,7 +164,7 @@ public class Samu_animation_script : MonoBehaviour
         Atk1var_fireball_init_pos = list.ToArray();
         init_pos = currentBody.transform.localPosition;
         Samu_bodies[1].SetActive(false);
-        UnsummonCircles();
+        //UnsummonCircles();
     }
 
     void Update()
@@ -218,21 +224,12 @@ public class Samu_animation_script : MonoBehaviour
         }
         if (eyes_alive == 0 && m_areEyesAlive)
         {
+            Debug.Log("eyes dead");
             m_areEyesAlive = false;
             m_eyesDeadEvent.Invoke();
             enraged = true;
             Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
             MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = true;
-        }
-        else
-        {
-            if (eyes_alive != 0 && !m_areEyesAlive)
-            {
-                m_areEyesAlive = true;
-                enraged = false;
-                MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
-                Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
-            }
         }
 
         magicCircleController(eyes_alive);
@@ -331,16 +328,18 @@ public class Samu_animation_script : MonoBehaviour
             case Anim_States.ATK2:
                 if (!Atk2Finished)
                 {
-                    if (!IsStuck)
+                    /*if (!IsStuck)
                     {
                         GoOffscreen();
-                    }
-                    GetUnstuck();
+                    }*/
+                    GoOffscreen();
                 }
                 else
                 {
-                    if (Samu_bodies[(int)(Bodies.BODY1)].transform.position.y != cam_bounds_.y - init_pos.y / 2 + 100 && enraged) { MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, currentBody.transform.position.z), 2.5f, 1); }
-                    else
+                    /*if (Samu_bodies[(int)(Bodies.BODY1)].transform.position.y != cam_bounds_.y - init_pos.y / 2 + 100 && enraged) { 
+                        MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, currentBody.transform.position.z), 2.5f, 1);
+                    }
+                    else*/
                     if (currentBody != Samu_bodies[(int)(Bodies.MAIN)])
                     {
                         TransferBody(Samu_bodies[(int)(Bodies.MAIN)]);
@@ -354,7 +353,9 @@ public class Samu_animation_script : MonoBehaviour
                         }
                         else
                         {
-                            m_endNormalChargesEvent.Invoke();
+                            m_endOfEnragedChargeEvent.Invoke();
+                            Atk2Finished = false;
+                            canGoOffscreen = false;
                             Debug.Log("end of enraged phase");
                         }
                     }
@@ -367,7 +368,7 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     Atk2Finished = false;
                     canGoOffscreen = false;
-                    state = prev_state;
+                    //state = prev_state;
                 }
                 break;
         }
@@ -393,9 +394,9 @@ public class Samu_animation_script : MonoBehaviour
     {
 
     }
-    private void GetUnstuck()
+    public void GetUnstuck()
     {
-        if (IsStuck)
+        if (true/*IsStuck*/)
         {
             if (tick_counter != 0)
             {
@@ -451,9 +452,13 @@ public class Samu_animation_script : MonoBehaviour
                 }
                 if (currentBody.transform.position.y == init_wPos.y && base_intesity <= 2)
                 {
-                    Atk2Finished = true;
+                    //Atk2Finished = true;
                     increaseIntensity = true;
-                    IsStuck = false;
+                    //IsStuck = false;
+                    Samu_bodies[(int)Bodies.MAIN].transform.position = currentBody.transform.position;
+                    TransferBody(Samu_bodies[(int)(Bodies.MAIN)]);
+                    m_fullyRecoveredEvent.Invoke();
+                    Debug.Log("FULLY RECOVERED");
                 }
             }
         }
@@ -617,6 +622,10 @@ public class Samu_animation_script : MonoBehaviour
                 if (currentBody.transform.position.y == floorLevelpos.position.y + 15)
                 {
                     IsStuck = true;
+                    m_endOfEnragedChargeEvent.Invoke();
+                    Atk2Finished = false;
+                    canGoOffscreen = false;
+                    Debug.Log("end of enraged phase");
                 }
             }
         }
@@ -654,7 +663,7 @@ public class Samu_animation_script : MonoBehaviour
                 break;
         }
 
-        if (dash_number > max_dash_number && !IsStuck)
+        if (dash_number > max_dash_number)
         {
             Atk2Finished = true;
         }
@@ -794,7 +803,7 @@ public class Samu_animation_script : MonoBehaviour
             }
         }
     }
-    public void UnsummonCircles()
+    public void UnsummonCircles_1()
     {
         for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
         {
@@ -803,9 +812,19 @@ public class Samu_animation_script : MonoBehaviour
                 Atk1_fireball_init_pos[i].transform.localScale -= new Vector3(Time.deltaTime * 1.5f, Time.deltaTime * 1.5f);
                 if (Atk1_fireball_init_pos[i].transform.localScale.x < 0) { Atk1_fireball_init_pos[i].transform.localScale = Vector3.zero; }
             }
-            else { m_unsummonCirclesEventAtk1.Invoke(); }
+            else { 
+                m_unsummonCirclesEventAtk1.Invoke(); 
+            }
         }
 
+        if (Atk1_fireball_init_pos[Atk1_fireball_init_pos.Length - 1].transform.localScale == Vector3.zero && Atk1var_fireball_init_pos[Atk1_fireball_init_pos.Length - 1].transform.localScale == Vector3.zero)
+        {
+            fireballsSummoned = false;
+        }
+    }
+
+    public void UnsummonCircles_2()
+    {
         for (int i = 0; i < Atk1var_fireball_init_pos.Length; i++)
         {
             if (Atk1var_fireball_init_pos[i].transform.localScale.x > 0)
@@ -815,6 +834,8 @@ public class Samu_animation_script : MonoBehaviour
                 { 
                     Atk1var_fireball_init_pos[i].transform.localScale = Vector3.zero; 
                 }
+            }else{
+                m_unsummonCirclesEventAtk2.Invoke();
             }
         }
         if (Atk1_fireball_init_pos[Atk1_fireball_init_pos.Length - 1].transform.localScale == Vector3.zero && Atk1var_fireball_init_pos[Atk1_fireball_init_pos.Length - 1].transform.localScale == Vector3.zero)
@@ -844,10 +865,23 @@ public class Samu_animation_script : MonoBehaviour
     public float dash_Speed { set { dash_velocity = value; } }
     public GameObject player_ref { set { player = value; } }
     public Samu_BigFireball[] GetFireBalls() { return Atk1_fireballs; }
+    public Samu_BigFireball[] GetFireBalls_1() { return Atk1var_fireballs; }
 
     public bool AreEyesAlive
     {
         set { m_areEyesAlive = value; }
         get { return m_areEyesAlive; }
     }
+
+    public void SetEyesToAlive(){
+        m_areEyesAlive = true;
+        enraged = false;
+        MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+        Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+    }
+
+    public bool Enraged{
+        set { enraged = value;}
+    }
+
 }

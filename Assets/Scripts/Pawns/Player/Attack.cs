@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Attack : MonoBehaviour
 {
+    UnityEvent m_damageSamuBossEvent;
+    public UnityEvent DamageSamuBossEvent{
+        get { return m_damageSamuBossEvent; }
+    }
     bool m_isAttachedToPlayer;
     [SerializeField] Transform m_attackPosition;
     public enum ATTACK_ANIMATION { NO_ATTACK, ATTACK_1, ATTACK_2, ATTACK_3,AERIAL, LAST_NO_USE}
@@ -23,6 +28,7 @@ public class Attack : MonoBehaviour
 
     private void Awake()
     {
+        m_damageSamuBossEvent = new UnityEvent();
         m_animator = GetComponent<Animator>();
         m_attackTimer = gameObject.AddComponent<Timer>();
         m_attackDuration = new float[(int)ATTACK_ANIMATION.LAST_NO_USE];
@@ -133,16 +139,15 @@ public class Attack : MonoBehaviour
                     enemyScript.Damage(GameManager.Instance.PlayerAttackDamage);
                 }
                  
-            }
-
-            if (enemy.gameObject.tag == "spiderBoss") { 
+            }else if (enemy.gameObject.tag == "spiderBoss") { 
                    Drill script = enemy.gameObject.GetComponent<Drill>();
                 script.Damage(GameManager.Instance.PlayerAttackDamage);
-            }
-
-            if (enemy.gameObject.tag == "samuEye") { 
+            }else if (enemy.gameObject.tag == "samuEye") { 
                    Samu_eye_script script = enemy.gameObject.GetComponent<Samu_eye_script>();
                     script.Damage();
+            }else if(enemy.gameObject.tag == "samuBody"){
+                m_damageSamuBossEvent.Invoke();
+                Debug.Log("Hitted");
             }
 
         }

@@ -32,6 +32,23 @@ public class Samu_BigFireball : MonoBehaviour
         m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_NOISE));
     }
 
+    public void Fire(Vector2 p_direction, float p_speed){
+         m_rb2d.velocity = p_speed * p_direction;
+
+        Vector2 spiderToPlayer = p_direction;
+
+        float angle = 360 / (2 * Mathf.PI) * Mathf.Atan(spiderToPlayer.y / spiderToPlayer.x);
+
+        if (p_direction.x < 0)
+        {
+            angle += -90;
+        }
+        else { angle += 90; }
+
+        transform.eulerAngles = new Vector3(0, 0, angle);
+
+    }
+
     private void OnTriggerEnter2D(Collider2D p_collider)
     {
         if (!p_collider.CompareTag("Player") && !p_collider.CompareTag("floor")) { return; }

@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SamuBoss : MonoBehaviour
 {
     AudioSource m_source;
 
-    private enum STATE { SUMMON_FIREBALLS,RETURN_TO_CENTER, MOVE_AROUND, FIRE_BALLS, BULLET_HELL, CHARGE_ATTACK, LAST_NO_USE }
+    private enum STATE { SUMMON_FIREBALLS,RETURN_TO_CENTER, MOVE_AROUND, FIRE_BALLS, BULLET_HELL, CHARGE_ATTACK, WEAK, RECOVER_FROM_WEAK, DEAD, LAST_NO_USE }
 
     private Samu_animation_script m_controller;
     private STATE m_state = STATE.LAST_NO_USE;
@@ -16,32 +17,58 @@ public class SamuBoss : MonoBehaviour
     private float m_timeToMoveAround = 5.0f;
     private bool m_isInCenter = false;
     private bool m_isNextStateCharge = false;
+    bool m_hasDoneBulletHell = false;
 
+    [SerializeField] GameObject m_fireballPrefab;
     [SerializeField] float m_fireBall_1Speed = 50.0f;
+    [SerializeField] float m_fireBallBulletHellSpeed = 100.0f;
+    [SerializeField] float m_weakDuration = 5.0f;
+    [SerializeField] Image m_healthBar;
+    [SerializeField] float m_maxHealth;
+    float m_health;
+    [SerializeField] Attack m_attack;
+    [SerializeField] GameObject[] m_eyes;
+
+    public void Damage(){
+        if(m_state == STATE.DEAD){ return; }
+        m_health -= GameManager.Instance.PlayerAttackDamage;
+        m_healthBar.fillAmount = m_health / m_maxHealth;
+        if(m_health <= 0){
+            m_state = STATE.DEAD;
+            Debug.Log("BOSS IS DEAD");
+            m_controller.Stop();
+        }
+    }
 
     private void Awake() 
     {
         m_evenTimer = gameObject.AddComponent<Timer>();
         m_source = GetComponent<AudioSource>();
         m_controller = GetComponent<Samu_animation_script>();
+        m_health = m_maxHealth;
     }
 
     private void Start() 
     {
+        m_attack.DamageSamuBossEvent.AddListener(Damage);
         m_fireBalls = new List<Samu_BigFireball>();
-        m_controller.EndOfFireballSummonEvent.AddListener(InitializeFireBalls);
+        m_controller.EndOfFireballSummonEvent.AddListener(ChooseFireballVariant);
         m_controller.ArriveToCenterEvent.AddListener(SetIsInCenterToTrue);
         m_controller.UnsummonCirclesEventAtk1.AddListener(InitializeMoveAround);
+        m_controller.UnsummonCirclesEventAtk2.AddListener(InitializeMoveAround);
         m_controller.EyesDeadEvent.AddListener(InitializeReturnToCenter);
         m_controller.EndNormalChargesEvent.AddListener(InitializeReturnToCenter);
+        m_controller.EndOfEnragedChargeEvent.AddListener(InitializeWeak);
+        m_controller.FullyRecoveredEvent.AddListener(ExitRecoverFromWeak);
     }
 
     private bool test = false;
     private void Update()
     {
         if (!test)
-        {
-            //InitializeSummonFireBalls();
+        {  
+            InitializeReturnToCenter();
+            //m_hasDoneBulletHell = true;
             test = true;
         }
 
@@ -59,6 +86,47 @@ public class SamuBoss : MonoBehaviour
             case STATE.CHARGE_ATTACK:
                 HandleChargeAttack();
                 break;
+            case STATE.BULLET_HELL:
+                HandleBulletHell();
+            break;
+            case STATE.WEAK:
+                HandleWeak();
+            break;
+            case STATE.RECOVER_FROM_WEAK:
+                HandleRecoverFromWeak();
+            break;
+        }
+    }
+
+    void InitializeWeak(){
+        m_state = STATE.WEAK;
+        m_controller.Stop();
+        m_evenTimer.Duration = m_weakDuration;
+        m_evenTimer.Run();
+    }
+
+    void HandleWeak(){
+        if(m_evenTimer.IsFinished){
+            InitializeRecoverFromWeak();
+        }
+    }
+
+    void InitializeRecoverFromWeak(){
+        m_state = STATE.RECOVER_FROM_WEAK;
+    }
+
+    void HandleRecoverFromWeak(){
+        m_controller.GetUnstuck();
+    }
+
+    void ExitRecoverFromWeak(){
+        if(m_evenTimer.IsFinished){
+            InitializeReturnToCenter();
+            foreach(GameObject eye in m_eyes){
+                eye.SetActive(true);
+            }
+            m_controller.SetEyesToAlive();
+            m_controller.Enraged = false;
         }
     }
 
@@ -67,6 +135,17 @@ public class SamuBoss : MonoBehaviour
         m_state = STATE.SUMMON_FIREBALLS;
         m_controller.ATK1();
         m_isNextStateCharge = true;
+    }
+
+    void ChooseFireballVariant(){
+        
+        if(m_hasDoneBulletHell){
+            InitializeBulletHell();
+            Debug.Log("BULLETHELL");
+        }else{
+            InitializeFireBalls();
+            Debug.Log("FIREBALLS");
+        }
     }
 
     void InitializeFireBalls()
@@ -78,6 +157,55 @@ public class SamuBoss : MonoBehaviour
         }
         m_evenTimer.Duration = m_timeBetweenFireBalls;
         m_evenTimer.Run();
+    }
+
+    void InitializeSummonBulletHell(){
+        m_state = STATE.SUMMON_FIREBALLS;
+        m_controller.ATK1VAR();
+        m_isNextStateCharge = true;
+    }
+
+    void InitializeBulletHell(){
+        m_state = STATE.BULLET_HELL;
+        foreach(Samu_BigFireball fireball in m_controller.GetFireBalls_1()){
+            m_fireBalls.Add(fireball);
+        }
+        m_evenTimer.Duration = 1.0f;
+        m_evenTimer.Run();
+    }
+
+    void InitializeFireBulletHell(){
+        Vector2 direction = new Vector2();
+        Samu_BigFireball[] fireballs = new Samu_BigFireball[4];
+
+        for(int i = 0; i < m_fireBalls.Count; i++){
+            fireballs[0] = m_fireBalls[0];
+            fireballs[1] = Instantiate(m_fireballPrefab, fireballs[0].transform.position, Quaternion.identity).GetComponent<Samu_BigFireball>();
+            fireballs[2] = Instantiate(m_fireballPrefab, fireballs[0].transform.position, Quaternion.identity).GetComponent<Samu_BigFireball>();
+            fireballs[3] = Instantiate(m_fireballPrefab, fireballs[0].transform.position, Quaternion.identity).GetComponent<Samu_BigFireball>();
+
+            direction.x = 1;
+            direction.y = 1;
+            fireballs[0].Fire(direction, m_fireBallBulletHellSpeed);
+            direction.x = -1;
+            direction.y = 1;
+            fireballs[1].Fire(direction, m_fireBallBulletHellSpeed);
+            direction.x = -1;
+            direction.y = -1;
+            fireballs[2].Fire(direction, m_fireBallBulletHellSpeed);
+            direction.x = 1;
+            direction.y = -1;
+            fireballs[3].Fire(direction, m_fireBallBulletHellSpeed);
+
+            m_fireBalls.RemoveAt(0);
+        }
+        m_controller.UnsummonCircles_2();
+    }
+
+    void HandleBulletHell(){
+        if(m_evenTimer.IsFinished){
+            InitializeFireBulletHell();
+        }
     }
 
     void HandleFireBalls()
@@ -92,7 +220,7 @@ public class SamuBoss : MonoBehaviour
         }
         else if (numberOfFireballs == 0)
         {
-            m_controller.UnsummonCircles();
+            m_controller.UnsummonCircles_1();
         }
     }
 
@@ -120,7 +248,7 @@ public class SamuBoss : MonoBehaviour
 
     void HandleReturnToCenter()
     {
-        if (m_evenTimer.IsFinished && m_isInCenter)
+        if (m_isInCenter)
         {
             if (!m_controller.AreEyesAlive)
             {
@@ -130,7 +258,24 @@ public class SamuBoss : MonoBehaviour
             {
                 InitializeChargeAttack();
             }
-            else { InitializeSummonFireBalls(); }
+            else {
+                float healthPercentage = m_health / m_maxHealth;
+                if(healthPercentage >= 0.5){
+                    InitializeSummonFireBalls();
+                }
+                else if (healthPercentage >= 0.25){
+                    if(m_hasDoneBulletHell){
+                        InitializeSummonFireBalls();
+                    }
+                    else{
+                        InitializeSummonBulletHell();
+                    }
+                    m_hasDoneBulletHell = !m_hasDoneBulletHell;
+                } else{
+                    InitializeSummonBulletHell();
+                }
+                
+            }
             m_isInCenter = false;
         }
     }
