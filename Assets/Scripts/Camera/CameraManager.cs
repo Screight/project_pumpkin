@@ -100,6 +100,7 @@ public class CameraManager : MonoBehaviour
     public float BottomLimit    { get { return bottomLimit; } }
     public float Width          { get { return m_screenWidth; } }
     public float Height         { get { return m_screenHeight; } }
+    public bool CameraAtCutScene { set { m_cameraMovementScript.CameraAtCutScene = value; } }
     public Vector3 Position     { get{ return transform.position;}}
     public float MainSceneDepth { get { return m_mainScene.transform.position.z - transform.position.z;}}
 }

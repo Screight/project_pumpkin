@@ -34,6 +34,7 @@ public class CameraMovement : MonoBehaviour
     private float m_cameraHeight;
     private bool m_isCameraStatic = false;
     private bool m_clampCamera = false;
+    private bool m_cameraAtCutScene = false;
 
     private float m_minimumHeightForCameraMovement = -10000000;
 
@@ -48,7 +49,6 @@ public class CameraMovement : MonoBehaviour
         m_cameraHeight = CameraManager.Instance.Height;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(m_isCameraStatic) { return; }
@@ -110,7 +110,7 @@ public class CameraMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(m_isCameraStatic && !m_clampCamera) { return; }
+        if((m_isCameraStatic && !m_clampCamera) || m_cameraAtCutScene) { return; }
         if(m_clampCamera)
         {
             m_targetPosition.y = m_player.transform.position.y + m_offsetY;
@@ -166,5 +166,6 @@ public class CameraMovement : MonoBehaviour
     public float RightLimit     { set { m_rightLimit = value; } }
     public float TopLimit       { set { m_topLimit = value; } }
     public float BottomLimit    { set { m_bottomLimit = value; } }
+    public bool CameraAtCutScene    { set { m_cameraAtCutScene = value; } }
     public float MinimumheightForCameraMovement { set { m_minimumHeightForCameraMovement = value; } }
 }

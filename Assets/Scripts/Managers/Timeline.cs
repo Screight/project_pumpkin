@@ -62,7 +62,7 @@ public class Timeline : MonoBehaviour
         //Debug.Log("Empieza CutScene");
         for (int i = 0; i < m_GameObjectsToActivate.Length; i++) { m_GameObjectsToActivate[i].SetActive(true); }
         pausemenu.IsCutScenePlaying = true;
-        if (m_isCameraScripted) { CameraManager.Instance.SetCameraToStatic(); }
+        if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = true; }
         if (m_hideHud) { m_HUD.enabled = false; }
         if (!m_playerCanMove) { Player.Instance.SetPlayerToScripted(); }
 
@@ -75,7 +75,7 @@ public class Timeline : MonoBehaviour
         pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
 
-        if (m_isCameraScripted) { CameraManager.Instance.SetCameraToNormal(); }
+        if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = false; }
         if (m_hideHud) { m_HUD.enabled = true; }
         if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
         if (m_isDarknessSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true); }
