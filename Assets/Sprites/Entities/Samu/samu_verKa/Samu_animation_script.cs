@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.Events;
 
 public class Samu_animation_script : MonoBehaviour
@@ -38,18 +39,27 @@ public class Samu_animation_script : MonoBehaviour
     //[SerializeField] GameObject innerRing;
     //[SerializeField] GameObject outerRing;
     //[SerializeField] GameObject core;
+    
+    [Header("Transferable Objects")]
+    [Tooltip("Glowing magic circle")]
     [SerializeField] GameObject mainCircle;
+    [Tooltip("Parent object for eyes")]
     [SerializeField] GameObject eye_obj;
+    [Tooltip("Light")]
+    [SerializeField] GameObject SamuLight;
 
-
+    [Header ("Bodies and bodyparts")]
     [SerializeField] GameObject[] Samu_bodies;
     [SerializeField] GameObject[] MainBodyParts;
     [SerializeField] GameObject[] Body1Parts;
 
+    [Header("Materials")]
     [SerializeField] Material WhiteMaterial;
     [SerializeField] Material ringMaterial;
     [SerializeField] Material coreMaterial;
 
+
+    [Header("Fireball things")]
     [SerializeField] GameObject atk1_Fireball_pos_obj;
     [SerializeField] Samu_BigFireball fireball_pref;
     private GameObject[] Atk1_fireball_init_pos;
@@ -237,7 +247,7 @@ public class Samu_animation_script : MonoBehaviour
         cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         init_wPos = transform.TransformPoint(init_pos);
         
-        /*//INPUT PROVISIONAL
+        //INPUT PROVISIONAL
         if (Input.GetKeyDown(KeyCode.E))
         {
             ATK2();
@@ -268,7 +278,7 @@ public class Samu_animation_script : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             KillFB();
-        }*/
+        }
         AnimationInputController();
         
 
@@ -380,18 +390,28 @@ public class Samu_animation_script : MonoBehaviour
         }*/
         mainCircle.transform.position = currentBody.transform.position;
         eye_obj.transform.position = currentBody.transform.position;
+        SamuLight.transform.position = currentBody.transform.position;
     }
     private void magicCircleController(int eyes_alive)
     {
-        Vector3 circleScale = new Vector3((eyes_alive + 1f) / eyes.Length - 0.25f, (eyes_alive + 1f) / eyes.Length - 0.25f, 0);
+        Vector3 circleScale = new Vector3((eyes_alive + 1f) / (eyes.Length+1f), (eyes_alive + 1f) / (eyes.Length+1f) , 0);
 
         circleScale = new Vector3(Mathf.Clamp(circleScale.x, 0.25f, 1), Mathf.Clamp(circleScale.x, 0.25f, 1), 0); ;
         if (circleScale.x > mainCircle.transform.localScale.x)
-        { mainCircle.transform.localScale += new Vector3(Time.deltaTime / 2, Time.deltaTime / 2, 0); }
+        {
+            mainCircle.transform.localScale += new Vector3(Time.deltaTime / 2, Time.deltaTime / 2, 0);
+            SamuLight.GetComponent<Light2D>().pointLightInnerAngle += Time.deltaTime * 2;
+            SamuLight.GetComponent<Light2D>().pointLightOuterRadius += Time.deltaTime * 2;
+        }
 
         if (circleScale.x < mainCircle.transform.localScale.x)
-        { mainCircle.transform.localScale -= new Vector3(Time.deltaTime / 2, Time.deltaTime / 2, 0); }
-    }
+        {
+            mainCircle.transform.localScale -= new Vector3(Time.deltaTime / 2, Time.deltaTime / 2, 0);
+            SamuLight.GetComponent<Light2D>().pointLightInnerRadius -= Time.deltaTime * 2;
+            SamuLight.GetComponent<Light2D>().pointLightOuterRadius -= Time.deltaTime * 2;
+        }
+    
+}
     private void ThrowFireballs(Samu_BigFireball[] FBs)
     {
 

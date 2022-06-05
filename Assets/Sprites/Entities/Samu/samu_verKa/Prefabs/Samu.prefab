@@ -309,7 +309,6 @@ Transform:
   - {fileID: 5705703623950869279}
   - {fileID: 5705703623178526041}
   - {fileID: 5705703623411945809}
-  - {fileID: 5705703624005672403}
   - {fileID: 5705703624406098088}
   - {fileID: 5705703623467898337}
   m_Father: {fileID: 5705703623487567816}
@@ -696,7 +695,7 @@ Transform:
   - {fileID: 5694987587692106706}
   - {fileID: 5694987588710192785}
   m_Father: {fileID: 5705703623145300848}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5705703623487567823
 GameObject:
@@ -731,6 +730,7 @@ Transform:
   - {fileID: 5705703622896187172}
   - {fileID: 5705703622874483059}
   - {fileID: 5705703623001249849}
+  - {fileID: 5705703624005672403}
   m_Father: {fileID: 5705703623577492803}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -746,20 +746,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211abd43045b6744ba0560b64ac9a147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_unsummonCirclesEventAtk1:
-    m_PersistentCalls:
-      m_Calls: []
-  m_eyesDeadEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_endNormalChargesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_endEnragedChargesEvent:
-    m_PersistentCalls:
-      m_Calls: []
   mainCircle: {fileID: 5705703623001249848}
   eye_obj: {fileID: 5705703622874483058}
+  SamuLight: {fileID: 0}
   Samu_bodies:
   - {fileID: 5705703623145300855}
   - {fileID: 5705703622896187227}
@@ -792,8 +781,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7eb147d0394ad88a925abe70c992c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_controller: {fileID: 5705703623487567817}
+  m_timeBetweenFireBalls: 0.5
+  m_timeToMoveAround: 5
+  m_fireballPrefab: {fileID: 0}
   m_fireBall_1Speed: 50
+  m_fireBallBulletHellSpeed: 100
+  m_weakDuration: 5
+  m_healthBar: {fileID: 0}
+  m_maxHealth: 0
+  m_attack: {fileID: 0}
+  m_eyes: []
 --- !u!1 &5705703623577492802
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,11 +950,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5705703624005672402}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 305, y: -208, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5705703623145300848}
-  m_RootOrder: 3
+  m_Father: {fileID: 5705703623487567816}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5705703624005672412
 MonoBehaviour:
@@ -1060,7 +1057,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5705703623145300848}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5705703624406098090
 SphereCollider:
@@ -2367,11 +2364,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 10716109642411399, guid: 3b19627c4b89a8241816c4a7001719a9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64.3
+      value: 78.8
       objectReference: {fileID: 0}
     - target: {fileID: 10716109642411399, guid: 3b19627c4b89a8241816c4a7001719a9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -87.2
+      value: -98.1
       objectReference: {fileID: 0}
     - target: {fileID: 10716109642411399, guid: 3b19627c4b89a8241816c4a7001719a9, type: 3}
       propertyPath: m_LocalPosition.z
