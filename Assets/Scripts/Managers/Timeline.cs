@@ -12,11 +12,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] bool m_hideHud = false;
     [SerializeField] bool m_playerCanMove = false;
 
-    [SerializeField] Vector2 m_startCutscenePlayerPos;
-    private Vector2 m_urasPosition;
     private bool m_movingUra = false;
-    private float desiredDuration;
-    private float elapsedTime;
 
     public bool m_cutSceneStartsWithDialog = false;
     [SerializeField] GameObject[] m_GameObjectsToActivate;
@@ -38,14 +34,8 @@ public class Timeline : MonoBehaviour
 
     private void Update()
     {
-        if (m_movingUra) 
-        {
-            elapsedTime += Time.deltaTime;
-            float percentageComplete = elapsedTime / desiredDuration;
-
-            Player.Instance.LerpPlayerToPosition(m_urasPosition, m_startCutscenePlayerPos, percentageComplete);
-        }
-        if (m_movingUra && m_startCutscenePlayerPos == Player.Instance.PlayerCurrPos) { m_movingUra = false; startCutScene(); }
+        if (Player.Instance.IsGrounded && m_movingUra) { m_movingUra = false; startCutScene(); }
+        if (m_movingUra) { return; }
 
         if ((int)m_director.time == (int)m_director.duration && !hasPlayed) { hasPlayed = true; }
 
@@ -56,16 +46,11 @@ public class Timeline : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) 
         {
-            if (m_startCutscenePlayerPos == Vector2.zero) { startCutScene(); }
-            else if (!m_movingUra) 
+            if (Player.Instance.IsGrounded || m_playerCanMove || m_isDarknessSpiritCutScene) { startCutScene(); }
+            else
             {
-                float distX = Mathf.Abs(m_startCutscenePlayerPos.x - Player.Instance.PlayerCurrPos.x);
-                float distY = Mathf.Abs(m_startCutscenePlayerPos.y - Player.Instance.PlayerCurrPos.y);
-                float dist = Mathf.Sqrt(distX * distX + distY * distY);
-                desiredDuration = dist/100*0.95f;
-
-                m_urasPosition = Player.Instance.PlayerCurrPos;
                 Player.Instance.SetPlayerToScripted();
+                Player.Instance.ScriptFall();
                 m_movingUra = true; 
             }
         }

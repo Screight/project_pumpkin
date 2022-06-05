@@ -439,12 +439,8 @@ public class Player : AnimatedCharacter
     }
 
     public void SetPlayerToPosition(Vector3 p_position) { transform.position = p_position; }
-    public void LerpPlayerToPosition(Vector2 myPos,Vector2 newPos,float percent)
-    {
-        transform.localPosition = Vector2.Lerp(myPos, newPos, percent);
-    }
 
-    /// COLLISIONS
+    ///COLLISIONS
     private void OnCollisionStay2D(Collision2D p_collider)
     {
         if (p_collider.gameObject.CompareTag("spike"))
@@ -542,25 +538,22 @@ public class Player : AnimatedCharacter
         get { return m_isGrounded; }
     }
 
-    public Vector2 Speed { get { return m_rb2D.velocity;}
-        set { m_rb2D.velocity = value;}
-    }
+    public Vector2 Speed { get { return m_rb2D.velocity; } set { m_rb2D.velocity = value; } }
 
     public bool IsUsingGroundBreaker { set { m_isUsingGroundBreaker = value; } }
 
-    public string ObjectGroundedTo { 
+    public string ObjectGroundedTo 
+    { 
         set { m_objectGroundedTo = value; } 
         get { return m_objectGroundedTo;}
     }
 
     public bool IsInvulnerable { get { return m_isInvulnerable;}}
-    public Vector2 PlayerCurrPos { get { return new Vector2(transform.position.x, transform.position.y); } }
 
     public bool IsInsideActiveInteractiveZone 
     {
         set { m_isInsideActiveInteractiveZone = value; }
     }
-
 
     public void ReduceSpeed()
     {
@@ -577,7 +570,8 @@ public class Player : AnimatedCharacter
     public Collider2D GetCollider(){ return m_collider;}
     #endregion
 
-    public void AddImpulse(Vector2 p_impulse){
+    public void AddImpulse(Vector2 p_impulse)
+    {
         m_rb2D.AddForce(p_impulse, ForceMode2D.Impulse);
     }
 
@@ -588,12 +582,14 @@ public class Player : AnimatedCharacter
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_IDLE, false);
     }
 
-    public void SetGravityScaleTo0(){
+    public void SetGravityScaleTo0()
+    {
         m_rb2D.gravityScale = 0;
         m_rb2D.velocity = Vector2.zero;
     }
 
-    public void SetGravityScaleToFall(){
+    public void SetGravityScaleToFall()
+    {
         m_rb2D.gravityScale = m_gravity2 / Physics2D.gravity.y;
     }
 
@@ -606,15 +602,16 @@ public class Player : AnimatedCharacter
         Gizmos.DrawLine(new Vector3(collider.bounds.max.x, collider.bounds.max.y, transform.position.z), new Vector3(collider.bounds.max.x, collider.bounds.min.y, transform.position.z));
     }
 
-    public void SetPlayerToInvisible(bool p_isInvisible){
+    public void SetPlayerToInvisible(bool p_isInvisible)
+    {
         m_spriteRenderer.enabled = !p_isInvisible;
     }
 
-    public void SetScriptedFor(float p_seconds){
+    public void SetScriptedFor(float p_seconds)
+    {
         m_isBeingScripted = true;
         m_eventTimer.Duration = p_seconds;
         m_eventStart = true;
         m_eventTimer.Run();
     }
-
 }
