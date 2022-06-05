@@ -847,6 +847,7 @@ Transform:
   - {fileID: 5304695136914559546}
   - {fileID: 7303557891537376539}
   - {fileID: 8973058837587074786}
+  - {fileID: 8372683939013870416}
   m_Father: {fileID: 6054658956129048168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1041,6 +1042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43a03844a7810e259e6e1e0409d3eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_deathEffecct: {fileID: 0}
   m_attackScript: {fileID: 2589283986949262958}
   m_collider: {fileID: 7814695433631215369}
   m_dashDustScript: {fileID: 514142220}
@@ -1064,6 +1066,52 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
   m_Enabled: 1
+--- !u!1 &7677779159992083514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8372683939013870416}
+  - component: {fileID: 3175050232536916625}
+  m_Layer: 7
+  m_Name: DeathExplosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8372683939013870416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677779159992083514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2483708738412794923}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3175050232536916625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677779159992083514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5a379cfd4f06293a4b0d0205708dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_explosionPrefab: {fileID: 9088369411898910400, guid: afaae2bb9e04011e89ee129db562aa4e, type: 3}
+  m_speed: 50
+  m_numberOfExplosion: 6
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0

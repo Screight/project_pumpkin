@@ -22,6 +22,7 @@ public class Skill_Groundbreaker : MonoBehaviour
 
     private void Awake()
     {
+        m_spellCooldownScript = FindObjectOfType<SpellCooldown>();
         m_cooldownTimer = gameObject.AddComponent<Timer>();
         m_player = GetComponent<Player>();
         m_rb2D = GetComponent<Rigidbody2D>();

@@ -166,6 +166,11 @@ public class GameManager : MonoBehaviour
     public void SetGameToPaused(bool p_isPaused, bool p_activatePanel)
     {
         m_isGamePaused = p_isPaused;
+        if(m_isGamePaused){
+            SoundManager.Instance.SetBackgroundVolume(SoundManager.Instance.BackgroundVolume/2);
+        }else{
+            SoundManager.Instance.SetBackgroundVolume(SoundManager.Instance.BackgroundVolume * 2);
+        }
         if (m_isGamePaused == false)
         {
             InputManager.Instance.PauseInputFor1Frame();
