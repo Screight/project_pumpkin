@@ -25,6 +25,7 @@ TagManager:
   - Tutorial
   - obstacle
   - samuEye
+  - samuBody
   layers:
   - Default
   - TransparentFX

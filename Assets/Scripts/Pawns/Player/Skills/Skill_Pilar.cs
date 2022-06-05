@@ -42,6 +42,7 @@ public class Skill_Pilar : MonoBehaviour
 
         m_isPilarOnCooldown = false;
         m_canPlayerUseSkill = false;
+        m_spellCooldownScript = FindObjectOfType<SpellCooldown>();
     }
 
     private void Update()

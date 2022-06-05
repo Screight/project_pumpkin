@@ -18,6 +18,7 @@ public class Skill_Fireball : MonoBehaviour
 
     private void Awake()
     {
+        m_spellCooldownScript = FindObjectOfType<SpellCooldown>();
         m_cooldownTimer = gameObject.AddComponent<Timer>();
         m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         m_fireBallScript = m_fireBall.GetComponent<Fireball>();

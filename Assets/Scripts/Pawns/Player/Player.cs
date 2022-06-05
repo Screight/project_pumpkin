@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Player : AnimatedCharacter
 {
+    [SerializeField] DeathEffect m_deathEffecct;
     bool m_insidePlatform;
     public bool InsidePlatform{
         set { m_insidePlatform = value;}
@@ -82,6 +83,7 @@ public class Player : AnimatedCharacter
     protected override void Awake() {
 
         base.Awake();
+        m_deathEffecct = FindObjectOfType<DeathEffect>();
         m_transicion = FindObjectOfType<Transicion>();
         Physics2D.IgnoreLayerCollision(6,1,true);
 
@@ -464,6 +466,7 @@ public class Player : AnimatedCharacter
 
     public void HandleDeath()
     {
+        m_deathEffecct.Explode();
         m_state = PLAYER_STATE.DEATH;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH, false);
         m_eventTimer.Duration = m_deathDuration;

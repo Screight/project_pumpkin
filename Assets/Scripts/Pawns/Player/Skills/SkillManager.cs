@@ -25,6 +25,7 @@ public class SkillManager : MonoBehaviour
     }
 
     private void Initialize(){
+        m_spellsUI = FindObjectOfType<SpellCooldown>();
         m_skillPilar = GetComponent<Skill_Pilar>();
         m_skillFireball = GetComponent<Skill_Fireball>();
         m_groundbreaker = GetComponent<Skill_Groundbreaker>();
