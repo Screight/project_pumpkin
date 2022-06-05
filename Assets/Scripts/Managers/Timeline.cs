@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 public class Timeline : MonoBehaviour
-{   
+{
     [SerializeField] GameObject[] m_entity;
     [SerializeField] bool m_isCameraScripted = false;
     [SerializeField] bool m_isFireSpiritCutScene = false;
@@ -14,19 +14,19 @@ public class Timeline : MonoBehaviour
     public bool m_cutSceneStartsWithDialog = false;
     [SerializeField] GameObject[] m_GameObjectsToActivate;
 
-    public PauseMenu pausemenu;
+    private PauseMenu pausemenu;
     public PlayableDirector m_director;
     public Canvas m_HUD;
     private bool hasPlayed;
     private bool hasStartedPlaying;
-    bool m_hasBeenPlayed = false;
 
-    private void Start() 
+    private void Start()
     {
         for (int i = 0; i < m_GameObjectsToActivate.Length; i++) { m_GameObjectsToActivate[i].SetActive(false); }
         pausemenu = FindObjectOfType<PauseMenu>();
+        if (pausemenu == null) { Debug.LogError("No se ha encontrado un PauseMenu!!"); }
         hasPlayed = false;
-        hasStartedPlaying = false; 
+        hasStartedPlaying = false;
     }
 
     private void Update()
@@ -69,13 +69,12 @@ public class Timeline : MonoBehaviour
     public bool HasStartedplaying { get { return hasStartedPlaying; } }
     public bool PlayerCanMove { get { return m_playerCanMove; } }
 
-    public void SetEntitiesTo(bool p_isActive){
+    public void SetEntitiesTo(bool p_isActive)
+    {
 
-        for(int i = 0; i < m_entity.Length; i++){
+        for (int i = 0; i < m_entity.Length; i++)
+        {
             m_entity[i].SetActive(p_isActive);
         }
-
-        
     }
-
 }
