@@ -33,6 +33,7 @@ public class SamuBoss : MonoBehaviour
         m_healthBar.transform.parent.gameObject.SetActive(true);
         InitializeReturnToCenter();
         GameManager.Instance.IsPlayerInFinalBossFight = true;
+        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.SAMAELTHEME);
     }
 
     public void Reset(){

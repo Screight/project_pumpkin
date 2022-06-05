@@ -87,7 +87,6 @@ public class Timeline : MonoBehaviour
 
     public void SetEntitiesTo(bool p_isActive)
     {
-
         for (int i = 0; i < m_entity.Length; i++)
         {
             m_entity[i].SetActive(p_isActive);
