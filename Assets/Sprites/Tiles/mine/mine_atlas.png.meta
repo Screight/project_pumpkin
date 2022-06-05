@@ -593,6 +593,18 @@ TextureImporter:
   - first:
       213: 3187299176525000828
     second: mine_atlas_196
+  - first:
+      213: -8762225826852338538
+    second: mine_atlas_197
+  - first:
+      213: -3160210236680481052
+    second: mine_atlas_198
+  - first:
+      213: 4209982619470542907
+    second: mine_atlas_199
+  - first:
+      213: 4537993892450392662
+    second: mine_atlas_200
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -633,7 +645,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -704,6 +716,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -4850,6 +4874,90 @@ TextureImporter:
       bones: []
       spriteID: c70faa9c6bf8b3c20800000000000000
       internalID: 3187299176525000828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_atlas_197
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 103
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69486b4e802566680800000000000000
+      internalID: -8762225826852338538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_atlas_198
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 103
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e65b13888da424d0800000000000000
+      internalID: -3160210236680481052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_atlas_199
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b383c1013ecdc6a30800000000000000
+      internalID: 4209982619470542907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_atlas_200
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65ad560e6613afe30800000000000000
+      internalID: 4537993892450392662
       vertices: []
       indices: 
       edges: []
