@@ -605,6 +605,12 @@ TextureImporter:
   - first:
       213: 4537993892450392662
     second: mine_atlas_200
+  - first:
+      213: -8004419531680004073
+    second: mine_atlas_201
+  - first:
+      213: 8138591124416465081
+    second: mine_atlas_202
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -4958,6 +4964,48 @@ TextureImporter:
       bones: []
       spriteID: 65ad560e6613afe30800000000000000
       internalID: 4537993892450392662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_atlas_201
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 718c30d58d69ae090800000000000000
+      internalID: -8004419531680004073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_atlas_202
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 85
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b88dfee18512f070800000000000000
+      internalID: 8138591124416465081
       vertices: []
       indices: 
       edges: []
