@@ -89,12 +89,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1637297441518375384, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1637297441518375384, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
       propertyPath: m_SortingLayerID
       value: -1767787731
       objectReference: {fileID: 0}
+    - target: {fileID: 1637297441518375384, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 1637297441518375387, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -316,7 +320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367190, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 575
+      value: 540.2
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367190, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -370,6 +374,22 @@ PrefabInstance:
       propertyPath: m_director
       value: 
       objectReference: {fileID: 2256392683496962218}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.data[1]
+      value: 
+      objectReference: {fileID: 1637297441744366376}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_startCutscenePlayerPos.x
+      value: 565
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_startCutscenePlayerPos.y
+      value: 223
+      objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367193, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_Name
       value: CutSceneStart2

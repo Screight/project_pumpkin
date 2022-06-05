@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1767787731
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -166,7 +166,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184,8 +184,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 538339855
-  m_SortingLayer: 4
+  m_SortingLayerID: -1767787731
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5304695136914559546}
   - component: {fileID: 6504446220883785272}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 14.9, y: 0}
   serializedVersion: 2
-  m_Radius: 8.9
+  m_Radius: 9.2
 --- !u!212 &2218283887586845846
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -393,7 +393,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2a3b56bd615e8964fbb15f7157c91b74, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -411,8 +411,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 538339855
-  m_SortingLayer: 4
+  m_SortingLayerID: -1767787731
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -614,7 +614,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 16768589374183515}
   - component: {fileID: 1302782152}
   - component: {fileID: 31577716}
+  - component: {fileID: 369178020}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -834,8 +835,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7328283339782624065}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1326, y: -915, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 439.7, y: 223, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5559658922750157610}
@@ -868,7 +869,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2a3b56bd615e8964fbb15f7157c91b74, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -887,7 +888,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1767787731
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: 1659573616651085283, guid: fe210f5e23ee6514ebbf2171d96da3bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1046,15 +1047,23 @@ MonoBehaviour:
   m_normalMovementSpeed: 60
   m_reducedMovementSpeed: 30
   m_moveTowardsOneWayPlatform: 40
-  m_blinkDuration: 0
+  m_blinkDuration: 0.15
   m_dashDuration: 0.5
   m_dashDistance: 75
   m_pushAwayOnProjectileHitVelocity: {x: -50, y: 100}
-  m_gravity1: 0
+  m_gravity1: -220
   m_minHeight: 10
   m_maxHeight: 55
   m_timeToPeak1: 0.6
   m_timeToPeak2: 0.5
+--- !u!81 &369178020
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328283339782624065}
+  m_Enabled: 1
 --- !u!1001 &2753220014825515508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1142,6 +1151,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8228955277516224534, guid: 7670067bbc0834c409249406c223ed0f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7670067bbc0834c409249406c223ed0f, type: 3}
 --- !u!1 &6054658956474028518 stripped
@@ -1169,6 +1182,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pilar
       objectReference: {fileID: 0}
+    - target: {fileID: 7469167060590964062, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 7469167060590964063, guid: 393d949a9cef47648a48f15eb13b22f1, type: 3}
       propertyPath: m_RootOrder
       value: 0
