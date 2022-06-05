@@ -182,6 +182,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3481523992316989240}
     - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_cutSceneStartsWithDialog
       value: 1
       objectReference: {fileID: 0}

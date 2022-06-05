@@ -111,6 +111,14 @@ PrefabInstance:
       propertyPath: m_isFireSpiritCutScene
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_startCutscenePlayerPos.x
+      value: 2651
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_startCutscenePlayerPos.y
+      value: -1201
+      objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367193, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_Name
       value: CutSceneStart3

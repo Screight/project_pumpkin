@@ -103,7 +103,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1767787731
-  m_SortingLayer: 8
+  m_SortingLayer: 11
   m_SortingOrder: 1
   m_Sprite: {fileID: -7888208468282484513, guid: f66387f6056393304b2e0a33a49e6c1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -392,6 +392,10 @@ PrefabInstance:
     - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_playerCanMove
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_isDarknessSpiritCutScene

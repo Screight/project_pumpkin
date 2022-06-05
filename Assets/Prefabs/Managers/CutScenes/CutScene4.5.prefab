@@ -103,6 +103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+--- !u!1 &2286585145558764090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2423965441624984284, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
+  m_PrefabInstance: {fileID: 4474381938778849510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2286585145558764070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2423965441624984256, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
@@ -262,6 +267,18 @@ PrefabInstance:
       propertyPath: m_playerCanMove
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.data[1]
+      value: 
+      objectReference: {fileID: 2286585145558764090}
+    - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
+      propertyPath: m_entity.Array.data[2]
+      value: 
+      objectReference: {fileID: 8262018381959619767}
     - target: {fileID: 1475660981935367192, guid: 41622ba825bf84e4b93573d4f5e747d3, type: 3}
       propertyPath: m_isDarknessSpiritCutScene
       value: 1
