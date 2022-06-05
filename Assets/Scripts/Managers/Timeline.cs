@@ -11,6 +11,13 @@ public class Timeline : MonoBehaviour
     [SerializeField] bool m_isDarknessSpiritCutScene = false;
     [SerializeField] bool m_hideHud = false;
     [SerializeField] bool m_playerCanMove = false;
+
+    [SerializeField] Vector2 m_startCutscenePlayerPos;
+    private Vector2 m_urasPosition;
+    private bool m_movingUra = false;
+    private float desiredDuration = 0.7f;
+    private float elapsedTime;
+
     public bool m_cutSceneStartsWithDialog = false;
     [SerializeField] GameObject[] m_GameObjectsToActivate;
 
@@ -31,6 +38,15 @@ public class Timeline : MonoBehaviour
 
     private void Update()
     {
+        if (m_movingUra) 
+        {
+            elapsedTime += Time.deltaTime;
+            float percentageComplete = elapsedTime / desiredDuration;
+
+            Player.Instance.LerpPlayerToPosition(m_urasPosition, m_startCutscenePlayerPos, percentageComplete);
+        }
+        if (m_movingUra && m_startCutscenePlayerPos == Player.Instance.PlayerCurrPos) { m_movingUra = false; startCutScene(); }
+
         if ((int)m_director.time == (int)m_director.duration && !hasPlayed) { hasPlayed = true; }
 
         if (m_director.state != PlayState.Playing && hasPlayed) { endCutScene(); }
@@ -38,7 +54,16 @@ public class Timeline : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) { startCutScene(); }
+        if (collision.gameObject.CompareTag("Player")) 
+        {
+            if (m_startCutscenePlayerPos == Vector2.zero) { startCutScene(); }
+            else if (!m_movingUra) 
+            {
+                m_urasPosition = Player.Instance.PlayerCurrPos;
+                Player.Instance.SetPlayerToScripted();
+                m_movingUra = true; 
+            }
+        }
     }
 
     public void startCutScene()

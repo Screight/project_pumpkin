@@ -439,6 +439,10 @@ public class Player : AnimatedCharacter
     }
 
     public void SetPlayerToPosition(Vector3 p_position) { transform.position = p_position; }
+    public void LerpPlayerToPosition(Vector2 myPos,Vector2 newPos,float percent)
+    {
+        transform.localPosition = Vector2.Lerp(myPos, newPos, percent);
+    }
 
     /// COLLISIONS
     private void OnCollisionStay2D(Collision2D p_collider)
@@ -547,11 +551,13 @@ public class Player : AnimatedCharacter
     public string ObjectGroundedTo { 
         set { m_objectGroundedTo = value; } 
         get { return m_objectGroundedTo;}
-        }
+    }
 
     public bool IsInvulnerable { get { return m_isInvulnerable;}}
+    public Vector2 PlayerCurrPos { get { return new Vector2(transform.position.x, transform.position.y); } }
 
-    public bool IsInsideActiveInteractiveZone {
+    public bool IsInsideActiveInteractiveZone 
+    {
         set { m_isInsideActiveInteractiveZone = value; }
     }
 
