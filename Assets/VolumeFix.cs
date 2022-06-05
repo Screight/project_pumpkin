@@ -14,6 +14,10 @@ public class VolumeFix : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (AudioSource m_audio in m_audioSource) { m_audio.volume = SoundManager.Instance.EffectVolume; }
+        if (GameManager.Instance.IsGamePaused)
+        {
+            foreach (AudioSource m_audio in m_audioSource) { m_audio.volume = 0; }
+        }
+        else { foreach (AudioSource m_audio in m_audioSource) { m_audio.volume = SoundManager.Instance.EffectVolume; } }
     }
 }

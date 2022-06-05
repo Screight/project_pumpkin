@@ -9,6 +9,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] bool m_isCameraScripted = false;
     [SerializeField] bool m_isFireSpiritCutScene = false;
     [SerializeField] bool m_isDarknessSpiritCutScene = false;
+    [SerializeField] bool m_isSamaelCutScene = false;
     [SerializeField] bool m_hideHud = false;
     [SerializeField] bool m_playerCanMove = false;
 
@@ -46,7 +47,7 @@ public class Timeline : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) 
         {
-            if (Player.Instance.IsGrounded || m_playerCanMove || m_isDarknessSpiritCutScene) { startCutScene(); }
+            if (Player.Instance.IsGrounded || m_playerCanMove || m_isDarknessSpiritCutScene || m_isSamaelCutScene) { startCutScene(); }
             else
             {
                 Player.Instance.SetPlayerToScripted();
