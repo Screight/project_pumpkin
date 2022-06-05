@@ -76,11 +76,17 @@ public class Samu_animation_script : MonoBehaviour
     private GameObject player;
     Samu_BigFireball[] fb;
 
+    [Header("Controlable var")]
+    [SerializeField] float dash_velocity = 5f;
+    [SerializeField] float idle_velocity = 2.5f;
+    [SerializeField] float enterOnScreenSpeed = 2.5f;
+    [SerializeField] float trackingTimer = 1;
+    [SerializeField] int tick_counter = 3;
+    [SerializeField] int max_dash_number = 2;
+
 
     Vector3 init_pos;
     float time;
-    private float dash_velocity = 5f;
-    private int max_dash_number = 2;
     private int dash_number = 1;
     private int dir = 0;
 
@@ -90,7 +96,6 @@ public class Samu_animation_script : MonoBehaviour
     private bool fireballsSummoned = false;
     private bool fireballsThrown = false;
 
-    private float trackingTimer = 1;
     private float trackingTimer_time = 0;
     private bool tracking = false;
     private bool canGoOffscreen = false;
@@ -102,14 +107,13 @@ public class Samu_animation_script : MonoBehaviour
     private float tickingTimer_time = 0;
 
 
-    private float base_intesity = 2;
-    private float max_intesity = 50;
+    private float base_intesity = 1.5f;
+    private float max_intesity = 40;
     private bool increaseIntensity = true;
 
 
     private bool unstuck_cycle_counter = false;
-    private int tick_counter = 3;
-
+    private float damp_f = 1;
 
 
     Vector3 cam_bounds_;
@@ -296,7 +300,7 @@ public class Samu_animation_script : MonoBehaviour
                     if (!(NumberInRange(x_pos, currentBody.transform.localPosition.x, max_range) && NumberInRange(y_pos, currentBody.transform.localPosition.y, max_range)))
                     {
                         Vector3 offset = currentBody.transform.localPosition - (init_pos + new Vector3(x_pos, -y_pos, 0));
-                        Vector3 direction = Vector3.ClampMagnitude(offset, 2.5f);
+                        Vector3 direction = Vector3.ClampMagnitude(offset, idle_velocity);
                         currentBody.transform.localPosition += -direction;
                         canMove = false;
                     }
@@ -450,13 +454,14 @@ public class Samu_animation_script : MonoBehaviour
                     base_intesity += Time.deltaTime * 20;
                     Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
                     Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
-                    mainCircle.GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
 
                     if (base_intesity > max_intesity / 5)
                     {
                         for (int i = 0; i < eyes.Length; i++)
                         {
                             eyes_init_pos[i].SetActive(true);
+                            Body1Parts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
+                            MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
                         }
                     }
 
@@ -467,12 +472,15 @@ public class Samu_animation_script : MonoBehaviour
                     MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, init_wPos.y, currentBody.transform.position.z), 1.5f, 1);
 
                     base_intesity -= Time.deltaTime * 15;
-                    if (base_intesity < 2) { base_intesity = 2f; }
+                    if (base_intesity < 1.5f)
+                    {
+                        base_intesity = 1.5f;
+                    }
                     Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
                     Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
-                    mainCircle.GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", base_intesity);
+                    
                 }
-                if (currentBody.transform.position.y == init_wPos.y && base_intesity <= 2)
+                if (currentBody.transform.position.y == init_wPos.y && base_intesity <= 1.5F)
                 {
                     //Atk2Finished = true;
                     increaseIntensity = true;
@@ -485,22 +493,71 @@ public class Samu_animation_script : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Moves entity to point 
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="WhereTo"></param>
+    /// <param name="Magnitude"></param>
+    /// <param name="Mode">Mode 0 = Move in local position; Mode 1 = Move in Global position </param>
     private void MoveToPoint(Transform entity, Vector3 WhereTo, float Magnitude, int Mode = 0)
     {
-        //Local Position
-        if (Mode == 0)
+        Vector3 offset;
+        Vector3 direction;
+        switch (Mode)
         {
-            Vector3 offset = entity.localPosition - WhereTo;
-            Vector3 direction = Vector3.ClampMagnitude(offset, Magnitude);
-            entity.localPosition += -direction;
-        }
-        else
+            //Local Position
+            case 0:
+                offset = entity.localPosition - WhereTo;
+                direction = Vector3.ClampMagnitude(offset, Magnitude);
+                direction = direction * Time.deltaTime * 10;
+
+                entity.localPosition += -direction;
+
+                break;
+            //Global Position
+            case 1:
+                offset = entity.position - WhereTo;
+                direction = Vector3.ClampMagnitude(offset, Magnitude);
+                direction = direction * Time.deltaTime * 10;
+                entity.position += -direction;
+                break;
+        }       
+    }
+    private void MoveToPoint(Transform entity, Vector3 WhereTo, float MagnitudeX, float MagnitudeY, int Mode = 0)
+    {
+
+        Vector3 offset;
+        Vector3 direction;
+        float newX;
+        float newY;
+
+        switch (Mode)
         {
-            Vector3 offset = entity.position - WhereTo;
-            Vector3 direction = Vector3.ClampMagnitude(offset, Magnitude);
-            entity.position += -direction;
+            //Local Position
+            case 0:
+                offset = entity.localPosition - WhereTo;
+                newX = Mathf.Clamp(offset.x, -MagnitudeX, MagnitudeX);
+                newY = Mathf.Clamp(offset.y, -MagnitudeY, MagnitudeY);
+                direction = new Vector3(newX, newY, entity.localPosition.z);
+                direction = direction * Time.deltaTime * 10;
+
+                entity.localPosition += -direction;
+
+                break;
+            //Global Position
+            case 1:
+                offset = entity.position - WhereTo;
+                newX = Mathf.Clamp(offset.x, -MagnitudeX, MagnitudeX);
+                newY = Mathf.Clamp(offset.y, -MagnitudeY, MagnitudeY);
+                direction = new Vector3(newX, newY, entity.localPosition.z);
+                direction = direction * Time.deltaTime * 10;
+
+                entity.position += -direction;
+                break;
         }
     }
+
     private void Back2Origin_f()
     {
         MoveToPoint(currentBody.transform, init_pos, 2.5f);
@@ -554,7 +611,7 @@ public class Samu_animation_script : MonoBehaviour
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
-                        float damp_f = 1f;
+                        float damp_f = 2.5f;
                         MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
                     }
                 }
@@ -574,7 +631,7 @@ public class Samu_animation_script : MonoBehaviour
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
-                        float damp_f = 1f;
+                        float damp_f = 2.5f;
                         MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
                     }
                 }
@@ -584,22 +641,38 @@ public class Samu_animation_script : MonoBehaviour
             {
                 if (trackingTimer_time < trackingTimer)
                 {
-                    MoveToPoint(currentBody.transform, new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z), 1.5f, 1);
-                    currentBody.transform.position = new Vector3(dir, currentBody.transform.position.y, currentBody.transform.position.z);
+                    MoveToPoint(currentBody.transform, new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z), 5f, 1f, 1); ;
                     trackingTimer_time += Time.deltaTime;
                 }
                 else
                 {
                     Vector3 EndPos = new Vector3(max_dir, currentBody.transform.position.y, currentBody.transform.position.z);
-                    float damp_f = 1;
+                     
+                    if ((direction == 0 && currentBody.transform.position.x < cam_bounds_.x) || (direction == 1 && currentBody.transform.position.x > cam_bounds_.x)) {
+                        damp_f -=  Time.deltaTime*0.75f ;
+                        damp_f = Mathf.Clamp(damp_f, 0.3f, 1f);
 
-                    MoveToPoint(currentBody.transform, new Vector3(max_dir, currentBody.transform.position.y, currentBody.transform.position.z), dash_velocity * damp_f, 1);
+
+                            }
+                    if (direction==1 && currentBody.transform.rotation.eulerAngles.z > -25 && currentBody.transform.position.x < cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * 20)); }
+                    if (direction == 1& currentBody.transform.rotation.eulerAngles.z < 0 && currentBody.transform.position.x > cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 15)); }
+
+
+
+
+                    if (direction ==0 && currentBody.transform.rotation.eulerAngles.z < 25 && currentBody.transform.position.x > cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 20)); }
+                    if (direction ==0 && currentBody.transform.rotation.eulerAngles.z > 0  && currentBody.transform.position.x < cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * 15)); }
+
+                    MoveToPoint(currentBody.transform, EndPos, dash_velocity*damp_f, 1);
+                    
                 }
                 if (currentBody.transform.position.x == max_dir)
                 {
                     trackingTimer_time = 0;
                     dash_number++;
                     tracking = false;
+                    damp_f = 1;
+                    currentBody.transform.rotation = Quaternion.Euler(Vector3.zero);
                     if (enraged && dash_number > 2)
                     {
                         currentBody.transform.position = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 + 100, init_wPos.z - init_pos.z);
@@ -613,15 +686,15 @@ public class Samu_animation_script : MonoBehaviour
         {
             if (!tracking)
             {
-                if (currentBody.transform.position.y <= cam_bounds_.y - init_pos.y / 2 - 15)
+                if (currentBody.transform.position.y <= cam_bounds_.y - init_pos.y / 2 - 30)
                 {
                     tracking = true;
                 }
                 else
                 {
-                    Vector3 EndPos = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, init_wPos.z - init_pos.z);
+                    Vector3 EndPos = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, init_wPos.z - init_pos.z);
 
-                    float damp_f = 1f;
+                    float damp_f = 2.5f;
                     MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
                 }
             }
@@ -630,13 +703,12 @@ public class Samu_animation_script : MonoBehaviour
             {
                 if (trackingTimer_time < trackingTimer)
                 {
-                    MoveToPoint(currentBody.transform, new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, init_wPos.z - init_pos.z), 1.5f, 1);
-                    currentBody.transform.position = new Vector3(player.transform.position.x, currentBody.transform.position.y, currentBody.transform.position.z);
+                    MoveToPoint(currentBody.transform, new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, init_wPos.z - init_pos.z), 1f, 5f, 1);
                     trackingTimer_time += Time.deltaTime;
                 }
                 else
                 {
-                    Vector3 EndPos = new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 15, currentBody.transform.position.z);
+                    Vector3 EndPos = new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, currentBody.transform.position.z);
                     float damp_f = 1;
 
                     MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y + 15, currentBody.transform.position.z), dash_velocity * damp_f, 1);
@@ -647,6 +719,8 @@ public class Samu_animation_script : MonoBehaviour
                     m_endOfEnragedChargeEvent.Invoke();
                     Atk2Finished = false;
                     canGoOffscreen = false;
+                    tracking = false;
+
                     Debug.Log("end of enraged phase");
                 }
             }
@@ -665,10 +739,10 @@ public class Samu_animation_script : MonoBehaviour
             default:break;
             case 1:
                 Move_track_dash(0);
-
                 break;
             case 2:
                 Move_track_dash(1);
+                
 
                 break;
             case 3:
@@ -679,6 +753,8 @@ public class Samu_animation_script : MonoBehaviour
                 else
                 {
                     Move_track_dash(0);
+                if(currentBody.transform.rotation.eulerAngles.z < 15) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime)); }
+
                 }
                 break;
             case 4:
@@ -702,6 +778,7 @@ public class Samu_animation_script : MonoBehaviour
         }
         mainCircle.transform.position = Body.transform.position;
         eye_obj.transform.position = Body.transform.position;
+        SamuLight.transform.position = Body.transform.position;
         currentBody.SetActive(false);
         Body.SetActiveRecursively(true);
         currentBody = Body;
