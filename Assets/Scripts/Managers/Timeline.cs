@@ -15,7 +15,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] Vector2 m_startCutscenePlayerPos;
     private Vector2 m_urasPosition;
     private bool m_movingUra = false;
-    private float desiredDuration = 0.7f;
+    private float desiredDuration;
     private float elapsedTime;
 
     public bool m_cutSceneStartsWithDialog = false;
@@ -59,6 +59,11 @@ public class Timeline : MonoBehaviour
             if (m_startCutscenePlayerPos == Vector2.zero) { startCutScene(); }
             else if (!m_movingUra) 
             {
+                float distX = Mathf.Abs(m_startCutscenePlayerPos.x - Player.Instance.PlayerCurrPos.x);
+                float distY = Mathf.Abs(m_startCutscenePlayerPos.y - Player.Instance.PlayerCurrPos.y);
+                float dist = Mathf.Sqrt(distX * distX + distY * distY);
+                desiredDuration = dist/100*0.95f;
+
                 m_urasPosition = Player.Instance.PlayerCurrPos;
                 Player.Instance.SetPlayerToScripted();
                 m_movingUra = true; 
