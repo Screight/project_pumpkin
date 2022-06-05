@@ -4,6 +4,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class GroundbreakerRune : InteractiveItem
 {
+    [SerializeField] Room m_finalBossRoom;
     private bool m_hasBeenPicked = false;
     [SerializeField] DialogueEvent m_dialogue;
     private Material mat;
@@ -42,6 +43,7 @@ public class GroundbreakerRune : InteractiveItem
         SoundManager.Instance.PlayOnce(AudioClipName.ITEM_PICK_UP);
         m_hasBeenPicked = true;
         m_dialogue.addListenerToDialogueFinish(UnlockGroundBreaker);
+        m_finalBossRoom.ShowIcon = true;
     }
 
     private void UnlockGroundBreaker() {

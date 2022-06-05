@@ -42,7 +42,7 @@ public class SaveLoadGame : MonoBehaviour
 
     public void Save()
     {
-
+        return ;
         FileStream fileStream = new FileStream(m_path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
         BinaryWriter writer = new BinaryWriter(fileStream);

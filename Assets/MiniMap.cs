@@ -23,6 +23,7 @@ public class MiniMap : MonoBehaviour
     Dictionary<int,int> m_roomsDictionary;
     Image[] m_rooms;
     Room[] m_roomsScript;
+    Image[] m_icons;
     [SerializeField] float m_desiredScale = 10;
     float m_scale = 10;
     Vector2 m_iconInitialSize;
@@ -48,6 +49,7 @@ public class MiniMap : MonoBehaviour
         m_iconScale = m_desiredIconScale / Screen.width * 320;
 
         Room[] rooms = FindObjectsOfType<Room>();
+        m_icons = new Image[rooms.Length];
 
         m_roomsDictionary = new Dictionary<int, int>();
         m_rooms = new Image[rooms.Length];
@@ -124,6 +126,16 @@ public class MiniMap : MonoBehaviour
         float topToCenter = Screen.height / 2 - (m_topLimit[(int)p_zone] - m_bottomLimit[(int)p_zone]) / (2 * m_scale);
 
         rectTransform.position = new Vector2((p_room.transform.position.x + p_room.GetRoomOffSetX() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].x) / m_scale + leftToCenter + m_distanceFromCenter.x, (p_room.transform.position.y + p_room.GetRoomOffSetY() + m_initialPositionTransformToTopLeftCorner[(int)p_zone].y) / m_scale + Screen.height - topToCenter + m_distanceFromCenter.y);
+        if(m_roomsScript[p_indexInArray].RoomIcon != null){
+            empty = new GameObject();
+            empty.transform.parent = m_rooms[p_indexInArray].gameObject.transform;
+            Image image = empty.AddComponent<Image>();
+            image.sprite = m_roomsScript[p_indexInArray].RoomIcon;
+            rectTransform = empty.GetComponent<RectTransform>();
+            rectTransform.localPosition = new Vector3(0,0,0);
+            rectTransform.sizeDelta = new Vector2(160 / m_scale,160 / m_scale);
+            m_icons[p_indexInArray] = image;
+        }
     }
 
     private void Update()
@@ -185,6 +197,9 @@ public class MiniMap : MonoBehaviour
     {
         for (int i = 0; i < m_rooms.Length; i++)
         {
+            if(m_icons[i] != null){
+                m_icons[i].gameObject.SetActive(false);
+            }
             m_rooms[i].enabled = false;
         }
         m_playerIcon.enabled = false;
@@ -203,6 +218,9 @@ public class MiniMap : MonoBehaviour
             if (m_roomsScript[i] != null && m_roomsScript[i].Zone == p_zone)
             {
                 m_rooms[i].enabled = true;
+                if(m_rooms[i].color == m_visitedRoom && m_roomsScript[i].RoomIcon != null || m_roomsScript[i].ShowIcon && m_rooms[i].color != m_activeRoom){
+                    m_icons[i].gameObject.SetActive(true);
+                }
             }
         }
         switch (p_zone)

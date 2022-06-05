@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SpiderBoss : AnimatedCharacter
 {
+    [SerializeField] Room m_spiderRoom;
     [SerializeField] GameObject m_bodyDestroyed;
     [SerializeField] GameObject[] m_leftArmParts;
     [SerializeField] GameObject[] m_rightArmParts;
@@ -665,6 +666,8 @@ public class SpiderBoss : AnimatedCharacter
                     m_bodyDestroyed.transform.position = transform.position;
                     m_bodyDestroyed.transform.rotation = transform.rotation;
                     GameManager.Instance.IsSpiderBossDefeated = true;
+                    m_spiderRoom.RemoveIcon();
+                    m_spiderRoom.ShowIcon = false;
                     gameObject.SetActive(false);
                     break;
                 case SPIDER_BOSS_DAMAGEABLE_PARTS.LEFT_DRILL:

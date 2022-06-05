@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField] Sprite m_icon;
+    [SerializeField] bool m_showIcon;
     [SerializeField] GameObject m_activableObjects;
     [SerializeField] bool m_drawInMap = true;
     BoxCollider2D m_roomLimits;
@@ -105,4 +107,16 @@ public class Room : MonoBehaviour
 
     public ZONE Zone { get { return m_zone; }}
     public static void ResetID(){ g_ID = 0;}
+    public Sprite RoomIcon{
+        get { return m_icon; }
+    }
+    public bool ShowIcon{
+        get { return m_showIcon; }
+        set { m_showIcon = value; }
+    }
+
+    public void RemoveIcon(){
+        m_icon = null;
+    }
+
 }
