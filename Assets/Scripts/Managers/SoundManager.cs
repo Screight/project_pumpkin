@@ -77,6 +77,7 @@ public class SoundManager : MonoBehaviour
         m_backgroundClips[(int)BACKGROUND_CLIP.FORESTOFSOULS] = Resources.Load<AudioClip>("Sound/ForestOfSoulsBGM");
         m_backgroundClips[(int)BACKGROUND_CLIP.ABANDONEDMINE] = Resources.Load<AudioClip>("Sound/AbandonedMineBGM");
         m_backgroundClips[(int)BACKGROUND_CLIP.SPIDER_BOSS] = Resources.Load<AudioClip>("Sound/AracneTheme");
+        m_backgroundClips[(int)BACKGROUND_CLIP.SAMAELTHEME] = Resources.Load<AudioClip>("Sound/SamaelTheme");
         //Click
         m_audioClips[(int)AudioClipName.DIALOGUECLIC1] = Resources.Load<AudioClip>("Sound/DialogueClic1");
         m_audioClips[(int)AudioClipName.DIALOGUECLIC2] = Resources.Load<AudioClip>("Sound/DialogueClic2");
