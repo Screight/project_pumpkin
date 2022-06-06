@@ -188,8 +188,8 @@ public class Samu_animation_script : MonoBehaviour
         //Debug.Log(sin);
         if (currentBody == Samu_bodies[((int)(Bodies.MAIN))])
         {
-            MainBodyParts[(int)(BodyParts.INNER_RING)].transform.Rotate(new Vector3(0, 0, sin));
-            MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.Rotate(new Vector3(0, 0, -sin));
+            MainBodyParts[(int)(BodyParts.INNER_RING)].transform.Rotate(new Vector3(0, 0, 30 * sin  * Time.deltaTime));
+            MainBodyParts[(int)(BodyParts.OUTER_RING)].transform.Rotate(new Vector3(0, 0, - 30 * sin * Time.deltaTime));
         }
 
         if (!Samu_bodies[1].activeSelf)
@@ -200,16 +200,16 @@ public class Samu_animation_script : MonoBehaviour
         {
             eye_obj.transform.rotation = new Quaternion(Samu_bodies[1].transform.rotation.x, Samu_bodies[1].transform.rotation.y, Samu_bodies[1].transform.rotation.z, -Samu_bodies[1].transform.rotation.w);
         }
-        mainCircle.transform.Rotate(rot_speed);
+        mainCircle.transform.Rotate(30 * rot_speed * Time.deltaTime);
 
         for (int i = 0; i < Atk1_fireball_init_pos.Length; i++)
         {
-            Atk1_fireball_init_pos[i].transform.Rotate(rot_speed * 4f);
+            Atk1_fireball_init_pos[i].transform.Rotate(30 * rot_speed * 4f * Time.deltaTime);
         }
 
         for (int i = 0; i < Atk1var_fireball_init_pos.Length; i++)
         {
-            Atk1var_fireball_init_pos[i].transform.Rotate(rot_speed * 4f);
+            Atk1var_fireball_init_pos[i].transform.Rotate(30 * rot_speed * 4f * Time.deltaTime);
         }
         int eyes_alive = eyes.Length;
         ///EYETRACKING
@@ -252,7 +252,7 @@ public class Samu_animation_script : MonoBehaviour
         init_wPos = transform.TransformPoint(init_pos);
         
         //INPUT PROVISIONAL
-        if (Input.GetKeyDown(KeyCode.E))
+        /*if (Input.GetKeyDown(KeyCode.E))
         {
             ATK2();
         }
@@ -282,7 +282,7 @@ public class Samu_animation_script : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             KillFB();
-        }
+        }*/
         AnimationInputController();
         
 
@@ -560,7 +560,7 @@ public class Samu_animation_script : MonoBehaviour
 
     private void Back2Origin_f()
     {
-        MoveToPoint(currentBody.transform, init_pos, 2.5f);
+        MoveToPoint(currentBody.transform, init_pos, 25f);
 
         changeState = false;
     }

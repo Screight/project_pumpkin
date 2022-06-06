@@ -85,7 +85,6 @@ public class SamuBoss : MonoBehaviour
         m_controller.FullyRecoveredEvent.AddListener(ExitRecoverFromWeak);
     }
 
-    private bool test = false;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Y))
