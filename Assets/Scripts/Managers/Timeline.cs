@@ -19,6 +19,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] GameObject[] m_GameObjectsToActivateAtEnd;
 
     private PauseMenu pausemenu;
+    private SamuBoss samaelScript;
     public PlayableDirector m_director;
     public Canvas m_HUD;
     private bool hasPlayed;
@@ -26,9 +27,11 @@ public class Timeline : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         pausemenu = FindObjectOfType<PauseMenu>();
         if (pausemenu == null) { Debug.LogError("No se ha encontrado un PauseMenu!!"); }
+        samaelScript = FindObjectOfType<SamuBoss>();
+
+        for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         hasPlayed = false;
         hasStartedPlaying = false;
     }
@@ -78,6 +81,8 @@ public class Timeline : MonoBehaviour
         if (m_hideHud) { m_HUD.enabled = true; }
         if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
         if (m_isDarknessSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true); }
+        if (m_isSamaelCutScene && samaelScript!=null) { samaelScript.StartFight(); }
+        else if(samaelScript == null) { Debug.LogError("No hay refe de Samael, activalo en la jerarquia o ponlo en escena mijo"); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(true); }
         gameObject.SetActive(false);
