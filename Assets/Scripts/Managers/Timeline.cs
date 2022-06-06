@@ -16,7 +16,7 @@ public class Timeline : MonoBehaviour
     private bool m_movingUra = false;
 
     public bool m_cutSceneStartsWithDialog = false;
-    [SerializeField] GameObject[] m_GameObjectsToActivate;
+    [SerializeField] GameObject[] m_GameObjectsToActivateAtEnd;
 
     private PauseMenu pausemenu;
     public PlayableDirector m_director;
@@ -26,7 +26,7 @@ public class Timeline : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < m_GameObjectsToActivate.Length; i++) { m_GameObjectsToActivate[i].SetActive(false); }
+        for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         pausemenu = FindObjectOfType<PauseMenu>();
         if (pausemenu == null) { Debug.LogError("No se ha encontrado un PauseMenu!!"); }
         hasPlayed = false;
@@ -60,7 +60,6 @@ public class Timeline : MonoBehaviour
     public void startCutScene()
     {
         //Debug.Log("Empieza CutScene");
-        for (int i = 0; i < m_GameObjectsToActivate.Length; i++) { m_GameObjectsToActivate[i].SetActive(true); }
         pausemenu.IsCutScenePlaying = true;
         if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = true; }
         if (m_hideHud) { m_HUD.enabled = false; }
@@ -79,6 +78,8 @@ public class Timeline : MonoBehaviour
         if (m_hideHud) { m_HUD.enabled = true; }
         if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
         if (m_isDarknessSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true); }
+
+        for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(true); }
         gameObject.SetActive(false);
     }
 
