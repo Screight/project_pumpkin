@@ -29,7 +29,7 @@ public class Timeline : MonoBehaviour
     {
         pausemenu = FindObjectOfType<PauseMenu>();
         if (pausemenu == null) { Debug.LogError("No se ha encontrado un PauseMenu!!"); }
-        samaelScript = FindObjectOfType<SamuBoss>();
+        if (m_isSamaelCutScene) { samaelScript = FindObjectOfType<SamuBoss>(); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         hasPlayed = false;
@@ -76,13 +76,16 @@ public class Timeline : MonoBehaviour
         //Debug.Log("Termina CutScene y me puedo mover");
         pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
-
         if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = false; }
         if (m_hideHud) { m_HUD.enabled = true; }
+
+        //CutScene 3
         if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
+        //CutScene 4.5
         if (m_isDarknessSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true); }
+        //CutScene 6
         if (m_isSamaelCutScene && samaelScript!=null) { samaelScript.StartFight(); }
-        else if(samaelScript == null) { Debug.LogError("No hay refe de Samael, activalo en la jerarquia o ponlo en escena mijo"); }
+        else if(m_isSamaelCutScene && samaelScript == null) { Debug.LogError("No hay refe de Samael, activalo en la jerarquia o ponlo en escena mijo"); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(true); }
         gameObject.SetActive(false);
