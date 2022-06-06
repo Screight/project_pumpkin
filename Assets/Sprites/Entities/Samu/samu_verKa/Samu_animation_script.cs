@@ -301,7 +301,7 @@ public class Samu_animation_script : MonoBehaviour
                     {
                         Vector3 offset = currentBody.transform.localPosition - (init_pos + new Vector3(x_pos, -y_pos, 0));
                         Vector3 direction = Vector3.ClampMagnitude(offset, idle_velocity);
-                        currentBody.transform.localPosition += -direction;
+                        currentBody.transform.localPosition += -direction * 50 * Time.deltaTime;
                         canMove = false;
                     }
                     else
@@ -315,7 +315,7 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     if (softening_movement_mod < 1) { softening_movement_mod += Time.deltaTime; }
 
-                    Vector3 motion = init_pos + new Vector3(x_pos * softening_movement_mod, -y_pos * softening_movement_mod, 0);
+                    Vector3 motion = init_pos + new Vector3(x_pos * softening_movement_mod, -y_pos * softening_movement_mod, 0) * 20 * Time.deltaTime;
 
                     currentBody.transform.localPosition = motion;
                 }
@@ -504,6 +504,7 @@ public class Samu_animation_script : MonoBehaviour
     {
         Vector3 offset;
         Vector3 direction;
+        Vector2 distance = new Vector2();
         switch (Mode)
         {
             //Local Position
@@ -513,6 +514,12 @@ public class Samu_animation_script : MonoBehaviour
                 direction = direction * Time.deltaTime * 10;
 
                 entity.localPosition += -direction;
+                distance.x = entity.localPosition.x - WhereTo.x;
+                distance.y = entity.localPosition.y - WhereTo.y;
+                if (distance.magnitude < 1)
+                {
+                    entity.localPosition = new Vector3(WhereTo.x, WhereTo.y, entity.localPosition.z);
+                }
 
                 break;
             //Global Position
@@ -521,8 +528,16 @@ public class Samu_animation_script : MonoBehaviour
                 direction = Vector3.ClampMagnitude(offset, Magnitude);
                 direction = direction * Time.deltaTime * 10;
                 entity.position += -direction;
+                distance.x = entity.position.x - WhereTo.x;
+                distance.y = entity.position.y - WhereTo.y;
+                if (distance.magnitude < 1)
+                {
+                    entity.position = new Vector3(WhereTo.x, WhereTo.y, entity.position.z);
+                }
                 break;
-        }       
+        }
+        
+        
     }
     private void MoveToPoint(Transform entity, Vector3 WhereTo, float MagnitudeX, float MagnitudeY, int Mode = 0)
     {
@@ -560,7 +575,7 @@ public class Samu_animation_script : MonoBehaviour
 
     private void Back2Origin_f()
     {
-        MoveToPoint(currentBody.transform, init_pos, 25f);
+        MoveToPoint(currentBody.transform, init_pos, 5f);
 
         changeState = false;
     }
@@ -579,7 +594,7 @@ public class Samu_animation_script : MonoBehaviour
 
         if (canGoOffscreen && Samu_bodies[(int)(Bodies.MAIN)].activeSelf)
         {
-            MoveToPoint(currentBody.transform, point, 2.5f, 1);
+            MoveToPoint(currentBody.transform, point, 10f, 1);
         }
         if (currentBody.transform.position.y >= cameraOffscreenPoint.y - init_pos.y && !Samu_bodies[1].activeSelf)
         {
