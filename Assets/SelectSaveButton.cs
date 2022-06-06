@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectSaveButton : MonoBehaviour
+public class SelectSaveButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     public enum SPIRITS { FIRE, DARK, GROUNDBREAKER, LAST_NO_USE}
 
@@ -27,6 +27,12 @@ public class SelectSaveButton : MonoBehaviour
 
         m_scale = Screen.width / 320;
         SetUpUI();
+    }
+
+    private void Awake() {
+        for(int i = 0; i < m_spirits.Length; i++){
+            m_spirits[i].GetComponent<Animator>().speed = 0;
+        }
     }
 
     public void StartGame(){
@@ -84,6 +90,18 @@ public class SelectSaveButton : MonoBehaviour
             heart.transform.SetParent(m_heartStartingPosition.transform.parent);
             heart.transform.position = position;
             heart.transform.localScale = new Vector3(1,1,1);
+        }
+    }
+
+    public void OnSelect(BaseEventData p_data){
+        for(int i = 0; i < m_spirits.Length; i++){
+            m_spirits[i].GetComponent<Animator>().speed = 1;
+        }
+    }
+
+    public void OnDeselect(BaseEventData p_data){
+        for(int i = 0; i < m_spirits.Length; i++){
+            m_spirits[i].GetComponent<Animator>().speed = 0;
         }
     }
 

@@ -11,11 +11,12 @@ public class UsefullFeatures : MonoBehaviour
     [SerializeField] Toggle m_invincible;
 
     [SerializeField] Transform m_darkForestTP;
-    [SerializeField] Transform m_mine;
-    [SerializeField] Transform m_AracneSavePoint;
-    [SerializeField] Transform m_postAracneRoom;
-    [SerializeField] Transform m_fireChamberEntrance;
-    [SerializeField] Transform m_groundBreakerTP;
+    [SerializeField] Transform m_mineTP;
+    [SerializeField] Transform m_AracneSaveTP;
+    [SerializeField] Transform m_postAracneBattleTP;
+    [SerializeField] Transform m_fireChamberEntranceTP;
+    [SerializeField] Transform m_groundBreakerChamberTP;
+    [SerializeField] Transform m_SamaelSaveTP;
 
     private void Awake()
     {
@@ -42,11 +43,12 @@ public class UsefullFeatures : MonoBehaviour
         }*/
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) { TransportTo(m_darkForestTP); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { TransportTo(m_mine); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { TransportTo(m_AracneSavePoint); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { TransportTo(m_postAracneRoom); }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) { TransportTo(m_fireChamberEntrance); }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) { TransportTo(m_groundBreakerTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) { TransportTo(m_mineTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) { TransportTo(m_AracneSaveTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) { TransportTo(m_postAracneBattleTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) { TransportTo(m_fireChamberEntranceTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) { TransportTo(m_groundBreakerChamberTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) { TransportTo(m_SamaelSaveTP); }
     }
 
     void TransportTo(Transform p_position){
