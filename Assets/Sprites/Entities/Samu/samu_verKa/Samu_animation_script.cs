@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Samu_animation_script : MonoBehaviour
 {
+    [SerializeField] GameObject m_bound;
     UnityEvent m_endOfEnragedChargeEvent;
     public UnityEvent EndOfEnragedChargeEvent { get { return m_endOfEnragedChargeEvent; } }
     UnityEvent m_endOfFireBallSummon;
@@ -196,6 +197,7 @@ public class Samu_animation_script : MonoBehaviour
 
         if (start)
         {
+            m_bound.SetActive(false);
             startTimer_time += Time.deltaTime;
 
             if (startTimer_time >= startTimer)
