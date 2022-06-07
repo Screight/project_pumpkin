@@ -227,6 +227,7 @@ public class SamuBoss : MonoBehaviour
         }
         else {
             InitializeBulletHell();
+            Debug.Log("puta");
         }
 
         
