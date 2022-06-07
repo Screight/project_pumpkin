@@ -102,6 +102,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &98241901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98241904}
+  - component: {fileID: 98241903}
+  - component: {fileID: 98241902}
+  m_Layer: 0
+  m_Name: SamuLight6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &98241904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98241901}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1585044835485216002}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &98241903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98241901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 1
+  m_Color: {r: 1, g: 0.9607843, b: 0, a: 1}
+  m_Intensity: 0
+  m_LightVolumeOpacity: 1
+  m_ApplyToSortingLayers: 0000000037746581c3ed5c70c35ef8180f6a1620d3e9bd3fd1d30e6dbf73d4ba2db3a1960f47591285e9b72023abd44fd73d32df
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 1
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 1
+  m_ShadowIntensity: 1
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 113.1
+  m_PointLightDistance: 26.39
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 15.39
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -13.875828, y: -16.507135, z: 0}
+  - {x: 1.3426679, y: -5.1981616, z: 0.00012207031}
+  - {x: 22.427582, y: -20.673382, z: 0}
+  - {x: 3.0552673, y: 0.80885315, z: 0.00012207031}
+  - {x: 14.896164, y: 21.420788, z: 0.00012207031}
+  - {x: 0.58460563, y: 7.086045, z: 0}
+  - {x: -13.390423, y: 21.64006, z: 0.00012207031}
+  - {x: -3.5698662, y: 0.5, z: 0}
+--- !u!95 &98241902
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98241901}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1089652801257647323
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,14 +926,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e999d958674dbaa42a92304c93376124, type: 3}
---- !u!1 &1585044835485216001 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8676160491615753847, guid: e999d958674dbaa42a92304c93376124, type: 3}
-  m_PrefabInstance: {fileID: 7897303972046764918}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1585044835485216002 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8676160491615753844, guid: e999d958674dbaa42a92304c93376124, type: 3}
+  m_PrefabInstance: {fileID: 7897303972046764918}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1585044835485216001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8676160491615753847, guid: e999d958674dbaa42a92304c93376124, type: 3}
   m_PrefabInstance: {fileID: 7897303972046764918}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8608859990274143701
