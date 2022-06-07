@@ -35,16 +35,11 @@ public class SamuBoss : MonoBehaviour
     [SerializeField] Attack m_attack;
     [SerializeField] GameObject[] m_eyes;
 
- 
-    
-
-    
     public void StartFight()
     {
         m_healthBar.transform.parent.gameObject.SetActive(true);
         InitializeReturnToCenter();
         GameManager.Instance.IsPlayerInFinalBossFight = true;
-        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.SAMAELTHEME);
         m_whisperTimer.Run();
     }
 
@@ -62,7 +57,8 @@ public class SamuBoss : MonoBehaviour
         m_audioSrc.Stop();
         m_samu.SetActive(true);
         m_cutscene.SetActive(true);
-        for(int i  = 0; i < m_gameobjectToActivate.Length; i++){
+        for(int i  = 0; i < m_gameobjectToActivate.Length; i++)
+        {
             m_gameobjectToActivate[i].SetActive(true);
         }
         m_light.intensity = 0;

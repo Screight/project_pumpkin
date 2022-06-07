@@ -69,7 +69,13 @@ public class Timeline : MonoBehaviour
         if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = true; }
         if (m_hideHud) { m_HUD.enabled = false; }
         if (!m_playerCanMove) { Player.Instance.SetPlayerToScripted(); }
+        //Stop BGM at CutScene6
+        if (m_isSamaelCutScene && samaelScript != null) 
+        {
+            StartCoroutine(FadeAudioSource.StartFade(SoundManager.Instance.audioSrcBGM, 3.0f, 0.0f));
+        }
 
+        //play!
         m_director.Play();
         hasStartedPlaying = true;
     }
