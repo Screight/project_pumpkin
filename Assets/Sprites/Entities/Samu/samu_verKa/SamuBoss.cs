@@ -211,16 +211,25 @@ public class SamuBoss : MonoBehaviour
 
     void ChooseFireballVariant()
     {
-        if (m_hasDoneBulletHell)
-        {
+        float healthPercentage = m_health/m_maxHealth;
+
+        if(healthPercentage >= 0.25f){
+            if (m_hasDoneBulletHell)
+            {
+                InitializeBulletHell();
+                Debug.Log("BULLETHELL");
+            }
+            else
+            {
+                InitializeFireBalls();
+                Debug.Log("FIREBALLS");
+            }
+        }
+        else {
             InitializeBulletHell();
-            Debug.Log("BULLETHELL");
         }
-        else
-        {
-            InitializeFireBalls();
-            Debug.Log("FIREBALLS");
-        }
+
+        
     }
 
     void InitializeFireBalls()
