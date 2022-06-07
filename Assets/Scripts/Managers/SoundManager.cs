@@ -129,6 +129,7 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.SAMAEL_HITTED_1] = Resources.Load<AudioClip>("Sound/SamaelHitted1");
         m_audioClips[(int)AudioClipName.SAMAEL_HITTED_2] = Resources.Load<AudioClip>("Sound/SamaelHitted2");
         m_audioClips[(int)AudioClipName.SAMAEL_LOSE_EYE] = Resources.Load<AudioClip>("Sound/SamaelScreamLite");
+        m_audioClips[(int)AudioClipName.SAMAEL_LOSE_ALL_EYES] = Resources.Load<AudioClip>("Sound/SamaelScreamHeavy");
     }
 
     public void PlayOnce(AudioClipName p_name)

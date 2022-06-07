@@ -8,7 +8,6 @@ public class Samu_eye_script : MonoBehaviour
 
     public void Damage()
     {
-        Debug.Log("OJETE");
         SoundManager.Instance.PlayOnce(AudioClipName.SAMAEL_LOSE_EYE);
         gameObject.SetActive(false);
     }
