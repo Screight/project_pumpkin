@@ -6,10 +6,12 @@ public class Samu_BigFireball : MonoBehaviour
 {
     AudioSource m_audioSrc;
     Rigidbody2D m_rb2d;
+    Collider2D m_collider;
     private void Awake()
     {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_audioSrc = GetComponent<AudioSource>();
+        m_collider = GetComponent<Collider2D>();
     }
 
     public void FireToPlayer(float p_speed)
@@ -59,6 +61,7 @@ public class Samu_BigFireball : MonoBehaviour
 
         m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_HIT));
         GetComponent<SpriteRenderer>().enabled = false;
+        m_collider.enabled = false;
         Destroy(gameObject, 1.0f);
     }
 

@@ -1010,6 +1010,14 @@ public class Samu_animation_script : MonoBehaviour
 
     public void Reset(){
         UnsummonCircles_1();
+
+        TransferBody(Samu_bodies[(int)Bodies.MAIN]);
+        tracking = false;
+        trackingTimer_time = 0;
+        dash_number = 1;
+        damp_f = 1;
+
+        Samu_bodies[(int)Bodies.BODY1].SetActive(false);
         currentBody = Samu_bodies[(int)Bodies.MAIN];
         currentBody.transform.localPosition = init_pos;
         GoBackCenter();
@@ -1040,6 +1048,14 @@ public class Samu_animation_script : MonoBehaviour
         for(int i = 0; i < Atk1var_fireball_init_pos.Length; i++){
             Atk1var_fireball_init_pos[i].transform.localScale = Vector3.zero;
         }
+    }
+
+    public void Die(){
+        enterOnScreenSpeed = 0.0f;
+    }
+
+    public float GetMaterialIntensityRing(){
+        return ringMaterial.GetFloat("_Intensity");
     }
 
 }

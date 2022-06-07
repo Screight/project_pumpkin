@@ -146,6 +146,9 @@ public class SamuBoss : MonoBehaviour
             case STATE.RECOVER_FROM_WEAK:
                 HandleRecoverFromWeak();
                 break;
+            case STATE.DEAD:
+                HandleDeath();
+                break;
         }
 
         //Samu Whispers SFX
@@ -159,6 +162,15 @@ public class SamuBoss : MonoBehaviour
 
             m_whisperTimer.Duration = Random.Range(35, 40);
             m_whisperTimer.Run();
+        }
+    }
+
+    void HandleDeath(){
+        if(m_controller.GetMaterialIntensityRing() < 40.0f){
+            m_controller.GetUnstuck();
+            return;
+        }else{
+
         }
     }
 
