@@ -68,4 +68,9 @@ public class Samu_BigFireball : MonoBehaviour
         if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_SPAWN_1)); }
         else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_FB_SPAWN_2)); }
     }
+
+    private void OnDisable() {
+        Destroy(gameObject);
+    }
+
 }

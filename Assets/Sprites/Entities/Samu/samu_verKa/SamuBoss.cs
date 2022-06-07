@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class SamuBoss : MonoBehaviour
 {
+    [SerializeField] Light2D m_light;
     [SerializeField] GameObject m_samu;
     [SerializeField] GameObject m_cutscene;
     [SerializeField] GameObject[] m_gameobjectToActivate;
@@ -63,7 +65,10 @@ public class SamuBoss : MonoBehaviour
         for(int i  = 0; i < m_gameobjectToActivate.Length; i++){
             m_gameobjectToActivate[i].SetActive(true);
         }
-        m_cutscene.GetComponentInChildren<Timeline>().Reset();
+        m_light.intensity = 0;
+        m_light.pointLightInnerRadius = 1;
+        m_light.pointLightOuterRadius = 200;
+        m_cutscene.GetComponent<Timeline>().Reset();
         this.gameObject.transform.parent.gameObject.SetActive(false);
     }
 
