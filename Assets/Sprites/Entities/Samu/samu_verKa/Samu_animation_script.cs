@@ -126,6 +126,7 @@ public class Samu_animation_script : MonoBehaviour
 
     public void StartTimer()
     {
+        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.SAMAELTHEME);
         start = true;
     }
 

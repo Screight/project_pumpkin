@@ -137,6 +137,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBackground(BACKGROUND_CLIP p_name)
     {
+        m_backgroundSource.volume = HandleSettings.Instance.getCurrentBgVolume;
         m_backgroundSource.clip = m_backgroundClips[(int)p_name];
         m_backgroundSource.Play();
     }
@@ -157,6 +158,7 @@ public class SoundManager : MonoBehaviour
 
     public float EffectVolume { get { return m_effectsSource.volume; }}
     public float BackgroundVolume { get { return m_backgroundSource.volume; }}
+    public AudioSource audioSrcBGM { get { return m_backgroundSource; }}
 
     public AudioClip ClipToPlay(AudioClipName p_name) { return m_audioClips[(int)p_name]; }
 }
