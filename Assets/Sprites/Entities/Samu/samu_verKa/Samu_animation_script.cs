@@ -470,7 +470,7 @@ public class Samu_animation_script : MonoBehaviour
                 }
                 else
                 {
-                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, init_wPos.y, currentBody.transform.position.z), 1.5f, 1);
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, init_wPos.y, currentBody.transform.position.z), enterOnScreenSpeed * 0.8f, 1);
 
                     base_intesity -= Time.deltaTime * 15;
                     if (base_intesity < 1.5f)
@@ -833,6 +833,7 @@ public class Samu_animation_script : MonoBehaviour
     public void ATK2()
     {
         prev_state = state;
+        tracking = false;
         next_state = Anim_States.ATK2;
         max_dash_number = 2;
         if (enraged) { max_dash_number = 3; }
