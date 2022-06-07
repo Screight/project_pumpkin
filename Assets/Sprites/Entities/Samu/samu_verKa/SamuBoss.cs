@@ -35,10 +35,6 @@ public class SamuBoss : MonoBehaviour
     private float m_health;
     [SerializeField] Attack m_attack;
     [SerializeField] GameObject[] m_eyes;
-
-    private void OnEnable() {
-        m_bound.SetActive(false);
-    }
     public void StartFight()
     {
         m_healthBar.transform.parent.gameObject.SetActive(true);

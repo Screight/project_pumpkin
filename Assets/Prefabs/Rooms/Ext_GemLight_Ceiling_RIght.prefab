@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5853411018578178119}
   - component: {fileID: 1085716802693814276}
   m_Layer: 0
-  m_Name: Ext_GemLight_Ceiling_RIght
+  m_Name: Ext_gemLight_Ceiling_RIght
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
