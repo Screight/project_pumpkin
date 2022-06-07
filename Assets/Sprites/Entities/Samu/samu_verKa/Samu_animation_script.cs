@@ -384,7 +384,6 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     Atk2Finished = false;
                     canGoOffscreen = false;
-                    //state = prev_state;
                 }
                 break;
         }
@@ -415,7 +414,7 @@ public class Samu_animation_script : MonoBehaviour
             SamuLight.GetComponent<Light2D>().pointLightOuterRadius -= Time.deltaTime * 2;
         }
     
-}
+    }
     private void ThrowFireballs(Samu_BigFireball[] FBs)
     {
 
@@ -464,7 +463,6 @@ public class Samu_animation_script : MonoBehaviour
                             MainBodyParts[(int)(BodyParts.OUTER_RING)].GetComponent<SpriteRenderer>().forceRenderingOff = false;
                         }
                     }
-
                     if (base_intesity >= max_intesity) { increaseIntensity = false; }
                 }
                 else
@@ -535,9 +533,7 @@ public class Samu_animation_script : MonoBehaviour
                     entity.position = new Vector3(WhereTo.x, WhereTo.y, entity.position.z);
                 }
                 break;
-        }
-        
-        
+        }      
     }
     private void MoveToPoint(Transform entity, Vector3 WhereTo, float MagnitudeX, float MagnitudeY, int Mode = 0)
     {
@@ -626,7 +622,6 @@ public class Samu_animation_script : MonoBehaviour
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
-                        float damp_f = 2.5f;
                         MoveToPoint(currentBody.transform, EndPos, enterOnScreenSpeed, 1);
                     }
                 }
@@ -718,7 +713,6 @@ public class Samu_animation_script : MonoBehaviour
                 {
                     Vector3 EndPos = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, init_wPos.z - init_pos.z);
 
-                    float damp_f = 2.5f;
                     MoveToPoint(currentBody.transform, EndPos, enterOnScreenSpeed, 1);
                 }
             }
@@ -734,7 +728,6 @@ public class Samu_animation_script : MonoBehaviour
                 else
                 {
                     Vector3 EndPos = new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, currentBody.transform.position.z);
-                    float damp_f = 1;
 
                     MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y + 15, currentBody.transform.position.z), dash_velocity *1.2f, 1);
                 }
@@ -790,7 +783,6 @@ public class Samu_animation_script : MonoBehaviour
         {
             Atk2Finished = true;
         }
-        float cur_x = currentBody.transform.position.x;
     }
 
     public void TransferBody(GameObject Body)

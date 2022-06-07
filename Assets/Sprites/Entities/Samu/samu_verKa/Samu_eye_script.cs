@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class Samu_eye_script : MonoBehaviour
 {
-    Rigidbody2D rb;
     [SerializeField] Samu_animation_script par_scr;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Damage()
     {
-        rb = GetComponent<Rigidbody2D>();
+        Debug.Log("OJETE");
+        SoundManager.Instance.PlayOnce(AudioClipName.SAMAEL_LOSE_EYE);
+        gameObject.SetActive(false);
     }
 
-    public void Damage(){
-        this.gameObject.SetActive(false);
-    }
-
-    private void OnTriggerEnter2D(Collider2D p_collider) {
-        if(p_collider.tag != "fireball"){ return; }
+    private void OnTriggerEnter2D(Collider2D p_collider)
+    {
+        if (!p_collider.CompareTag("fireball")) { return; }
         Damage();
     }
-
 }
