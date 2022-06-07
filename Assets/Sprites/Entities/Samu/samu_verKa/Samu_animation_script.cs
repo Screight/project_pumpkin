@@ -1014,6 +1014,7 @@ public class Samu_animation_script : MonoBehaviour
         currentBody = Samu_bodies[(int)Bodies.MAIN];
         currentBody.transform.localPosition = init_pos;
         GoBackCenter();
+        start = false;
         //state = Anim_States.STOP;
     }
 

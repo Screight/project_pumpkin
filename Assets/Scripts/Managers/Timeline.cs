@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 public class Timeline : MonoBehaviour
 {
     [SerializeField] GameObject[] m_entity;
+    Vector3 m_firstEntity;
     [SerializeField] bool m_isCameraScripted = false;
     [SerializeField] bool m_isFireSpiritCutScene = false;
     [SerializeField] bool m_isDarknessSpiritCutScene = false;
@@ -34,6 +35,7 @@ public class Timeline : MonoBehaviour
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         hasPlayed = false;
         hasStartedPlaying = false;
+        m_firstEntity = m_entity[0].transform.localPosition;
     }
 
     private void Update()
@@ -103,7 +105,12 @@ public class Timeline : MonoBehaviour
     }
 
     public void Reset(){
-        m_director.Stop();
+        m_movingUra = false;
+        hasPlayed = false;
+        m_director.RebindPlayableGraphOutputs();
+        m_director.Pause();
+        m_entity[0].transform.localPosition = m_firstEntity;
+        m_entity[0].GetComponent<SpriteRenderer>().flipX = true;
     }
 
 }
