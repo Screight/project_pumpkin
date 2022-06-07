@@ -170,8 +170,17 @@ public class SamuBoss : MonoBehaviour
             m_controller.GetUnstuck();
             return;
         }else{
-
+            float alpha = m_controller.FadeOut();
+            if(alpha <= 0){
+                Transicion script = FindObjectOfType<Transicion>();
+                script.AddListenerToEndOfFadeIn(GoToCredits);
+                script.FadeIn();
+            }
         }
+    }
+
+    void GoToCredits(){
+        Game.SceneManager.Instance.LoadScene((int)SCENE.CREDITS);
     }
 
     void InitializeWeak()

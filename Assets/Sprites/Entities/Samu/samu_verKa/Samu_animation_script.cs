@@ -1058,4 +1058,16 @@ public class Samu_animation_script : MonoBehaviour
         return ringMaterial.GetFloat("_Intensity");
     }
 
+    public float FadeOut(){
+        Color color = new Color();
+
+        for(int i = 0; i < Body1Parts.Length; i++){
+            
+            color = Body1Parts[i].GetComponent<SpriteRenderer>().color;
+            Body1Parts[i].GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, color.a - 0.1f);
+        }
+
+        return color.a;
+    }
+
 }
