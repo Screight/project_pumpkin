@@ -48,7 +48,13 @@ public class UsefullFeatures : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4)) { TransportTo(m_postAracneBattleTP); }
         if (Input.GetKeyDown(KeyCode.Alpha5)) { TransportTo(m_fireChamberEntranceTP); }
         if (Input.GetKeyDown(KeyCode.Alpha6)) { TransportTo(m_groundBreakerChamberTP); }
-        if (Input.GetKeyDown(KeyCode.Alpha7)) { TransportTo(m_SamaelSaveTP); }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) { TransportTo(m_SamaelSaveTP);
+        SetAreSkillsUnlocked(true);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8)) { 
+            m_isPlayerInvincible = !m_isPlayerInvincible;
+            SetPlayerInvincible(m_isPlayerInvincible);
+        }
     }
 
     void TransportTo(Transform p_position){
