@@ -117,7 +117,7 @@ public class SamuBoss : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y) || m_controller.isFightStarted )
+        if ( m_controller.isFightStarted )
         {
             StartFight();
             m_controller.isFightStarted = false;
