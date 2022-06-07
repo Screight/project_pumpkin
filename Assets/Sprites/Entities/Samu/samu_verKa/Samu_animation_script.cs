@@ -262,6 +262,7 @@ public class Samu_animation_script : MonoBehaviour
         }
         if (eyes_alive == 0 && m_areEyesAlive)
         {
+            SoundManager.Instance.PlayOnce(AudioClipName.SAMAEL_LOSE_ALL_EYES);
             DestroyFireBalls();
             TotalUnsummonCircles();
             Debug.Log("eyes dead");
@@ -1018,10 +1019,16 @@ public class Samu_animation_script : MonoBehaviour
 
     public void DestroyFireBalls(){
         for(int i = 0; i < Atk1_fireballs.Length; i++){
-            Destroy(Atk1_fireballs[i]);
+            if(Atk1_fireballs[i] != null){
+                Destroy(Atk1_fireballs[i]);
+            }
+            
         }
         for(int i = 0; i < Atk1var_fireballs.Length; i++){
-            Destroy(Atk1_fireballs[i]);
+            if(Atk1var_fireballs[i] != null){
+                Destroy(Atk1var_fireballs[i]);
+            }
+            
         }
     }
 

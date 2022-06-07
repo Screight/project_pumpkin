@@ -211,16 +211,26 @@ public class SamuBoss : MonoBehaviour
 
     void ChooseFireballVariant()
     {
-        if (m_hasDoneBulletHell)
-        {
+        float healthPercentage = m_health/m_maxHealth;
+
+        if(healthPercentage >= 0.25f){
+            if (m_hasDoneBulletHell)
+            {
+                InitializeBulletHell();
+                Debug.Log("BULLETHELL");
+            }
+            else
+            {
+                InitializeFireBalls();
+                Debug.Log("FIREBALLS");
+            }
+        }
+        else {
             InitializeBulletHell();
-            Debug.Log("BULLETHELL");
+            Debug.Log("puta");
         }
-        else
-        {
-            InitializeFireBalls();
-            Debug.Log("FIREBALLS");
-        }
+
+        
     }
 
     void InitializeFireBalls()
@@ -296,7 +306,9 @@ public class SamuBoss : MonoBehaviour
 
         if (m_evenTimer.IsFinished && numberOfFireballs > 0)
         {
-            m_fireBalls[0].FireToPlayer(m_fireBall_1Speed);
+            if(m_fireBalls[0] != null){
+                m_fireBalls[0].FireToPlayer(m_fireBall_1Speed);
+            }
             m_fireBalls.RemoveAt(0);
             m_evenTimer.Run();
         }
