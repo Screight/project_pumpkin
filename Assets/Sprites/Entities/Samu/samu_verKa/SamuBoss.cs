@@ -30,6 +30,10 @@ public class SamuBoss : MonoBehaviour
     [SerializeField] Attack m_attack;
     [SerializeField] GameObject[] m_eyes;
 
+ 
+    
+
+    
     public void StartFight()
     {
         m_healthBar.transform.parent.gameObject.SetActive(true);
@@ -94,9 +98,10 @@ public class SamuBoss : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.Y) || m_controller.isFightStarted )
         {
             StartFight();
+            m_controller.isFightStarted = false;
         }
 
         if (!GameManager.Instance.IsPlayerInFinalBossFight) { return; }
