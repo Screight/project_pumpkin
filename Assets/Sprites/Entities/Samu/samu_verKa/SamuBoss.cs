@@ -296,7 +296,9 @@ public class SamuBoss : MonoBehaviour
 
         if (m_evenTimer.IsFinished && numberOfFireballs > 0)
         {
-            m_fireBalls[0].FireToPlayer(m_fireBall_1Speed);
+            if(m_fireBalls[0] != null){
+                m_fireBalls[0].FireToPlayer(m_fireBall_1Speed);
+            }
             m_fireBalls.RemoveAt(0);
             m_evenTimer.Run();
         }
