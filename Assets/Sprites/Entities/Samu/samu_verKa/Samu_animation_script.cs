@@ -263,6 +263,10 @@ public class Samu_animation_script : MonoBehaviour
         if (eyes_alive == 0 && m_areEyesAlive)
         {
             SoundManager.Instance.PlayOnce(AudioClipName.SAMAEL_LOSE_ALL_EYES);
+            tracking = false;
+            trackingTimer_time = 0;
+            dash_number = 1;
+            damp_f = 1;
             DestroyFireBalls();
             TotalUnsummonCircles();
             Debug.Log("eyes dead");
@@ -1056,6 +1060,14 @@ public class Samu_animation_script : MonoBehaviour
 
     public float GetMaterialIntensityRing(){
         return ringMaterial.GetFloat("_Intensity");
+    }
+
+    public float IncreaseIntensity(){
+        float currentIntensity = Body1Parts[1].GetComponent<SpriteRenderer>().material.GetFloat("_Intensity") + 3;
+
+        Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", currentIntensity);
+        Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", currentIntensity);
+        return currentIntensity;
     }
 
     public float FadeOut(){
