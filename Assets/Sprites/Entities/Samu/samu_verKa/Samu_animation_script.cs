@@ -591,7 +591,7 @@ public class Samu_animation_script : MonoBehaviour
 
         if (canGoOffscreen && Samu_bodies[(int)(Bodies.MAIN)].activeSelf)
         {
-            MoveToPoint(currentBody.transform, point, 10f, 1);
+            MoveToPoint(currentBody.transform, point, enterOnScreenSpeed, 1);
         }
         if (currentBody.transform.position.y >= cameraOffscreenPoint.y - init_pos.y && !Samu_bodies[1].activeSelf)
         {
@@ -624,7 +624,7 @@ public class Samu_animation_script : MonoBehaviour
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
                         float damp_f = 2.5f;
-                        MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
+                        MoveToPoint(currentBody.transform, EndPos, enterOnScreenSpeed, 1);
                     }
                 }
             }
@@ -643,7 +643,7 @@ public class Samu_animation_script : MonoBehaviour
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
-                        MoveToPoint(currentBody.transform, EndPos, 2.5f, 1);
+                        MoveToPoint(currentBody.transform, EndPos, enterOnScreenSpeed, 1);
                     }
                 }
             }
@@ -716,7 +716,7 @@ public class Samu_animation_script : MonoBehaviour
                     Vector3 EndPos = new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, init_wPos.z - init_pos.z);
 
                     float damp_f = 2.5f;
-                    MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
+                    MoveToPoint(currentBody.transform, EndPos, enterOnScreenSpeed, 1);
                 }
             }
 
@@ -733,7 +733,7 @@ public class Samu_animation_script : MonoBehaviour
                     Vector3 EndPos = new Vector3(currentBody.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, currentBody.transform.position.z);
                     float damp_f = 1;
 
-                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y + 15, currentBody.transform.position.z), dash_velocity * damp_f, 1);
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, floorLevelpos.position.y + 15, currentBody.transform.position.z), dash_velocity *1.2f, 1);
                 }
                 if (currentBody.transform.position.y == floorLevelpos.position.y + 15)
                 {
@@ -775,11 +775,11 @@ public class Samu_animation_script : MonoBehaviour
                 else
                 {
                     Move_track_dash(0);
-                if(currentBody.transform.rotation.eulerAngles.z < 15) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime)); }
-
                 }
                 break;
             case 4:
+                Move_track_dash(2);
+
                 break;
         }
 
