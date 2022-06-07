@@ -32,6 +32,7 @@ public class SplashScreen : MonoBehaviour
 
         if(!m_hasMusicBeenPlayed){
             SoundManager.Instance.StopBackground();
+            m_menu.SetActive(false);
             m_hasMusicBeenPlayed = true;
         }
 
