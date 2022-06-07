@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class SamuBoss : MonoBehaviour
 {
-    AudioSource m_source;
+    private AudioSource m_audioSrc;
+    private Timer m_whisperTimer;
 
     private enum STATE { SUMMON_FIREBALLS, RETURN_TO_CENTER, MOVE_AROUND, FIRE_BALLS, BULLET_HELL, CHARGE_ATTACK, WEAK, RECOVER_FROM_WEAK, DEAD, LAST_NO_USE }
 
@@ -17,7 +18,7 @@ public class SamuBoss : MonoBehaviour
     [SerializeField] private float m_timeToMoveAround = 5.0f;
     private bool m_isInCenter = false;
     private bool m_isNextStateCharge = false;
-    bool m_hasDoneBulletHell = false;
+    private bool m_hasDoneBulletHell = false;
 
     [SerializeField] GameObject m_fireballPrefab;
     [SerializeField] float m_fireBall_1Speed = 50.0f;
@@ -25,7 +26,7 @@ public class SamuBoss : MonoBehaviour
     [SerializeField] float m_weakDuration = 5.0f;
     [SerializeField] Image m_healthBar;
     [SerializeField] float m_maxHealth;
-    float m_health;
+    private float m_health;
     [SerializeField] Attack m_attack;
     [SerializeField] GameObject[] m_eyes;
 
@@ -35,6 +36,7 @@ public class SamuBoss : MonoBehaviour
         InitializeReturnToCenter();
         GameManager.Instance.IsPlayerInFinalBossFight = true;
         SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.SAMAELTHEME);
+        m_whisperTimer.Run();
     }
 
     public void Reset()
@@ -58,6 +60,8 @@ public class SamuBoss : MonoBehaviour
         {
             m_state = STATE.DEAD;
             Debug.Log("BOSS IS DEAD");
+            m_whisperTimer.Stop();
+            m_audioSrc.Stop();
             m_controller.Stop();
         }
     }
@@ -65,7 +69,8 @@ public class SamuBoss : MonoBehaviour
     private void Awake()
     {
         m_evenTimer = gameObject.AddComponent<Timer>();
-        m_source = GetComponent<AudioSource>();
+        m_whisperTimer = gameObject.AddComponent<Timer>();
+        m_audioSrc = GetComponent<AudioSource>();
         m_controller = GetComponent<Samu_animation_script>();
         m_health = m_maxHealth;
         m_healthBar.transform.parent.gameObject.SetActive(false);
@@ -83,6 +88,8 @@ public class SamuBoss : MonoBehaviour
         m_controller.EndNormalChargesEvent.AddListener(InitializeReturnToCenter);
         m_controller.EndOfEnragedChargeEvent.AddListener(InitializeWeak);
         m_controller.FullyRecoveredEvent.AddListener(ExitRecoverFromWeak);
+
+        m_whisperTimer.Duration = 20.0f;
     }
 
     private void Update()
@@ -92,6 +99,7 @@ public class SamuBoss : MonoBehaviour
             StartFight();
         }
 
+        if (!GameManager.Instance.IsPlayerInFinalBossFight) { return; }
         switch (m_state)
         {
             case STATE.FIRE_BALLS:
@@ -115,6 +123,19 @@ public class SamuBoss : MonoBehaviour
             case STATE.RECOVER_FROM_WEAK:
                 HandleRecoverFromWeak();
                 break;
+        }
+
+        //Samu Whispers SFX
+        if (m_whisperTimer.IsFinished && !m_audioSrc.isPlaying)
+        {
+            int randNum = Random.Range(0, 4);
+            if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_WHISPER_1)); }
+            else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_WHISPER_2)); }
+            else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_WHISPER_3)); }
+            else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_WHISPER_4)); }
+
+            m_whisperTimer.Duration = Random.Range(35, 40);
+            m_whisperTimer.Run();
         }
     }
 
