@@ -259,6 +259,8 @@ public class Samu_animation_script : MonoBehaviour
         }
         if (eyes_alive == 0 && m_areEyesAlive)
         {
+            DestroyFireBalls();
+            TotalUnsummonCircles();
             Debug.Log("eyes dead");
             m_areEyesAlive = false;
             m_eyesDeadEvent.Invoke();
@@ -1017,6 +1019,24 @@ public class Samu_animation_script : MonoBehaviour
         start = false;
         startTimer_time = 0;
         //state = Anim_States.STOP;
+    }
+
+    public void DestroyFireBalls(){
+        for(int i = 0; i < Atk1_fireballs.Length; i++){
+            Destroy(Atk1_fireballs[i]);
+        }
+        for(int i = 0; i < Atk1var_fireballs.Length; i++){
+            Destroy(Atk1_fireballs[i]);
+        }
+    }
+
+    public void TotalUnsummonCircles(){
+        for(int i = 0; i < Atk1_fireball_init_pos.Length; i++){
+            Atk1_fireball_init_pos[i].transform.localScale = Vector3.zero;
+        }
+        for(int i = 0; i < Atk1var_fireball_init_pos.Length; i++){
+            Atk1var_fireball_init_pos[i].transform.localScale = Vector3.zero;
+        }
     }
 
 }

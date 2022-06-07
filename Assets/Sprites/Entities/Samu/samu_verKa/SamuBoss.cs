@@ -6,6 +6,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class SamuBoss : MonoBehaviour
 {
+    [SerializeField] GameObject m_bound;
     [SerializeField] Light2D m_light;
     [SerializeField] GameObject m_samu;
     [SerializeField] GameObject m_cutscene;
@@ -35,9 +36,9 @@ public class SamuBoss : MonoBehaviour
     [SerializeField] Attack m_attack;
     [SerializeField] GameObject[] m_eyes;
 
- 
-    
-
+    private void OnEnable() {
+        m_bound.SetActive(false);
+    }
     
     public void StartFight()
     {
@@ -70,6 +71,7 @@ public class SamuBoss : MonoBehaviour
         m_light.pointLightOuterRadius = 200;
         m_cutscene.GetComponent<Timeline>().Reset();
         this.gameObject.transform.parent.gameObject.SetActive(false);
+        m_bound.SetActive(true);
     }
 
     public void Damage()
