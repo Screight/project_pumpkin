@@ -26,7 +26,7 @@ public class DeathEffect : MonoBehaviour
 
     private void Update() {
 
-        if(Input.GetKeyDown(KeyCode.Z)){
+        /*if(Input.GetKeyDown(KeyCode.Z)){
             Explode();
         }
 
@@ -45,7 +45,7 @@ public class DeathEffect : MonoBehaviour
 
                 m_explosion[i].transform.position += m_speed * Time.deltaTime * m_workingVector;
             }
-        }
+        }*/
     }
 
     public void Explode(){

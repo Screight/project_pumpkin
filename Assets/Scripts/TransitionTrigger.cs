@@ -49,7 +49,7 @@ public class TransitionTrigger : InteractiveItem
             Player.Instance.ScriptWalk(direction, 0.2f);
         }
         else { Player.Instance.StopScripting(); }
-        if(m_lookRight){ Player.Instance.FacePlayerToRight(); }
+        
         m_transicionScript.RemoveListenerToEndOfTransition(ReturnPlayerToNormal);
         GameManager.Instance.IsGamePaused = false;
     }
@@ -57,5 +57,6 @@ public class TransitionTrigger : InteractiveItem
     void TransportPlayerToPosition()
     {
         Player.Instance.transform.position = new Vector3(m_finalPosition.position.x, m_finalPosition.position.y, Player.Instance.transform.position.z);
+        if(m_lookRight){ Player.Instance.FacePlayerToRight(); }
     }   
 }

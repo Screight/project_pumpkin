@@ -539,14 +539,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bec1f6e27bc81754e9ba1b4f448fbcc8, type: 3}
---- !u!4 &6862672634777248537 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5436632233387562696, guid: bec1f6e27bc81754e9ba1b4f448fbcc8, type: 3}
-  m_PrefabInstance: {fileID: 1463617448219522513}
-  m_PrefabAsset: {fileID: 0}
 --- !u!320 &6862672634777248538 stripped
 PlayableDirector:
   m_CorrespondingSourceObject: {fileID: 5436632233387562699, guid: bec1f6e27bc81754e9ba1b4f448fbcc8, type: 3}
+  m_PrefabInstance: {fileID: 1463617448219522513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6862672634777248537 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5436632233387562696, guid: bec1f6e27bc81754e9ba1b4f448fbcc8, type: 3}
   m_PrefabInstance: {fileID: 1463617448219522513}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1463617448472161831

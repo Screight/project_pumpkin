@@ -52,7 +52,7 @@ public class Timeline : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) 
         {
-            if (Player.Instance.IsGrounded || m_playerCanMove || m_isDarknessSpiritCutScene || m_isSamaelCutScene) { startCutScene(); }
+            if (Player.Instance.IsGrounded || m_playerCanMove || m_isDarknessSpiritCutScene) { startCutScene(); }
             else
             {
                 Player.Instance.SetPlayerToScripted();
