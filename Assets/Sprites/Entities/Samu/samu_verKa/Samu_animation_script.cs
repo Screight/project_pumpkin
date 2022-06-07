@@ -263,6 +263,10 @@ public class Samu_animation_script : MonoBehaviour
         if (eyes_alive == 0 && m_areEyesAlive)
         {
             SoundManager.Instance.PlayOnce(AudioClipName.SAMAEL_LOSE_ALL_EYES);
+            tracking = false;
+            trackingTimer_time = 0;
+            dash_number = 1;
+            damp_f = 1;
             DestroyFireBalls();
             TotalUnsummonCircles();
             Debug.Log("eyes dead");
@@ -470,7 +474,7 @@ public class Samu_animation_script : MonoBehaviour
                 }
                 else
                 {
-                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, init_wPos.y, currentBody.transform.position.z), 1.5f, 1);
+                    MoveToPoint(currentBody.transform, new Vector3(currentBody.transform.position.x, init_wPos.y, currentBody.transform.position.z), enterOnScreenSpeed * 0.8f, 1);
 
                     base_intesity -= Time.deltaTime * 15;
                     if (base_intesity < 1.5f)
@@ -833,6 +837,7 @@ public class Samu_animation_script : MonoBehaviour
     public void ATK2()
     {
         prev_state = state;
+        tracking = false;
         next_state = Anim_States.ATK2;
         max_dash_number = 2;
         if (enraged) { max_dash_number = 3; }
@@ -1009,6 +1014,14 @@ public class Samu_animation_script : MonoBehaviour
 
     public void Reset(){
         UnsummonCircles_1();
+
+        TransferBody(Samu_bodies[(int)Bodies.MAIN]);
+        tracking = false;
+        trackingTimer_time = 0;
+        dash_number = 1;
+        damp_f = 1;
+
+        Samu_bodies[(int)Bodies.BODY1].SetActive(false);
         currentBody = Samu_bodies[(int)Bodies.MAIN];
         currentBody.transform.localPosition = init_pos;
         GoBackCenter();
@@ -1039,6 +1052,34 @@ public class Samu_animation_script : MonoBehaviour
         for(int i = 0; i < Atk1var_fireball_init_pos.Length; i++){
             Atk1var_fireball_init_pos[i].transform.localScale = Vector3.zero;
         }
+    }
+
+    public void Die(){
+        enterOnScreenSpeed = 0.0f;
+    }
+
+    public float GetMaterialIntensityRing(){
+        return ringMaterial.GetFloat("_Intensity");
+    }
+
+    public float IncreaseIntensity(){
+        float currentIntensity = Body1Parts[1].GetComponent<SpriteRenderer>().material.GetFloat("_Intensity") + 3;
+
+        Body1Parts[1].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", currentIntensity);
+        Body1Parts[2].GetComponent<SpriteRenderer>().material.SetFloat("_Intensity", currentIntensity);
+        return currentIntensity;
+    }
+
+    public float FadeOut(){
+        Color color = new Color();
+
+        for(int i = 0; i < Body1Parts.Length; i++){
+            
+            color = Body1Parts[i].GetComponent<SpriteRenderer>().color;
+            Body1Parts[i].GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, color.a - 0.1f);
+        }
+
+        return color.a;
     }
 
 }

@@ -80,6 +80,7 @@ public class SamuBoss : MonoBehaviour
         //Death
         if (m_health <= 0)
         {
+            Die();
             m_state = STATE.DEAD;
             Debug.Log("BOSS IS DEAD");
             m_whisperTimer.Stop();
@@ -146,6 +147,9 @@ public class SamuBoss : MonoBehaviour
             case STATE.RECOVER_FROM_WEAK:
                 HandleRecoverFromWeak();
                 break;
+            case STATE.DEAD:
+                HandleDeath();
+                break;
         }
 
         //Samu Whispers SFX
@@ -160,6 +164,30 @@ public class SamuBoss : MonoBehaviour
             m_whisperTimer.Duration = Random.Range(35, 40);
             m_whisperTimer.Run();
         }
+    }
+
+    void HandleDeath(){
+        if(m_controller.GetMaterialIntensityRing() < 40.0f){
+            m_controller.IncreaseIntensity();
+            return;
+        }else{
+            float alpha = m_controller.FadeOut();
+            if(alpha <= 0){
+                Transicion script = FindObjectOfType<Transicion>();
+                script.AddListenerToEndOfFadeIn(GoToCredits);
+                script.FadeIn();
+            }
+        }
+    }
+
+    void Die(){
+        Transicion script = FindObjectOfType<Transicion>();
+        script.AddListenerToEndOfFadeIn(GoToCredits);
+        script.FadeIn();
+    }
+
+    void GoToCredits(){
+        Game.SceneManager.Instance.LoadScene((int)SCENE.CREDITS);
     }
 
     void InitializeWeak()
@@ -190,7 +218,10 @@ public class SamuBoss : MonoBehaviour
 
     void ExitRecoverFromWeak()
     {
-        if (m_evenTimer.IsFinished)
+        if(m_health <= 0){
+            m_state = STATE.DEAD;
+        }
+        else if (m_evenTimer.IsFinished)
         {
             InitializeReturnToCenter();
             foreach (GameObject eye in m_eyes)
