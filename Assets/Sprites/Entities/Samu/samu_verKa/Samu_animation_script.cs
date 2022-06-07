@@ -117,6 +117,20 @@ public class Samu_animation_script : MonoBehaviour
     private float softening_movement_mod = 0.3f;
 
     private Vector3 rot_speed = new Vector3(0, 0, 0.3f);
+
+    [SerializeField] float startTimer = 3;
+    private float startTimer_time = 0;
+    private bool fightStart = false;
+    private bool start = false;
+  
+
+    public void StartTimer()
+    {
+        start = true;
+    }
+
+
+
     #endregion
     private void Awake()
     {
@@ -171,11 +185,25 @@ public class Samu_animation_script : MonoBehaviour
         Atk1var_fireball_init_pos = list.ToArray();
         init_pos = currentBody.transform.localPosition;
         Samu_bodies[1].SetActive(false);
+        mainCircle.transform.localScale = Vector3.zero;
+
         //UnsummonCircles();
     }
 
     void Update()
     {
+
+        if (start)
+        {
+            startTimer_time += Time.deltaTime;
+
+            if (startTimer_time >= startTimer)
+            {
+                fightStart = true;
+
+                start = false;
+            }
+        }
         ///ROTATION 
         float sin = Mathf.Cos(Time.time / 2) * 1.5f;
         //Debug.Log(sin);
@@ -975,6 +1003,10 @@ public class Samu_animation_script : MonoBehaviour
 
     public bool Enraged{
         set { enraged = value;}
+    }
+    public bool isFightStarted{
+        set { fightStart = value;}
+        get { return fightStart; }
     }
 
     public void Reset(){
