@@ -40,7 +40,7 @@ public class weakPlatformDestroyer : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D p_collision)
-    {   if(p_collision.tag != "Player") { return;}
+    {   if(p_collision.tag != "groundCheck") { return;}
         platformSprite.material = def_mat;
     }
 

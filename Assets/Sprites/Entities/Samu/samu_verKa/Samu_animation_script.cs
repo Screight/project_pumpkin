@@ -22,7 +22,8 @@ public class Samu_animation_script : MonoBehaviour
 
     UnityEvent m_eyesDeadEvent;
     public UnityEvent EyesDeadEvent { get { return m_eyesDeadEvent; } }
-    bool m_areEyesAlive = true;
+
+    private bool m_areEyesAlive = true;
 
     UnityEvent m_endNormalChargesEvent;
     public UnityEvent EndNormalChargesEvent { get { return m_endNormalChargesEvent; } }
@@ -34,11 +35,6 @@ public class Samu_animation_script : MonoBehaviour
     Anim_States state = Anim_States.STOP;
     Anim_States next_state = Anim_States.STOP;
     Anim_States prev_state = Anim_States.STOP;
-
-
-    //[SerializeField] GameObject innerRing;
-    //[SerializeField] GameObject outerRing;
-    //[SerializeField] GameObject core;
     
     [Header("Transferable Objects")]
     [Tooltip("Glowing magic circle")]
@@ -58,7 +54,6 @@ public class Samu_animation_script : MonoBehaviour
     [SerializeField] Material ringMaterial;
     [SerializeField] Material coreMaterial;
 
-
     [Header("Fireball things")]
     [SerializeField] GameObject atk1_Fireball_pos_obj;
     [SerializeField] Samu_BigFireball fireball_pref;
@@ -76,6 +71,10 @@ public class Samu_animation_script : MonoBehaviour
     private GameObject player;
     Samu_BigFireball[] fb;
 
+    [Header("SFX")]
+    private AudioSource m_audioSrc;
+    private bool m_hasDoneHorizAtkSFX = false;
+
     [Header("Controlable var")]
     [SerializeField] float dash_velocity = 5f;
     [SerializeField] float idle_velocity = 2.5f;
@@ -83,10 +82,8 @@ public class Samu_animation_script : MonoBehaviour
     [SerializeField] float trackingTimer = 1;
     [SerializeField] int tick_counter = 3;
     [SerializeField] int max_dash_number = 2;
-
-
-    Vector3 init_pos;
-    float time;
+    private Vector3 init_pos;
+    private float time;
     private int dash_number = 1;
     private int dir = 0;
 
@@ -106,7 +103,6 @@ public class Samu_animation_script : MonoBehaviour
     private float tickingTimer = 1;
     private float tickingTimer_time = 0;
 
-
     private float base_intesity = 1.5f;
     private float max_intesity = 40;
     private bool increaseIntensity = true;
@@ -114,21 +110,32 @@ public class Samu_animation_script : MonoBehaviour
 
     private bool unstuck_cycle_counter = false;
     private float damp_f = 1;
-
-
-    Vector3 cam_bounds_;
-    Vector3 init_wPos;
-
-    Vector3 cameraOffscreenPoint;
-    Vector3 point;
-
-
-    float softening_movement_mod = 0.3f;
+    private Vector3 cam_bounds_;
+    private Vector3 init_wPos;
+    private Vector3 cameraOffscreenPoint;
+    private Vector3 point;
+    private float softening_movement_mod = 0.3f;
 
     private Vector3 rot_speed = new Vector3(0, 0, 0.3f);
+
+    [SerializeField] float startTimer = 3;
+    private float startTimer_time = 0;
+    private bool fightStart = false;
+    private bool start = false;
+  
+
+    public void StartTimer()
+    {
+        start = true;
+    }
+
+
+
     #endregion
     private void Awake()
     {
+        m_audioSrc = GetComponent<AudioSource>();
+
         m_endOfEnragedChargeEvent = new UnityEvent();
         m_endOfFireBallSummon = new UnityEvent();
         m_arriveToCenterEvent = new UnityEvent();
@@ -178,11 +185,25 @@ public class Samu_animation_script : MonoBehaviour
         Atk1var_fireball_init_pos = list.ToArray();
         init_pos = currentBody.transform.localPosition;
         Samu_bodies[1].SetActive(false);
+        mainCircle.transform.localScale = Vector3.zero;
+
         //UnsummonCircles();
     }
 
     void Update()
     {
+
+        if (start)
+        {
+            startTimer_time += Time.deltaTime;
+
+            if (startTimer_time >= startTimer)
+            {
+                fightStart = true;
+
+                start = false;
+            }
+        }
         ///ROTATION 
         float sin = Mathf.Cos(Time.time / 2) * 1.5f;
         //Debug.Log(sin);
@@ -250,41 +271,17 @@ public class Samu_animation_script : MonoBehaviour
 
         cam_bounds_ = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         init_wPos = transform.TransformPoint(init_pos);
-        
+
         //INPUT PROVISIONAL
-        /*if (Input.GetKeyDown(KeyCode.E))
-        {
-            ATK2();
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            ATK1();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            ATK1VAR();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Stop();
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            MoveIdle();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GoBackCenter();
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            KillFB();
-        }*/
-        AnimationInputController();
+        //if (Input.GetKeyDown(KeyCode.E)) { ATK2(); }
+        //if (Input.GetKeyDown(KeyCode.Y)) { ATK1(); }
+        //if (Input.GetKeyDown(KeyCode.U)) { ATK1VAR(); }
+        //if (Input.GetKeyDown(KeyCode.Q)) { Stop(); }
+        //if (Input.GetKeyDown(KeyCode.W)) { MoveIdle(); }
+        //if (Input.GetKeyDown(KeyCode.R)) { GoBackCenter(); }
+        //if (Input.GetKeyDown(KeyCode.T)) { KillFB(); }
         
+        AnimationInputController();
 
         //MOVEMENT
         switch (state)
@@ -646,8 +643,7 @@ public class Samu_animation_script : MonoBehaviour
                     {
                         Vector3 EndPos = new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z);
 
-                        float damp_f = 2.5f;
-                        MoveToPoint(currentBody.transform, EndPos, damp_f, 1);
+                        MoveToPoint(currentBody.transform, EndPos, 2.5f, 1);
                     }
                 }
             }
@@ -656,30 +652,40 @@ public class Samu_animation_script : MonoBehaviour
             {
                 if (trackingTimer_time < trackingTimer)
                 {
-                    MoveToPoint(currentBody.transform, new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z), 5f, 1f, 1); ;
+                    MoveToPoint(currentBody.transform, new Vector3(dir, player.transform.position.y + 10, init_wPos.z - init_pos.z), 5.0f, 1.0f, 1);
+                    if (!m_hasDoneHorizAtkSFX)
+                    {
+                        int randNum = Random.Range(0, 3);
+                        if (randNum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_HORIZ_1)); }
+                        else if (randNum == 1) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_HORIZ_2)); }
+                        else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_HORIZ_3)); }
+                        m_hasDoneHorizAtkSFX = true;
+                    }
                     trackingTimer_time += Time.deltaTime;
                 }
                 else
                 {
+                    m_hasDoneHorizAtkSFX = false;
                     Vector3 EndPos = new Vector3(max_dir, currentBody.transform.position.y, currentBody.transform.position.z);
-                     
-                    if ((direction == 0 && currentBody.transform.position.x < cam_bounds_.x) || (direction == 1 && currentBody.transform.position.x > cam_bounds_.x)) {
-                        damp_f -=  Time.deltaTime*0.75f ;
+
+                    if ((direction == 0 && currentBody.transform.position.x < cam_bounds_.x) || (direction == 1 && currentBody.transform.position.x > cam_bounds_.x))
+                    {
+                        damp_f -= Time.deltaTime * 0.75f;
                         damp_f = Mathf.Clamp(damp_f, 0.3f, 1f);
 
 
-                            }
-                    if (direction==1 && currentBody.transform.rotation.eulerAngles.z > -25 && currentBody.transform.position.x < cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * 20)); }
-                    if (direction == 1& currentBody.transform.rotation.eulerAngles.z < 0 && currentBody.transform.position.x > cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 15)); }
+                    }
+                    if (direction == 1 && currentBody.transform.rotation.eulerAngles.z > -25 && currentBody.transform.position.x < cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * 20)); }
+                    if (direction == 1 & currentBody.transform.rotation.eulerAngles.z < 0 && currentBody.transform.position.x > cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 15)); }
 
 
 
 
-                    if (direction ==0 && currentBody.transform.rotation.eulerAngles.z < 25 && currentBody.transform.position.x > cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 20)); }
-                    if (direction ==0 && currentBody.transform.rotation.eulerAngles.z > 0  && currentBody.transform.position.x < cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * 15)); }
+                    if (direction == 0 && currentBody.transform.rotation.eulerAngles.z < 25 && currentBody.transform.position.x > cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 20)); }
+                    if (direction == 0 && currentBody.transform.rotation.eulerAngles.z > 0 && currentBody.transform.position.x < cam_bounds_.x) { currentBody.transform.Rotate(new Vector3(0, 0, -Time.deltaTime * 15)); }
 
-                    MoveToPoint(currentBody.transform, EndPos, dash_velocity*damp_f, 1);
-                    
+                    MoveToPoint(currentBody.transform, EndPos, dash_velocity * damp_f, 1);
+
                 }
                 if (currentBody.transform.position.x == max_dir)
                 {
@@ -719,6 +725,7 @@ public class Samu_animation_script : MonoBehaviour
                 if (trackingTimer_time < trackingTimer)
                 {
                     MoveToPoint(currentBody.transform, new Vector3(player.transform.position.x, cam_bounds_.y - init_pos.y / 2 - 30, init_wPos.z - init_pos.z), 1f, 5f, 1);
+                    
                     trackingTimer_time += Time.deltaTime;
                 }
                 else
@@ -996,6 +1003,10 @@ public class Samu_animation_script : MonoBehaviour
 
     public bool Enraged{
         set { enraged = value;}
+    }
+    public bool isFightStarted{
+        set { fightStart = value;}
+        get { return fightStart; }
     }
 
     public void Reset(){

@@ -19,7 +19,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] GameObject[] m_GameObjectsToActivateAtEnd;
 
     private PauseMenu pausemenu;
-    private SamuBoss samaelScript;
+    private Samu_animation_script samaelScript;
     public PlayableDirector m_director;
     public Canvas m_HUD;
     private bool hasPlayed;
@@ -29,7 +29,7 @@ public class Timeline : MonoBehaviour
     {
         pausemenu = FindObjectOfType<PauseMenu>();
         if (pausemenu == null) { Debug.LogError("No se ha encontrado un PauseMenu!!"); }
-        if (m_isSamaelCutScene) { samaelScript = FindObjectOfType<SamuBoss>(); }
+        if (m_isSamaelCutScene) { samaelScript = FindObjectOfType<Samu_animation_script>(); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         hasPlayed = false;
@@ -84,7 +84,7 @@ public class Timeline : MonoBehaviour
         //CutScene 4.5
         if (m_isDarknessSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.DASH, true); }
         //CutScene 6
-        if (m_isSamaelCutScene && samaelScript!=null) { samaelScript.StartFight(); }
+        if (m_isSamaelCutScene && samaelScript!=null) { samaelScript.StartTimer(); }
         else if(m_isSamaelCutScene && samaelScript == null) { Debug.LogError("No hay refe de Samael, activalo en la jerarquia o ponlo en escena mijo"); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(true); }

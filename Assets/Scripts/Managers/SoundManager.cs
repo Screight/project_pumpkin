@@ -112,12 +112,20 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.LILBAT_SWING_2] = Resources.Load<AudioClip>("Sound/BatSwing2");
         m_audioClips[(int)AudioClipName.LILBAT_SWING_3] = Resources.Load<AudioClip>("Sound/BatSwing3");
         //Samael
+        m_audioClips[(int)AudioClipName.SAMAEL_WHISPER_1] = Resources.Load<AudioClip>("Sound/SamaelWhisper1");
+        m_audioClips[(int)AudioClipName.SAMAEL_WHISPER_2] = Resources.Load<AudioClip>("Sound/SamaelWhisper2");
+        m_audioClips[(int)AudioClipName.SAMAEL_WHISPER_3] = Resources.Load<AudioClip>("Sound/SamaelWhisper3");
+        m_audioClips[(int)AudioClipName.SAMAEL_WHISPER_4] = Resources.Load<AudioClip>("Sound/SamaelWhisper4");
+
         m_audioClips[(int)AudioClipName.SAMAEL_FB_NOISE] = Resources.Load<AudioClip>("Sound/SamaelFireballSFX");
         m_audioClips[(int)AudioClipName.SAMAEL_FB_HIT] = Resources.Load<AudioClip>("Sound/SamaelFireballHitSFX");
         m_audioClips[(int)AudioClipName.SAMAEL_FB_SPAWN_1] = Resources.Load<AudioClip>("Sound/SamaelFireSpawn1");
         m_audioClips[(int)AudioClipName.SAMAEL_FB_SPAWN_2] = Resources.Load<AudioClip>("Sound/SamaelFireSpawn2");
         m_audioClips[(int)AudioClipName.SAMAEL_CIRCLE_SPAWN_1] = Resources.Load<AudioClip>("Sound/SamaelCircle1");
         m_audioClips[(int)AudioClipName.SAMAEL_CIRCLE_SPAWN_2] = Resources.Load<AudioClip>("Sound/SamaelCircle2");
+        m_audioClips[(int)AudioClipName.SAMAEL_HORIZ_1] = Resources.Load<AudioClip>("Sound/SamaelHorizAtk1");
+        m_audioClips[(int)AudioClipName.SAMAEL_HORIZ_2] = Resources.Load<AudioClip>("Sound/SamaelHorizAtk2");
+        m_audioClips[(int)AudioClipName.SAMAEL_HORIZ_3] = Resources.Load<AudioClip>("Sound/SamaelHorizAtk3");
     }
 
     public void PlayOnce(AudioClipName p_name)
