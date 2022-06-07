@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class SamuBoss : MonoBehaviour
 {
+    [SerializeField] GameObject m_samu;
+    [SerializeField] GameObject m_cutscene;
+    [SerializeField] GameObject[] m_gameobjectToActivate;
     private AudioSource m_audioSrc;
     private Timer m_whisperTimer;
 
@@ -53,6 +56,15 @@ public class SamuBoss : MonoBehaviour
         m_hasDoneBulletHell = false;
         m_isNextStateCharge = false;
         m_isInCenter = false;
+        m_whisperTimer.Stop();
+        m_audioSrc.Stop();
+        m_samu.SetActive(true);
+        m_cutscene.SetActive(true);
+        for(int i  = 0; i < m_gameobjectToActivate.Length; i++){
+            m_gameobjectToActivate[i].SetActive(true);
+        }
+        m_cutscene.GetComponentInChildren<Timeline>().Reset();
+        this.gameObject.transform.parent.gameObject.SetActive(false);
     }
 
     public void Damage()
@@ -60,6 +72,10 @@ public class SamuBoss : MonoBehaviour
         if (m_state == STATE.DEAD) { return; }
         m_health -= GameManager.Instance.PlayerAttackDamage;
         m_healthBar.fillAmount = m_health / m_maxHealth;
+        int randnum = Random.Range(0, 2);
+        if (randnum == 0) { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_HITTED_1)); }
+        else { m_audioSrc.PlayOneShot(SoundManager.Instance.ClipToPlay(AudioClipName.SAMAEL_HITTED_2)); }
+        //Death
         if (m_health <= 0)
         {
             m_state = STATE.DEAD;

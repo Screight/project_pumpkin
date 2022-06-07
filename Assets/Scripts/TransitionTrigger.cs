@@ -10,6 +10,7 @@ public class TransitionTrigger : InteractiveItem
     [SerializeField] Transicion m_transicionScript;
     [SerializeField] bool m_changeCheckpointToFinalPosition = false;
     [SerializeField] ZONE m_destinationZone = ZONE.FOREST;
+    [SerializeField] bool m_lookRight = false;
 
     protected override void Awake()
     {
@@ -48,6 +49,7 @@ public class TransitionTrigger : InteractiveItem
             Player.Instance.ScriptWalk(direction, 0.2f);
         }
         else { Player.Instance.StopScripting(); }
+        if(m_lookRight){ Player.Instance.FacePlayerToRight(); }
         m_transicionScript.RemoveListenerToEndOfTransition(ReturnPlayerToNormal);
         GameManager.Instance.IsGamePaused = false;
     }

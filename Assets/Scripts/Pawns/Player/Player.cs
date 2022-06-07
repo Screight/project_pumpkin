@@ -466,7 +466,7 @@ public class Player : AnimatedCharacter
 
     public void HandleDeath()
     {
-        m_deathEffecct.Explode();
+        //m_deathEffecct.Explode();
         m_state = PLAYER_STATE.DEATH;
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.PLAYER_DEATH, false);
         m_eventTimer.Duration = m_deathDuration;

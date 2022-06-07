@@ -101,4 +101,9 @@ public class Timeline : MonoBehaviour
             m_entity[i].SetActive(p_isActive);
         }
     }
+
+    public void Reset(){
+        m_director.Stop();
+    }
+
 }
