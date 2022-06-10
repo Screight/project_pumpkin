@@ -38,8 +38,8 @@ TagManager:
   - obstacle
   - platformPlayer
   - platformEnemy
-  - 
-  - 
+  - objects
+  - ignoreObjects
   - 
   - 
   - 
