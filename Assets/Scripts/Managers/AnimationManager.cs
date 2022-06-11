@@ -213,7 +213,7 @@ public class AnimationManager : MonoBehaviour
         return -1;
     }
 
-    public float GetClipDuration(Animator p_animator, string p_animation)
+    static public float GetClipDuration(Animator p_animator, string p_animation)
     {
         foreach (AnimationClip animationClip in p_animator.runtimeAnimatorController.animationClips)
         {

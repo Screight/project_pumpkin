@@ -20,7 +20,7 @@ public class DeathEffect : MonoBehaviour
     }
 
     private void Start() {
-        m_explosionFadeTimer.Duration = AnimationManager.Instance.GetClipDuration(m_explosionPrefab.GetComponent<Animator>(),"explosion");
+        m_explosionFadeTimer.Duration = AnimationManager.GetClipDuration(m_explosionPrefab.GetComponent<Animator>(),"explosion");
         m_workingVector.z = 0;
     }
 
