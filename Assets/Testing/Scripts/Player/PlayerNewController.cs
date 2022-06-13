@@ -17,6 +17,12 @@ public class PlayerNewController : MonoBehaviour
     PlayerIdleState m_idleState;
     PlayerMoveState m_moveState;
     PlayerDashState m_dashState;
+    PlayerJumpState m_jumpState;
+    PlayerAirState m_airState;
+    #endregion
+
+    #region Check Transforms
+    [SerializeField] Transform m_groundCheck;
     #endregion
 
     #region Other Variables
@@ -35,6 +41,8 @@ public class PlayerNewController : MonoBehaviour
         m_idleState = new PlayerIdleState(this, m_stateMachine, m_playerData, "idle");
         m_moveState = new PlayerMoveState(this, m_stateMachine, m_playerData, "move");
         m_dashState = new PlayerDashState(this, m_stateMachine, m_playerData, "dash");
+        m_jumpState = new PlayerJumpState(this, m_stateMachine, m_playerData, "jump");
+        m_airState = new PlayerAirState(this, m_stateMachine, m_playerData, "air");
     }
     private void Start() {
         m_stateMachine.Initialize(m_idleState);
@@ -65,6 +73,11 @@ public class PlayerNewController : MonoBehaviour
         m_rb2d.velocity = m_workSpace;
         m_currentSpeed = m_workSpace;
     }
+
+    public void SetGravity(float p_gravity){
+        m_rb2d.gravityScale = p_gravity / Physics2D.gravity.y;
+    }
+
     #endregion
 
     #region Check Functions
@@ -74,6 +87,12 @@ public class PlayerNewController : MonoBehaviour
             FlipX();
         }
     }
+
+    public bool CheckIfGrounded(){
+        //return Physics2D.OverlapBox (m_groundCheck.position, m_playerData.m_groundBox, m_playerData.m_groundMask);
+        return Physics2D.OverlapCircle(m_groundCheck.position, 0.3f, m_playerData.m_groundMask);
+    }
+
     #endregion
 
     #region Other Functions
@@ -97,6 +116,14 @@ public class PlayerNewController : MonoBehaviour
 
     public PlayerDashState DashState{
         get { return m_dashState; }
+    }
+
+    public PlayerJumpState JumpState{
+        get { return m_jumpState; }
+    }
+
+    public PlayerAirState AirState{
+        get { return m_airState; }
     }
 
     public Vector2 CurrentVelocity{

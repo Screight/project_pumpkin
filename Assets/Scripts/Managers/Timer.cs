@@ -9,7 +9,6 @@ public class Timer: MonoBehaviour
 
     bool m_isFinished;
     bool m_isRunning;
-    bool m_hasStarted;
 
     public Timer(float p_duration)
     {
@@ -24,7 +23,6 @@ public class Timer: MonoBehaviour
         m_time = 0;
         m_isFinished = true;
         m_isRunning = false;
-        m_hasStarted = false;
     }
 
     private void Update()
@@ -53,8 +51,7 @@ public class Timer: MonoBehaviour
     public void Stop()
     {
         m_isRunning = false;
-        m_isFinished = false;
-        m_hasStarted = false;
+        m_isFinished = true;
         m_time = 0;
     }
     public void Restart()

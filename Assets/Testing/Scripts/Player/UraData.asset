@@ -13,3 +13,13 @@ MonoBehaviour:
   m_Name: UraData
   m_EditorClassIdentifier: 
   movementVelocity: 60
+  m_dashDistance: 75
+  m_minHeight: 10
+  m_maxHeight: 55
+  m_gravityUp: -220
+  m_gravityDown: -300
+  m_jumpSpeed: 100
+  m_groundBox: {x: 0, y: 0}
+  m_groundMask:
+    serializedVersion: 2
+    m_Bits: 256

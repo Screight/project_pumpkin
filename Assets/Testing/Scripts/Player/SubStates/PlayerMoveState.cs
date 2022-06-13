@@ -27,8 +27,6 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-        m_player.CheckIfShouldFlip(m_input.x);
-
         if(InputManager.Instance.DashButtonPressed){
             m_stateMachine.ChangeState(m_player.DashState);
             return ;
@@ -38,7 +36,6 @@ public class PlayerMoveState : PlayerGroundedState
             return;
         }
         m_player.SetVelocityX(m_playerData.movementVelocity * m_input.normalized.x);
-        m_player.SetVelocityY(m_playerData.movementVelocity * m_input.normalized.y);
     }
 
     public override void PhysicsUpdate()

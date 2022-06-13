@@ -27,13 +27,23 @@ public class PlayerGroundedState : PlayerState
     {
         base.LogicUpdate();
 
-       if(InputManager.Instance.HorizontalAxis == 0){
+        if(m_player.CurrentVelocity.y < 0f){
+            if(!m_player.CheckIfGrounded()){
+                m_stateMachine.ChangeState(m_player.AirState);
+            }
+        }
+        else if(InputManager.Instance.JumpButtonPressed){
+            m_stateMachine.ChangeState(m_player.JumpState);
+        }
+        else if(InputManager.Instance.HorizontalAxis == 0){
             m_input = Vector2.zero;
         }
         else{
             m_input.x = InputManager.Instance.HorizontalAxis;
+            m_player.CheckIfShouldFlip(m_input.x);
             m_input.Normalize();
         }
+        
     }
 
     public override void PhysicsUpdate()

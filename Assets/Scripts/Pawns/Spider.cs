@@ -118,7 +118,9 @@ public class Spider : Enemy
 
     public void HandleEclosion()
     {
-        if (m_eventTimer.IsFinished) { Hatch(); }
+        if (m_eventTimer.IsFinished) {
+            Hatch(); 
+        }
     }
 
     public void Hatch()

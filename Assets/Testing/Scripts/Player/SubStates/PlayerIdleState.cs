@@ -40,4 +40,9 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.PhysicsUpdate();
     }
+
+    public void TriggerLandAnimation(){
+        m_player.Animator.SetTrigger("land");
+    }
+
 }

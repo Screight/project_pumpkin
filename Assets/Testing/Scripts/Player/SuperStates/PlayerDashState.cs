@@ -9,7 +9,7 @@ public class PlayerDashState : PlayerState
     public PlayerDashState(PlayerNewController p_player, PlayerStateMachine p_stateMachine, PlayerData p_playerData, string p_animBoolName) : base(p_player, p_stateMachine, p_playerData, p_animBoolName)
     {
         m_dashTimer = m_player.gameObject.AddComponent<Timer>();
-        m_dashTimer.Duration = AnimationManager.GetClipDuration(m_player.Animator, "dash");
+        m_dashTimer.Duration = AnimationManager.GetClipDuration(m_player.Animator, "dashAnim");
         m_dashSpeed = m_playerData.m_dashDistance / m_dashTimer.Duration;
     }
 
@@ -39,15 +39,12 @@ public class PlayerDashState : PlayerState
     {
         base.LogicUpdate();
         if(m_dashTimer.IsFinished){
-            Exit();
             if(InputManager.Instance.HorizontalAxis == 0){
                 m_stateMachine.ChangeState(m_player.IdleState);
             } else{
                 m_stateMachine.ChangeState(m_player.MoveState);
             }
-            
         }
-        
     }
 
     public override void PhysicsUpdate()

@@ -45,8 +45,28 @@ public class Projectile : MonoBehaviour
         m_rb2D.velocity = p_direction * m_speed;
     }
 
+    private void OnTriggerEnter2D(Collider2D p_collider) {
+        if (p_collider.gameObject.layer == (int)UNITY_LAYERS.OBSTACLE)
+        {
+            m_source.PlayOneShot(m_impactSound);
+            m_renderer.enabled = false;
+            m_impactParticle.Play();
+            m_collision.enabled = false;
+            m_rb2D.simulated = false;
+            Destroy(gameObject, 5.0f);
+        }
+        else if (p_collider.gameObject.CompareTag("Player") && Player.Instance.CanPlayerGetHit())
+        {
+            float distanceToEnemyX = p_collider.gameObject.transform.position.x - transform.position.x;
+            float distanceToEnemyY = p_collider.gameObject.transform.position.y - transform.position.y;
+            Vector2 direction = new Vector2(distanceToEnemyX / Mathf.Abs(distanceToEnemyX), distanceToEnemyY / Mathf.Abs(distanceToEnemyY));
 
-    private void OnCollisionEnter2D(Collision2D p_collision) {
+            Player.Instance.HandleHostileCollision(m_pushAwayPlayerVelocity, direction, m_playerNoControlDuration, m_playerInvulnerableDuration, m_damage);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collision2D p_collision) {
         if (p_collision.gameObject.layer == (int)UNITY_LAYERS.OBSTACLE)
         {
             m_source.PlayOneShot(m_impactSound);
