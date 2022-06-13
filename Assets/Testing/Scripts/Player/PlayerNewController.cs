@@ -19,10 +19,14 @@ public class PlayerNewController : MonoBehaviour
     PlayerDashState m_dashState;
     PlayerJumpState m_jumpState;
     PlayerAirState m_airState;
+    PlayerGroundebreakerState m_groundbreakerState;
+    PlayerFireballState m_fireballState;
     #endregion
 
     #region Check Transforms
     [SerializeField] Transform m_groundCheck;
+    [Tooltip("Starting position of fireball")]
+    [SerializeField] Transform m_firaballSpawn;
     #endregion
 
     #region Other Variables
@@ -43,6 +47,10 @@ public class PlayerNewController : MonoBehaviour
         m_dashState = new PlayerDashState(this, m_stateMachine, m_playerData, "dash");
         m_jumpState = new PlayerJumpState(this, m_stateMachine, m_playerData, "jump");
         m_airState = new PlayerAirState(this, m_stateMachine, m_playerData, "air");
+        m_groundbreakerState = new PlayerGroundebreakerState(this, m_stateMachine, m_playerData, "groundbreaker");
+        m_fireballState = new PlayerFireballState(this, m_stateMachine, m_playerData, "idle");
+
+        m_playerData.Initialize();
     }
     private void Start() {
         m_stateMachine.Initialize(m_idleState);
@@ -100,6 +108,12 @@ public class PlayerNewController : MonoBehaviour
         m_facingDirection *= -1;
         transform.Rotate(0.0f, 180.0f, 0.0f);
     }
+
+    public void InstantiateFireball(){
+        Fireball script = Instantiate(m_playerData.m_fireball, m_firaballSpawn.position, Quaternion.identity).GetComponent<Fireball>();
+        script.Fire(m_facingDirection);
+    }
+
     #endregion
 
     #region Getters and Setters
@@ -124,6 +138,14 @@ public class PlayerNewController : MonoBehaviour
 
     public PlayerAirState AirState{
         get { return m_airState; }
+    }
+
+    public PlayerGroundebreakerState GroundbreakerState{
+        get { return m_groundbreakerState; }
+    }
+
+    public PlayerFireballState FireballState{
+        get { return m_fireballState; }
     }
 
     public Vector2 CurrentVelocity{

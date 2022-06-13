@@ -16,9 +16,14 @@ MonoBehaviour:
   m_dashDistance: 75
   m_minHeight: 10
   m_maxHeight: 55
-  m_gravityUp: -220
-  m_gravityDown: -300
-  m_jumpSpeed: 100
+  m_gravityUp: -305.55554
+  m_gravityDown: -440
+  m_timeToReachMaxHeight: 0.6
+  m_timeToFallMaxHeight: 0.5
+  m_maxJumpSpeed: 183.33333
+  m_minJumpSpeed: 78.17359
+  m_groundbreakerSpeed: -260
+  m_fireball: {fileID: 8228955277516224530, guid: 7670067bbc0834c409249406c223ed0f, type: 3}
   m_groundBox: {x: 0, y: 0}
   m_groundMask:
     serializedVersion: 2

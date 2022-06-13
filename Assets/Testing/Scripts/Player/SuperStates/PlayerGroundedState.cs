@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
 {
-    protected Vector2 m_input;
+    protected float m_inputX;
+    protected bool m_hasTransitioned = false;
     public PlayerGroundedState(PlayerNewController p_player, PlayerStateMachine p_stateMachine, PlayerData p_playerData, string p_animBoolName) : base(p_player, p_stateMachine, p_playerData, p_animBoolName)
     {
     }
@@ -17,6 +18,7 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        m_hasTransitioned = false;
     }
 
     public override void Exit()
@@ -34,14 +36,25 @@ public class PlayerGroundedState : PlayerState
         }
         else if(InputManager.Instance.JumpButtonPressed){
             m_stateMachine.ChangeState(m_player.JumpState);
+            m_hasTransitioned = true;
+            return;
+        }
+        else if(InputManager.Instance.DashButtonPressed){
+            m_stateMachine.ChangeState(m_player.DashState);
+            m_hasTransitioned = true;
+            return ;
+        }
+        else if(InputManager.Instance.Skill1ButtonPressed){
+            m_stateMachine.ChangeState(m_player.FireballState);
+            m_hasTransitioned = true;
+            return;
         }
         else if(InputManager.Instance.HorizontalAxis == 0){
-            m_input = Vector2.zero;
+            m_inputX = 0;
         }
         else{
-            m_input.x = InputManager.Instance.HorizontalAxis;
-            m_player.CheckIfShouldFlip(m_input.x);
-            m_input.Normalize();
+            m_inputX = InputManager.Instance.HorizontalAxis;
+            m_player.CheckIfShouldFlip(m_inputX);
         }
         
     }

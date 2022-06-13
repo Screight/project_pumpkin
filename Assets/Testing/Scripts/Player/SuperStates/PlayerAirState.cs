@@ -6,7 +6,7 @@ public class PlayerAirState : PlayerState
 {
     bool m_isGrounded;
 
-    protected Vector2 m_input;
+    protected float m_inputX;
     public PlayerAirState(PlayerNewController p_player, PlayerStateMachine p_stateMachine, PlayerData p_playerData, string p_animBoolName) : base(p_player, p_stateMachine, p_playerData, p_animBoolName)
     {
     }
@@ -14,7 +14,7 @@ public class PlayerAirState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-
+        m_player.SetGravity(m_playerData.m_gravityDown);
         m_isGrounded = m_player.CheckIfGrounded();
     }
 
@@ -31,36 +31,48 @@ public class PlayerAirState : PlayerState
     {
         base.LogicUpdate();
 
-        if(InputManager.Instance.HorizontalAxis == 0){
-            m_input = Vector2.zero;
+        if(InputManager.Instance.DashButtonPressed){
+            m_stateMachine.ChangeState(m_player.DashState);
+            return;
         }
-        else{
-            m_input.x = InputManager.Instance.HorizontalAxis;
-            m_player.CheckIfShouldFlip(m_input.x);
-            m_input.Normalize();
+        else if(InputManager.Instance.Skill1ButtonPressed){
+            m_stateMachine.ChangeState(m_player.FireballState);
+            return;
+        }
+        else if(InputManager.Instance.Skill2ButtonPressed){
+            m_stateMachine.ChangeState(m_player.GroundbreakerState);
+            return;
         }
 
         float velocityNormalized = m_player.CurrentVelocity.y;
         if(velocityNormalized != 0){
             velocityNormalized =  velocityNormalized / Mathf.Abs(velocityNormalized);
         }
-            m_player.Animator.SetFloat("yVelocity", velocityNormalized);
+        
+        m_player.Animator.SetFloat("yVelocity", velocityNormalized);
 
+        // CHECK IF FALLING
         if(m_player.CurrentVelocity.y < 0.01f){
             m_isGrounded = m_player.CheckIfGrounded();
             m_player.SetGravity(m_playerData.m_gravityDown);
         }
+        
+        // GET MOVEMENT INPUT
+        m_inputX = InputManager.Instance.HorizontalAxis;
+        m_player.CheckIfShouldFlip(m_inputX);
 
+        // CHECK IF GROUNDED
         if(m_isGrounded && m_player.CurrentVelocity.y < 0.01f){
-            if(m_input.x != 0){
+            if(m_inputX != 0){
                 m_stateMachine.ChangeState(m_player.MoveState);
             }else{
                 m_player.IdleState.TriggerLandAnimation();
                 m_stateMachine.ChangeState(m_player.IdleState);
             }
         }
-
-        m_player.SetVelocityX(m_playerData.movementVelocity * m_input.x);
+        // MOVEMENT
+        m_player.SetVelocityX(m_playerData.movementVelocity * m_inputX);
+        m_inputX = 0;
        
     }
 

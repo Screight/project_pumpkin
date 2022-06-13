@@ -28,12 +28,11 @@ public class PlayerIdleState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(InputManager.Instance.DashButtonPressed){
-            m_stateMachine.ChangeState(m_player.DashState);
-        }
-        else if(m_input.x != 0){
+        if(m_hasTransitioned){ return ;}
+        if(m_inputX != 0){
             m_stateMachine.ChangeState(m_player.MoveState);
         }
+        
     }
 
     public override void PhysicsUpdate()

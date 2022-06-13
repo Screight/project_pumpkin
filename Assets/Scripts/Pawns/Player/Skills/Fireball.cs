@@ -16,8 +16,10 @@ public class Fireball : MonoBehaviour
     int m_damage = 1;
 
     private void Awake()
-    {
-        m_playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    {   if(Player.Instance != null){
+            m_playerScript = Player.Instance.GetComponent<Player>();
+        }
+        
         m_rb2D = GetComponent<Rigidbody2D>();
         m_maxDurationTimer = gameObject.AddComponent<Timer>();
         m_maxDurationTimer.Duration = m_maxDuration;
@@ -37,6 +39,16 @@ public class Fireball : MonoBehaviour
         transform.position = m_playerScript.gameObject.transform.position + new Vector3(0,10,0);
         m_maxDurationTimer.Run();
     }
+
+    public void Fire(int p_facingDirection){
+
+        if(p_facingDirection == -1){
+            FlipX();
+        }
+        m_rb2D.velocity = new Vector2(p_facingDirection * m_speed, 0);
+        m_maxDurationTimer.Run();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "floor" || collision.CompareTag("enemy") || collision.CompareTag("platform") || collision.CompareTag("vine") || collision.CompareTag("obstacle"))
@@ -53,7 +65,7 @@ public class Fireball : MonoBehaviour
     void DesactivateFireBall()
     {
         gameObject.SetActive(false);
-        m_skillFireBallScript.IsFireBallAvailable = true;
+        //m_skillFireBallScript.IsFireBallAvailable = true;
         m_maxDurationTimer.Stop();
     }
 

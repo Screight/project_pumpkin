@@ -26,16 +26,12 @@ public class PlayerMoveState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if(InputManager.Instance.DashButtonPressed){
-            m_stateMachine.ChangeState(m_player.DashState);
-            return ;
-        }
-        else if(m_input.magnitude == 0){
+        if(m_hasTransitioned) { return ;}
+        if(m_inputX == 0){
             m_stateMachine.ChangeState(m_player.IdleState);
             return;
         }
-        m_player.SetVelocityX(m_playerData.movementVelocity * m_input.normalized.x);
+        m_player.SetVelocityX(m_playerData.movementVelocity * m_inputX);
     }
 
     public override void PhysicsUpdate()

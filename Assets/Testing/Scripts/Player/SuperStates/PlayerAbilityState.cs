@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAbilityState : PlayerState
 {
     private bool m_isGrounded;
-    protected bool m_isAbiltyDone;
+    protected bool m_isAbilityDone;
     public PlayerAbilityState(PlayerNewController p_player, PlayerStateMachine p_stateMachine, PlayerData p_playerData, string p_animBoolName) : base(p_player, p_stateMachine, p_playerData, p_animBoolName)
     {
     }
@@ -20,7 +20,7 @@ public class PlayerAbilityState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        m_isAbiltyDone = false;
+        m_isAbilityDone = false;
     }
 
     public override void Exit()
@@ -30,8 +30,9 @@ public class PlayerAbilityState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(m_isAbiltyDone){
-            if(m_isGrounded && m_player.CurrentVelocity.y < 0){
+        if(m_isAbilityDone){
+            m_isGrounded = m_player.CheckIfGrounded();
+            if(m_isGrounded && m_player.CurrentVelocity.y < 0.01f){
                 m_stateMachine.ChangeState(m_player.IdleState);
             }
             else{
