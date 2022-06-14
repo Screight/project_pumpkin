@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DialogueTrigger : InteractiveItem
 {
-    DialogueEvent m_dialogue;
+    private DialogueEvent m_dialogue;
     public Timeline m_CutSceneStart;
 
     protected override void Awake()

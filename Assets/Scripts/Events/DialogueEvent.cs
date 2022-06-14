@@ -9,7 +9,7 @@ public class DialogueEvent : MonoBehaviour
     protected int m_dialogueCount = 0;
     protected int m_eventCount = 0;
     protected bool m_isEventActive = false;
-    UnityEvent m_dialogueFinish;
+    private UnityEvent m_dialogueFinish;
 
     [SerializeField] protected Dialogue m_dialogue;
     [SerializeField] protected PlayableDirector m_cutscene;

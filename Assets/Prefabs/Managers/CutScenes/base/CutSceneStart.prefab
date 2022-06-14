@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1475660981935367190}
   - component: {fileID: 1475660981935367191}
   - component: {fileID: 1475660981935367192}
+  - component: {fileID: 2754696417810441478}
   m_Layer: 0
   m_Name: CutSceneStart
   m_TagString: Untagged
@@ -70,4 +71,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc411ec3a5ea7914e9b0d87fb1bf450e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_entity: []
+  m_isCameraScripted: 0
+  m_isFireSpiritCutScene: 0
+  m_isDarknessSpiritCutScene: 0
+  m_isSamaelCutScene: 0
+  m_hideHud: 0
+  m_playerCanMove: 0
+  m_cutSceneStartsWithDialog: 0
+  m_GameObjectsToActivateAtEnd: []
   m_director: {fileID: 0}
+  m_HUD: {fileID: 0}
+--- !u!320 &2754696417810441478
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475660981935367193}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []

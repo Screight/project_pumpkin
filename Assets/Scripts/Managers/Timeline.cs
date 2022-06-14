@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 public class Timeline : MonoBehaviour
 {
     [SerializeField] GameObject[] m_entity;
-    Vector3 m_firstEntity;
+    private Vector3 m_firstEntity;
     [SerializeField] bool m_isCameraScripted = false;
     [SerializeField] bool m_isFireSpiritCutScene = false;
     [SerializeField] bool m_isDarknessSpiritCutScene = false;
@@ -21,15 +21,25 @@ public class Timeline : MonoBehaviour
 
     private PauseMenu pausemenu;
     private Samu_animation_script samaelScript;
-    public PlayableDirector m_director;
-    public Canvas m_HUD;
+    private PlayableDirector m_director;
+    private GameObject m_HUD;
     private bool hasPlayed;
     private bool hasStartedPlaying;
 
+    private void Awake()
+    {
+        m_director = GetComponent<PlayableDirector>();
+    }
+
     private void Start()
     {
+        //Get PauseMenu
         pausemenu = FindObjectOfType<PauseMenu>();
-        if (pausemenu == null) { Debug.LogError("No se ha encontrado un PauseMenu!!"); }
+        if (pausemenu == null) { Debug.LogError("No se ha encontrado el PauseMenu!!"); }
+        //Get Hud
+        m_HUD = GameObject.Find("hudCanvas");
+        if (m_HUD == null) { Debug.LogError("Nombrad al hud \"hudCanvas\"!"); }
+
         if (m_isSamaelCutScene) { samaelScript = FindObjectOfType<Samu_animation_script>(); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
@@ -64,10 +74,9 @@ public class Timeline : MonoBehaviour
 
     public void startCutScene()
     {
-        //Debug.Log("Empieza CutScene");
         pausemenu.IsCutScenePlaying = true;
         if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = true; }
-        if (m_hideHud) { m_HUD.enabled = false; }
+        if (m_hideHud) { m_HUD.SetActive(false); }
         if (!m_playerCanMove) { Player.Instance.SetPlayerToScripted(); }
         //Stop BGM at CutScene6
         if (m_isSamaelCutScene && samaelScript != null) 
@@ -81,11 +90,10 @@ public class Timeline : MonoBehaviour
     }
     public void endCutScene()
     {
-        //Debug.Log("Termina CutScene y me puedo mover");
         pausemenu.IsCutScenePlaying = false;
         if (!m_playerCanMove) { Player.Instance.StopScripting(); }
         if (m_isCameraScripted) { CameraManager.Instance.CameraAtCutScene = false; }
-        if (m_hideHud) { m_HUD.enabled = true; }
+        if (m_hideHud) { m_HUD.SetActive(true); }
 
         //CutScene 3
         if (m_isFireSpiritCutScene) { GameManager.Instance.SetIsSkillAvailable(SKILLS.FIRE_BALL, true); }
@@ -110,7 +118,8 @@ public class Timeline : MonoBehaviour
         }
     }
 
-    public void Reset(){
+    public void Reset()
+    {
         m_movingUra = false;
         hasPlayed = false;
         m_director.RebindPlayableGraphOutputs();
@@ -118,5 +127,4 @@ public class Timeline : MonoBehaviour
         m_entity[0].transform.localPosition = m_firstEntity;
         m_entity[0].GetComponent<SpriteRenderer>().flipX = true;
     }
-
 }
