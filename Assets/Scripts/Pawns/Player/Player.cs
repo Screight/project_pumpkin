@@ -183,7 +183,7 @@ public class Player : AnimatedCharacter
 
     void HandleMoveState()
     {
-        m_direction = InputManager.Instance.HorizontalAxisFlat;
+        m_direction = (int)Input.GetAxisRaw("Horizontal");
         Move();
         if (InputManager.Instance.JumpButtonPressed && m_isGrounded && !m_isInsideActiveInteractiveZone)
         {
