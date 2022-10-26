@@ -23,6 +23,5 @@ void Start()
         lg.transform.Rotate(new Vector3(0, 0, Time.deltaTime*25));
         float sin = (Mathf.Sin(Time.time*5f));
 
-        lg.intensity = (sin+4f)/1.5f;    
     }
 }
