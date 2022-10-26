@@ -16,13 +16,18 @@ public class Fireball : MonoBehaviour
     int m_damage = 1;
 
     private void Awake()
-    {   if(Player.Instance != null){
-            m_playerScript = Player.Instance.GetComponent<Player>();
-        }
-        
+    {   
         m_rb2D = GetComponent<Rigidbody2D>();
         m_maxDurationTimer = gameObject.AddComponent<Timer>();
         m_maxDurationTimer.Duration = m_maxDuration;
+    }
+
+    private void Start()
+    {
+        if (Player.Instance != null)
+        {
+            m_playerScript = Player.Instance.GetComponent<Player>();
+        }
     }
 
     void Update() { if (m_maxDurationTimer.IsFinished) { DesactivateFireBall(); } }
