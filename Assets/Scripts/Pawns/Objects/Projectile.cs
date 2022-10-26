@@ -50,7 +50,12 @@ public class Projectile : MonoBehaviour
         {
             m_source.PlayOneShot(m_impactSound);
             m_renderer.enabled = false;
-            m_impactParticle.Play();
+
+            if(m_impactParticle != null)
+            {
+                m_impactParticle.Play();
+            }
+            
             m_collision.enabled = false;
             m_rb2D.simulated = false;
             Destroy(gameObject, 5.0f);
