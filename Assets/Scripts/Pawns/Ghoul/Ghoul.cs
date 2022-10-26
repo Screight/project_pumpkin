@@ -323,7 +323,7 @@ public class Ghoul : Enemy
         else { m_ghoulState = p_defaultState; chargeTimer.Stop(); hasCharged = false; }
     }
 
-    protected override void EndHit()
+    public override void EndHit()
     {
         base.EndHit();
         if (m_state == ENEMY_STATE.DEATH) { return; }

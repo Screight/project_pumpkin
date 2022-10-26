@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum SKELETON_STATE { MOVE, CHASE, DIE, ATTACK, HIT, AIR }
+public enum SKELETON_STATE { PATROL ,MOVE, CHASE, DIE, ATTACK, HIT, AIR }
 public enum SKELETON_ANIMATION { MOVE, RELOAD, FIRE, DIE, HIT, ATTACK, LAST_NO_USE }
 
 public class Skeleton : Enemy
@@ -71,6 +71,7 @@ public class Skeleton : Enemy
     protected override void Update()
     {
         base.Update();
+
         switch (m_skeletonState)
         {
             default:break;
@@ -98,6 +99,11 @@ public class Skeleton : Enemy
 
     void Move(SKELETON_STATE p_defaultState)
     {
+        if (m_playerIsNear) {
+            m_skeletonState = SKELETON_STATE.CHASE;
+            return; 
+        }
+
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_MOVE, false);
         if (m_hasReturned)
         {
@@ -156,7 +162,7 @@ public class Skeleton : Enemy
         //Player Near but Unnaccesible
         if (m_playerIsNear && !m_playerIsAtRange && !m_isGrounded) 
         { 
-            m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
+            m_rb2D.velocity = new Vector2( FacingDirection() * m_speed, m_rb2D.velocity.y);
             AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_RELOAD, false);
         }
         else if (m_playerIsNear)
@@ -248,7 +254,7 @@ public class Skeleton : Enemy
 
     public SKELETON_STATE State { set { m_skeletonState = value; } get { return m_skeletonState; } }
 
-    protected override void EndHit()
+    public override void EndHit()
     {
         base.EndHit();
         if(m_playerIsAtRange){
@@ -282,7 +288,7 @@ public class Skeleton : Enemy
     }
     public bool IsPlayerNear
     {
-        set { m_playerIsNear = value; }
+        set { m_playerIsNear = value; Debug.Log(m_playerIsNear); }
     }
     public bool IsPlayerAtRange
     {

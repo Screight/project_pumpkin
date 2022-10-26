@@ -116,7 +116,7 @@ public class FlyingPatrolMonster : Enemy
         }       
     }
 
-    protected override void EndHit()
+    public override void EndHit()
     {
         base.EndHit();
         if(m_health <= 0) 

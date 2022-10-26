@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class skellyGroundCheck : MonoBehaviour
 {
-    Skeleton skeletonScript;
+    SkeletonController skeletonScript;
     Rigidbody2D skeletonRigidBody;
 
-    void Start()
+    void Awake()
     {
-        skeletonScript = GetComponentInParent<Skeleton>();
+        skeletonScript = GetComponentInParent<SkeletonController>();
         skeletonRigidBody = GetComponentInParent<Rigidbody2D>();
     }
 
@@ -26,7 +26,7 @@ public class skellyGroundCheck : MonoBehaviour
             skeletonScript.IsGrounded = true;
             skeletonRigidBody.velocity = Vector2.zero;
             //Physics2D.IgnoreLayerCollision(6, 7, false);
-            skeletonScript.State = SKELETON_STATE.MOVE;
+            skeletonScript.ChangeState(skeletonScript.PatrolState);
         }
         if(skeletonScript.State == SKELETON_STATE.DIE){
             skeletonRigidBody.velocity = Vector2.zero;

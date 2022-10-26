@@ -240,7 +240,7 @@ public class FlyingMonster : Enemy
         
     }
 
-    protected override void EndHit(){
+    public override void EndHit(){
         base.EndHit();
         InitializePatrol();
         AnimationManager.Instance.PlayAnimation(this, ANIMATION.CHARGE_BAT_MOVE, false);

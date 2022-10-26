@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class SkellyWallCheck : MonoBehaviour
 {
-    Skeleton skeletonScript;
-    Rigidbody2D skeletonRigidBody;
+    SkeletonController skeletonScript;
 
     void Start()
     {
-        skeletonScript = GetComponentInParent<Skeleton>();
-        skeletonRigidBody = GetComponentInParent<Rigidbody2D>();
+        skeletonScript = GetComponentInParent<SkeletonController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "floor") {
-             skeletonScript.IsHittingWall = true; }
+             skeletonScript.IsHittingWall = true;
+        }
     }
 }

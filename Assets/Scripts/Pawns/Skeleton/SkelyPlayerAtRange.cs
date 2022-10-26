@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class SkelyPlayerAtRange : MonoBehaviour
 {
-    Skeleton SkeletonScript;
+    SkeletonController SkeletonScript;
     void Start()
     {
-        SkeletonScript = GetComponentInParent<Skeleton>();
+        SkeletonScript = GetComponentInParent<SkeletonController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") { SkeletonScript.IsPlayerAtRange = true; }
+        if (collision.gameObject.tag == "Player") { SkeletonScript.IsPlayerInAttackRange = true; }
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player") { SkeletonScript.IsPlayerInAttackRange = true; }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") { SkeletonScript.IsPlayerAtRange = false; }
+        if (collision.gameObject.tag == "Player") { SkeletonScript.IsPlayerInAttackRange = false; }
     }
 }
