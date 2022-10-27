@@ -71,6 +71,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        Destroy(gameObject);
+    }
     private void OnTriggerEnter2D(Collision2D p_collision) {
         if (p_collision.gameObject.layer == (int)UNITY_LAYERS.OBSTACLE)
         {
