@@ -30,6 +30,7 @@ public class TransitionTrigger : InteractiveItem
         m_transicionScript.AddListenerToEndOfFadeIn(TransportPlayerToPosition);
         if (m_changeCheckpointToFinalPosition)
         {
+            CheckpointsManager.Instance.SetMusicTo(m_destinationZone);
             CheckpointsManager.Instance.SetGlobalCheckPoint(m_finalPosition);
         }
         
