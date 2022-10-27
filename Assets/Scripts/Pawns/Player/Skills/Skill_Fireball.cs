@@ -39,7 +39,7 @@ public class Skill_Fireball : MonoBehaviour
     public void Fireball()
     {
         if (!GameManager.Instance.GetIsSkillAvailable(SKILLS.FIRE_BALL)) { return; }
-        if (InputManager.Instance.Skill1ButtonPressed && m_cooldownTimer.IsFinished && m_isFireBallAvailable)
+        if (InputManager.Instance.Skill1ButtonPressed && m_cooldownTimer.IsFinished)
         {
             m_fireBall.SetActive(true);
             m_isFireBallAvailable = false;
