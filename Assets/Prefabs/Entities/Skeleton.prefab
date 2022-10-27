@@ -297,11 +297,11 @@ GameObject:
   - component: {fileID: 433329262852215980}
   - component: {fileID: 433329262852215981}
   - component: {fileID: 433329262852215982}
-  - component: {fileID: 433329262852215983}
   - component: {fileID: 433329262852216656}
   - component: {fileID: 892857362}
   - component: {fileID: 892857363}
   - component: {fileID: 4028166243443811680}
+  - component: {fileID: 3829808578584038704}
   m_Layer: 6
   m_Name: Mob
   m_TagString: enemy
@@ -426,37 +426,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 14.867065, y: 28.398254}
   m_EdgeRadius: 0
---- !u!114 &433329262852215983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433329262852216658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b6effb6d4c98f74ba96790729223428, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MAX_HEALTH: 3
-  m_health: 3
-  m_damage: 1
-  m_room: 0
-  m_playerInvulnerableDuration: 1
-  m_playerNoControlDuration: 0.2
-  m_pushAwayPlayerVelocity: {x: 50, y: 100}
-  m_pushedDuration: 0.2
-  m_pushedSpeed: 50
-  m_arrow: {fileID: 5072539391972705450, guid: 6d0638c4f9e19a748a232a3f6b8a3839, type: 3}
-  prefabBone: {fileID: 5072539391972705450, guid: 6d0638c4f9e19a748a232a3f6b8a3839, type: 3}
-  player: {fileID: 0}
-  left_limit: {fileID: 433329263508409560}
-  right_limit: {fileID: 433329262800548460}
-  m_speed: 12
-  m_isFacingRight: 0
-  m_attackPosition: {fileID: 1593206793}
-  m_flamesAudioSrc: {fileID: 892857362}
-  m_growlingAudioSrc: {fileID: 892857363}
 --- !u!95 &433329262852216656
 Animator:
   serializedVersion: 3
@@ -698,6 +667,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8210a6b267303d04d94113d7699fe87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3829808578584038704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433329262852216658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10cdebb87a965c49a46bccfeb160d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_HEALTH: 3
+  m_health: 3
+  m_damage: 1
+  m_room: 0
+  m_isNewController: 1
+  m_playerInvulnerableDuration: 0.5
+  m_playerNoControlDuration: 0.5
+  m_pushAwayPlayerVelocity: {x: 50, y: 100}
+  m_pushedDuration: 0.1
+  m_pushedSpeed: 50
+  m_patrolPointLeft: {fileID: 433329263508409560}
+  m_patrolPointRight: {fileID: 433329262800548460}
+  m_speed: 40
+  m_attackCooldown: 2
+  m_projectilePrefab: {fileID: 5072539391972705450, guid: 6d0638c4f9e19a748a232a3f6b8a3839, type: 3}
+  m_attackPosition: {fileID: 1593206793}
+  m_flamesAudioSrc: {fileID: 892857362}
+  m_growlingAudioSrc: {fileID: 892857363}
 --- !u!1 &433329263508409561
 GameObject:
   m_ObjectHideFlags: 0
