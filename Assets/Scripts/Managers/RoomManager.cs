@@ -9,8 +9,8 @@ public class RoomManager : MonoBehaviour
 
     List<Room> m_rooms;
 
-    ROOMS m_lastRoom;
-    ROOMS m_currentRoom;
+    Room m_currentRoom;
+    Room m_lastRoom;
 
     Vector3 m_positionToTransitionCameraTo;
     
@@ -63,6 +63,13 @@ public class RoomManager : MonoBehaviour
         return null;
     }
 
-    public int CurrentRoom { get { return m_rooms[(int)m_currentRoom].ID; }}
-
+    public Room CurrentRoom {
+        get { return m_currentRoom; }
+        set { m_currentRoom = value; }
+    }
+    public Room LastRoom
+    {
+        get { return m_lastRoom; }
+        set { m_lastRoom = value; }
+    }
 }

@@ -74,17 +74,21 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D p_collider) 
     {
-        if (!p_collider.CompareTag("Player")) { return; }
+        if (!p_collider.CompareTag("transitionTrigger")) { return; }
         if (m_miniMap != null) { m_miniMap.SetActiveRoom(m_ID); }
+        if(RoomManager.Instance.CurrentRoom != null)
+        {
+            RoomManager.Instance.CurrentRoom.DisableElements();
+        }
+        RoomManager.Instance.CurrentRoom = this;
         m_activableObjects.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D p_collider) 
     {
-        if(!p_collider.CompareTag("Player")) { return ;}
+        if(!p_collider.CompareTag("transitionTrigger")) { return ;}
         Reset();
         m_activableObjects.SetActive(false);
-        
     }
 
     public int ID { get { return m_ID;}}
@@ -117,6 +121,16 @@ public class Room : MonoBehaviour
 
     public void RemoveIcon(){
         m_icon = null;
+    }
+
+    public void DisableElements()
+    {
+        m_activableObjects.SetActive(false);
+    }
+
+    public void EnableElements()
+    {
+        m_activableObjects.SetActive(true);
     }
 
 }
