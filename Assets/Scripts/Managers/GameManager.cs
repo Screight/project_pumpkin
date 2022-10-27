@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     bool m_isPlayerInFinalBossFight = false;
     [SerializeField] SavePoint m_finalBossSavePoint;
-    SamuBoss m_samuBoss;
+    [SerializeField] SamuBoss m_samuBoss;
 
     private void Awake()
     {
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
         m_miniMapInterface = FindObjectOfType<MiniMapInterface>();
         Time.timeScale = 1;
-        m_samuBoss = FindObjectOfType<SamuBoss>();
+        //m_samuBoss = FindObjectOfType<SamuBoss>();
     }
 
     static public GameManager Instance

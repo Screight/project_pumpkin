@@ -20,7 +20,7 @@ public class Timeline : MonoBehaviour
     [SerializeField] GameObject[] m_GameObjectsToActivateAtEnd;
 
     private PauseMenu pausemenu;
-    private Samu_animation_script samaelScript;
+    [SerializeField] Samu_animation_script samaelScript;
     private PlayableDirector m_director;
     private GameObject m_HUD;
     private bool hasPlayed;
@@ -40,7 +40,7 @@ public class Timeline : MonoBehaviour
         m_HUD = GameObject.Find("hudCanvas");
         if (m_HUD == null) { Debug.LogError("Nombrad al hud \"hudCanvas\"!"); }
 
-        if (m_isSamaelCutScene) { samaelScript = FindObjectOfType<Samu_animation_script>(); }
+        //if (m_isSamaelCutScene) { samaelScript = FindObjectOfType<Samu_animation_script>(); }
 
         for (int i = 0; i < m_GameObjectsToActivateAtEnd.Length; i++) { m_GameObjectsToActivateAtEnd[i].SetActive(false); }
         hasPlayed = false;
