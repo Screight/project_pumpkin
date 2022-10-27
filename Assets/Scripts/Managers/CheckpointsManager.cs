@@ -19,6 +19,25 @@ public class CheckpointsManager : MonoBehaviour
 
     private CheckpointsManager() { }
 
+    public void SetMusicTo(ZONE p_zone)
+    {
+        switch (p_zone)
+        {
+            case ZONE.FOREST:
+                {
+                    m_checkpointMusic = BACKGROUND_CLIP.FORESTOFSOULS;
+                }
+                break;
+            case ZONE.MINE:
+                {
+                    m_checkpointMusic = BACKGROUND_CLIP.ABANDONEDMINE;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private void Awake()
     {
         if (m_instance == null)
