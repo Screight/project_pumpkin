@@ -140,6 +140,16 @@ public class SkeletonController : Enemy
             m_isDying = true;
         }
     }
+    public override void Reset()
+    {
+        base.Reset();
+        m_isStateMachineActive = true;
+        m_stateMachine.ChangeState(m_patrolState);
+
+        m_flamesAudioSrc.Play();
+        m_rb2D.gravityScale = 40;
+        EndHit();
+    }
 
     public float Speed { get { return m_speed; } }
 
