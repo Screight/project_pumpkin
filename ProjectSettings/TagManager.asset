@@ -75,11 +75,11 @@ TagManager:
   - name: TIlemap
     uniqueID: 538339855
     locked: 0
-  - name: TilemapDeco
-    uniqueID: 1069410771
-    locked: 0
   - name: TIlemapEmissive
     uniqueID: 1730314939
+    locked: 0
+  - name: TilemapDeco
+    uniqueID: 1069410771
     locked: 0
   - name: Projectiles
     uniqueID: 1829688273

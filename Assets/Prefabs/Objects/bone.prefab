@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2ff8133610a73794b9357d53e3e16795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1829688273
-  m_SortingLayer: 3
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -7015776086528527438, guid: d4eaf8d0794e55e4da7cb1d1f43b95b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -151,7 +151,9 @@ MonoBehaviour:
   m_playerInvulnerableDuration: 1
   m_playerNoControlDuration: 0.2
   m_pushAwayPlayerVelocity: {x: 50, y: 100}
-  m_audioClip: 12
+  m_shootSound: {fileID: 0}
+  m_impactSound: {fileID: 0}
+  m_impactParticle: {fileID: 0}
 --- !u!95 &2777672098367293637
 Animator:
   serializedVersion: 3
