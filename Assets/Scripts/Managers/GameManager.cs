@@ -85,9 +85,16 @@ public class GameManager : MonoBehaviour
             if (m_isPlayerInSpiderBossFight)
             {
                 m_transicion.AddListenerToEndOfFadeIn(HandlePlayerDeathInSpiderBossBattle);
-            }else if(m_isPlayerInFinalBossFight){
+                GameManager.Instance.CurrentZone = ZONE.MINE;
+            }
+            else if(m_isPlayerInFinalBossFight){
                 m_transicion.AddListenerToEndOfFadeIn(HandlePlayerDeathInFinalBossBattle);
                 CheckpointsManager.Instance.SetGlobalCheckPoint(m_finalBossSavePoint.GetSpawnPoint());
+                GameManager.Instance.CurrentZone = ZONE.MINE;
+            }
+            else
+            {
+                GameManager.Instance.CurrentZone = CheckpointsManager.Instance.Zone;
             }
         }
         else if (m_playerHealth > PLAYER_MAX_HEALTH) { m_playerHealth = PLAYER_MAX_HEALTH; }

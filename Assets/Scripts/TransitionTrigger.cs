@@ -59,5 +59,6 @@ public class TransitionTrigger : InteractiveItem
     {
         Player.Instance.transform.position = new Vector3(m_finalPosition.position.x, m_finalPosition.position.y, Player.Instance.transform.position.z);
         if(m_lookRight){ Player.Instance.FacePlayerToRight(); }
+        CheckpointsManager.Instance.Zone = m_destinationZone;
     }   
 }
