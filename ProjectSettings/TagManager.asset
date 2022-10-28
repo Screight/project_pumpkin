@@ -75,6 +75,12 @@ TagManager:
   - name: TIlemap
     uniqueID: 538339855
     locked: 0
+  - name: Enemies
+    uniqueID: 307840783
+    locked: 0
+  - name: Items
+    uniqueID: 3134485439
+    locked: 0
   - name: TIlemapEmissive
     uniqueID: 1730314939
     locked: 0
@@ -83,12 +89,6 @@ TagManager:
     locked: 0
   - name: Projectiles
     uniqueID: 1829688273
-    locked: 0
-  - name: Items
-    uniqueID: 3134485439
-    locked: 0
-  - name: Enemies
-    uniqueID: 307840783
     locked: 0
   - name: ForegroundDeco
     uniqueID: 548923781
