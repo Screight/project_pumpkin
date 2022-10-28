@@ -126,7 +126,7 @@ public class SkeletonController : Enemy
     public override void Damage(float p_damage)
     {
         m_isStateMachineActive = false;
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_HIT, false);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.SKELETON_HIT, true);
         m_growlingAudioSrc.Stop();
         base.Damage(p_damage);
         //m_rb2D.velocity = new Vector2(0, m_rb2D.velocity.y);
@@ -150,6 +150,33 @@ public class SkeletonController : Enemy
         m_flamesAudioSrc.Play();
         m_rb2D.gravityScale = 40;
         EndHit();
+    }
+
+    public override void EndHit()
+    {
+        base.EndHit();
+
+        if (m_isPlayerInAttackRange)
+        {
+            m_stateMachine.ChangeState(m_attackState);
+        }
+        else if (m_isPlayerInVisionRange)
+        {
+            m_stateMachine.ChangeState(m_chaseState);
+        }
+        else
+        {
+            if(m_stateMachine.CurrentState == m_patrolState)
+            {
+                AnimationManager.Instance.PlayAnimation(m_animator, ANIMATION.SKELETON_MOVE);
+                VelocityX = FacingDirection() * m_speed;
+                
+            }
+            else
+            {
+                m_stateMachine.ChangeState(m_patrolState);
+            }
+        }
     }
 
     public float Speed { get { return m_speed; } }
