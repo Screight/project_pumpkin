@@ -47,5 +47,5 @@ Material:
     - _Intensity: 1
     m_Colors:
     - _Color_Eyes: {r: 0, g: 0.17254902, b: 2.792157, a: 0}
-    - _Color_Tail: {r: 0.007843138, g: 0, b: 0.1254902, a: 0}
+    - _Color_Tail: {r: 0.015686275, g: 0, b: 0.2509804, a: 0}
   m_BuildTextureStacks: []
