@@ -132,6 +132,12 @@ public class SaveLoadGame : MonoBehaviour
             m_miniMap.Load(reader);
 
             fileStream.Close();
+
+            if (GameManager.Instance.IsMapUnlocked)
+            {
+                Destroy(GameObject.FindObjectOfType<MapUnlock>().gameObject);
+            }
+
         }
         catch
         {
