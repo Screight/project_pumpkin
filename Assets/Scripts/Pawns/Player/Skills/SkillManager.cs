@@ -37,6 +37,7 @@ public class SkillManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGamePaused) { return; }
         switch (m_playerScript.State)
         {
             case PLAYER_STATE.MOVE: 
