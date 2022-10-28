@@ -5,10 +5,10 @@ using UnityEngine;
 public class LifeUra : AnimatedCharacter
 {
     public void LoseHeart(){
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.LIFE_URA_DOWN, false);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.LIFE_URA_DOWN, true);
     }
 
     public void GainHeart(){
-        AnimationManager.Instance.PlayAnimation(this, ANIMATION.LIFE_URA_UP, false);
+        AnimationManager.Instance.PlayAnimation(this, ANIMATION.LIFE_URA_UP, true);
     }
 }
