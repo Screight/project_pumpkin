@@ -16,18 +16,21 @@ public class SoundManager : MonoBehaviour
         else { Destroy(this); }
     }
 
+    private void Start()
+    {
+        m_backgroundSource.volume = m_startBackgroundVolume;
+        m_effectsSource.volume = m_startEffectsVolume;
+
+        m_backgroundSource.loop = true;
+        m_effectsSource.loop = false;
+    }
+
     public static SoundManager Instance { get { return m_instance; } private set { } }
 
     void Initiate()
     {
         m_backgroundSource = gameObject.AddComponent<AudioSource>();
         m_effectsSource = gameObject.AddComponent<AudioSource>();
-
-        m_backgroundSource.volume = m_startBackgroundVolume;
-        m_effectsSource.volume = m_startEffectsVolume;
-
-        m_backgroundSource.loop = true;
-        m_effectsSource.loop = false;
 
         m_audioClips = new AudioClip[(int)AudioClipName.LAST_NO_USE];
         m_backgroundClips = new AudioClip[(int)BACKGROUND_CLIP.LAST_NO_USE];
@@ -132,6 +135,11 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.SAMAEL_LOSE_ALL_EYES] = Resources.Load<AudioClip>("Sound/SamaelScreamHeavy");
     }
 
+    private void Update()
+    {
+        Debug.Log(m_backgroundSource.volume);
+    }
+
     public void PlayOnce(AudioClipName p_name)
     {
         m_effectsSource.PlayOneShot(m_audioClips[(int)p_name]);   
@@ -139,7 +147,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBackground(BACKGROUND_CLIP p_name)
     {
-        m_backgroundSource.volume = HandleSettings.Instance.getCurrentBgVolume;
         m_backgroundSource.clip = m_backgroundClips[(int)p_name];
         m_backgroundSource.Play();
     }
