@@ -168,5 +168,11 @@ public class SoundManager : MonoBehaviour
     public float BackgroundVolume { get { return m_backgroundSource.volume; }}
     public AudioSource audioSrcBGM { get { return m_backgroundSource; }}
 
+    public void SetBackgroundMusicTo(BACKGROUND_CLIP p_clip)
+    {
+        m_backgroundSource.clip = m_backgroundClips[(int)p_clip];
+        m_backgroundSource.Play();
+    }
+
     public AudioClip ClipToPlay(AudioClipName p_name) { return m_audioClips[(int)p_name]; }
 }

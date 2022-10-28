@@ -78,6 +78,18 @@ public class Portal : InteractiveItem
         Player.Instance.transform.position = new Vector3(m_destinyPortal.SpawnPosition.x, m_destinyPortal.SpawnPosition.y, Player.Instance.transform.position.z);
         m_transicion.RemoveListenerToEndOfFadeIn(TransportPlayer);
         GameManager.Instance.CurrentZone = m_destinyPortal.Zone;
+
+        BACKGROUND_CLIP clip = BACKGROUND_CLIP.ABANDONEDMINE;
+        if (m_zone == ZONE.FOREST)
+        {
+            clip = BACKGROUND_CLIP.FORESTOFSOULS;
+        }
+        else if (m_zone == ZONE.MINE)
+        {
+            clip = BACKGROUND_CLIP.ABANDONEDMINE;
+        }
+        SoundManager.Instance.SetBackgroundMusicTo(clip);
+
     }
 
     public void EndTransportPlayer()
@@ -95,6 +107,7 @@ public class Portal : InteractiveItem
         else{
             Player.Instance.FacePlayerToRight();
         }
+
     }
 
     public Vector3 SpawnPosition
