@@ -138,6 +138,7 @@ public class SkeletonController : Enemy
             m_flamesAudioSrc.Stop();
             m_growlingAudioSrc.Stop();
             m_isDying = true;
+            m_isStateMachineActive = false;
         }
     }
     public override void Reset()

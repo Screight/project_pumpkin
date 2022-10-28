@@ -158,4 +158,6 @@ public class Enemy : AnimatedCharacter
 
     public ROOMS Room { get { return m_room;}}
     public bool IsDying{ get { return m_isDying;}}
+
+    public float Health { get { return m_health; } }
 }
