@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 5488d0c5807a46c49964a6a5d9b9b8e5, type: 2}
     - target: {fileID: 2423965441624984284, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}
       propertyPath: m_Name
-      value: PressCDialogue
+      value: PressLBDialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470e3614eb8eaa4499079eae47635a73, type: 3}

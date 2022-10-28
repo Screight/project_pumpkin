@@ -88,7 +88,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1637297441518375384, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
       propertyPath: m_SortingLayer
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1637297441518375384, guid: 77929dee37c6eda4ebcf6d681cda827f, type: 3}
       propertyPath: m_SortingLayerID
