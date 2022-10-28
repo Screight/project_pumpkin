@@ -180,11 +180,6 @@ public class AnimationManager : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        
-    }    
-
     public void PlayAnimation(AnimatedCharacter p_animatedCharacter, ANIMATION p_animation, bool p_startAgainIfSameAnimation){
         if( !p_startAgainIfSameAnimation && p_animatedCharacter.AnimationState == p_animation) return ;
 
