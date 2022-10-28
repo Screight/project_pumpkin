@@ -35,7 +35,20 @@ public class HealthPoints : MonoBehaviour
         for(int i = 0; i < GameManager.Instance.PlayerHealth; i++){
             m_hearts[i].GetComponent<LifeUra>().GainHeart();
         }
+        isInitialized = true;
     }
+
+    bool isInitialized = false;
+
+    private void OnEnable()
+    {
+        if (!isInitialized) { return; }
+        for (int i = GameManager.Instance.PlayerHealth; i < GameManager.Instance.PlayerMaxHealth; i++)
+        {
+            m_hearts[i].GetComponent<LifeUra>().LoseHeart();
+        }
+    }
+
 
     public void RestoreHeart(){
         m_hearts[GameManager.Instance.PlayerHealth - 1].GetComponent<LifeUra>().GainHeart();
