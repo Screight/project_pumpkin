@@ -16,12 +16,6 @@ public class HandleSettings : MonoBehaviour
     {
         if (m_instance == null) { m_instance = this; }
         else { Destroy(this); }
-    }
-    public static HandleSettings Instance { get { return m_instance; } private set { } }
-
-    private void Start()
-    {
-        if (m_effectsVolumeLevel != null) { m_effectsVolumeLevel.value = SoundManager.Instance.EffectVolume; }
 
         if (isMainMenu)
         {
@@ -32,7 +26,13 @@ public class HandleSettings : MonoBehaviour
             if (m_backgroundVolumeLevel != null) { m_backgroundVolumeLevel.value = 2 * SoundManager.Instance.BackgroundVolume; }
         }
 
-        
+    }
+
+    public static HandleSettings Instance { get { return m_instance; } private set { } }
+
+    private void Start()
+    {
+        if (m_effectsVolumeLevel != null) { m_effectsVolumeLevel.value = SoundManager.Instance.EffectVolume; }
     }
 
     public void SetBackgroundVolume()
