@@ -11,6 +11,8 @@ namespace Game
         BACKGROUND_CLIP m_currentBackgroundClip;
         [SerializeField] SCENE m_scene;
 
+        [SerializeField] bool m_setBackgroundVolumeToSettings = true;
+
         private void Start()
         {
             SetUpScene();
@@ -18,7 +20,7 @@ namespace Game
 
         public void SetUpScene()
         {
-            SceneManager.Instance.SetCurrentScene(this);
+            SceneManager.Instance.SetCurrentScene(this, m_setBackgroundVolumeToSettings);
             m_currentBackgroundClip = m_backgroundMusic;
             if(m_scene == SCENE.MAIN_MENU){
                 Room.ResetID();

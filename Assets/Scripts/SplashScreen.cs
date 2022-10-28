@@ -48,7 +48,7 @@ public class SplashScreen : MonoBehaviour
                         m_canvas.alpha -= m_alphaTic;
                         m_alphaTimer.Run();
                     } else{
-                        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.MAINTITLE);
+                        SoundManager.Instance.PlayBackground(BACKGROUND_CLIP.MAINTITLE, false);
                         m_menu.SetActive(true);
                         gameObject.SetActive(false);
                     }

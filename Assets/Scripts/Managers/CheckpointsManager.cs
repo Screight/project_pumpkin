@@ -78,7 +78,7 @@ public class CheckpointsManager : MonoBehaviour
         EnemyManager.Instance.ResetAllAliveEnemies();
     }
 
-    public void MovePlayerToGlobalCheckPoint()
+    public void MovePlayerToGlobalCheckPoint(bool p_setVolumeToSettings = true)
     {
         m_player.ResetPlayer(PLAYER_STATE.IDLE, ANIMATION.PLAYER_IDLE);
         if (m_globalCheckPoint != null) 
@@ -89,7 +89,7 @@ public class CheckpointsManager : MonoBehaviour
         {
             m_player.transform.position = new Vector3(m_localCheckPoint.position.x, m_localCheckPoint.position.y, m_player.transform.position.z);
         }
-        SoundManager.Instance.PlayBackground(m_checkpointMusic);
+        SoundManager.Instance.PlayBackground(m_checkpointMusic, p_setVolumeToSettings);
         GameManager.Instance.CurrentZone = m_zone;
     }
 
@@ -127,7 +127,7 @@ public class CheckpointsManager : MonoBehaviour
         position.z = p_reader.ReadSingle();
         m_globalCheckPoint.transform.position = position;
         m_localCheckPoint = m_globalCheckPoint;
-        MovePlayerToGlobalCheckPoint();
+        MovePlayerToGlobalCheckPoint(false);
     }
 
 }

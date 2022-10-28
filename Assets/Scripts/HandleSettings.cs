@@ -10,6 +10,8 @@ public class HandleSettings : MonoBehaviour
     [SerializeField] Sprite m_darkGreenFill;
     [SerializeField] Image[] m_fillSlider;
 
+    [SerializeField] bool isMainMenu = false;
+
     private void Awake()
     {
         if (m_instance == null) { m_instance = this; }
@@ -20,12 +22,29 @@ public class HandleSettings : MonoBehaviour
     private void Start()
     {
         if (m_effectsVolumeLevel != null) { m_effectsVolumeLevel.value = SoundManager.Instance.EffectVolume; }
-        if (m_backgroundVolumeLevel != null) { m_backgroundVolumeLevel.value = SoundManager.Instance.BackgroundVolume; }
+
+        if (isMainMenu)
+        {
+            if (m_backgroundVolumeLevel != null) { m_backgroundVolumeLevel.value = SoundManager.Instance.BackgroundVolume; }
+        }
+        else
+        {
+            if (m_backgroundVolumeLevel != null) { m_backgroundVolumeLevel.value = 2 * SoundManager.Instance.BackgroundVolume; }
+        }
+
+        
     }
 
     public void SetBackgroundVolume()
     {
-        if (m_backgroundVolumeLevel != null) { SoundManager.Instance.SetBackgroundVolume(m_backgroundVolumeLevel.value); }
+        if (isMainMenu && m_backgroundVolumeLevel != null)
+        {
+            SoundManager.Instance.SetBackgroundVolume(m_backgroundVolumeLevel.value);
+        }
+        else if(!isMainMenu && m_backgroundVolumeLevel != null)
+        {
+            SoundManager.Instance.SetBackgroundVolume(m_backgroundVolumeLevel.value / 2);
+        }
     }
 
     public void SetEffectsVolume()

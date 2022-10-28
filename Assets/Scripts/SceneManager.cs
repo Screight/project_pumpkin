@@ -37,11 +37,11 @@ namespace Game
             m_currentSceneID = (SCENE)UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
         }
 
-        public void SetCurrentScene(Scene p_scene)
+        public void SetCurrentScene(Scene p_scene, bool p_setVolumeToSettings = true)
         {
             m_currentScene = p_scene;
             m_currentSceneID = p_scene.SCENE;
-            SoundManager.Instance.PlayBackground(m_currentScene.BackgroundMusic);
+            SoundManager.Instance.PlayBackground(m_currentScene.BackgroundMusic, p_setVolumeToSettings);
         }
 
         public void LoadScene(int p_scene)

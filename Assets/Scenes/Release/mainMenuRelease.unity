@@ -3407,6 +3407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_backgroundMusic: 0
   m_scene: 0
+  m_setBackgroundVolumeToSettings: 0
 --- !u!1 &820434729
 GameObject:
   m_ObjectHideFlags: 0

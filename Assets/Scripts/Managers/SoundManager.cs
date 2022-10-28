@@ -135,18 +135,17 @@ public class SoundManager : MonoBehaviour
         m_audioClips[(int)AudioClipName.SAMAEL_LOSE_ALL_EYES] = Resources.Load<AudioClip>("Sound/SamaelScreamHeavy");
     }
 
-    private void Update()
-    {
-        Debug.Log(m_backgroundSource.volume);
-    }
-
     public void PlayOnce(AudioClipName p_name)
     {
         m_effectsSource.PlayOneShot(m_audioClips[(int)p_name]);   
     }
 
-    public void PlayBackground(BACKGROUND_CLIP p_name)
+    public void PlayBackground(BACKGROUND_CLIP p_name, bool setToSettings = true)
     {
+        if (setToSettings)
+        {
+            m_backgroundSource.volume = HandleSettings.Instance.getCurrentBgVolume;
+        }
         m_backgroundSource.clip = m_backgroundClips[(int)p_name];
         m_backgroundSource.Play();
     }
