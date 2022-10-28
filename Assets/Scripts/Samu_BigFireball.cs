@@ -51,11 +51,12 @@ public class Samu_BigFireball : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D p_collider)
+    private void OnTriggerStay2D(Collider2D p_collider)
     {
         if (!p_collider.CompareTag("Player") && !p_collider.CompareTag("floor")) { return; }
         if (p_collider.CompareTag("Player"))
         {
+            if(Player.Instance.State == PLAYER_STATE.DASH) { return; }
             Player.Instance.HandleHostileCollision(Vector2.zero, Vector2.zero, 0.5f, 1, 1);
         }
 
