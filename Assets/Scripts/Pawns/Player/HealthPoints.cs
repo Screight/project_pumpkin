@@ -65,7 +65,7 @@ public class HealthPoints : MonoBehaviour
         m_hearts[GameManager.Instance.PlayerHealth].GetComponent<LifeUra>().LoseHeart();
     }
 
-    public void GainExtraHeart(){
+    public void GainExtraHeart(bool restoreHealth = true){
 
         float cameraSize = Camera.main.scaledPixelWidth;
 
@@ -78,7 +78,10 @@ public class HealthPoints : MonoBehaviour
         gameobject.transform.localScale = new Vector3(1,1,1);
         m_hearts.Add(gameobject);
         gameobject.transform.position += new Vector3(m_separationBetweenHearts * (m_hearts.Count - 1), 0, 0);
-        GameManager.Instance.RestorePlayerToFullHealth();
+        if (restoreHealth)
+        {
+            GameManager.Instance.RestorePlayerToFullHealth();
+        }
     }
 
 }

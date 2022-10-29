@@ -240,7 +240,7 @@ public class GameManager : MonoBehaviour
         m_playerHealth = p_reader.ReadInt32();
 
         for(int i = 3; i <PLAYER_MAX_HEALTH; i++){
-            m_healthUI.GainExtraHeart();
+            m_healthUI.GainExtraHeart(false);
             m_miniMapInterface.AddHeart();
         }
 
@@ -261,6 +261,9 @@ public class GameManager : MonoBehaviour
         if(m_isSpiderBossDefeated){
             m_spiderBossTrigger.DisableSpiderBoss();
         }
+
+        GameManager.Instance.RestorePlayerToFullHealth();
+
     }
 
     public bool IsSpiderBossDefeated{

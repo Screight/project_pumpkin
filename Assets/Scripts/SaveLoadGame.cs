@@ -169,7 +169,7 @@ public class SaveLoadGame : MonoBehaviour
             fileStream.Close();
         }
         catch{
-            Debug.LogError("File " + p_saveState.Path + " NOT found.");
+            Debug.Log("File " + p_saveState.Path + " NOT found.");
             p_saveState.LoadGame = false;
             p_saveState.SetSpiritTo(false, SelectSaveButton.SPIRITS.FIRE);
             p_saveState.SetSpiritTo(false, SelectSaveButton.SPIRITS.DARK);
