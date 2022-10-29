@@ -21,7 +21,6 @@ public class SaveLoadGame : MonoBehaviour
         if (m_instance == null)
         {
             m_instance = this;
-            m_interactiveItems[2] = FindObjectOfType<GroundbreakerRune>();
             m_miniMap = FindObjectOfType<MiniMap>();
             m_path = Game.SceneManager.Instance.SavePath;
         }
